@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.lifestyle.ElectricityActivity">
+
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/edit_text_rounded2"
+                android:orientation="vertical">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Enter Your Name"
+                    android:textColor="@color/colorPrimary"
+
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyEditText
+                    android:id="@+id/edName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:hint="Name"
+                    android:drawableLeft="@drawable/ic_name"
+                    android:minHeight="45dp"
+                    android:paddingLeft="8dp"
+                    android:textColorHint="@color/accessibility_edit_hint_color"
+                    app:drawableTint="@color/colorPrimary" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/grey_light_secondary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/edit_text_rounded2"
+                android:orientation="vertical">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Enter Your Provider Name"
+                    android:textColor="@color/colorPrimary"
+
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyEditText
+                    android:id="@+id/edProvider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:hint="Provider Name"
+                    android:drawableLeft="@drawable/ic_provider_name"
+                    android:minHeight="45dp"
+                    android:paddingLeft="8dp"
+                    android:textColorHint="@color/accessibility_edit_hint_color"
+                    app:drawableTint="@color/colorPrimary" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/grey_light_secondary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/edit_text_rounded2"
+                android:orientation="vertical">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Enter Your Account Number"
+                    android:textColor="@color/colorPrimary"
+
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyEditText
+                    android:id="@+id/edAccountNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+
+                    android:hint="Account Number"
+                    android:drawableLeft="@drawable/ic_number"
+                    android:minHeight="45dp"
+                    android:paddingLeft="8dp"
+                    app:drawableTint="@color/colorPrimary" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/grey_light_secondary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/edit_text_rounded2"
+                android:orientation="vertical">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Enter Pay Amount"
+                    android:textColor="@color/colorPrimary"
+
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyEditText
+                    android:id="@+id/edAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:hint="Pay Amount"
+                    android:minHeight="45dp"
+                    android:drawableLeft="@drawable/ic_attach_money_recharge"
+
+                    android:paddingLeft="8dp"
+                    app:drawableTint="@color/colorPrimary" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/grey_light_secondary" />
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <com.stuffer.stuffers.views.MyButton
+        android:id="@+id/btnTransfer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="15dp"
+
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/blue_rounded_bg"
+        android:padding="20dp"
+        android:text="@string/info_submit"
+        android:textAllCaps="true"
+        android:textColor="@color/white" />
+</LinearLayout>

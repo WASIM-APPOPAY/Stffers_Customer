@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="15sp"
+    tools:context=".activity.shop_mall.AddToCardShopFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivItem"
+                android:layout_width="wrap_content"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:padding="8dp"
+                android:src="@mipmap/cat_bags"/>
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/subcat_bg"
+                android:text="Item Titiel"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:paddingStart="15sp"
+                />
+
+            <LinearLayout
+                android:layout_gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/tvDisPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="@color/discount_color"
+                    android:padding="2dp"
+                    android:text="USD 120 "
+                    android:textSize="16sp"
+                    android:textColor="@color/white" />
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/tvActualPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_reset"
+                    android:foreground="@drawable/strikethrough_foreground"
+                    android:padding="2dp"
+                    android:text="USD 135"
+                    android:textSize="16sp"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/ivQr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_gravity="start"
+                    android:padding="8dp"
+                    android:src="@mipmap/cat_bags" />
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:id="@+id/tvShopName"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Shop Name : "
+                    android:textSize="16sp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@drawable/subcat_bg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:orientation="horizontal">
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No of Quantity"
+                    android:gravity="end"
+                    android:padding="12sp"
+                    android:textSize="16sp"
+                    />
+
+                <ImageButton
+                    android:id="@+id/ibtnDecrease"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="12dp"
+                    android:tint="#FF0000"
+                    android:src="@drawable/ic_less_product"
+                    android:text="Raspadura Lunida"
+                    android:textSize="16sp" />
+
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+
+                    android:tint="#FF0000"
+                    android:id="@+id/tvTotal"
+                    android:text="0" />
+
+                <ImageButton
+                    android:id="@+id/ibtnIncrease"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="12dp"
+                    android:tint="#FF0000"
+                    android:src="@drawable/ic_add_product"
+                    android:text="Raspadura Lunida"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+            <com.stuffer.stuffers.views.MyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Review"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:padding="5dp"
+                />
+            <com.stuffer.stuffers.views.MyTextView
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="6"
+                android:background="@drawable/bg_border_address"
+                />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="42dp"
+
+            android:background="@drawable/bg_add_to_cart"
+            android:text="Add To Card"
+            android:textAppearance="?android:attr/textAppearance"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnForgot"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@drawable/bg_order_now"
+            android:text="Order Now"
+            android:textAppearance="?android:attr/textAppearance"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

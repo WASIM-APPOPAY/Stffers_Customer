@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:padding="5dp"
+            android:src="@drawable/appopay_resize_logo" />
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:text="Update Your Profile"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textSize="20sp" />
+
+
+
+    </LinearLayout>
+
+    <com.stuffer.stuffers.views.MyTextView
+        android:id="@+id/tvProfileInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Dear customer Thank You for SignUp with us, please click on UPDATE to complete your profile."
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textSize="16sp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.stuffer.stuffers.views.MyButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:theme="@style/MaterialButton"
+            android:visibility="invisible" />
+
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update"
+            android:textColor="@color/white"
+            android:theme="@style/MaterialButton" />
+
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

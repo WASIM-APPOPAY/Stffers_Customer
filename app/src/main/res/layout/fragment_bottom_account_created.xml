@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_rounded2"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/appopay_gift_card" />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvCommonHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="    Appopay Wallet"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:src="@drawable/user_card_new" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/tvAccNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1212"
+                android:layout_gravity="bottom|center"
+                android:layout_marginBottom="45dp"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+
+                />
+        </FrameLayout>
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:id="@+id/tvCommonContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="Thank You"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="Your Wallet Account has been created Successfully."
+            android:textSize="18sp"
+
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <com.stuffer.stuffers.views.MyButton
+
+                android:id="@+id/btnCommonOk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="CLOSE"
+                android:textColor="@color/white"
+                android:theme="@style/MaterialButton"
+
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

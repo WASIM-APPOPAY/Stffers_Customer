@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        android:padding="8dp"
+        tools:context=".fragments.union_fragments.ActionFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivDebitCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:paddingTop="25dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/wallet_card14" />
+            <!--android:src="@drawable/appopay_new_card_logo2"-->
+
+        </LinearLayout>
+        <!--android:text="@string/info_thank_you_for_card_enrollment"-->
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text="Card Features"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:text="@string/info_1_if_you_are_a_new_customer"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:text="@string/info_2_if_you_have_already_a_unionpay_card"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:text="3. If you already have a UnionPay Card please click on LINK YOUR CARD."
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnEnrolment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="25sp"
+            android:background="@drawable/blue_rounded_bg"
+            android:text="@string/info_card_enrollment"
+            android:textColor="@color/white" />
+
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnUnmask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/blue_rounded_bg"
+            android:text="@string/info_card_unmask"
+            android:textColor="@color/white" />
+
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/blue_rounded_bg"
+            android:text="@string/info_link_your_card"
+            android:textColor="@color/white" />
+
+
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnOpenNewAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="25sp"
+            android:background="@drawable/blue_rounded_bg"
+            android:text="@string/info_open_new_account"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.stuffer.stuffers.views.MyTextView
+        android:id="@+id/txtUpdateProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:layout_weight="1"
+        android:background="@drawable/subcat_bg"
+        android:clickable="true"
+        android:drawableLeft="@drawable/ic_user_drawable"
+        android:drawableRight="@mipmap/ic_forward"
+        android:focusable="true"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="@string/info_update_your_profile"
+        android:textColor="@color/Tex"
+        android:textSize="14sp" />
+
+    <com.stuffer.stuffers.views.MyTextView
+        android:id="@+id/tvProfileDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:layout_weight="1"
+        android:background="@drawable/subcat_bg"
+        android:clickable="true"
+        android:drawableLeft="@drawable/ic_user_drawable"
+        android:drawableRight="@mipmap/ic_forward"
+        android:focusable="true"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="@string/info_profile_details"
+        android:textColor="@color/Tex"
+        android:textSize="14sp" />
+
+    <com.stuffer.stuffers.views.MyTextView
+        android:id="@+id/tvDeliveryAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:layout_weight="1"
+        android:background="@drawable/subcat_bg"
+        android:drawableLeft="@drawable/ic_profile_settings"
+        android:drawableRight="@mipmap/ic_forward"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="@string/info_delivery_address"
+        android:textColor="@color/Tex"
+        android:textSize="14sp" />
+
+     <com.stuffer.stuffers.views.MyTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:layout_weight="1"
+        android:background="@drawable/subcat_bg"
+        android:drawableLeft="@drawable/ic_profile_settings"
+        android:drawableRight="@mipmap/ic_forward"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="@string/info_upload_your_id"
+        android:textColor="@color/Tex"
+        android:textSize="14sp" />
+
+     <com.stuffer.stuffers.views.MyTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:layout_weight="1"
+        android:background="@drawable/subcat_bg"
+        android:drawableLeft="@drawable/ic_profile_settings"
+        android:drawableRight="@mipmap/ic_forward"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="@string/info_upload_approved_of_address"
+        android:textColor="@color/Tex"
+        android:textSize="14sp" />
+
+
+
+    <com.stuffer.stuffers.views.MyTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:layout_weight="1"
+        android:background="@drawable/subcat_bg"
+        android:drawableLeft="@drawable/ic_profile_settings"
+        android:drawableRight="@mipmap/ic_forward"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="@string/info_invite_on_appopay"
+        android:textColor="@color/Tex"
+        android:textSize="14sp" />
+
+    <com.stuffer.stuffers.views.MyTextView
+        android:visibility="gone"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:layout_weight="1"
+        android:background="@drawable/subcat_bg"
+        android:drawableLeft="@drawable/ic_logout"
+        android:drawableRight="@mipmap/ic_forward"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="Logout"
+        android:textColor="@color/Tex"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_light_tertiary" />
+
+
+</LinearLayout>

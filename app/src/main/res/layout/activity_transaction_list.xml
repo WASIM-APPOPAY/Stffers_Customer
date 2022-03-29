@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.wallet.TransactionListActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <com.stuffer.stuffers.views.MySwitchView
+        android:id="@+id/swAccountNumber"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/edit_text_rounded"
+        android:gravity="left|center_vertical"
+        android:padding="8dp"
+        android:text="A/C Number  :  6644552244552233"
+        android:textColor="@color/more_than_other_dark_grey"
+        android:textSize="18sp"
+
+        />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTransactionList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

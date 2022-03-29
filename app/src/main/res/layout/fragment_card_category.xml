@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    tools:context=".fragments.union_fragments.CardCategoryFragment">
+
+    <ScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivDebitCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:paddingTop="25dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+
+                android:scaleType="fitCenter"
+                android:src="@drawable/wallet_card14"
+                />
+            <!--android:src="@drawable/appopay_new_card_logo2" -->
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:text="Card Enrollment"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:text="Dear customer appOPay makes following cards available; please click on the type of card you would like to enroll."
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <com.stuffer.stuffers.views.MyButton
+                android:id="@+id/btnCardWallet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="25sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25sp"
+                android:background="@drawable/blue_rounded_bg"
+                android:text="Wallet Card Enrollment"
+                android:textColor="@color/white" />
+
+            <com.stuffer.stuffers.views.MyButton
+                android:visibility="gone"
+
+                android:id="@+id/btnExpressCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="25sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25sp"
+                android:background="@drawable/blue_rounded_bg"
+                android:text="Money Exprees Card Enrollment"
+                android:textColor="@color/white" />
+
+            <com.stuffer.stuffers.views.MyButton
+                android:visibility="gone"
+                android:id="@+id/btnCardGift"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="25sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25sp"
+                android:background="@drawable/blue_rounded_bg"
+                android:text="Gift Card Enrollment"
+                android:textColor="@color/white" />
+
+
+
+
+            <com.stuffer.stuffers.views.MyButton
+                android:visibility="gone"
+                android:id="@+id/btnCardLoan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="25sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25sp"
+                android:background="@drawable/blue_rounded_bg"
+                android:text="Loan Card Enrollment"
+                android:textColor="@color/white" />
+
+            <com.stuffer.stuffers.views.MyButton
+                android:visibility="gone"
+                android:id="@+id/btnCardCredit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="25sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25sp"
+                android:background="@drawable/blue_rounded_bg"
+                android:text="Credit Card Enrollment"
+                android:textColor="@color/white" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+
+
+
+
+</LinearLayout>

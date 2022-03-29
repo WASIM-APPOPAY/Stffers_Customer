@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".fragments.bottom_fragment.BottotmPinFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_rounded2"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/appopay_gift_card" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/tvHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="Transaction Pin"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
+
+            <com.stuffer.stuffers.views.MyButton
+
+                android:id="@+id/btnCloseDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/info_close"
+                android:textColor="@color/white"
+                android:theme="@style/MaterialButton"
+                android:visibility="gone"
+
+                />
+
+
+        </LinearLayout>
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="For your safety, create your personal 6-digit PIN number. You will need to enter the PIN for certain transactions and to make changes to your profile. "
+            android:textSize="14sp"
+
+            />
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="DO NOT SHARE YOUR PIN WITH ANYONE AND KEEP IT IN A SAFE PLACE."
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textSize="14sp"
+
+            />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:textColor="@color/colortext"
+            android:textColorHint="@color/colorhint"
+            app:passwordToggleEnabled="true">
+
+            <com.stuffer.stuffers.views.MyEditText
+                android:id="@+id/edTransPin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/edit_text_rounded"
+                android:hint="Enter transaction pin"
+                android:imeOptions="flagNoExtractUi|actionNext"
+                android:inputType="numberPassword"
+                android:digits="0123456789"
+                android:padding="15dp"
+                android:maxLength="6"
+                android:singleLine="true"
+                android:textColor="@color/Tex"
+                android:textColorHint="@color/textSub"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/cnfpassword"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:textColor="@color/colortext"
+            android:textColorHint="@color/colorhint"
+            app:passwordToggleEnabled="true">
+
+            <com.stuffer.stuffers.views.MyEditText
+                android:id="@+id/edCnfmTransPin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/edit_text_rounded"
+                android:digits="0123456789"
+                android:hint="Confirm transaction pin"
+                android:imeOptions="flagNoExtractUi|actionDone"
+                android:inputType="numberPassword"
+                android:maxLength="6"
+                android:padding="15dp"
+                android:singleLine="true"
+                android:textColor="@color/Tex"
+                android:textColorHint="@color/textSub"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="3">
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="3">
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="3">
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="3">
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:visibility="invisible"
+                    android:id="@+id/btnClear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:text="@string/info_clear"
+                    android:textColor="@color/white"
+                    android:theme="@style/MaterialButton" />
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey10"
+                    android:visibility="invisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnConfirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:text="@string/info_confirm"
+                    android:textColor="@color/white"
+                    android:theme="@style/MaterialButton" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <com.stuffer.stuffers.views.MyTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:gravity="left"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/info_brand_coming_soon"
+        android:textColor="@color/Black"
+        android:textSize="14sp" />
+
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/fashion1"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/info_item_bike_rider"
+                    android:textColor="@color/fashion2_border"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/fashion1_bg"
+                    android:padding="5dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/bike" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/fashion1"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/info_item_bulova"
+                    android:textColor="@color/fashion1_border"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/fashion2_bg"
+                    android:padding="5dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/bulova" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/fashion2"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/info_item_guess"
+                    android:textColor="@color/fashion2_border"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/fashion2_bg"
+                    android:padding="5dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/guess" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/fashion3"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/info_item_hilfiger"
+                    android:textColor="@color/fashion3_border"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/fashion3_bg"
+                    android:padding="5dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/hilfiger" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/fashion4"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/info_item_lrx"
+                    android:textColor="@color/fashion4_border"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/fashion4_bg"
+                    android:padding="5dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/lrx" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/fashion3"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/info_item_marc"
+                    android:textColor="@color/fashion3_border"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/fashion3_bg"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/marc" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/fashion4"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/info_item_bike"
+                    android:textColor="@color/fashion4_border"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/fashion4_bg"
+                    android:padding="5dp"
+
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/bike_7" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/fashion2"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/info_item_nike_swoosh"
+                    android:textColor="@color/fashion2_border"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/fashion2_bg"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/nike_swoosh_logo_black_8" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/fashion1"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/info_item_omega"
+                    android:textColor="@color/fashion1_border"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/fashion1_bg"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/omega_9" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/fashion4"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/info_item_supra"
+                    android:textColor="@color/fashion4_border"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/fashion4_bg"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/supra_10" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/fashion3"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/info_item_swatch"
+                    android:textColor="@color/fashion3_border"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/fashion3_bg"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/swatch_11" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/fashion4"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/info_item_swissbrand"
+                    android:textColor="@color/fashion4_border"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/fashion4_bg"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/swissbrand_12" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/fashion1"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/info_item_tissot"
+                    android:textColor="@color/fashion1_border"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/fashion1_bg"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/tissot_13" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/fashion2"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/info_item_under_armour"
+                    android:textColor="@color/fashion2_border"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/fashion2_bg"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/underarmour_14" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</LinearLayout>

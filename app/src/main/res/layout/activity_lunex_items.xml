@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.lunex_card.LunexItemsActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <com.stuffer.stuffers.views.MyTextViewBold
+        android:id="@+id/tvItemTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/subcat_bg"
+        android:gravity="center_vertical"
+        android:minHeight="50dp"
+        android:padding="10dp"
+        android:text="Lunex Gift Card"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/subcat_bg"
+        android:orientation="horizontal">
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:id="@+id/tvAreaCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:drawableRight="@drawable/ic_dropdown"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/info_area_code"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:drawableTint="@color/colorPrimary"
+
+            />
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:padding="10dp"
+            android:text="+1"
+            android:textSize="16sp" />
+
+        <com.stuffer.stuffers.views.MyEditText
+            android:id="@+id/edtphone_number"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/edit_text_no_round_bg"
+
+            android:hint="@string/info_enter_phone_number"
+            android:imeOptions="actionDone|flagNoExtractUi"
+            android:inputType="number"
+            android:padding="10dp" />
+
+        <ImageView
+            android:id="@+id/ivContactList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_contact_list" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvGiftsAmount"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_weight="1" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+
+        android:src="@drawable/banner1" />
+
+
+</LinearLayout>

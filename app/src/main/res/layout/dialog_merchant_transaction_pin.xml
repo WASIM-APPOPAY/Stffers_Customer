@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="12dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/appopay_gift_card" />
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="15dp"
+            android:text="Topup Payment"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
+
+
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:background="@drawable/edit_text_rounded"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/colortext"
+        android:textColorHint="@color/colorhint"
+        app:passwordToggleEnabled="true">
+
+        <com.stuffer.stuffers.views.MyEditText
+            android:id="@+id/edtTransactionPin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#0000"
+            android:clickable="false"
+            android:drawableStart="@drawable/ic_fiber_pin"
+            android:drawablePadding="12dp"
+            android:gravity="left"
+            android:hint="Enter 6 digit transaction pin "
+            android:inputType="numberPassword"
+            android:lines="1"
+            android:maxLength="6"
+            android:padding="10dp"
+            android:textColor="@color/Tex"
+            android:imeOptions="actionDone|flagNoExtractUi"
+            android:textColorHint="@color/textSub"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+
+
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text=" Close "
+            android:textColor="@color/white"
+            android:theme="@style/MaterialButton" />
+
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=" Confirm "
+            android:textColor="@color/white"
+            android:theme="@style/MaterialButton" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

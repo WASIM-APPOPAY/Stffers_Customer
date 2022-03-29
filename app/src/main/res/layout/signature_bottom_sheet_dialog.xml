@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sign="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llSignature"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingTop="5dp"
+    android:paddingRight="15dp"
+    android:visibility="visible">
+
+    <ImageView
+        android:id="@+id/ivBankLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:src="@drawable/banko_delta" />
+
+    <com.stuffer.stuffers.views.MyTextViewBold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Firme dentro del recuadro igual a su documento de identidad" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/roundrect_sign">
+
+        <com.kyanogen.signatureview.SignatureView
+            android:id="@+id/signature_view"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="5dp"
+            sign:backgroundColor="#ffffff"
+            sign:enableSignature="true"
+            sign:penColor="#000000"
+            sign:penSize="2dp" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnReset"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:text="Reset"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:theme="@style/MaterialButton3" />
+
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnSaveSign"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:text="Save Sign"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:theme="@style/MaterialButton2" />
+    </LinearLayout>
+
+</LinearLayout>

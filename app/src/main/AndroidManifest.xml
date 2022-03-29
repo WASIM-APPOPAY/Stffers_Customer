@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.stuffer.stuffers"
+    tools:ignore="ImpliedTouchscreenHardware,MissingLeanbackLauncher">
+
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android,com.aseem.versatileprogressbar" />
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the "MyLocation" functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="false"
+        android:smallScreens="true" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+
+    <application
+        android:name=".AppoPayApplication"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_new_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_new_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:allowBackup">
+        <activity
+            android:name=".activity.FianceTab.WalletNewBankActivity"
+            android:exported="true">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+
+        <activity
+            android:name=".activity.FianceTab.DominaActivity"
+            android:exported="false"></activity>
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <activity
+            android:name=".activity.wallet.GiftCardActivity"
+            android:exported="false" />
+        <activity android:name=".activity.wallet.AgentMapActivity" />
+
+        <service
+            android:name=".myService.MyApduService"
+            android:exported="true"
+            android:permission="android.permission.BIND_NFC_SERVICE">
+            <intent-filter>
+                <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.nfc.cardemulation.host_apdu_service"
+                android:resource="@xml/apduservice" />
+        </service>
+
+        <activity
+            android:name=".activity.quick_pass.QRCodeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize|adjustPan" />
+
+        <!--
+ The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <uses-library
+            android:name="org.apache.http.Legacy"
+            android:required="false" />
+
+        <activity
+            android:name=".activity.wallet.MerchantMapsActivity"
+            android:hardwareAccelerated="false"
+            android:label="@string/title_activity_merchant_maps" />
+        <activity android:name=".activity.FianceTab.UnionPayActivity" />
+        <activity android:name=".activity.FianceTab.ClientsActivity" />
+        <activity android:name=".activity.FianceTab.TarjetaActivity" />
+        <activity android:name=".activity.FianceTab.FinanceActivity" />
+        <activity
+            android:name=".activity.lunex_card.LunexGiftActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.wallet.FundSistemaActivity" />
+        <activity
+            android:name=".activity.profile.DeliveryAddressActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".activity.lunex_card.LunexMoreActivity" />
+        <activity
+            android:name=".activity.lunex_card.LunexItemsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.wallet.PinActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.shop_mall.SopActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".my_camera.CameraActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.finance_fragment.media.MediaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.quick_pass.QuickPassActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.linkbank.LinkBankAccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.finance_fragment.TermConditionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.contact.InviteContactActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize|adjustPan" />
+        <activity android:name=".activity.finance.InsuranceTypeActivity" />
+
+        <activity android:name=".activity.finance.InsuranceActivity" />
+        <activity
+            android:name=".activity.finance.GoBankActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.payment.GasQrActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize|adjustPan" />
+        <activity
+            android:name=".activity.payment.GasPaymentActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize|adjustPan" />
+        <activity
+            android:name=".activity.giftcard.OwnGiftCardActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.CashOut2Activity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize|adjustPan" />
+        <activity
+            android:name=".activity.wallet.CashOutActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize|adjustPan" />
+        <activity
+            android:name=".activity.forgopassword.ForgotPasswordActvivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.lifestyle.WaterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.lifestyle.TvActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.lifestyle.PhoneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.lifestyle.ElectricityActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.wallet.ForgotPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragments.bottom.chat.MessageActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.contact.FindFriendActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.contact.ContactDemoActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".activity.wallet.SignInChat" />
+        <activity
+            android:name=".activity.wallet.RequestMoney"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.wallet.notificationActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.wallet.BecomeMerchantActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.wallet.BankNameActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.wallet.TransactionDetailsActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.wallet.TransactionListActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.wallet.WalletCardActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.wallet.WalletBankActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.cardtopup.TopupCardActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".activity.wallet.WalletActivity" />
+        <activity
+            android:name=".activity.wallet.QuickPaymentActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".activity.wallet.RemoveCardActivity" />
+        <activity
+            android:name=".activity.wallet.CardDetails"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".activity.wallet.MyCardsActivity" />
+        <activity
+            android:name=".activity.wallet.AccountActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.wallet.TransactionPinActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.wallet.ScreenLockActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.wallet.ProfileDetailsActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.wallet.UpdateProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.wallet.OverviewActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.wallet.SettingActvity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.wallet.VerifyOtpActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize|adjustPan" />
+        <activity
+            android:name=".activity.wallet.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.wallet.SignInActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize|adjustPan"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.wallet.SignupAcitivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize|adjustPan"
+            tools:ignore="LockedOrientationActivity">
+
+            <!--
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+        <activity
+            android:name=".activity.wallet.AddMoneyToWallet"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.BookBusTicketActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.BusSearchResultActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.FlightSearchResultActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.HomeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.wallet.HotelSearchActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.HotelSearchResultActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.MobileNumberRegistrationActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize|adjustPan" />
+        <activity
+            android:name=".activity.wallet.MobileRechargeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize|adjustPan"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.wallet.MovieDetailView"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.MovieTicketsActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.MovieTicketSeatViewActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.MyOrdersActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.PaymentsActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.ProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.RegisterCustomerDetailsActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.TrainSearchResultActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.TravelActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.AllBrandsActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.AllChildCategoriesActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.BookAppointmentActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.CartActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.CategoryDetailActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.CategoryListActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.HelplineActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.NewServiceListActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.NotificationActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.OrderTrackActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.ProductDetailActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.ProductReviewActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.ProductsActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.SearchActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.SellerDetailActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.SellersofServiceList"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.ServiceCategoriesActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.ThankYouActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.ThankYouAppointmentActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.ViewTopProductActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.mall.YourOrderActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.PayNowActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.PayUserActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.InnerPayActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.MyPassbook"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.PaymentSettings"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.ThankYouRechargeDone"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.TrainTicketDetailActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.AddTrainTicketInfo"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.wallet.MovieTicketDetailActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <service
+            android:name=".fragments.bottom.chatnotification.AppopayFirebaseMessaging"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".myService.NotificationReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_appopay_notification2" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.stuffer.stuffers.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/paths" />
+        </provider>
+
+        <service
+            android:name=".asyntask.MyJobIntentService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+    </application>
+
+</manifest>

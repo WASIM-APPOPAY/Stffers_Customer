@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="false"
+    android:orientation="vertical"
+    tools:context=".fragments.union_fragments.UnMaskFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/linearParent"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <FrameLayout
+            android:layout_marginTop="20dp"
+            android:id="@+id/fLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="visible">
+
+            <ImageView
+
+                android:id="@+id/ivUninonPay"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="@drawable/virtual_card"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/tvCardNumberU"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="center"
+                android:layout_marginTop="23dp"
+                android:textSize="20sp" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/tvExpU"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="left|bottom"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="23dp"
+                android:layout_marginBottom="55dp"
+                android:textSize="16sp" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/tvNameU"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="center|bottom"
+                android:layout_marginTop="23dp"
+                android:layout_marginBottom="55dp"
+
+                android:textSize="18sp" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/tvCvvU"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="65dp"
+                android:layout_marginBottom="27dp"
+                android:textSize="12sp"
+                android:text="123"
+                />
+
+            <!--<com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvCvvU"
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="65dp"
+                android:layout_marginBottom="27dp"
+                android:textSize="12sp"
+                android:text="123"
+                />-->
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/tvCardTypeU"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="150dp"
+                android:layout_marginBottom="27dp"
+                android:textSize="12sp"
+                android:text="123"
+                />
+            <!--<com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvCardTypeU"
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="150dp"
+                android:layout_marginBottom="27dp"
+                android:textSize="12sp"
+                android:text="123"
+                />-->
+
+
+
+
+
+
+
+
+
+
+        </FrameLayout>
+    </LinearLayout>
+    <com.stuffer.stuffers.views.MyTextViewBold
+        android:id="@+id/tvCardHeaderU"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21sp"
+        android:padding="10dp"
+        android:text="Please tap on card for UnMask"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textSize="18sp"
+        android:visibility="gone"
+        android:layout_marginTop="8dp"
+
+        />
+    </FrameLayout>
+
+
+
+</LinearLayout>

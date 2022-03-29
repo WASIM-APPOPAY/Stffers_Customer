@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.finance_fragment.media.AllMediaFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <com.stuffer.stuffers.fragments.finance_fragment.media.AutoFitRecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:id="@+id/folderRecycler"
+        android:columnWidth="@dimen/folder_column_width" />
+
+
+</FrameLayout>

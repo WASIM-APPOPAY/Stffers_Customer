@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.wallet.AccountActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/edit_text_no_round_bg"
+                android:padding="10dp"
+                android:text="Wallet Account"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/ivWallet"
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"
+                    android:background="@drawable/user_card"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:visibility="gone" />
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/tvAccountNos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="110dp"
+                    android:gravity="center"
+                    android:text="0000    0000    0000    0000    000"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginEnd="45dp"
+                    android:layout_marginBottom="60dp"
+                    android:text="01/30"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/tvFullName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="38dp"
+                    android:layout_marginBottom="35dp"
+                    android:text="MD WASIM"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+
+            </FrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvGiftCards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/linearParent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <com.stuffer.stuffers.views.MyTextViewBold
+                        android:id="@+id/tvTopTap"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="8dp"
+                        android:padding="5dp"
+                        android:text="Tap on Wallet Card to see Transaction Details"
+                        android:textAppearance="?attr/textAppearanceBody1"
+                        android:textSize="14sp"
+
+
+                        />
+
+                    <FrameLayout
+                        android:id="@+id/ivFrameTop"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginEnd="25dp"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/ivWallet1"
+                            android:layout_width="match_parent"
+                            android:layout_height="230dp"
+                            android:background="@drawable/user_card_new"
+                            android:clickable="true"
+                            android:focusable="true" />
+
+                        <com.stuffer.stuffers.views.MyTextView
+                            android:id="@+id/tvCardNumber1"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="150dp"
+                            android:gravity="center"
+                            android:text="0000    0000    0000    0000    000"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <com.stuffer.stuffers.views.MyTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end|bottom"
+                            android:layout_marginEnd="45dp"
+                            android:layout_marginBottom="35dp"
+                            android:text="Exp:01/30"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <com.stuffer.stuffers.views.MyTextView
+                            android:id="@+id/tvName1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginBottom="18dp"
+
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+                    </FrameLayout>
+
+
+                    <com.stuffer.stuffers.views.MyTextViewBold
+                        android:id="@+id/tvCardHeaderU"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="21sp"
+                        android:layout_marginTop="8dp"
+                        android:padding="5dp"
+                        android:text="Tap on card to UnMask"
+                        android:textAppearance="?attr/textAppearanceBody1"
+                        android:textSize="18sp"
+                        android:visibility="gone"
+
+                        />
+
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/tvCardNumber11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginStart="23dp"
+                        android:layout_marginTop="55dp"
+                        android:padding="8dp"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+
+                    <FrameLayout
+                        android:id="@+id/fLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:visibility="gone">
+                        <!--android:background="@drawable/temp_debit"-->
+                        <ImageView
+                            android:id="@+id/ivUninonPay"
+                            android:layout_width="match_parent"
+                            android:layout_height="220dp"
+                            android:layout_margin="8dp"
+                            android:adjustViewBounds="true"
+
+                            android:clickable="true"
+                            android:focusable="true" />
+
+
+
+                        <com.stuffer.stuffers.views.MyTextView
+                            android:id="@+id/tvCardNumberU"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="15dp"
+
+                            android:textSize="20sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="135dp"
+                            android:orientation="horizontal">
+
+
+                            <com.stuffer.stuffers.views.MyTextView
+                                android:id="@+id/tvExpU"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|bottom"
+                                android:layout_marginStart="35dp"
+
+                                android:textSize="16sp" />
+
+                            <com.stuffer.stuffers.views.MyTextView
+                                android:id="@+id/tvNameU"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+
+                                android:layout_gravity="center|bottom"
+                                android:layout_weight="1"
+                                android:singleLine="true"
+
+                                android:textSize="18sp" />
+
+                        </LinearLayout>
+
+
+
+
+                        <LinearLayout
+                            android:layout_marginTop="165dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+
+
+
+                            <com.stuffer.stuffers.views.MyTextView
+
+                                android:id="@+id/tvCardTypeU"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|bottom"
+                                android:layout_marginStart="25dp"
+
+                                android:text="123"
+                                android:textSize="12sp"
+                                android:visibility="gone" />
+
+                            <com.stuffer.stuffers.views.MyTextView
+                                android:id="@+id/tvCvvU"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|bottom"
+                                android:layout_marginStart="35dp"
+
+                                android:text="123"
+                                android:textSize="16sp"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
+
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/fBottomCvv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="250dp"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/union_wallet_card_back" />
+
+                        <com.stuffer.stuffers.views.MyTextView
+                            android:id="@+id/tvCvvBack"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="97dp"
+                            android:layout_marginEnd="15dp"
+                            android:text="XXX"
+                            android:textAppearance="?attr/textAppearanceBody1"
+                            android:textSize="16sp" />
+
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+    <com.stuffer.stuffers.views.MyButton
+        android:id="@+id/btnCreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/blue_rounded_bg"
+        android:text="Create New Account"
+        android:textColor="@color/white"
+        android:visibility="gone"
+
+        />
+
+</LinearLayout>

@@ -1,0 +1,649 @@
+<resources>
+    <string name="app_name">Appopay</string>
+
+    <string name="copyright">Copyright &#169;. All Rights Reserved.</string>
+    <string name="select_country_code">Please select country code</string>
+    <string name="code"><u>code</u></string>
+    <string name="setting_error">Your login details does not exists, please login to change your password.</string>
+    <string name="profile_update_error">Your login details does not exists, please login to update your profile.</string>
+    <string name="profile_update_error1">You have not update your profile , please update your profile.</string>
+    <string name="account_see_error">Your login details does not exists, please login to perform any action.</string>
+
+    <string name="recharge_payment_mode">Please select payment mode</string>
+    <string name="recharge_payment_balance_error">Your account doesn\'t have enough balance to buy topup</string>
+    <string name="recharge_partial_pay1">You are about to pay </string>
+    <string name="recharge_partial_pay2"> purchase of topup . Please confirm ?</string>
+    <string name="gift_card__pay">purchase of Gift Card . Please confirm ?</string>
+
+
+    <string name="carddetails_card_title">Card details</string>
+    <!--<string name="carddetails_subhead">Verify and complete your card information</string>-->
+    <string name="carddetails_subhead">Please Verify your card information before submission.</string>
+    <string name="carddetails_card_number_field_label">Card number</string>
+    <string name="carddetails_card_number_field_label1">Account number</string>
+    <string name="carddetails_cardholder_field_label">Cardholder name</string>
+    <string name="carddetails_cardholder_field_label1">Account Holder name</string>
+    <string name="carddetails_expiry_date_field_label">Expiry date</string>
+    <string name="carddetails_cvv_label">CVV</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="type_your_message">Type a message</string>
+
+    <string name="trans_note">Note</string>
+    <string name="trans_info">Length of transaction pin should be  six digits.</string>
+
+    <string name="screen_note">Note</string>
+    <string name="screen_info">Length of screen lock pin should be  four digits.</string>
+    <string name="update_note">Note</string>
+    <string name="update_note_info">Please verify your details before updating the profile,Transaction pin should be 6 digits numeric and Screen lock pin should be 4 digits numeric</string>
+    <string name="required_filled">"Please fill all required filled "</string>
+    <string name="merchant_inactive_error">Merchant is Inactive ,Please contact admin</string>
+    <string name="merchant_same_account">From and To account cannot be the same</string>
+    <string name="merchant_balance_error">Your account doesn\'t have enough balance to tranfer</string>
+    <string name="merchant_partial_pay1">You are about to pay </string>
+    <string name="merchant_partial_pay2">  Please confirm ?</string>
+    <string name="wallet_header">Transfer Money</string>
+    <string name="mobile_no_error">Mobile No. Error</string>
+    <string name="mobile_no_error_info">You  cannot search your own registered mobile number.</string>
+
+
+    <!--string for transaction pin-->
+
+    <string name="info_old_transaction_pin">Enter transaction pin.</string>
+    <string name="info_new_transaction_pin">Confirm transaction pin.</string>
+    <string name="info_transaction_pin_length">Pin should be 6 digit length</string>
+    <string name="info_old_password">Enter old password.</string>
+    <string name="info_new_password">Create new password</string>
+    <string name="info_confirm_your_password">Confirm your password</string>
+    <string name="info_mismatch">mismatch</string>
+    <string name="info_security_question1">Enter security question 1</string>
+    <string name="info_security_answer1">Enter security answer 1</string>
+    <string name="info_security_question2">Enter security question 2</string>
+    <string name="info_security_answer2">Enter security answer 2</string>
+
+
+    <string name="number_zero">0</string>
+    <string name="number_one">1</string>
+    <string name="number_two">2</string>
+    <string name="number_three">3</string>
+    <string name="number_four">4</string>
+    <string name="number_five">5</string>
+    <string name="number_six">6</string>
+    <string name="number_seven">7</string>
+    <string name="number_eight">8</string>
+    <string name="number_nine">9</string>
+    <string name="btn_clear">Clear</string>
+    <string name="btn_backspace">Back</string>
+    <string name="info_receiver_mobile_number">Enter receiver mobile number</string>
+    <string name="info_valid_mobile_number">Enter valid mobile number</string>
+    <string name="info_phone_top_up">Phone Top-Up</string>
+    <string name="info_select_dob">please select date of birth</string>
+    <string name="search_info_transfer_money">Search by Mobile number for amount transfer</string>
+    <string name="search_info_request_money">Search by Mobile number for request money</string>
+    <string name="sign_in">Sign In</string>
+    <string name="default_notification_channel_id">notification</string>
+    <string name="info_select_bank">Please select bank</string>
+    <string name="info_select_account_type">Please select account type</string>
+    <string name="info_account_holder_name">Enter account holder name</string>
+    <string name="info_bank_account_number">Enter bank account number</string>
+    <string name="info_enter_transfer_ammount">Enter transfer amount</string>
+    <string name="info_enter_fund_ammount">Enter fund amount</string>
+    <string name="info_fund_wallet">Fund Wallet </string>
+    <string name="info_add_fund_by_card">Add Funds By Card</string>
+    <string name="info_add_money">Add Money</string>
+    <string name="info_add_money_sistema">Add Money By Sistema Clave</string>
+    <string name="info_select_currency">Please select currency</string>
+    <string name="info_invalid_transactipon_pin">Invalid transaction pin</string>
+    <string name="info_sufficient_fund">Your account dosent have sufficient fund</string>
+    <string name="info_payment_failed_try_after">Failed to make payment ,Please try after sometime.</string>
+    <string name="info_action_payments">Payments</string>
+    <string name="info_action_recharge">Recharge</string>
+    <string name="info_action_add_money">Add Money</string>
+    <string name="info_action_pay">Pay</string>
+    <string name="info_action_transactions">Transactions</string>
+    <string name="info_mapping_user">Please wait, Mapping user.</string>
+    <string name="info_generating_otp">Generating otp for verification.</string>
+    <string name="info_verifying_user">Verifying user details.</string>
+    <string name="info_login_successfull">Login successful!</string>
+    <string name="info_login_failed">Login failed! Please try again later</string>
+    <string name="info_enter_mobile_number">Enter mobile number</string>
+    <string name="info_enter_password">Enter password</string>
+    <string name="info_enter_otp">Please enter OTP</string>
+    <string name="info_verifying_otp">Verifying OTP.</string>
+    <string name="info_verification_failed_given_otp">verification failed with given otp</string>
+    <string name="info_otp_request_failed">Otp request failed</string>
+    <string name="info_get_back_offer">Register today, and get 10% cashback</string>
+    <string name="info_verify_your_phone_number">Verify your phone number</string>
+    <string name="info_resend_otp">Resend OTP</string>
+    <string name="info_already_registered">Already Registered?</string>
+    <string name="info_sign_in">Sign In</string>
+    <string name="info_enter_phone_number">Enter phone number</string>
+    <string name="info_appopay_will_send_otp">Appopay will send a One Time Password</string>
+    <string name="info_enter_valid_phone_number">Please enter a valid phone no.</string>
+    <string name="info_sending_otp">Please wait sending OTP.</string>
+    <string name="info_verify_your_phone_number2">Please verify your phone number</string>
+    <string name="info_request_otp_failed">Otp request failed.</string>
+    <string name="info_register_today_early_benifit">Register for Free</string>
+    <string name="info_hint_full_name">Full Name</string>
+    <string name="info_hint_email">Email</string>
+    <string name="info_hint_password">Password</string>
+    <string name="info_please_select_your_country">Please select your country</string>
+    <string name="info_english">English</string>
+    <string name="info_spanish">Spanish</string>
+    <string name="info_create_account">Create Account</string>
+    <string name="ifo_terms_conditions"><![CDATA[Agree to the Terms & Conditions]]></string>
+    <string name="info_have_an_account">Have an account ?</string>
+    <string name="info_log_in_now">Log In Now</string>
+    <string name="info_enter_name">Enter name</string>
+    <string name="info_enter_email">Enter email</string>
+    <string name="info_enter_password_atleast_6_digits">Enter password,with atleast 6 digit</string>
+    <string name="info_getting_country_code">Getting country code</string>
+    <string name="info_enter_first_name_lasr_name">please enter first and last name</string>
+    <string name="info_enter_emial_id">please enter valid email id</string>
+    <string name="info_select_country_first">please select your country code first</string>
+    <string name="info_seletct_prefer_language">Please select your prefer language</string>
+    <string name="info_please_accept_term_condition">please accept term and condition to continue.</string>
+    <string name="info_verifying_mobile_number">Verifying mobile number.</string>
+    <string name="error_phone_number_already_exists">Phone number already exists</string>
+    <string name="error_phone_verification_failed">Phone verification failed</string>
+    <string name="error_email_already_exists">Email already exist</string>
+    <string name="error_email_verification_failed">Email verification failed</string>
+    <string name="error_account_creation_failed">Account creation failed</string>
+    <string name="error_request_account_creation_failed">\"Request for account creation failed \"</string>
+    <string name="info_creating_account">Please wait, creating your account</string>
+    <string name="info_registraion_failed_try_later">Registration failed! Please try again later</string>
+    <string name="info_hello">Hello</string>
+    <string name="info_sign_into_your_account">Sign into your Account</string>
+
+    <string name="info_hint_mobile">Mobile</string>
+    <string name="info_forgot_password">Forgot password?</string>
+    <string name="info_not_member">Not a Member Yet?</string>
+    <string name="info_register_now">Register Now.</string>
+    <string name="info_skip">skip</string>
+    <string name="info_balance">Balance</string>
+    <string name="info_deposit">Deposit</string>
+    <string name="info_withdraw">Withdraw</string>
+    <string name="info_send">Send</string>
+    <string name="info_my_cards">My Cards</string>
+    <string name="info_manage_account">Manage Account</string>
+    <string name="info_activate_your_terminal">Activate Your Terminal</string>
+    <string name="info_hint_enter_user_name">Enter user name</string>
+    <string name="info_hint_enter_your_password">Enter your password</string>
+    <string name="info_activate">Activate</string>
+    <string name="info_terminal">Terminal</string>
+    <string name="info_profile">Profile</string>
+    <string name="info_kyc">Kyc</string>
+
+    <string name="info_link_your_bank">Link your card</string>
+    <string name="info_overview">Overview</string>
+    <string name="info_payment">Payment</string>
+    <string name="info_mall">Mall</string>
+    <string name="info_setting">Setting</string>
+    <string name="info_logout">Logout</string>
+    <string name="info_home">Home</string>
+    <string name="info_quick_pay">Quick Pay</string>
+    <string name="info_transfer">Transfer</string>
+    <string name="info_chat">Chat</string>
+    <string name="info_chat1">CHAT</string>
+    <string name="info_want_to_logout">Are you sure to want to Logout ?</string>
+    <string name="info_yes">Yes</string>
+    <string name="info_no">No</string>
+    <string name="info_balance_in_the_wallet">Balance in the Wallet</string>
+    <string name="info_item_grocery">Grocery</string>
+    <string name="info_item_resturant">Restaurant</string>
+    <string name="info_item_pharmacy">Pharmacy</string>
+    <string name="info_item_mobile">Mobile</string>
+    <string name="info_item_men">Men</string>
+    <string name="info_item_women">Women</string>
+    <string name="info_item_electronics">Electronics</string>
+    <string name="info_item_tv_amp_appliances"><![CDATA[TV & Appliances]]></string>
+    <string name="info_item_laptops">Laptops</string>
+    <string name="info_item_home_amp_kithcen"><![CDATA[Home & Kithcen]]></string>
+    <string name="info_item_health_amp_fitness">Health &amp; Fitness</string>
+    <string name="info_item_kids_toys">Kids Toys</string>
+    <string name="info_item_beauty_amp_grooming"><![CDATA[Beauty & Grooming]]></string>
+    <string name="info_item_bags_amp_luggage"><![CDATA[Bags & Luggage]]></string>
+    <string name="info_item_gift_vouchers">Gift Vouchers</string>
+    <string name="info_item_nivea_lotion">Nivea Lotion</string>
+    <string name="info_item_eye_shadow_kit">Eye Shadow Kit</string>
+    <string name="info_item_daily_fash_lotion">Daily Fash Lotion</string>
+    <string name="info_item_hand_wash">Hand Wash</string>
+    <string name="info_item_lipstick">Lipstick</string>
+    <string name="info_item_devish_women">Devish Women</string>
+    <string name="info_item_5_cashback">$5 Cashback</string>
+    <string name="info_item_10_cashback">$10 Cashback</string>
+    <string name="info_item_8_cashback">$8 Cashback</string>
+
+    <string name="info_item_7_cashback">$7 Cashback</string>
+    <string name="info_item_12_cashback">$12 Cashback</string>
+    <string name="info_item_bike_rider">Bike Rider</string>
+    <string name="info_item_bulova">Bulova</string>
+    <string name="info_item_guess">Guess</string>
+    <string name="info_item_hilfiger">Hilfiger</string>
+    <string name="info_item_lrx">Lrx</string>
+    <string name="info_item_marc">Marc</string>
+    <string name="info_item_bike">Bike</string>
+    <string name="info_item_nike_swoosh">NIke Swoosh</string>
+    <string name="info_item_omega">Omega</string>
+    <string name="info_item_supra">Supra</string>
+    <string name="info_item_swatch">Swatch</string>
+    <string name="info_item_swissbrand">SwissBrand</string>
+    <string name="info_item_tissot">Tissot</string>
+    <string name="info_item_under_armour">Under Armour</string>
+    <string name="info_title_cashback_amp_offers"><![CDATA[Cashback & Offers]]></string>
+    <string name="info_subtitle_view_your_scratchcards_pomits_amp_other_offers"><![CDATA[View your scratchcards, pomits & other offers]]></string>
+    <string name="info_title_become_a_merchant">Become a Merchant</string>
+    <string name="info_subtitle_become_a_merchant"><![CDATA[Get All-in-One-QR instantly & start accepting payments]]></string>
+    <string name="info_title_account_safety_tips">Account Safety Tips</string>
+    <string name="info_subtitle_account_safety_tips">Beware of fake KYC calls and SMS. Learn how to protect yourself from fraud</string>
+    <string name="info_lifestyle">Lifestyle</string>
+    <string name="info_entertainment">Entertainment</string>
+    <string name="info_travel">Travel</string>
+    <string name="info_finance">Finance</string>
+    <string name="info_government">Government</string>
+    <string name="info_electricity">Electricity</string>
+    <string name="info_phone">Phone</string>
+    <string name="info_tv">TV</string>
+    <string name="info_water">Water</string>
+    <string name="info_movie_tickets">Movie Tickets</string>
+    <string name="info_hotels">Hotels</string>
+    <string name="info_flight">Flight</string>
+    <string name="info_car_rental">Car Rental</string>
+    <string name="info_bus">Bus</string>
+    <string name="info_train_ticket">Train Ticket</string>
+    <string name="info_nfc_pay">NFC Pay</string>
+    <string name="info_cash_in">Cash In</string>
+    <string name="info_cash_out">Cash Out</string>
+    <string name="info_transfer_money">Transfer Money</string>
+    <string name="info_request_money">Request Money</string>
+    <string name="info_manage_contacts">Manage Contacts</string>
+    <string name="info_gas">Gas</string>
+    <string name="info_go_bank">Go bank</string>
+    <string name="info_loan">Loan</string>
+    <string name="info_insurance">Insurance</string>
+    <string name="info_pos">POS</string>
+    <string name="info_traffic_ticket">Traffic Ticket</string>
+    <string name="info_municipality">Municipality</string>
+    <string name="info_mici">MICI</string>
+    <string name="info_dgi">DGI</string>
+
+    <string name="info_please_wait_dots">Please wait....</string>
+    <string name="info_area_code">Area code</string>
+    <string name="info_select_carrier">Select Carrier</string>
+    <string name="toolbar_tilte_recharge">Phone Recharge</string>
+    <string name="info_recharge_service_error">Service is not available for the selected country</string>
+    <string name="info_area_code_first">please select area code first</string>
+    <string name="info_please_select_carrier">Please select carrier</string>
+    <string name="info_enter_recharge_amount">please enter recharge amount</string>
+    <string name="error_enter_phone_number">Enter phone number</string>
+    <string name="error_enter_valid_phone_number">please enter valid phone number</string>
+    <string name="info_topup_payment">Topup Payment</string>
+    <string name="info_card">Card</string>
+    <string name="info_wallet">Wallet</string>
+
+    <string name="info_conversion_rate">Please wait, Getting conversion rate</string>
+    <string name="info_hint_transaction_pin">Enter 6 digit transaction pin</string>
+    <string name="info_close">Close</string>
+    <string name="info_confirm">Confirm</string>
+    <string name="error_enter_transaction_pin">Enter transaction pin</string>
+    <string name="error_new_enter_transaction_pin">Enter new transaction pin</string>
+    <string name="error_transaction_pin_length">Transaction pin should be in 6 digit</string>
+    <string name="info_sending_request">Please wait, Sending your request</string>
+    <string name="info_success_recharge">Thank you!\n Your Recharge Successfully Done</string>
+    <string name="info_status">Status :</string>
+    <string name="info_all">All</string>
+    <string name="info_hindi">Hindi</string>
+    <string name="info_marathi">Marathi</string>
+    <string name="info_telgu">Telgu</string>
+    <string name="toolbar_tilel_movies_tickets">Movie Tickets</string>
+    <string name="info_book_now">Book Now</string>
+    <string name="info_show_times">Showtimes</string>
+    <string name="info_about_movies">About Movie</string>
+    <string name="toolbar_tiitle_book_ticket">Book Ticket</string>
+    <string name="info_book_seat">Book Seat</string>
+    <string name="info_show_this_qr_code_to_cinema_hall">Show this QR Code to Cinema Hall</string>
+    <string name="info_price">Price</string>
+    <string name="info_serial_number">Serial Number</string>
+    <string name="info_ticket_view">Ticket View</string>
+    <string name="toolbar_title_search_hotel">Search Hotels</string>
+    <string name="toolbar_title_found">132 Hotels Found</string>
+    <string name="info_popular">Popular</string>
+    <string name="info_cheapest">Cheapest</string>
+    <string name="info_closest">Closest</string>
+    <string name="info_highest_star">Highest Star</string>
+    <string name="info_train">Train</string>
+    <string name="info_flights">Flight</string>
+    <string name="appopay_travel">Appopay Travel</string>
+    <string name="info_hint_source_station">Source Station</string>
+    <string name="info_hint_destination_station">Destination Station</string>
+    <string name="show_both_non_ac_amp_ac_coaches"><![CDATA[Show both non-Ac & AC Coaches]]></string>
+    <string name="info_departure_date">Departure Date</string>
+    <string name="info_search_trains">Search Trains</string>
+    <string name="info_delhi_to_mum"><![CDATA[Delhi --> Mumbai]]></string>
+    <string name="info_punjabi_mail">12332 - Punjab Mail</string>
+    <string name="info_irctc_user_id">IRCTC User ID</string>
+    <string name="info_boarding_station">Boarding Station</string>
+    <string name="info_traveller_information">Traveller Information</string>
+    <string name="info_hint_age">Age</string>
+
+
+    <string name="info_hint_birth_choice">Birth Choice</string>
+    <string name="info_done">Done</string>
+    <string name="info_hint_contact_information">Contact Information</string>
+    <string name="info_proceed_to_book">Proceed To Book</string>
+    <string name="toolbar_title_book_id">Booking ID</string>
+    <string name="info_booking_successful">Booking Successful</string>
+    <string name="info_book_more">Book More</string>
+    <string name="info_download_invoice">Download Invoice</string>
+    <string name="info_contact_support">Contact Support</string>
+    <string name="info_delhi_mumbai"><![CDATA[Delhi --> Mumbai]]></string>
+    <string name="info_oneway">ONEWAY</string>
+    <string name="info_roundtrip">ROUNDTRIP</string>
+    <string name="info_add_return_date">Add Return Date</string>
+    <string name="info_travellers">Travellers</string>
+    <string name="info_class">Class</string>
+    <string name="info_show_non_stop_flights_only">Show non stop flights only</string>
+    <string name="info_search_flights">Search Flights</string>
+    <string name="info_hint_source_city">Source City</string>
+    <string name="info_hint_destination_city">Destination City</string>
+    <string name="info_show_both_non_ac_amp_ac_buses"><![CDATA[Show both non-Ac & AC Buses]]></string>
+    <string name="info_search_buses">Search Buses</string>
+    <string name="toolbar_title_mumbai_pune"><![CDATA[Mumbai --> Pune]]></string>
+    <string name="toolbar_tiltle_appopay_bus_booking">Appopay Bus Booking</string>
+    <string name="info_book">Book</string>
+    <string name="toolbar_title_customer_pay">Customer Pay</string>
+    <string name="info_cancel">Cancel</string>
+    <string name="info_search">Search</string>
+    <string name="info_customer_account_list">Customer Account List</string>
+    <string name="info_please_enter_phone_number">Please enter phone number</string>
+    <string name="error_user_details_not_exists">User details not found</string>
+    <string name="info_getting_currency_code">Please wait, getting currency code.</string>
+    <string name="info_from_account">From Account</string>
+    <string name="info_hint_from_account">From Account</string>
+    <string name="info_to_account">To Account</string>
+    <string name="info_hint_to_account">To Account</string>
+    <string name="info_amount_to_be_transfer">Amount to Transfer</string>
+    <string name="info_hint_enter_amount">Enter Amount</string>
+    <string name="info_hint_conversion_rate">Conversion Rate</string>
+    <string name="info_hint_amount_to_be_credited">Amount to be credited</string>
+    <string name="info_hint_credited_amount">credited amount</string>
+
+
+    <string name="info_please_select_from_account">please select form account</string>
+    <string name="info_invalid_format">invalid format</string>
+    <string name="info_getting_profile">please wait, getting profile</string>
+    <string name="info_selecr_from_account_first">please select from account first</string>
+    <string name="info_enter_transer_amount">please enter transfer amount</string>
+    <string name="info_invalid_foramt">invalid format</string>
+    <string name="info_pay_to_merchant">Pay To Merchant</string>
+    <string name="info_ok">Ok</string>
+    <string name="error_invalid_transaction_pin">Invalid transaction pin</string>
+    <string name="error_account_balance">Your account dosent have sufficient fund</string>
+    <string name="toolbar_title_request_money">Request Money</string>
+    <string name="info_getting_user_account">please wait, getting user account</string>
+    <string name="info_amount_to_be_request">Amount to be Request</string>
+    <string name="info_enter_request_amount">Enter Request Amount</string>
+    <string name="info_send_request">Send Request</string>
+    <string name="error_merchant_details">Merchant Details does not exists</string>
+    <string name="toolbar_title_merchant_details">Merchant Details</string>
+    <string name="info_select_from_account">Select From Account</string>
+    <string name="info_pay_now">Pay Now</string>
+    <string name="info_getting_merchant_details">please wait, getting Merchant details</string>
+    <string name="info_merchant_error">Merchant Error</string>
+    <string name="info_getting_user_details">please wait, getting user details</string>
+    <string name="info_please_wait">Please wait</string>
+    <string name="error_try_again">please try again</string>
+    <string name="error_user_detail_not_found">User details not found</string>
+    <string name="error_select_from_account">please select form account</string>
+    <string name="info_success_with_tankyou">\"Thank You\nYour Transaction Successfully Done \"</string>
+    <string name="info_users">USERS</string>
+    <string name="info_calls">CALLS</string>
+    <string name="info_your_personel">Your personal Appopay ID, QR, \nShow this QR to receive money</string>
+    <string name="info_your_personel1">Your personal Appopay ID, QR, \nShow this QR to cash out</string>
+    <string name="info_your_personel2">Your personal Appopay ID, QR, \nShow this QR to pay Gas Bill </string>
+    <string name="info_bank">Bank</string>
+    <string name="info_scan_your_card">Scan your card</string>
+    <string name="info_select_currency1">Select Currency</string>
+    <string name="info_add_fund">Add Fund</string>
+    <string name="info_enter_your_card_number">please enter your card number</string>
+    <string name="info_enter_valid_card">\"please enter a valid card \"</string>
+    <string name="info_enter_card_holder_name">please enter your card holder name</string>
+    <string name="info_enter_expirary_date">Please enter expiry date</string>
+    <string name="info_processing_your_request">Please wait,Processing your request</string>
+    <string name="info_wallet_credit_successfully">\"Thank you!\n Your Wallet Credited Successfully \"</string>
+    <string name="info_updaing_profile">Please wait, updating your profile.</string>
+    <string name="info_profile_successfully_updated">Profile Successfully updated</string>
+    <string name="info_update_your_profile">Update Your Profile</string>
+    <string name="info_profile_details">Profile Details</string>
+    <string name="info_delivery_address">Delivery Address</string>
+    <string name="info_invite_on_appopay">Invite on Appopay</string>
+    <string name="info_hint_user_name">User Name</string>
+    <string name="info_hint_user_e_mial_id">User E-mial id</string>
+    <string name="info_hint_user_mobile_number">User Mobile number</string>
+
+
+    <string name="info_select_your_country">Select your country</string>
+    <string name="info_select_your_state">Select your state</string>
+    <string name="info_hint_enter_your_city_name">Enter your City name</string>
+    <string name="info_hint_enter_your_transaction_pin">Enter your transaction pin</string>
+    <string name="info_hint_enter_your_screen_lock_pin">Enter your screen lock pin</string>
+    <string name="info_enter_your_address">Enter your address</string>
+    <string name="info_update_profile">Update profile</string>
+    <string name="toolbar_title_update_profile">Update Profile</string>
+    <string name="info_your_city_name">your city name</string>
+    <string name="info_create_your_transaction_pin">create your transaction pin</string>
+    <string name="info_create_your_screen_lock_pin">create your screen lock pin</string>
+    <string name="info_your_address">your address</string>
+    <string name="info_change_password_and_pins">Change Password and Pins</string>
+    <string name="info_update_password">Update password</string>
+    <string name="info_update_screen_lock_pin">Update Screen Lock Pin</string>
+    <string name="info_update_transaction_pin">Transaction Pin</string>
+    <string name="info_submit">Submit</string>
+    <string name="info_password_length"><![CDATA[Please Enter New Password > 6 Characters long.]]></string>
+    <string name="error_request_status_failed">request status failed</string>
+    <string name="toolbar_title_screen_lock_pin">Screen Lock Pin</string>
+    <string name="info_verify_your_phone_number_to_change_screen_lock_pin">Verify your phone number to Change screen lock pin</string>
+    <string name="info_sign_in1">Sign In</string>
+    <string name="info_verify_your_phone_number_to_change_transaction_pin">Verify your phone number to Change transaction pin</string>
+    <string name="please_select_carrier1">Please Select Carrier</string>
+    <string name="info_search_your_country">Search your country</string>
+    <string name="info_login_required">Login required</string>
+    <string name="info_login">Login</string>
+    <string name="info_profile_update_error">Profile Update Error</string>
+    <string name="info_update">Update</string>
+
+
+    <!--HERE-->
+    <string name="info_search_your_state">Search your state</string>
+    <string name="info_please_select_currency">Please Select Currency</string>
+    <string name="info_verifying_email">Verifying email id.</string>
+    <string name="error_account_verification">Authentication failed with the given mobile number and password</string>
+    <string name="info_change_your_language">Change your language</string>
+    <string name="info_attach_document">Attach Document</string>
+    <string name="info_attach_your_front_document_image_by_below_option">Attach your front document image by below option</string>
+    <string name="info_camera">Camera</string>
+    <string name="info_gallery">Gallery</string>
+    <string name="info_shop_on_mall"> Shop Our Mall</string>
+    <string name="info_top_shopping_offers">Top Shopping Offers</string>
+    <string name="info_brand_vouchers">Brand Vouchers</string>
+    <string name="info_brand_coming_soon">Brand coming soon</string>
+    <string name="info_call_logs_will_appear_here">Your call logs will appear here. Start selecting by a user</string>
+    <string name="info_chat_will_appear_here">Your chat will appear here. Start chatting by selecting user</string>
+    <string name="info_upload_your_kyc">Upload your kyc</string>
+    <string name="info_document_types">Document Types</string>
+    <string name="info_select_your_document_types">Select your document types</string>
+    <string name="info_front_image">Front Image</string>
+    <string name="info_back_image">Back Image</string>
+    <string name="info_shop_by_category">Shop by Category</string>
+    <string name="info_shop_our_services">Shop Our Services</string>
+    <string name="info_fashion_offers">Fashion Offers</string>
+    <string name="info_today_s_flash_deals">Today\'s Flash Deals</string>
+    <string name="info_featured_products">Featured Products</string>
+    <string name="info_top_of_the_day">Top of the day</string>
+    <string name="info_featured_brands">Featured Brands</string>
+    <string name="info__1000_brands">1000+ BRANDS</string>
+    <string name="info_free_shipping">FREE SHIPPING</string>
+    <string name="info_genuine_products">GENUINE PRODUCTS</string>
+    <string name="info_well_curated_products">Well curated products</string>
+    <string name="info_for_first_10_orders">for first 10 Orders</string>
+    <string name="info_source_directly_from_brands">Source directly from brands.</string>
+    <string name="info_help_center">HELP CENTER</string>
+    <string name="info_message_us">MESSAGE US</string>
+    <string name="info_transaction_pin">Transaction Pin</string>
+    <string name="info_anser_error">Your answer is incorrect</string>
+    <string name="info_forgot_password2">Forgot Password</string>
+    <string name="info_forgot_error">Please Contact support team for create new password.</string>
+    <string name="info_forgot_password_answer">please enter your security answer</string>
+    <string name="info_forgot_password_success">Your password updated Successfully</string>
+    <string name="ingo_gift_card">Gift Card</string>
+    <string name="info_gas_pay">Gas Pay</string>
+    <string name="info_exclude_countries">AF,AX,AL,DZ,EG,IR,IQ,IL,LB,NE,NG,PH,SA,SD,SY,YE</string>
+    <string name="hey_there">Hey there! I am using</string>
+    <string name="download_now">Download Android App</string>
+
+
+    <string name="download_now_ios">Download Ios App : </string>
+
+    <string name="info_quick_pass">Quick Pass</string>
+
+    <string name="picture">Capture Image</string>
+    <string name="description_info">Info</string>
+    <string name="request_permission">The Appopay needs camera permission. Please allow it to work properly!.</string>
+    <string name="camera_error">This device doesn\'t support Camera2 API.</string>
+    <string name="intro_message">
+    <![CDATA[
+
+           I have added camera facility
+
+        ]]>
+    </string>
+
+    <string name="switch_camera">Switch camera</string>
+    <string name="info_zip_code">Zip Code</string>
+    <string name="google_maps_api_key">AIzaSyBJ-gfrAjD6HQ_1FllX8KhyKeCzx-3YZYc</string>
+    <string name="info_clave">Clave</string>
+
+    <string name="no_inteenet_connection"> No internet connection available</string>
+    <string name="info_read_user_details"> Wait, getting the user\'s details.</string>
+    <string name="info_get_curreny_code"> Please wait, getting the currency code.</string>
+    <string name="info_get_transaction">"Please Wait. getting the details of the transaction."</string>
+    <string name="info_account_destails"> Account details </string>
+    <string name="info_transaction_list"> Transaction list </string>
+    <string name="error_method_not_alloed">Method not allowed. </string>
+    <string name="error_bad_request"> wrong request</string>
+    <string name="info_transaction_details"> Details of the transaction </string>
+    <string name="info_get_country_code">Please Wait. Obtaining country code </string>
+    <string name="info_get_bank_name">Please Wait. Getting bank names. </string>
+    <string name="no_data_found"> No data found.</string>
+    <string name="info_select_county"> Select country.</string>
+    <string name="info_get_bank_currency"> Please Wait. Getting bank currency </string>
+    <string name="info_get_account_types">Please Wait. Get account types</string>
+    <string name="info_old_screen_pin"> Enter Screen lock pin</string>
+    <string name="info_new_screen_pin"> Confirm the screen lock pin.</string>
+    <string name="info_screen_pin_length"> The pin must be 4 digits long </string>
+
+    <string name="info_chinese">中国人</string>
+    <string name="info_upload_your_id">Upload Your Id</string>
+    <string name="info_upload_approved_of_address">Upload Approved of Address</string>
+
+    <string name="info_nueva_cuenta">New Account</string>
+    <string name="info_union_pay">Union Pay</string>
+    <string name="info_card1">Card</string>
+    <string name="title_activity_merchant_maps">Map</string>
+    <string name="info_open_account1">Open your simplified account now</string>
+    <string name="info_open_account2">\tCopy of identity card or passport (a copy of the page that shows the photograph, signature, and general information of the person and copy of the page where you can find the stamp of entry to the country.</string>
+    <string name="info_open_account3">\tComplete and sign affidavit of income.</string>
+    <string name="info_open_account4">\tCopy a utility receipt.</string>
+    <string name="info_open_account5">\tComplete bank form.</string>
+    <string name="info_open_account_note1"> The client may keep up to an amount of </string>
+    <string name="info_open_account_min_amount">$5000.00</string>
+    <string name="info_open_account_note2"> in his account.The accumulated monthly deposits and withdrawals may not exceed one thousand five hundred balboas (B /. </string>
+    <string name="info_open_account_max_amount">$1,500.00</string>
+    <string name="info_declaraci_n_jurada_de_ingresos">AFFIDAVIT OF INCOME</string>
+    <string name="info_cuentas_de_debida_diligencia_simplificada">DUE DILIGENCE ACCOUNTS SIMPLIFIED</string>
+    <string name="info_aceptar_acuerdo_antes_de_enviar_su_aplicacion">Accept agreement before submitting your application</string>
+    <string name="info_income">(Write here the origin of your income)</string>
+    <string name="info_income2">(Write here the origin of your income)</string>
+    <string name="info_income3">I declare that all the data provided in relation to my income and its origin are true, and
+that they do not come from or will be used for illegal activities, such as those provided for in the
+laws, agreements, regulations and / or any other norms, whether of a national and / or international nature
+that are or become applicable in the Republic of Panama, especially those related to the
+money laundering, terrorist financing and the financing of the proliferation of weapons of
+massive destruction..</string>
+
+    <string name="info_part1">Autorizo expresamente a Banco</string>
+    <string name="info_part2">, afiliadas y subsidiarias, en adelante EL
+BANCO, para corroborar la veracidad de la información aquí suministrada y a obtener cualquier
+explicación necesaria relativa a esta declaración.</string>
+
+    <string name="info_part3">I declare that the signature that appears in this document and in my identification document is the same
+that I use to manage all my accounts and business transactions.</string>
+    <string name="info_part4">I oblige myself to immediately notify THE BANK, any change that occurs in any of my
+data.</string>
+    <string name="servicedesc">servicedesc</string>
+    <string name="aiddescription">aiddescription</string>
+
+    <string name="info_part5">(Full name)</string>
+    <string name="info_part6">(Identification number)</string>
+    <string name="info_part7">Sign inside the box equal to your identity document</string>
+    <string name="info_upload_id_and_address_proof">Upload Id and Address proof</string>
+
+    <string name="please_tap_on_it_to_scan_id_proof">Please tap on it to Scan Id proof</string>
+    <string name="please_tap_on_it_to_scan_address_proof2">Please tap on it to Scan Address proof</string>
+
+    <string name="info_request_union_pay_card">please request for the union pay wallet card.</string>
+    <string name="info_bad_request">Bad Request</string>
+    <string name="info_503">Service Unavailable server error</string>
+    <string name="info_not_found">Not Found</string>
+    <string name="info_qr_code">QR Code</string>
+    <string name="info_generate_qr_code">Generate Qr Code</string>
+    <string name="info_scan_qr_code">Scan Qr Code</string>
+    <string name="info_request_for_card">please request for card</string>
+    <string name="info_mid">MID</string>
+    <string name="info_country_code">Country Code : </string>
+    <string name="info_merchant_name">"Merchant Name : "</string>
+    <string name="info_city">"City : "</string>
+    <string name="info_tid">"TID : "</string>
+    <string name="info_instant_discount_amount">Instant Discount Amount :</string>
+    <string name="info_sale_amount">Sale Amount :</string>
+    <string name="info_amount_union">Amount :</string>
+    <string name="info_amount_after_discount">Amount After Discount :</string>
+    <string name="info_currency">Currency :</string>
+    <string name="info_transaction_time">Transaction Time :</string>
+    <string name="info_voucher_no">Voucher No :</string>
+    <string name="info_invalid_transaction_pin">Invalid Transaction Pin</string>
+    <string name="info_global_qrcode">Global QR</string>
+    <string name="info_china_qr_code">China QR</string>
+    <string name="info_success">SUCCESS</string>
+    <string name="info_clientes">Clientes</string>
+    <string name="info_card_enrollment">Card Enrollment</string>
+    <string name="info_money_express_card_enrollment">Money Express Card Enrollment</string>
+    <string name="info_gift_card_enrollment">Gift Card Enrollment</string>
+    <string name="info_wallet_card_enrollment">Wallet Card Enrollment</string>
+    <string name="info_loan_card_enrollment">Loan Card Enrollment</string>
+    <string name="info_credit_card_enrollment">Credit Card Enrollment</string>
+    <string name="info_card_unmask">Card Unmask</string>
+    <string name="info_verify_kyc">Verify KYC</string>
+    <string name="info_thank_you_for_card_enrollment">Thank you for Card Enrollment</string>
+    <string name="info_1_if_you_are_a_new_customer">1. If you are a new customer please click on CARD ENROLLMENT.</string>
+    <string name="info_2_if_you_have_already_a_unionpay_card">2. If you would like to see the details of your UnionPay Virtual Card, please click on UNMASK CARD.</string>
+    <string name="info_link_your_card">Link Your Card</string>
+    <string name="info_open_new_account">Open New Account</string>
+    <string name="info_dear_user_your_phone_no_is_already_register_n_thank_you_for_using_our_service">Dear user your phone no is already register,\n Thank you for using our service</string>
+    <string name="info_clear">CLEAR</string>
+
+
+    <string name="info_user_not_exist">User details doesn\'t exists</string>
+
+    <string name="info_otp_failed">Otp request failed</string>
+
+
+    <string name="become_merchnat_info_body">Get "All-in-One-QR" and instantly start accepting payments</string>
+    <string name="info_agent_location">Agent Location</string>
+    <string name="google_maps_key">AIzaSyAPKs9Pj1dxZSG-MH5OrNxUO0sytf5bQII</string>
+    <string name="info_share">Share</string>
+
+
+</resources>

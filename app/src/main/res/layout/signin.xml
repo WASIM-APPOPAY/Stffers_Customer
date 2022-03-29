@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:id="@+id/MainForm"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:focusable="false"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+
+                <ImageView
+
+                    android:id="@+id/head"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginRight="50dp"
+
+                    android:src="@drawable/appopay_new_logo2"
+                    android:textColor="@color/Tex" />
+
+                <LinearLayout
+
+                    android:id="@+id/linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="10dp"
+
+                    android:background="@drawable/edit_text_rounded"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="@string/info_hello"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="@string/info_sign_into_your_account"
+                        android:textColor="#000"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grey_light_secondary" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/spCountry"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:spinnerMode="dropdown" />
+
+                        <ImageView
+                            android:id="@+id/ivRefresh"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="center_horizontal|center_vertical|center"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_refresh"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grey_light_secondary"
+                        android:visibility="gone" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:drawableLeft="@mipmap/ic_mobile"
+                            android:padding="10dp" />
+
+                        <com.hbb20.CountryCodePicker
+                            android:id="@+id/edtCustomerCountryCode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="#0000"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:textColor="@color/Tex"
+                            android:textColorHint="@color/textSub"
+                            android:textSize="14sp"
+                            app:ccp_areaCodeDetectedCountry="true"
+                            app:ccp_autoDetectCountry="false"
+                            app:ccp_defaultPhoneCode="507"
+                            app:ccp_excludedCountries=""
+                            app:ccp_showFlag="false"
+                            app:ccp_showFullName="false"
+                            app:ccp_showNameCode="false" />
+
+                        <com.stuffer.stuffers.views.MyTextViewBold
+                            android:id="@+id/tvAreaCodeDo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:padding="5dp"
+                            android:text="Area Code"
+                            android:textAppearance="?attr/textAppearanceBody1"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+
+
+                            />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/email1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:textColor="@color/colortext"
+                            android:textColorHint="@color/colorhint">
+
+                            <com.stuffer.stuffers.views.MyEditText
+                                android:id="@+id/edtMobile"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="#0000"
+                                android:drawablePadding="12dp"
+                                android:gravity="left"
+                                android:hint="@string/info_hint_mobile"
+                                android:inputType="phone"
+                                android:lines="1"
+                                android:padding="10dp"
+                                android:textColor="@color/Tex"
+                                android:textColorHint="@color/textSub"
+                                android:textSize="16sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grey_light_secondary" />
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/colortext"
+                        android:textColorHint="@color/colorhint"
+                        app:passwordToggleEnabled="true">
+
+
+                        <com.stuffer.stuffers.views.MyEditText
+                            android:id="@+id/edtPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#0000"
+                            android:drawableStart="@mipmap/ic_password"
+                            android:drawablePadding="16dp"
+                            android:hint="@string/info_hint_password"
+                            android:inputType="textPassword"
+                            android:padding="10dp"
+                            android:textColor="@color/Tex"
+                            android:textColorHint="@color/textSub"
+                            android:textSize="16sp"
+
+
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grey_light_secondary" />
+
+                    <RelativeLayout
+                        android:id="@+id/linear4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="10dp"
+                        android:orientation="horizontal">
+
+                        <com.stuffer.stuffers.views.MyTextView
+                            android:id="@+id/tvPwdPolicy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/forgot_password_bg"
+                            android:padding="10dp"
+                            android:text="Password policy info"
+                            android:textColor="@color/textSub"
+                            android:textSize="16sp" />
+
+                        <com.stuffer.stuffers.views.MyTextView
+                            android:id="@+id/tvForgotPassword"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="center"
+
+                            android:background="@drawable/forgot_password_bg"
+                            android:gravity="right"
+                            android:padding="10dp"
+                            android:text="@string/info_forgot_password"
+                            android:textColor="@color/textSub"
+                            android:textSize="16sp" />
+
+
+                    </RelativeLayout>
+
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/signin1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/signinline"
+                        android:layout_marginLeft="60dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="60dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/blue_rounded_bg"
+                        android:elevation="1.5dp"
+                        android:gravity="center"
+                        android:padding="12dp"
+                        android:text="@string/info_sign_in"
+                        android:textColor="#fff"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/tvEmailTest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:text="Test Email"
+                        android:visibility="gone" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/signin11"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/signinline"
+                        android:layout_marginLeft="60dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginRight="60dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/blue_rounded_bg"
+                        android:elevation="1.5dp"
+                        android:gravity="center"
+                        android:padding="12dp"
+                        android:text="Click me"
+                        android:textColor="#fff"
+                        android:textSize="16sp"
+                        android:visibility="gone" />
+
+
+                    <LinearLayout
+                        android:id="@+id/signinline"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <com.stuffer.stuffers.views.MyTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="3dp"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="@string/info_not_member"
+                            android:textColor="@color/textSub"
+                            android:textSize="16sp"
+
+                            />
+
+                        <com.stuffer.stuffers.views.MyTextView
+                            android:id="@+id/signup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="3dp"
+                            android:background="@drawable/register_button_bg"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="@string/info_register_now"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/ivBankLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/bank_logo2" />
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+
+                android:layout_marginBottom="2dp"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:padding="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bottom_logo_union" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:padding="15dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bottom_logo_2" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:padding="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_quick_pass" />
+
+
+                <!--<ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/appopay_new_card_logo2" />-->
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/wallet_card140" />
+
+                <!--
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:padding="2dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/visa_mastercard_china" />-->
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <com.stuffer.stuffers.views.MyTextView
+        android:id="@+id/skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginLeft="3dp"
+        android:background="@drawable/register_button_bg"
+        android:padding="10dp"
+        android:text="@string/info_skip"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+</FrameLayout>
+
+
+

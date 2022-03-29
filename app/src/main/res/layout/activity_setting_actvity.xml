@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.wallet.SettingActvity">
+
+    <include layout="@layout/toolbar" />
+
+    <com.stuffer.stuffers.views.MyTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="5dp"
+        android:text="@string/info_change_password_and_pins"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical">
+
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edit_text_rounded2"
+
+                android:padding="8dp">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="36dp"
+                    android:padding="5dp"
+                    android:text="@string/info_update_transaction_pin"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/ivTranscPin"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="3dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/ic_add_primary"
+
+                    />
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:src="@drawable/ic_fiber_pin" />
+
+            </FrameLayout>
+
+
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/layoutExpandTrans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:el_duration="1000"
+                app:el_expanded="false"
+                app:el_parallax="0.5">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_rounded"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/colortext"
+                        android:textColorHint="@color/colorhint"
+                        app:passwordToggleEnabled="true">
+
+                        <com.stuffer.stuffers.views.MyEditText
+                            android:id="@+id/edtTransactionPin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#0000"
+                            android:clickable="false"
+                            android:drawableStart="@drawable/ic_fiber_pin"
+                            android:drawablePadding="12dp"
+                            android:gravity="left"
+                            android:hint="@string/error_new_enter_transaction_pin"
+                            android:imeOptions="actionDone|flagNoExtractUi"
+                            android:inputType="numberPassword"
+                            android:lines="1"
+                            android:maxLength="6"
+                            android:padding="10dp"
+                            android:textColor="@color/Tex"
+                            android:textColorHint="@color/textSub"
+                            android:textSize="16sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grey_light_secondary" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Transaction pin should be 6 digits numeric only"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="12sp"
+                        android:padding="5dp"
+                        android:textStyle="bold" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/tvSubmitTrans"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="60dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="60dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/blue_rounded_bg"
+                        android:elevation="1.5dp"
+                        android:gravity="center"
+                        android:padding="12dp"
+                        android:text="@string/info_submit"
+                        android:textColor="#fff"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+            </net.cachapa.expandablelayout.ExpandableLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/grey_light_secondary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edit_text_rounded2"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp">
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="36dp"
+                        android:padding="5dp"
+                        android:text="@string/info_change_your_language"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="start|center_vertical"
+                        android:src="@drawable/ic_language1" />
+
+                </FrameLayout>
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal">
+
+                    <com.stuffer.stuffers.views.MyRadioButton
+                        android:id="@+id/rbEnglish"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+
+                        android:text="@string/info_english"
+                        android:textColor="@color/textSub"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <com.stuffer.stuffers.views.MyRadioButton
+                        android:id="@+id/rbSpanish"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="5dp"
+                        android:text="@string/info_spanish"
+                        android:textColor="@color/textSub"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <com.stuffer.stuffers.views.MyRadioButton
+                        android:visibility="gone"
+                        android:id="@+id/rbChinese"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:drawablePadding="5dp"
+                        android:text="@string/info_chinese"
+                        android:textColor="@color/textSub"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

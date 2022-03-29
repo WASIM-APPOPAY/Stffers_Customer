@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.wallet.CashOutActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:layout_height="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+
+            android:orientation="vertical">
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="For cash out please filled the required detials"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/layoutFromAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/edit_text_rounded2"
+                android:orientation="vertical">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="From Account"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/tvFromAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:hint="From Account"
+                    android:minHeight="45dp"
+                    android:paddingLeft="8dp"
+                    app:drawableTint="@color/colorPrimary" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/grey_light_secondary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/edit_text_rounded2"
+                android:orientation="vertical">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="8dp"
+                    android:text="Amount to be Withdrawn from Wallet"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyEditText
+                    android:id="@+id/edAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:digits="0123456789"
+                    android:drawableLeft="@drawable/ic_attach_money_recharge"
+                    android:gravity="center_vertical"
+                    android:hint="Enter Amount"
+                    android:imeOptions="actionDone|flagNoExtractUi"
+                    android:inputType="numberDecimal"
+                    android:minHeight="45dp"
+                    android:paddingLeft="8dp"
+
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/grey_light_secondary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/edit_text_rounded2"
+                android:orientation="vertical">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="8dp"
+                    android:text="Processing Fees"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/edProcessingFees"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:imeOptions="actionDone|flagNoExtractUi"
+                    android:inputType="numberDecimal"
+                    android:minHeight="45dp"
+                    android:paddingLeft="8dp"
+                    android:text="Your processing fees is \u0024 1.00"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:gravity="end"
+                    android:orientation="horizontal">
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:minHeight="45dp"
+                        android:paddingLeft="8dp"
+                        android:text="Total Amount :"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/tvTotalAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:minHeight="45dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:text="1"
+                        android:textColor="@color/light_red"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/grey_light_secondary" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.stuffer.stuffers.views.MyButton
+        android:id="@+id/btnCreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/blue_rounded_bg"
+        android:padding="18dp"
+        android:text="Create"
+        android:textColor="@color/white" />
+
+
+</LinearLayout>

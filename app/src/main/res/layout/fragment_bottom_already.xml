@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_rounded2"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/appopay_gift_card" />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvCommonHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="    Appopay"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
+
+
+
+
+        </LinearLayout>
+
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="12dp"
+            android:id="@+id/tvCommonContent"
+            android:text="@string/info_dear_user_your_phone_no_is_already_register_n_thank_you_for_using_our_service"
+            android:textSize="14sp" />
+
+        <com.stuffer.stuffers.views.MyButton
+
+            android:id="@+id/btnCommonOk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/info_ok"
+            android:textColor="@color/white"
+            android:theme="@style/MaterialButton"
+
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="3">
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="3">
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="3">
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="3">
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnClear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:text="@string/info_clear"
+                    android:textColor="@color/white"
+                    android:theme="@style/MaterialButton" />
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnKey10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyButton
+                    android:id="@+id/btnConfirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:text="@string/info_confirm"
+                    android:textColor="@color/white"
+                    android:theme="@style/MaterialButton" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

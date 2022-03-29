@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.wallet_fragments.NewAccountFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.stuffer.stuffers.views.MyCheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Accept agreement before submiting your application"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:src="@drawable/banko_delta" />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="AFFIDAVIT OF INCOME AND DUE DILIGENCE FOR SIMPLIFIED ACCOUNTS"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="I the undersigned Jose Roderkuz with passport Number 123456789, acting in my own name and my own behalf certify under the penalty of perjury that the following is true and correct; I received monthly income of $3,000, which come from: "
+
+                />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Consultant"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#00BCD4" />
+
+            <com.stuffer.stuffers.views.MyEditText
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@null"
+                android:gravity="center"
+                android:hint="(Write here the origin of your income)"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Consultant"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#00BCD4" />
+
+            <com.stuffer.stuffers.views.MyEditText
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@null"
+                android:gravity="center"
+                android:hint="(Write here the origin of your income)"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="I declared all the data provided in relation to my income and its origin are true, and that do not come from and will not be sued for illegal activities, such as those provided for in the low, agreements, regulations and / or any other names, whether that are or become application in Republic of Panama, especially, terrorist financing and the financing of the proliferation of weapons of massive destruction  " />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.stuffer.stuffers.views.MyButton
+
+        android:id="@+id/btnNextScreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/blue_rounded_bg"
+        android:padding="20dp"
+        android:text="Next"
+        android:textAllCaps="true"
+        android:textColor="@color/white" />
+
+
+</LinearLayout>

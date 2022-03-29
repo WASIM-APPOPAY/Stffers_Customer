@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.wallet.FundSistemaActivity">
+
+    <include layout="@layout/toolbar_clave" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F5F5"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical">
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="SISTEMA CLAVE"
+                android:textColor="#1F1F1F"
+                android:textSize="20sp" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="Comercio: Mi Comercio Appopay "
+                android:textSize="16sp" />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="Formulario de registro su tarjeta Clave :"
+                android:textColor="#2D2D2D"
+                android:textSize="15sp" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/card_number_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_border_calve">
+
+                <com.stuffer.stuffers.views.CardNumberEditText
+                    android:id="@+id/card_number_field_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@null"
+                    android:drawableStart="@drawable/ic_credit_card_drawable"
+                    android:drawablePadding="5dp"
+                    android:drawableTint="#7F7F7F"
+                    android:hint="Número de tarjeta clave"
+                    android:padding="5dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+
+                    android:background="@drawable/bg_border_calve">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@null"
+                        android:drawableLeft="@drawable/ic_today_clave"
+                        android:drawablePadding="5dp"
+                        android:hint="Fecha"
+                        android:imeOptions="actionNext|flagNoExtractUi"
+                        android:inputType="textVisiblePassword|textCapCharacters"
+                        android:padding="5dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_margin="5dp"
+
+                    android:background="@drawable/bg_border_calve">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tieCod"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@null"
+                        android:drawableStart="@drawable/ic_credit_card_drawable"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="#7F7F7F"
+                        android:hint="Cod de"
+                        android:imeOptions="actionNext|flagNoExtractUi"
+                        android:inputType="textVisiblePassword|textCapCharacters"
+                        android:padding="5dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+
+                android:background="@drawable/bg_border_calve">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tieName"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/ic_person_clave"
+                    android:drawablePadding="5dp"
+                    android:hint="Nombre"
+                    android:imeOptions="actionNext|flagNoExtractUi"
+                    android:inputType="textVisiblePassword|textCapCharacters"
+                    android:padding="5dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!---->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+
+                android:background="@drawable/bg_border_calve">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tieSurname"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/ic_arrow_right_clave"
+                    android:drawablePadding="5dp"
+                    android:hint="Primer apellido"
+                    android:imeOptions="actionNext|flagNoExtractUi"
+                    android:inputType="textVisiblePassword|textCapCharacters"
+                    android:padding="5dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+
+                android:background="@drawable/bg_border_calve">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tieSSurname"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/ic_arrow_right_clave"
+                    android:drawablePadding="5dp"
+                    android:hint="Segundo apellido"
+                    android:imeOptions="actionNext|flagNoExtractUi"
+                    android:inputType="textVisiblePassword|textCapCharacters"
+                    android:padding="5dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+
+                android:background="@drawable/bg_border_calve">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tieMobileNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/ic_phone_clave"
+                    android:drawablePadding="5dp"
+                    android:hint="Celular para el registro"
+                    android:imeOptions="actionNext|flagNoExtractUi"
+                    android:inputType="textVisiblePassword|textCapCharacters"
+                    android:padding="5dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+
+                android:background="@drawable/bg_border_calve">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tieEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/ic_email_clave"
+                    android:drawablePadding="5dp"
+                    android:hint="E-mail"
+                    android:imeOptions="actionNext|flagNoExtractUi"
+                    android:inputType="textVisiblePassword|textCapCharacters"
+                    android:padding="5dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.stuffer.stuffers.views.MyCheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:text="He leído y acepto los Terminos y Condiciones"
+                android:textColor="#757575" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal">
+                <!--android:background="#546F7A"-->
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="#830010"
+                    android:gravity="center"
+                    android:text="Cancelar"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:id="@+id/layoutConfirm"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimaryDark"
+                    android:gravity="center">
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:gravity="center"
+                        android:text="Aceptar "
+                        android:textSize="16sp"
+                        android:textColor="#FCFCFC" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:src="@drawable/ic_arrow_forward_clave" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>
+

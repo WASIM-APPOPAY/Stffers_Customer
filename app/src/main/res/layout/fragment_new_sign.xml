@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    tools:context=".fragments.wallet_fragments.NewSignFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:id="@+id/layoutUpload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:visibility="visible">
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="2dp"
+
+                android:background="@drawable/subcat_bg"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:text="Your Id Proof"
+                android:textSize="18sp"
+                tools:ignore="RtlSymmetry" />
+
+
+            <FrameLayout
+                android:id="@+id/fTop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/roundrect_sign"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
+
+                <ImageView
+
+                    android:id="@+id/image1"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    android:padding="15dp"
+
+                    android:src="@drawable/ic_image_blank" />
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+        <com.stuffer.stuffers.views.MySwitchView
+            android:id="@+id/signatureBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/info_part7"
+            android:textSize="18sp" />
+
+        <FrameLayout
+            android:id="@+id/frameSignature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/roundrect_sign"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/signature_view"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="5dp" />
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+    <com.stuffer.stuffers.views.MyButton
+
+        android:id="@+id/btnSubmitForm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/blue_rounded_bg"
+        android:padding="20dp"
+        android:text="Sumbit"
+        android:textAllCaps="true"
+        android:textColor="@color/white" />
+
+
+</LinearLayout>

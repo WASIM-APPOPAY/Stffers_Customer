@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.finance_fragment.BankChildFragment">
+
+    <LinearLayout
+
+        android:id="@+id/layoutOpen"
+        style="@style/LayoutFundLinearStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/no_round_bg1"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_credicrop" />
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lines="2"
+            android:text="nueva cuenta"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:minHeight="45dp"
+                android:padding="5dp"
+                android:text=" Congratulations, your appOpay account has been approved."
+                android:textSize="16sp"
+                />
+            <com.stuffer.stuffers.views.MyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:minHeight="45dp"
+                android:padding="5dp"
+                android:text=" Read the terms below and click om OPEN ACCOUNT to read the account agreement."
+                android:textSize="16sp"
+                />
+
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvHeadingOpenAccount"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/subcat_bg"
+                android:gravity="center"
+                android:padding="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/info_open_account1"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/tvText1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+
+                android:background="@drawable/bg_border_address"
+                android:padding="5dp"
+                android:text="@string/info_open_account2"
+                android:textSize="18sp" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/tvText2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+
+                android:background="@drawable/bg_border_address"
+                android:padding="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/info_open_account3"
+                android:textSize="18sp" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/tvText3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+
+                android:background="@drawable/bg_border_address"
+                android:padding="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/info_open_account4"
+                android:textSize="18sp" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/tvText4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+
+                android:background="@drawable/bg_border_address"
+                android:padding="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/info_open_account5"
+                android:textSize="18sp" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/tvText5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="8dp"
+
+                android:background="@drawable/bg_border_address"
+                android:padding="5dp"
+                android:paddingStart="5dp"
+                android:text="@string/info_open_account_note1"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <com.stuffer.stuffers.views.MyButton
+        android:id="@+id/btnProceed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/blue_rounded_bg"
+        android:padding="18dp"
+        android:text="Open Account"
+        android:textColor="@color/white" />
+
+</LinearLayout>
+
+

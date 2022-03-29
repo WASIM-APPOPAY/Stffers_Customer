@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardElevation="5dp"
+    app:contentPadding="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivItem"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:src="@mipmap/cat_bags" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:orientation="vertical">
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+
+                android:id="@+id/tvItemName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Raspadura Lunida"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvShopName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Raspadura Lunida"
+                android:textSize="12sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:orientation="horizontal">
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/tvDisPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@color/discount_color"
+                android:padding="2dp"
+                android:text="USD 120 "
+                android:textColor="@color/white" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/tvActualPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/color_reset"
+                android:foreground="@drawable/strikethrough_foreground"
+                android:padding="2dp"
+                android:text="USD 135"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/ivQr"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:src="@mipmap/cat_bags" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
+
+    <!--
+    <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_less_product"
+                    android:text="Raspadura Lunida"
+                    android:textSize="16sp" />
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="0" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_add_product"
+                    android:text="Raspadura Lunida"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+    -->

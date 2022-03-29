@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-path
+        name="external_files"
+        path="." />
+    <!--    <cache-path
+
+            name="/data/user/0/com.stuffer.stuffers/cache"
+
+            path="." />-->
+    <cache-path
+        name="data/data/user/0/com.stuffer.stuffers/cache/documents/"
+        path="." />
+
+
+</paths>
+
+    <!--
+    <cache-path
+    name="data/data/user/0/com.ipsmart.ipsmartess/cache/documents/"
+    path="." />-->

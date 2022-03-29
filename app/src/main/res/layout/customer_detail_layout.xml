@@ -1,0 +1,762 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/head"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="40dp"
+                android:padding="10dp"
+                android:src="@drawable/appopay_new_logo" />
+
+
+            <ScrollView
+                android:id="@+id/MainForm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/head"
+                android:focusable="false"
+                android:paddingLeft="20dp"
+                android:paddingTop="5dp"
+                android:paddingRight="20dp">
+
+                <LinearLayout
+                    android:id="@+id/linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_rounded"
+                    android:orientation="vertical"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="@string/info_register_today_early_benifit"
+                        android:textColor="#000"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:id="@+id/llIdType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/edit_text_rounded2"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:orientation="vertical">
+
+                        <com.stuffer.stuffers.views.MyTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:padding="8dp"
+                            android:text="Id Type"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <com.stuffer.stuffers.views.MyTextView
+                                android:id="@+id/tvIdType"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@null"
+                                android:drawableEnd="@drawable/ic_forward"
+                                android:drawablePadding="10dp"
+                                android:gravity="center_vertical"
+                                android:imeOptions="actionNext|flagNoExtractUi"
+                                android:inputType="numberDecimal"
+                                android:minHeight="50dp"
+                                android:paddingLeft="8dp"
+                                android:text="Please Select Id Type"
+                                app:drawableTint="@color/colorPrimary" />
+
+                            <com.stuffer.stuffers.views.MyEditText
+                                android:id="@+id/edIdFoucs"
+                                android:visibility="gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:background="@null"
+                                android:editable="false"
+                                android:padding="10dp"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutScan"
+                        android:visibility="gone"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/edit_text_rounded"
+                        android:orientation="horizontal">
+
+                        <com.stuffer.stuffers.views.MyTextView
+                            android:id="@+id/tvScanDocs"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:drawablePadding="12dp"
+                            android:editable="false"
+                            android:focusable="false"
+                            android:gravity="left|center_vertical"
+                            android:inputType="none"
+                            android:lines="1"
+                            android:padding="15dp"
+                            android:text="Tap to capture your Id"
+                            android:textColor="@color/Tex"
+                            android:textColorHint="@color/textSub"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:background="@null"
+
+                            android:editable="false"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_scan"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:id="@+id/image1"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"
+                        android:visibility="gone" />
+
+                    </LinearLayout>
+
+
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"
+                        android:textColor="@color/colortext"
+                        android:textColorHint="@color/colorhint">
+
+
+                        <com.stuffer.stuffers.views.MyEditText
+                            android:id="@+id/txtUserName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edit_text_rounded"
+                            android:gravity="left|center"
+                            android:hint="@string/info_hint_full_name"
+                            android:imeOptions="flagNoExtractUi|actionNext"
+                            android:lines="1"
+                            android:padding="15dp"
+                            android:singleLine="true"
+                            android:textColor="@color/Tex"
+                            android:textColorHint="@color/textSub"
+                            android:textSize="16sp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/edit_text_rounded"
+                        android:orientation="horizontal">
+
+                        <com.stuffer.stuffers.views.MyEditText
+                            android:id="@+id/edtDob"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:drawablePadding="12dp"
+                            android:editable="false"
+                            android:focusable="false"
+                            android:gravity="left|center_vertical"
+                            android:hint="Select your date of birth "
+                            android:inputType="none"
+                            android:lines="1"
+                            android:padding="15dp"
+                            android:textColor="@color/Tex"
+                            android:textColorHint="@color/textSub"
+                            android:textSize="16sp" />
+
+                        <com.stuffer.stuffers.views.MyEditText
+                            android:id="@+id/edFocus"
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:background="@null"
+                            android:editable="false"
+                            android:padding="10dp"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+
+
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"
+                        android:textColor="@color/colortext"
+                        android:textColorHint="@color/colorhint">
+
+
+                        <com.stuffer.stuffers.views.MyEditText
+                            android:id="@+id/tvIdNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edit_text_rounded"
+                            android:gravity="left|center"
+                            android:hint="ID Number"
+                            android:imeOptions="flagNoExtractUi|actionNext"
+                            android:inputType="text"
+                            android:lines="1"
+                            android:padding="15dp"
+                            android:singleLine="true"
+                            android:textColor="@color/Tex"
+                            android:textColorHint="@color/textSub"
+                            android:textSize="16sp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/edit_text_rounded"
+                        android:orientation="horizontal">
+
+                        <com.stuffer.stuffers.views.MyEditText
+                            android:id="@+id/edtExpirayDate"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:drawablePadding="12dp"
+                            android:editable="false"
+                            android:focusable="false"
+                            android:gravity="left|center_vertical"
+                            android:hint="Select id expiry date"
+                            android:inputType="none"
+                            android:lines="1"
+
+                            android:padding="15dp"
+                            android:textColor="@color/Tex"
+                            android:textColorHint="@color/textSub"
+                            android:textSize="16sp" />
+
+                        <com.stuffer.stuffers.views.MyEditText
+                            android:id="@+id/edFocusIdExp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:background="@null"
+                            android:editable="false"
+                            android:padding="10dp"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/bg_border_address"
+                        android:orientation="horizontal">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/placesAutocomplete"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="type your address"
+                            android:padding="16dp" />
+
+                        <ImageView
+                            android:id="@+id/btnClearAll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_clear_black_24dp"
+                            app:tint="@color/colorPrimaryDark" />
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/email1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:textColor="@color/colortext"
+                        android:textColorHint="@color/colorhint">
+
+                        <com.stuffer.stuffers.views.MyEditText
+                            android:id="@+id/txtUserEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edit_text_rounded"
+                            android:gravity="left|center"
+                            android:hint="@string/info_hint_email"
+                            android:inputType="textEmailAddress"
+                            android:imeOptions="flagNoExtractUi|actionNext"
+                            android:padding="15dp"
+                            android:singleLine="true"
+                            android:textColor="@color/Tex"
+                            android:textColorHint="@color/textSub"
+                            android:textSize="16sp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/password"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:textColor="@color/colortext"
+                            android:textColorHint="@color/colorhint"
+                            app:passwordToggleEnabled="true">
+
+                            <com.stuffer.stuffers.views.MyEditText
+                                android:id="@+id/txtUserPassword"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/edit_text_rounded"
+                                android:hint="@string/info_hint_password"
+                                android:imeOptions="flagNoExtractUi|actionNext"
+                                android:inputType="textPassword"
+                                android:padding="15dp"
+                                android:singleLine="true"
+                                android:textColor="@color/Tex"
+                                android:textColorHint="@color/textSub"
+                                android:textSize="16sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <ImageView
+                            android:id="@+id/ivPolicy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/forgot_password_bg"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_info" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/edit_text_rounded"
+                        android:orientation="vertical">
+
+                        <com.stuffer.stuffers.views.MyTextView
+                            android:id="@+id/tvCountryId"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:padding="15dp"
+                            android:text="@string/info_please_select_your_country" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/edit_text_rounded"
+                        android:orientation="vertical">
+
+                        <com.stuffer.stuffers.views.MyTextView
+                            android:id="@+id/edState"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:drawablePadding="8dp"
+                            android:focusable="true"
+                            android:gravity="start|center_vertical"
+                            android:padding="8dp"
+                            android:text="please select your state"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llBankType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/edit_text_rounded2"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:orientation="vertical">
+
+                        <com.stuffer.stuffers.views.MyTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:padding="8dp"
+                            android:text="Bank Name"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <com.stuffer.stuffers.views.MyTextView
+                                android:id="@+id/tvBankName"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@null"
+                                android:drawableEnd="@drawable/ic_forward"
+                                android:drawablePadding="10dp"
+                                android:gravity="center_vertical"
+                                android:imeOptions="actionNext|flagNoExtractUi"
+                                android:inputType="numberDecimal"
+                                android:minHeight="50dp"
+                                android:paddingLeft="8dp"
+                                android:text="Please Select Bank Name"
+                                app:drawableTint="@color/colorPrimary" />
+
+                            <com.stuffer.stuffers.views.MyEditText
+                                android:id="@+id/edBankFocus"
+                                android:visibility="gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:background="@null"
+                                android:editable="false"
+                                android:padding="10dp"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="10dp"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rbEnglish"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+
+                            android:text="@string/info_english"
+
+                            android:textColor="@color/textSub" />
+
+                        <RadioButton
+                            android:id="@+id/rbSpanish"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+
+                            android:text="@string/info_spanish"
+
+                            android:textColor="@color/textSub" />
+
+                        <RadioButton
+                            android:visibility="gone"
+                            android:id="@+id/rbChineseS"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+
+                            android:text="@string/info_chinese"
+
+                            android:textColor="@color/textSub" />
+
+                    </RadioGroup>
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/btnSignUp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/signupline"
+                        android:layout_marginLeft="60dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="60dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/blue_rounded_bg"
+                        android:elevation="1.5dp"
+                        android:gravity="center"
+                        android:padding="12dp"
+                        android:text="@string/info_create_account"
+                        android:textColor="#fff"
+                        android:textSize="16sp" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/btnSignUp1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/signupline"
+                        android:layout_marginLeft="60dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="60dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/blue_rounded_bg"
+                        android:elevation="1.5dp"
+                        android:gravity="center"
+                        android:padding="12dp"
+                        android:text="@string/info_create_account"
+                        android:textColor="#fff"
+                        android:textSize="16sp"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/linear4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/checkbocremember"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:buttonTint="@color/textSub"
+                                android:checked="false" />
+
+
+                            <com.stuffer.stuffers.views.MyTextView
+                                android:id="@+id/forgotpass"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="5dp"
+                                android:background="@drawable/forgot_password_bg"
+                                android:gravity="right"
+                                android:padding="10dp"
+                                android:text="@string/ifo_terms_conditions"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </ScrollView>
+
+
+            <LinearLayout
+                android:id="@+id/signupline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="35dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="3dp"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/info_have_an_account"
+                    android:textColor="@color/textSub"
+                    android:textSize="16sp" />
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/btnSignIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/register_button_bg"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/info_log_in_now"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="15dp"
+        android:layout_marginBottom="2dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:padding="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bottom_logo_union" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:padding="15dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bottom_logo_2" />
+
+        <ImageView
+            android:visibility="gone"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_credicrop" />
+
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:src="@drawable/wallet_card140" />
+
+        <!--
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:padding="2dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/visa_mastercard_china" />-->
+
+
+    </LinearLayout>
+
+</LinearLayout>
+
+
+
+

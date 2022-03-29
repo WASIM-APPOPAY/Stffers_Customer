@@ -1,0 +1,30 @@
+buildscript {
+    repositories {
+        google()
+        maven { url "https://jitpack.io" }
+        maven { url "https://maven.google.com/" }
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+        }
+        maven {
+            url 'https://storage.googleapis.com/r8-releases/raw'
+        }
+        flatDir {
+            dirs 'libs'
+        }
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.google.gms:google-services:4.3.10'
+        classpath 'com.android.tools:r8:3.1.51'
+        classpath 'com.android.tools.build:gradle:7.1.1'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'
+    }
+
+}
+
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

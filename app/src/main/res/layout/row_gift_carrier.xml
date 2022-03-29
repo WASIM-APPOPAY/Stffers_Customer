@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="120dp"
+    android:layout_height="wrap_content"
+
+    android:layout_margin="5dp">
+
+    <LinearLayout
+        android:id="@+id/vertical_list_item_background"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selected_row"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/ivGiftIcon"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+
+            android:src="@mipmap/gift2" />
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:id="@+id/tvCarrierName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:lines="2"
+            android:text="Lunex" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

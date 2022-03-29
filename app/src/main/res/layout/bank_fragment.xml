@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="58dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_rounded"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivProfile"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:padding="15dp"
+
+                android:src="@mipmap/ic_profile" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:id="@+id/tvNameH"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tvHeading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvNameH"
+                    android:layout_marginTop="5dp"
+                    android:text="Total Balance : "
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:textSize="15sp" />
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/tvBalanceH"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvNameH"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/tvHeading"
+
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:textSize="15sp" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Search Mobile number to Send money to."
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+             />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/grey_light_secondary" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/edtCustomerCountryCode"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="#0000"
+                android:drawableEnd="@drawable/ic_dropdown"
+                android:gravity="center"
+                android:inputType="number"
+                android:textColor="@color/Tex"
+                android:textColorHint="@color/textSub"
+                android:textSize="14sp"
+                app:ccp_areaCodeDetectedCountry="true"
+                app:ccp_countryPreference="PA"
+                app:ccp_defaultPhoneCode="507"
+                app:ccp_showFlag="false"
+                app:ccp_showFullName="false"
+                app:ccp_showNameCode="false" />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvAreaCodeDo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:padding="5dp"
+                android:text="Area Code"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+
+
+
+
+            <com.stuffer.stuffers.views.MyEditText
+                android:id="@+id/edtphone_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/edit_text_no_round_bg"
+                android:drawablePadding="10dp"
+                android:hint="@string/info_enter_phone_number"
+                android:imeOptions="flagNoExtractUi|actionDone"
+                android:inputType="number"
+                android:padding="10dp" />
+
+
+            <ImageView
+                android:id="@+id/ivContactList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_contact_list" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/grey_light_secondary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <com.stuffer.stuffers.views.MyButton
+                android:id="@+id/btnRemoveCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/blue_rounded_bg"
+                android:text="@string/info_cancel"
+                android:textColor="@color/white" />
+
+
+            <com.stuffer.stuffers.views.MyButton
+
+                android:id="@+id/btnSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/blue_rounded_bg"
+                android:text="@string/info_search"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:text="@string/info_customer_account_list"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/grey_light_secondary" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvActiveAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnChange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="change"
+            android:textColor="@color/white"
+
+            android:theme="@style/MaterialButton"
+            android:visibility="gone" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

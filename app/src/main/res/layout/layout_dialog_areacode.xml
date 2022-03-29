@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="340dp"
+    android:layout_marginTop="15dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.stuffer.stuffers.views.MyTextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/please_select_carrier1"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAreaCode"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:padding="5dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end|center"
+        android:orientation="horizontal">
+        <com.stuffer.stuffers.views.MyButton
+
+            android:id="@+id/btnConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="5dp"
+            android:theme="@style/MaterialButton"
+            android:text="Confirm"
+            android:textColor="@color/white" />
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="5dp"
+            android:theme="@style/MaterialButton"
+            android:text="@string/info_close"
+            android:textColor="@color/white" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

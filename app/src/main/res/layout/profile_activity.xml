@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_light_tertiary"
+    android:orientation="vertical">
+
+    <include layout="@layout/profile_toolbar" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="vertical"
+                    android:padding="5dp"
+                    android:paddingBottom="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.stuffer.stuffers.views.MyTextView
+                            android:id="@+id/tvUserName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:gravity="center"
+
+                            android:textColor="@color/Black"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <com.stuffer.stuffers.views.MyTextView
+                            android:id="@+id/tvUserMobile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:textColor="@color/Black"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:background="@drawable/bg_border_address"
+                            android:padding="20dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/union_pay5" />
+
+
+                    </LinearLayout>
+
+                    <!--<ImageView
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/appopaybar_code" />-->
+
+
+                    <LinearLayout
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/edit_text_rounded"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+
+                        <ImageView
+                            android:id="@+id/user_qr_image"
+                            android:layout_width="200dp"
+                            android:layout_height="180dp"
+                            android:layout_gravity="center" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/edit_text_rounded"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+
+                        <ImageView
+                            android:id="@+id/user_qr_image1"
+                            android:layout_width="200dp"
+                            android:layout_height="180dp"
+                            android:layout_gravity="center" />
+
+
+                    </LinearLayout>
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:visibility="gone"
+                        android:id="@+id/profile_tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_strok"
+                        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                        app:tabGravity="fill"
+                        app:tabIndicatorColor="@color/colorAccent"
+                        app:tabMode="fixed"
+                        app:tabSelectedTextColor="@color/colorAccent"
+                        app:tabTextColor="@color/black" />
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:visibility="gone"
+                        android:id="@+id/profile_viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="250sp">
+                        <ImageView
+                            android:layout_width="200dp"
+                            android:layout_height="200dp"
+                            android:src="@drawable/qr_code"
+                            android:layout_gravity="center"
+                            />
+                        <ImageView
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/scan_appopay"
+                            android:padding="5dp"
+                            />
+                    </FrameLayout>
+
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+
+                        android:focusable="false">
+
+                        <com.hbb20.CountryCodePicker
+                            android:clickable="false"
+                            android:focusable="false"
+
+                            android:id="@+id/countryCodePicker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center_vertical"
+                            app:ccp_autoDetectCountry="true"
+                            app:ccp_showFlag="true"
+                            app:ccp_showFullName="true"
+                            app:ccp_showPhoneCode="true" />
+
+                        <com.hbb20.CountryCodePicker
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center_vertical"
+                            android:visibility="gone"
+                            app:ccp_autoDetectCountry="true"
+                            app:ccp_defaultPhoneCode="507"
+                            app:ccp_showFlag="true"
+                            app:ccp_showFullName="true" />
+
+                    </FrameLayout>
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/subcat_bg"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <com.stuffer.stuffers.views.MyTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableEnd="@drawable/ic_remove_red_eye"
+                            android:drawablePadding="5dp"
+                            android:drawableTint="@color/colorPrimary"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="@string/info_balance_in_the_wallet"
+                            android:textColor="@color/icon_color"
+                            android:textSize="16sp" />
+
+                        <com.stuffer.stuffers.views.MyTextView
+                            android:id="@+id/tvWalletAmount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end|center"
+                            android:padding="5dp"
+                            android:text="$0"
+                            android:textColor="#000000"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/tvSacnQrCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/subcat_bg"
+                        android:clickable="true"
+                        android:drawableStart="@drawable/ic_scan"
+                        android:drawableEnd="@drawable/ic_forward"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/colorPrimary"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:padding="5dp"
+                        android:text="@string/info_qr_code"
+                        android:textColor="#000000"
+                        android:textSize="16sp" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="@string/info_your_personel"
+                        android:textColor="@color/Black"
+                        android:textSize="12sp" />
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <include
+                layout="@layout/profile_activity_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.wallet.TransactionDetailsActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <com.stuffer.stuffers.views.MySwitchView
+        android:id="@+id/swAccountNumber"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/edit_text_rounded"
+        android:gravity="left|center_vertical"
+        android:padding="8dp"
+        android:text="A/C Number  :  6644552244552233"
+        android:textColor="@color/more_than_other_dark_grey"
+        android:textSize="18sp"
+
+        />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardTransaction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:orientation="vertical"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_border_address"
+            android:orientation="vertical"
+            android:padding="8dp">
+            <!--row transaction ids-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Transaction Id"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/tvTransactionId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:padding="8dp"
+                    android:textColor="@color/colorPrimary"
+
+
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+            <!--row date and time-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Date"
+                    android:textSize="16sp" />
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/tvDateTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:padding="8dp"
+                    android:text="Date and Time"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+
+            <!--row sender-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Sender Name "
+                    android:textSize="16sp" />
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/tvSenderName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:padding="8dp"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+            <!--row phone number-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Phone Number"
+                    android:textSize="16sp" />
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/tvMobileNUmber"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:padding="8dp"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+            <!--row amount with currency-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Amount of Money"
+                    android:textSize="16sp" />
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/tvAmountCurrency"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:padding="8dp"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Message"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/tvMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_border_address"
+                android:gravity="start"
+                android:minHeight="80dp"
+                android:padding="8dp"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>
+

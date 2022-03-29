@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    tools:context=".activity.wallet.GiftCardActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/gift_card111"
+                android:padding="10dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:background="@drawable/edit_text_rounded2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="8dp"
+                    android:text="Receiver Details"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:orientation="horizontal">
+
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/edtCustomerCountryCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="#0000"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:textColor="@color/Tex"
+                        android:textColorHint="@color/textSub"
+                        android:textSize="14sp"
+                        app:ccp_areaCodeDetectedCountry="true"
+                        app:ccp_autoDetectCountry="false"
+                        app:ccp_defaultPhoneCode="507"
+                        app:ccp_excludedCountries=""
+                        app:ccp_showFlag="false"
+                        app:ccp_showFullName="false"
+                        app:ccp_showNameCode="false" />
+                    <!--android:hint="Enter Phone Number"-->
+                    <com.stuffer.stuffers.views.MyEditText
+                        android:id="@+id/edtphone_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+
+                        android:layout_weight="1"
+                        android:background="@drawable/edit_text_no_round_bg"
+
+                        android:hint="@string/info_enter_phone_number"
+                        android:imeOptions="actionDone|flagNoExtractUi"
+                        android:inputType="number"
+                        android:padding="10dp" />
+
+                    <ImageView
+                        android:id="@+id/ivContactList"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_contact_list" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edit_text_rounded2"
+                android:orientation="vertical">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="8dp"
+                    android:text="Gift Amount"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyEditText
+                    android:id="@+id/edAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:digits="0123456789."
+                    android:drawableLeft="@drawable/ic_attach_money_recharge"
+                    android:gravity="center_vertical"
+                    android:hint="@string/info_hint_enter_amount"
+                    android:imeOptions="actionDone|flagNoExtractUi"
+                    android:inputType="numberDecimal"
+                    android:minHeight="42dp"
+                    android:paddingLeft="8dp"
+
+                    />
+
+            </LinearLayout>
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="8dp"
+                android:text="Notes for Receiver"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <com.stuffer.stuffers.views.MyEditText
+                android:id="@+id/edtAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/bg_border_address"
+                android:gravity="start"
+                android:hint="sent gift amount with notes"
+                android:imeOptions="actionDone|flagNoExtractUi"
+                android:lines="4"
+                android:padding="5dp"
+                android:textColorHint="@color/colorhint" />
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.stuffer.stuffers.views.MyButton
+        android:id="@+id/btnTransfer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/blue_rounded_bg"
+        android:padding="20dp"
+        android:text="Send Gift Card"
+        android:textAllCaps="true"
+        android:textColor="@color/white" />
+
+</LinearLayout>

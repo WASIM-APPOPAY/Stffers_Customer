@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="350dp"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:layout_gravity="center_vertical|center"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:padding="8dp"
+        android:id="@+id/rootLayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/appopay_new_logo2" />
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Tienes Efectivo"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5sp"
+                android:text="$"
+                android:textSize="25sp" />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvPayAmt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5sp"
+                android:paddingEnd="5sp"
+                android:paddingBottom="5sp"
+                android:text="120.00"
+                android:textSize="25sp" />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:padding="8dp"
+                android:src="@drawable/check"
+                app:tint="#2AC130" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="5sp"
+            android:background="@color/grey_light_tertiary" />
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Destinatario"
+            android:textSize="20sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/ivLogoPerson"
+                android:layout_width="60dp"
+                android:layout_height="70dp"
+                android:layout_centerVertical="true"
+                android:padding="5sp"
+                android:src="@drawable/ic_person_clave" />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvMerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5sp"
+                android:layout_marginTop="8dp"
+                android:layout_toEndOf="@+id/ivLogoPerson"
+                android:padding="5dp"
+                android:text="USER  NAME"
+                android:textColor="@color/black" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/tvMerNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvMerName"
+                android:layout_marginLeft="5sp"
+                android:layout_marginTop="2dp"
+                android:layout_toEndOf="@+id/ivLogoPerson"
+                android:padding="5dp"
+
+                android:text="USER  NAME" />
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="5sp"
+            android:background="@color/grey_light_tertiary" />
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Fecha"
+            android:textSize="20sp" />
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:text="Hoy-21 FEB 2022"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Comentario"
+            android:textSize="20sp" />
+
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:id="@+id/tvSenderName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:text="Prestamo Mohamed"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Confirmacion"
+            android:textSize="20sp" />
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:id="@+id/tvUniqueNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:text="#574649880"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:src="@drawable/logo3"
+            />
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnCloseInner"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+
+            android:background="@drawable/blue_rounded_bg"
+            android:padding="20dp"
+            android:text="Close"
+            android:textAllCaps="true"
+            android:textColor="@color/white" />
+
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnSharePayment"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+
+            android:background="@drawable/blue_rounded_bg"
+            android:padding="20dp"
+            android:text="Share"
+            android:textAllCaps="true"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

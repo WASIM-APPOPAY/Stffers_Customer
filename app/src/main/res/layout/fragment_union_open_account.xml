@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAFAFA"
+    tools:context=".fragments.union_fragments.UnionOpenAccountFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/card_number_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/view_normal_subcat"
+            android:padding="5dp">
+
+            <com.stuffer.stuffers.views.CardNumberEditText
+                android:id="@+id/card_number_field_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Primary Account Number"
+                tools:text="1234 5678 9012" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tinput_field_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/view_normal_subcat"
+            android:padding="5dp">
+
+            <com.stuffer.stuffers.views.CardNumberEditText
+                android:id="@+id/cardnumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Account Number"
+                tools:text="1234 5678 9012" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/subcat_bg"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/expiry_date_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:padding="5dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/expiry_date_field_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/carddetails_expiry_date_field_label"
+                    android:imeOptions="actionNext|flagNoExtractUi"
+
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cvv_number_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/card_filed_cvv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/carddetails_cvv_label"
+                    android:imeOptions="actionDone|flagNoExtractUi"
+                    android:inputType="number|numberPassword"
+                    android:maxLength="3" />
+                <!--android:inputType="textVisiblePassword|textCapCharacters"-->
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tinput_fName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/subcat_bg"
+            android:padding="5dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tinput_field_fName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter First Name"
+                android:imeOptions="actionNext|flagNoExtractUi"
+                android:inputType="textVisiblePassword|textCapCharacters"
+                tools:text="FIRST NAME" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tinput_mName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/view_normal_subcat"
+            android:padding="5dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tinput_field_mName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Middle Name"
+                android:imeOptions="actionNext|flagNoExtractUi"
+                android:inputType="textVisiblePassword|textCapCharacters"
+                tools:text="MIDDLE NAME" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tinput_lName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/view_normal_subcat"
+            android:padding="5dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tinput_field_lName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Last Name"
+                android:imeOptions="actionNext|flagNoExtractUi"
+                android:inputType="textVisiblePassword|textCapCharacters"
+                tools:text="LAST NAME" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/view_normal_subcat"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mob Number : "
+                android:textColor="@color/colorPrimary" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="507  "
+                android:textSize="16sp" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="63516303"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/subcat_bg"
+            android:padding="8dp"
+            android:text="Select Id Type"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/view_normal_subcat"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Id Card" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Passport" />
+
+
+            </RadioGroup>
+
+            <com.stuffer.stuffers.views.MyEditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:hint="Enter Id Number"
+                android:padding="8dp"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnKyc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/blue_rounded_bg"
+            android:text="Verify KYC "
+            android:textColor="@color/white" />
+
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/blue_rounded_bg"
+            android:text="@string/info_submit"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+
+</ScrollView>
