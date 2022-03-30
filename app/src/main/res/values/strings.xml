@@ -41,7 +41,7 @@
     <string name="required_filled">"Please fill all required filled "</string>
     <string name="merchant_inactive_error">Merchant is Inactive ,Please contact admin</string>
     <string name="merchant_same_account">From and To account cannot be the same</string>
-    <string name="merchant_balance_error">Your account doesn\'t have enough balance to tranfer</string>
+    <string name="merchant_balance_error">Your account doesn\'t have enough balance to transfer</string>
     <string name="merchant_partial_pay1">You are about to pay </string>
     <string name="merchant_partial_pay2">  Please confirm ?</string>
     <string name="wallet_header">Transfer Money</string>

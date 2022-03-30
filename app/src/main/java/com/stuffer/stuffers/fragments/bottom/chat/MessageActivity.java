@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -78,6 +79,7 @@ public class MessageActivity extends AppCompatActivity {
     private String mMobileNumber;
     private MainAPIInterface mainAPIInterface;
     private boolean notify = false;
+    private String mPhone_number,mArea_code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +114,13 @@ public class MessageActivity extends AppCompatActivity {
                 ChatUser user = dataSnapshot.getValue(ChatUser.class);
                 //username.setText(user.getUsername());
                 tvUserName.setText(Objects.requireNonNull(user).getUsername());
+                 mPhone_number = user.getPhone_number();
+                String username = user.getUsername();
+                mArea_code = user.getArea_code();
+                /*Log.e(TAG, "onDataChange: user name : " + username);
+                Log.e(TAG, "onDataChange: phone Number : " + phone_number);
+                Log.e(TAG, "onDataChange: area_code : "+ area_code);*/
+
                 //readMessages(fuser.getUid(),receiverId,user.getImageURL());
                 readMessages(fuser.getUid(), receiverId, "default");
             }
@@ -121,8 +130,6 @@ public class MessageActivity extends AppCompatActivity {
 
             }
         });
-
-
 
 
         //readMessages(fuser.getUid(), receiverId, "default");
@@ -135,9 +142,14 @@ public class MessageActivity extends AppCompatActivity {
                 if (msg.matches(Regex)) {
                     notify = false;
                     messageEditText.setText("");
-                    Intent intent = new Intent(MessageActivity.this, QuickPaymentActivity.class);
+                    Intent intent = new Intent(MessageActivity.this, TransferChatActivity.class);
                     intent.putExtra(AppoConstants.AMOUNT, msg);
+                    intent.putExtra(AppoConstants.AREACODE,mArea_code);
+                    intent.putExtra(AppoConstants.PHWITHCODE,mPhone_number);
                     startActivity(intent);
+                    /*Intent intent = new Intent(MessageActivity.this, QuickPaymentActivity.class);
+                    intent.putExtra(AppoConstants.AMOUNT, msg);
+                    startActivity(intent);*/
                 } else if (!msg.equals("")) {
 
                     sendMessage(fuser.getUid(), receiverId, msg);
@@ -324,7 +336,7 @@ public class MessageActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     // progressDialog.dismiss();
                     //Log.e(TAG, "Image upload task was not successful.",
-                            //task.getException());
+                    //task.getException());
                     Toast.makeText(MessageActivity.this, "image uploading failed", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -363,7 +375,7 @@ public class MessageActivity extends AppCompatActivity {
                         public void onResponse(@NotNull Call<MyResponse> call, @NotNull Response<MyResponse> response) {
                             if (response.code() == 200) {
                                 if (response.body().success == 1) {
-                                   // Toast.makeText(MessageActivity.this, "Failes", Toast.LENGTH_SHORT).show();
+                                    // Toast.makeText(MessageActivity.this, "Failes", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }

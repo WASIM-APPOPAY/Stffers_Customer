@@ -4,10 +4,10 @@ import androidx.annotation.Keep;
 
 @Keep
 public class ChatUser {
-    private String id, username,imageURL,verification,status,search,phone_number;
+    private String id, username,imageURL,verification,status,search,phone_number,area_code;
 
 
-    public ChatUser(String id, String username, String imageURL, String verification, String status, String search,String phone_number) {
+    public ChatUser(String id, String username, String imageURL, String verification, String status, String search,String phone_number,String area_code) {
         this.id = id;
         this.username = username;
         this.imageURL = imageURL;
@@ -15,11 +15,16 @@ public class ChatUser {
         this.status = status;
         this.search = search;
         this.phone_number=phone_number;
+        this.area_code=area_code;
 
     }
     public ChatUser()
     {
 
+    }
+
+    public String getArea_code() {
+        return area_code;
     }
 
     public String getPhone_number() {

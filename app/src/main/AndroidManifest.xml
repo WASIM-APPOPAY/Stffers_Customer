@@ -53,18 +53,24 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
         <activity
+            android:name=".fragments.bottom.chat.TransferChatActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+        <activity
             android:name=".activity.FianceTab.WalletNewBankActivity"
             android:exported="true">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
-
         <activity
             android:name=".activity.FianceTab.DominaActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -94,7 +100,6 @@
             android:name=".activity.quick_pass.QRCodeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize|adjustPan" />
-
         <!--
  The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -103,7 +108,6 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -161,7 +165,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize|adjustPan" />
         <activity android:name=".activity.finance.InsuranceTypeActivity" />
-
         <activity android:name=".activity.finance.InsuranceActivity" />
         <activity
             android:name=".activity.finance.GoBankActivity"

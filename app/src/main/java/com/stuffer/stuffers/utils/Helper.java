@@ -2433,6 +2433,8 @@ public class Helper {
     }
 
 
+
+
     public static String getUserDetails() {
         if (mUserDetails == null) {
             mUserDetails = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);

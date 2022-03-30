@@ -750,10 +750,12 @@ public class SignupAcitivity extends AppCompatActivity implements BankSelectList
                             reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
                             HashMap<String, String> hashMap = new HashMap<>();
+                            hashMap.put("area_code",String.valueOf(phoneCode));
                             hashMap.put("id", userid);
                             hashMap.put("username", txtUserName.getText().toString());
                             hashMap.put("imageURL", "default");
                             hashMap.put("verification", "verified");
+
                             hashMap.put("email_id", txtUserEmail.getText().toString().trim());
                             hashMap.put("phone_number", phWithCode);
                             hashMap.put("search", txtUserName.getText().toString().trim().toLowerCase());
