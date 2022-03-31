@@ -3,6 +3,7 @@ package com.stuffer.stuffers.activity.wallet;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,7 +31,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_ACCESSTOKEN;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_FIREBASE_TOKEN;
@@ -119,8 +123,28 @@ public class notificationActivity extends AppCompatActivity {
      * "notification_date": "2020-08-24T12:59:22.000+0000",
      * "userid": 89
      *
-     * @param response
+     * @param
      */
+
+    private String getTimeDateOther(String dateParam){
+        // milliseconds
+        long milliSec = Long.parseLong(dateParam);
+
+        // Creating date format
+        //DateFormat simple = new SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z");
+        DateFormat simple = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
+
+        // Creating date from milliseconds
+        // using Date() constructor
+        Date result = new Date(milliSec);
+
+        // Formatting Date according to the
+        // given format
+        //System.out.println(simple.format(result));
+        Log.e(TAG, "getTimeDateOther: "+simple.format(result) );
+
+        return simple.format(result);
+    }
 
     private void getNotificationDetails(JSONObject response) {
         ArrayList<Notifications> mListNotifications = new ArrayList<>();
@@ -132,7 +156,8 @@ public class notificationActivity extends AppCompatActivity {
                     Notifications notifications = new Notifications();
                     notifications.setId(index.getString(AppoConstants.ID));
                     notifications.setMobilenumber(index.getString(AppoConstants.MOBILENUMBER));
-                    notifications.setNotification_date(Helper.getTimeDate(index.getString(AppoConstants.NOTIFICATION_DATE)));
+                    //notifications.setNotification_date(Helper.getTimeDate(index.getString(AppoConstants.NOTIFICATION_DATE)));
+                    notifications.setNotification_date(getTimeDateOther(index.getString(AppoConstants.NOTIFICATION_DATE)));
                     notifications.setNotification_text(index.getString(AppoConstants.NOTIFICATION_TEXT));
                     notifications.setUserid(index.getString(AppoConstants.USERID));
                     mListNotifications.add(notifications);

@@ -75,7 +75,8 @@ public class MessageActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private ProgressBar progressBar;
-    private String Regex = "\\d+";
+    //private String Regex = "\\d+";
+    private String Regex = "(?<=^| )\\d+(\\.\\d+)?(?=$| )|(?<=^| )\\.\\d+(?=$| )";
     private String mMobileNumber;
     private MainAPIInterface mainAPIInterface;
     private boolean notify = false;

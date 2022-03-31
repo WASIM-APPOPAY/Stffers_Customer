@@ -620,7 +620,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         }
         String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
         JsonObject params = new JsonObject();
-        params.addProperty(AppoConstants.AMOUNT, tvAmountCredit.getText().toString().trim());
+        params.addProperty(AppoConstants.AMOUNT, edAmount.getText().toString().trim());//need to add here
         params.addProperty(AppoConstants.CHARGES, String.valueOf(bankfees));
         params.addProperty(AppoConstants.CONVERSIONRATE, 1);
         params.addProperty(AppoConstants.ENTEREDAMOUNT, edAmount.getText().toString().trim());
