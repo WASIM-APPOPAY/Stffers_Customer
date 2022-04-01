@@ -355,36 +355,27 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         mListAccount = new ArrayList<>();
         String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
 
-        //Log.e(TAG, "readUserAccounts: " + vaultValue);
-        String nameWithMobile = null;
         try {
             JSONObject root = indexUser;
             JSONObject objResult = root.getJSONObject(AppoConstants.RESULT);
-            nameWithMobile = objResult.getString(AppoConstants.FIRSTNAME) + " " + objResult.getString(AppoConstants.LASTNAME) + "-" + objResult.getString(AppoConstants.MOBILENUMBER);
-            //tvUserMobileName.setText(nameWithMobile);
             recivername = objResult.getString(AppoConstants.FIRSTNAME) + " " + objResult.getString(AppoConstants.LASTNAME);
             reciveruserid = objResult.getString(AppoConstants.ID);
             reciveremail = objResult.getString(AppoConstants.EMIAL);
 
             JSONObject objCustomerDetails = objResult.getJSONObject(AppoConstants.CUSTOMERDETAILS);
             JSONArray arrCustomerAccount = objCustomerDetails.getJSONArray(AppoConstants.CUSTOMERACCOUNT);
-            // for (int i = 0; i < arrCustomerAccount.length(); i++) {
             for (int i = 0; i < 1; i++) {
                 JSONObject index = arrCustomerAccount.getJSONObject(i);
                 AccountModel model = new AccountModel();
                 model.setAccountnumber(index.getString(AppoConstants.ACCOUNTNUMBER));
                 model.setAccountEncrypt(null);
                 if (index.has(AppoConstants.ACCOUNTSTATUS)) {
-                    //Log.e(TAG, "readUserAccounts: AccountStatus : " + index.getString(AppoConstants.ACCOUNTSTATUS));
                     model.setAccountstatus(index.getString(AppoConstants.ACCOUNTSTATUS));
                     model.setCurrencyid(index.getString(AppoConstants.CURRENCYID));
                     model.setCurrencyCode(getCurrency(index.getString(AppoConstants.CURRENCYID)));
                     model.setCurrentbalance(index.getString(AppoConstants.CURRENTBALANCE));
                     mListAccount.add(model);
-                } /*else {
-                    //Log.e(TAG, "readUserAccounts: AccountStatus : " + "null");
-                    model.setAccountstatus("");
-                }*/
+                }
 
             }
 
