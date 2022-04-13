@@ -96,14 +96,22 @@ public class ProfileDetailsActivity extends AppCompatActivity {
                         tvDob.setText("Date of birth : " + " NA ");
                     } else*/ {
                         layoutAfterUpdate.setVisibility(View.VISIBLE);
-                        //tvScreen.setText("Screen Lock Pin : " + " NA ");
-                       // tvTrans.setText("Transaction Pin : " + result.getString(AppoConstants.TRANSACTIONPIN));
-                        //tvCityName.setText("City Name : " + customerDetails.getString(AppoConstants.CITYNAME));
+                       //tvScreen.setText("Screen Lock Pin : " + " NA ");
+                       //tvTrans.setText("Transaction Pin : " + result.getString(AppoConstants.TRANSACTIONPIN));
+                       //tvCityName.setText("City Name : " + customerDetails.getString(AppoConstants.CITYNAME));
                         tvCityName.setVisibility(View.GONE);
-                        tvAddress.setText("Address : " + customerDetails.getString(AppoConstants.ADDRESS));
-                        //tvDob.setText("Date of birth : " + customerDetails.getString(AppoConstants.DOB));
-                        String dob = TimeUtils.parseLongDate(customerDetails.getString(AppoConstants.DOB), TimeUtils.DOBFORMAT);
-                        tvDob.setText("Date of birth : " + dob);
+                        if (customerDetails.isNull(AppoConstants.ADDRESS)){
+                            tvAddress.setText("NA");
+                        }else {
+                            tvAddress.setText("Address : " + customerDetails.getString(AppoConstants.ADDRESS));
+                        }
+                        try {
+                            String dob = TimeUtils.parseLongDate(customerDetails.getString(AppoConstants.DOB), TimeUtils.DOBFORMAT);
+                            tvDob.setText("Date of birth : " + dob);
+                        }catch (Exception e){
+                            tvDob.setText("Date of birth : NA" );
+                            e.printStackTrace();
+                        }
                         /*String countryId = customerDetails.getString(AppoConstants.COUNTRYID);
                         String stateId = customerDetails.getString(AppoConstants.STATEID);
                         getState(countryId, stateId);*/

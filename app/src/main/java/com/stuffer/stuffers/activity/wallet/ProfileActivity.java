@@ -428,7 +428,7 @@ public class ProfileActivity extends AppCompatActivity implements TransactionSta
             mRootUnion.put("unionPayRequest", mUninoRequestTemp);
             JsonObject mRoot = new JsonParser().parse(mRootUnion.toString()).getAsJsonObject();
             showLoading();
-
+           
             apiServiceUNIONPay.getQRandBardCode(mRoot, UnionConstant.QRCODE_REQUEST_PATH, authToken, UnionConstant.CONTENT_TYPE)
                     .enqueue(new Callback<JsonObject>() {
                         @Override
@@ -614,6 +614,15 @@ public class ProfileActivity extends AppCompatActivity implements TransactionSta
             return mFragmentList.size();
         }
 
+
+
+
+
+
+
+
+
+
         public void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
@@ -624,6 +633,9 @@ public class ProfileActivity extends AppCompatActivity implements TransactionSta
             return mFragmentTitleList.get(position);
         }
     }
+
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

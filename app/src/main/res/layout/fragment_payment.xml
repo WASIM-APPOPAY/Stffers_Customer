@@ -102,6 +102,7 @@
                 android:text="@string/info_request_money"
                 android:textColor="@color/icon_color"
                 android:textSize="12sp" />
+
         </LinearLayout>
 
         <!--manage contact-->

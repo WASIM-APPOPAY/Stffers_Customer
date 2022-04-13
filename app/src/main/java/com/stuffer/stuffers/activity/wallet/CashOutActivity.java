@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.activity.payment.GasPaymentActivity;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.models.output.AccountModel;
@@ -99,9 +100,24 @@ public class CashOutActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String amount = edAmount.getText().toString().trim();
-                if (!StringUtils.isEmpty(amount)) {
+                /*if (!StringUtils.isEmpty(amount)) {
                     amountF = (float) (Float.parseFloat(amount) + 1.0);
                     tvTotalAmount.setText(String.valueOf(amountF));
+                } else {
+                    tvTotalAmount.setText("0");
+                }*/
+
+                //String amount = edAmount.getText().toString().trim();
+                if (!StringUtils.isEmpty(amount)) {
+                    try {
+                        btnCreate.setEnabled(true);
+                        amountF = Helper.getTwoDecimal(Float.parseFloat(amount));
+                        tvTotalAmount.setText(String.valueOf(amountF+1));
+                    } catch (Exception e) {
+                        btnCreate.setEnabled(false);
+                        Toast.makeText(CashOutActivity.this, "invalid format", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
                 } else {
                     tvTotalAmount.setText("0");
                 }

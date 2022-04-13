@@ -381,6 +381,7 @@
             android:background="@color/grey_light_secondary" />
         <!--05.layout overview-->
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/layoutOverview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -409,6 +410,7 @@
         </LinearLayout>
 
         <View
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/grey_light_secondary" />

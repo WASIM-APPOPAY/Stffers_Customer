@@ -20,6 +20,7 @@ import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.communicator.CameraListener;
 import com.stuffer.stuffers.utils.AppoConstants;
 
+
 public class CameraActivity extends AppCompatActivity implements View.OnClickListener, AspectRatioFragment.AspectRatioListener, CameraListener {
     private static final String FRAGMENT_DIALOG = "aspect_dialog";
     private static final String TAG = "CameraActivity";

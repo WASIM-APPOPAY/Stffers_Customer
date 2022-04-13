@@ -277,7 +277,7 @@
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:paddingBottom="10dp"
-                        android:text="@string/info_your_personel"
+                        android:text="Your personal AppOpay QR ID,\nShow this QR to verify your identity."
                         android:textColor="@color/Black"
                         android:textSize="12sp" />
 

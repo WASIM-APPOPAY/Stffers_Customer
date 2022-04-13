@@ -54,8 +54,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:gravity="end"
             android:layout_centerVertical="true"
+            android:gravity="end"
             android:orientation="horizontal">
 
             <ImageView
@@ -82,10 +82,10 @@
                 android:visibility="gone" />
 
             <FrameLayout
-                android:layout_gravity="center_vertical"
                 android:id="@+id/frameNotification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true">

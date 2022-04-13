@@ -411,10 +411,8 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
             recmobilenumber = obj.getString(AppoConstants.RECEIVERMOBILENUMBER);
             recareacode = obj.getString(AppoConstants.RECEIVERAREACODE);
             recname = obj.getString(AppoConstants.RECIEVERNAME);
-
             recuserid = obj.getString(AppoConstants.RECIEVERUSERID);
             receiverEmail = obj.getString(AppoConstants.EMIAL);
-
             tvName1.setText(recname);
             tvBalance1.setText("+" + recareacode + "" + recmobilenumber);
         } catch (JSONException e) {
@@ -626,7 +624,6 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         params.addProperty(AppoConstants.RECIEVERNAME, recname);
         params.addProperty(AppoConstants.RECIEVERUSERID, Integer.parseInt(recuserid));
         params.addProperty("recivermobilenumber", Long.parseLong(recmobilenumber));
-        //params.addProperty(AppoConstants.SENDERACCOUNTNUMBER, mListAccount.get(mFromPosition).getAccountnumber());
         params.addProperty(AppoConstants.SENDERACCOUNTNUMBER, Helper.getWalletAccountNumber());
         try {
             JSONObject jsonUser = new JSONObject(vaultValue);

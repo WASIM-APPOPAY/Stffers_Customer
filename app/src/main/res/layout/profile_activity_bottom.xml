@@ -22,6 +22,8 @@
         android:textColor="@color/Tex"
         android:textSize="14sp" />
 
+
+
     <com.stuffer.stuffers.views.MyTextView
         android:id="@+id/tvProfileDetails"
         android:layout_width="match_parent"
@@ -78,7 +80,7 @@
         android:drawableRight="@mipmap/ic_forward"
         android:gravity="center"
         android:padding="12dp"
-        android:text="@string/info_upload_approved_of_address"
+        android:text="Upload Address Verification"
         android:textColor="@color/Tex"
         android:textSize="14sp" />
 

@@ -326,6 +326,7 @@ public class OverviewActivity extends AppCompatActivity implements LoginRequestL
                         ivProfileCompleted.setImageResource(R.drawable.ic_verified_details);
                         ivMobileVerified.setImageResource(R.drawable.ic_verified_details);
                         ivEmailVerified.setImageResource(R.drawable.ic_verified_details);
+                        ivIdUploaded.setImageResource(R.drawable.ic_verified_details);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

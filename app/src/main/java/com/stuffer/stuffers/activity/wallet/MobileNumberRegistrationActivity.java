@@ -127,7 +127,7 @@ public class MobileNumberRegistrationActivity extends AppCompatActivity implemen
                         e.printStackTrace();
                     }
 
-                    // requestForOtp();
+                    //requestForOtp();
 
                     if (AppoPayApplication.isNetworkAvailable(MobileNumberRegistrationActivity.this)) {
                         verifyMobileNumber(strCustomerCountryCode + mDominicaAreaCode + edtCustomerMobileNumber.getText().toString().trim());
@@ -279,6 +279,7 @@ public class MobileNumberRegistrationActivity extends AppCompatActivity implemen
         JsonObject param = new JsonObject();
 
         param.addProperty("phone_number", "+" + strCustomerCountryCode + mDominicaAreaCode + edtCustomerMobileNumber.getText().toString().trim());
+        //{"phone_number":"+919836683269"}
 
         //Log.e("TAG", "requestForOtp: " + param.toString());
 
@@ -405,6 +406,9 @@ public class MobileNumberRegistrationActivity extends AppCompatActivity implemen
         JsonObject params = new JsonObject();
         params.addProperty("phone_number", "+" + strCustomerCountryCode + mDominicaAreaCode + edtCustomerMobileNumber.getText().toString().trim());
         params.addProperty("otp_number", edtOtpNumber.getText().toString().trim());
+        //{"phone_number":"+919836683269"}
+        //{"otp_number":"986578"}
+
 
 
         mainAPIInterface.getVerificationStatus(params).enqueue(new Callback<String>() {
@@ -417,6 +421,7 @@ public class MobileNumberRegistrationActivity extends AppCompatActivity implemen
                     } else {
                         Intent intent = new Intent(MobileNumberRegistrationActivity.this, SignupAcitivity.class);
                         String phWithCode = strCustomerCountryCode + mDominicaAreaCode + strCustomerPhone;
+
                         intent.putExtra(AppoConstants.PHONECODE, strCustomerCountryCode);
                         intent.putExtra(AppoConstants.MOBILENUMBER, strCustomerPhone);
                         intent.putExtra(AppoConstants.COUNTRYNAMECODE, selectedCountryNameCode);

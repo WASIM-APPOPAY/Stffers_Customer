@@ -273,6 +273,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
             }
         });
 
+        layoutOverview.setVisibility(View.GONE);
         layoutOverview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
