@@ -131,7 +131,7 @@
     <string name="info_hint_password">Password</string>
     <string name="info_please_select_your_country">Please select your country</string>
     <string name="info_english">English</string>
-    <string name="info_spanish">Spanish</string>
+    <string name="info_spanish">Español</string>
     <string name="info_create_account">Create Account</string>
     <string name="ifo_terms_conditions"><![CDATA[Agree to the Terms & Conditions]]></string>
     <string name="info_have_an_account">Have an account ?</string>
@@ -644,6 +644,22 @@ data.</string>
     <string name="info_agent_location">Agent Location</string>
     <string name="google_maps_key">AIzaSyAPKs9Pj1dxZSG-MH5OrNxUO0sytf5bQII</string>
     <string name="info_share">Share</string>
+    <string name="info_intro"><![CDATA[Buy Sell, Pay & Chat.\nAccepted at 52,000,000 Merchants Globally]]></string>
+    <string name="info_select_language">SELECT LANGUAGE</string>
+
+    <string name="info_split1"> Tap</string>
+    <string name="info_split2"> Agree and Continue</string>
+    <string name="info_split3"> to accept the</string>
+    <string name="info_split4"> Terms  and Condition </string>
+    <string name="info_accept_intro"><![CDATA[ACCEPT T&C]]></string>
+    <string name="info_select_your_app_language">Select Your App Language</string>
+    <string name="info_apply">Apply</string>
+    <string name="info_term_condition">Please Accept Term and Conditions.</string>
+
+
+    //Pulse Aceptar y Continuar para aceptar las condiciones de servicio
+
+
 
 
 </resources>

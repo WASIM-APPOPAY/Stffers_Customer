@@ -146,7 +146,7 @@
     <string name="info_hint_password"> la contraseña </string>
     <string name="info_please_select_your_country"> Por favor seleccione su país </string>
     <string name="info_english"> English </string>
-    <string name="info_spanish"> el español </string>
+    <string name="info_spanish"> Español </string>
     <string name="info_create_account"> crear cuenta </string>
     <string name="ifo_terms_conditions"><![CDATA[Aceptar los Términos y Condiciones]]></string>
     <string name="info_have_an_account"> ¿Tiene una cuenta?</string>
@@ -346,8 +346,6 @@
     <string name="info_hint_age"> la edad </string>
 
 
-
-
     <string name="info_hint_birth_choice"> Opción de nacimiento </string>
     <string name="info_done"> listo </string>
     <string name="info_hint_contact_information"> la información de contacto </string>
@@ -443,7 +441,6 @@
     <string name="info_hint_user_mobile_number"> Número de teléfono móvil del usuario </string>
 
 
-
     <string name="info_select_your_country"> Seleccione su país </string>
     <string name="info_select_your_state"> Seleccione su estado </string>
     <string name="info_hint_enter_your_city_name"> Introduzca el nombre de su ciudad </string>
@@ -523,8 +520,6 @@
     <string name="download_now">Download now</string>
 
 
-
-
     <string name="info_add_money_sistema">Agregue dinero por Sistema Clave</string>
     <string name="gift_card__pay">compra de Tarjeta Regalo. Por favor confirmar ?</string>
     <string name="carddetails_card_number_field_label1">Número de cuenta</string>
@@ -583,6 +578,18 @@ datos.</string>
     <string name="please_tap_on_it_to_scan_id_proof">Por favor, tóquelo para escanear la prueba de identificación</string>
     <string name="info_upload_id_and_address_proof">Cargar identificación y prueba de dirección</string>
     <string name="please_tap_on_it_to_scan_address_proof2">Por favor, tóquelo para escanear la prueba de dirección</string>
+    <string name="info_intro"><![CDATA[Compra, Venta, Pago y Chat.\nAceptado en 52.000.000 de comercios de todo el mundo]]></string>
+
+    <string name="info_split1"> Pulse</string>
+    <string name="info_split2"> Aceptar y Continuar</string>
+    <string name="info_split3"> para aceptar las</string>
+    <string name="info_split4"> Término y Condición </string>
+    <string name="info_accept_intro"><![CDATA[ACEPTAR T&C]]></string>
+    <string name="info_select_language">SELECCIONAR IDIOMA</string>
+    <string name="info_select_your_app_language">Seleccione el idioma de su aplicación</string>
+    <string name="info_apply">Aplicar</string>
+    <string name="info_term_condition">Acepte los términos y condiciones.</string>
+
 
 
 </resources>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".activity.wallet.SplashActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+
+
+
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:src="@drawable/logo2" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5sp"
+                android:text="@string/info_intro"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textSize="16sp"
+
+
+                />
+
+            <ImageView
+                android:layout_width="280dp"
+                android:layout_height="220dp"
+                android:layout_gravity="center"
+
+                android:src="@drawable/into_logo" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_gravity="center"
+                    android:padding="5dp"
+                    android:src="@drawable/qr_code" />
+
+                <ImageView
+
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:padding="5dp"
+                    android:src="@drawable/bottom_logo_union" />
+            </FrameLayout>
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvTapInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Tap Agree and Continue to accept the Term of Service. "
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textStyle="italic"
+
+
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/tvCheck"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="0dp" />
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/tvAgree"
+                    android:layout_width="220dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="-10dp"
+                    android:background="@drawable/blue_rounded_bg"
+                    android:clickable="true"
+                    android:elevation="1.5dp"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="@string/info_accept_intro"
+                    android:textColor="#fff"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvLanguage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:text="@string/info_select_language"
+                android:textColor="#FB8310"
+                android:textSize="18sp"
+                app:drawableEndCompat="@drawable/ic_down_language" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/bootm_layout" />
+</LinearLayout>
+
+
+    <!--
+    <?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+
+        <ImageView
+            android:id="@+id/secondaryImage"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginTop="60dp"
+            android:src="@drawable/appopay_new_logo"
+             />
+        <ProgressBar
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/secondaryImage"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="120dp"
+            android:layout_marginBottom="30dp" />
+
+
+    </RelativeLayout>-->
