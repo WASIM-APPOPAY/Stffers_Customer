@@ -50,6 +50,7 @@ public class WalletBankFragment extends Fragment {
     MyEditText edSourceIncome, edMonthlyIncome, edTotalMember, edPassportNo;
     MyTextViewBold tvExpiryDate;
     private String mDob;
+    //Amount to Top-Up
 
     private OptionSelectListener mListenerSelect;
     private String userName;

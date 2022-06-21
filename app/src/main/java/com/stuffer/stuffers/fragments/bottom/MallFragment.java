@@ -30,7 +30,7 @@ import com.stuffer.stuffers.activity.mall.CategoryListActivity;
 import com.stuffer.stuffers.activity.mall.HelplineActivity;
 import com.stuffer.stuffers.activity.mall.ProductsActivity;
 import com.stuffer.stuffers.activity.mall.SearchActivity;
-import com.stuffer.stuffers.activity.wallet.ProfileActivity;
+import com.stuffer.stuffers.activity.wallet.CustomerProfileActivity;
 import com.stuffer.stuffers.adapter.mall.BrandRecyclerAdapter;
 import com.stuffer.stuffers.adapter.mall.FashionListAdapter;
 import com.stuffer.stuffers.adapter.mall.FlashDealListAdapter;
@@ -309,7 +309,7 @@ public class MallFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Intent newIntent = new Intent(getActivity(), ProfileActivity.class);
+                Intent newIntent = new Intent(getActivity(), CustomerProfileActivity.class);
                 startActivity(newIntent);
 
             }

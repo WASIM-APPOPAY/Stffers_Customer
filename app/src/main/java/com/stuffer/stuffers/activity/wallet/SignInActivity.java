@@ -18,6 +18,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 
+import com.emv.qrcode.decoder.mpm.DecoderMpm;
+import com.emv.qrcode.model.mpm.MerchantPresentedMode;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.MyContextWrapper;
 import com.stuffer.stuffers.R;
@@ -52,6 +54,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Random;
 
 import okhttp3.MediaType;
@@ -64,6 +67,7 @@ import static com.stuffer.stuffers.utils.DataVaultManager.KEY_ACCESSTOKEN;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_FIREBASE_TOKEN;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_UNIQUE_NUMBER;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_LANGUAGE;
+import static com.stuffer.stuffers.utils.DataVaultManager.TANDC;
 
 public class SignInActivity extends AppCompatActivity implements AreaSelectListener {
 
@@ -90,8 +94,8 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
     private String mUserId;
     private DatabaseReference reference;
     private MyTextViewBold tvAreaCodeDo;
-    private String selectedCountryNameCode="";
-    private String mDominicaAreaCode="";
+    private String selectedCountryNameCode = "";
+    private String mDominicaAreaCode = "";
     private ArrayList<String> mAreaList;
     private AreaCodeDialog mAreaDialog;
 
@@ -120,7 +124,6 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         ivRefresh = (ImageView) findViewById(R.id.ivRefresh);
 
         edtCustomerCountryCode.setExcludedCountries(getString(R.string.info_exclude_countries));
-
 
 
         signin1.setOnClickListener(new View.OnClickListener() {
@@ -195,6 +198,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                 //  getGiftCards();
             }
         });
+
         tvPwdPolicy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -205,7 +209,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
             }
         });
         //a958b66129babb52
-        // MerchantPresentedMode decode = DecoderMpm.decode("00020101021215312500034400020344100000000000006520459725303344540115802HK5913Test Merchant6002HK626001200000000000000000000005200000000000000000000007080000001063045855", MerchantPresentedMode.class);
+         MerchantPresentedMode decode = DecoderMpm.decode("00020101021215312500034400020344100000000000006520459725303344540115802HK5913Test Merchant6002HK626001200000000000000000000005200000000000000000000007080000001063045855", MerchantPresentedMode.class);
         //MerchantPresentedMode decode = DecoderMpm.decode("00020101021215314701034400020344001584054110306520453995303840540510.005802US5918UPI QRC test K 8406009test city62600120202109142058300020350520202109142058300020350708000100016304E2FB", MerchantPresentedMode.class);
         //String param = new Gson().toJson(decode);
         //Log.e(TAG, "onCreate: " + param);
@@ -217,7 +221,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                 selectedCountryNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
                 if (selectedCountryNameCode.equalsIgnoreCase("DO")) {
                     mDominicaAreaCode = "";
-                    tvAreaCodeDo.setVisibility(View.VISIBLE);
+                    tvAreaCodeDo.setVisibility(View.GONE);
                 } else {
                     mDominicaAreaCode = "";
                     tvAreaCodeDo.setVisibility(View.GONE);
@@ -231,7 +235,6 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                 getAreaCodes();
             }
         });
-
 
 
     }
@@ -251,7 +254,6 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         mAreaDialog.show(getSupportFragmentManager(), mAreaDialog.getTag());
 
     }
-
 
 
     public void getRandomNumberString() {
@@ -302,9 +304,9 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
 
     }*/
 
-    public void create(){
-        String strUserEmail="support@appopay.com";
-        String phWithCode="50763516303";
+    public void create() {
+        String strUserEmail = "support@appopay.com";
+        String phWithCode = "50763516303";
         mAuth.createUserWithEmailAndPassword(strUserEmail, phWithCode)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -319,7 +321,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                             hashMap.put("username", "Mohamad Alharazi");
                             hashMap.put("imageURL", "default");
                             hashMap.put("verification", "verified");
-                            hashMap.put("email_id",strUserEmail );
+                            hashMap.put("email_id", strUserEmail);
                             hashMap.put("phone_number", phWithCode);
                             hashMap.put("search", "Mohamad Alharazi".toString().trim().toLowerCase());
 
@@ -358,7 +360,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         //selectedCountryCode=selectedCountryCode+mDominicaAreaCode;
 
         ////Log.e(TAG, "userMapping: " + selectedCountryCode);
-        mainAPIInterface.getMapping("+" + selectedCountryCode + mDominicaAreaCode+edtMobile.getText().toString().trim()).enqueue(new Callback<MappingResponse>() {
+        mainAPIInterface.getMapping("+" + selectedCountryCode + mDominicaAreaCode + edtMobile.getText().toString().trim()).enqueue(new Callback<MappingResponse>() {
             @Override
             public void onResponse(Call<MappingResponse> call, Response<MappingResponse> response) {
                 dialog.dismiss();
@@ -484,7 +486,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         String phWithDominica = mDominicaAreaCode + phNumber;
 
         mainAPIInterface.getLoginDetails(Long.parseLong(phWithDominica), Integer.parseInt(selectedCountryCode), vaultValue).enqueue(new Callback<JsonObject>() {
-        /*mainAPIInterface.getLoginDetails(Long.parseLong(phNumber), selectedCountryCode, vaultValue).enqueue(new Callback<JsonObject>() {*/
+            /*mainAPIInterface.getLoginDetails(Long.parseLong(phNumber), selectedCountryCode, vaultValue).enqueue(new Callback<JsonObject>() {*/
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
@@ -492,19 +494,22 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                 if (response.isSuccessful()) {
                     try {
                         JSONObject mPrev = new JSONObject(body.toString());
-                        //Log.e(TAG, "onResponse: " + mPrev.toString());
+                        Log.e(TAG, "onResponse: " + mPrev.toString());
                         if (mPrev.getString("message").equalsIgnoreCase("success")) {
                             String jsonUserDetails = mPrev.toString();
                             //Log.e(TAG, "onResponse: 2" + jsonUserDetails);
                             DataVaultManager.getInstance(SignInActivity.this).saveUserDetails(jsonUserDetails);
+                            JSONObject jsonObject = null;
                             try {
                                 JSONObject obj = new JSONObject(jsonUserDetails);
-                                JSONObject jsonObject = obj.getJSONObject(AppoConstants.RESULT);
-                                mUserId = jsonObject.getString(AppoConstants.ID);
 
+                                jsonObject = obj.getJSONObject(AppoConstants.RESULT);
+                                mUserId = jsonObject.getString(AppoConstants.ID);
                                 createAccountInFirebase(jsonObject.getString(AppoConstants.EMIAL), selectedCountryCode + edtMobile.getText().toString().trim());
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                    Toast.makeText(SignInActivity.this, "Details Not Found", Toast.LENGTH_SHORT).show();
+                                DataVaultManager.getInstance(SignInActivity.this).saveUserDetails("");
                             }
 
                         }
@@ -512,7 +517,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                         e.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(SignInActivity.this, "login failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignInActivity.this, "login failed", Toast.LENGTH_LONG).show();
                 }
             }
 

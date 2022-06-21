@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -67,6 +68,8 @@ public class InviteContactActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);*/
         setContentView(R.layout.activity_invite_contact);
         rvContacts = findViewById(R.id.rvContacts);
         edSearch = findViewById(R.id.edSearch);
@@ -124,7 +127,7 @@ public class InviteContactActivity extends AppCompatActivity {
                         }
                     }
                     processReadContact();
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -252,7 +255,6 @@ public class InviteContactActivity extends AppCompatActivity {
                 return name1.compareTo(name2);
             }
         });
-
 
 
         if (!myContacts.isEmpty()) {

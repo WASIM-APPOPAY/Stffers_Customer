@@ -14,7 +14,7 @@ import androidx.annotation.RequiresApi;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.wallet.AccountActivity;
-import com.stuffer.stuffers.activity.wallet.ProfileActivity;
+import com.stuffer.stuffers.activity.wallet.CustomerProfileActivity;
 import com.stuffer.stuffers.fragments.bottom.chat.MessageActivity;
 import com.stuffer.stuffers.utils.DataVaultManager;
 import com.google.firebase.auth.FirebaseAuth;
@@ -165,7 +165,7 @@ public class AppopayFirebaseMessaging extends FirebaseMessagingService {
             String body = remoteMessage.getNotification().getBody();
             MyNotificationManager mNotificationManager = new MyNotificationManager(getApplicationContext());
             //Intent intent = new Intent(this, NotificationReceiver.class);
-            Intent intent = new Intent(this, ProfileActivity.class);
+            Intent intent = new Intent(this, CustomerProfileActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             Bundle bundle = new Bundle();
             bundle.putString("discount", body);

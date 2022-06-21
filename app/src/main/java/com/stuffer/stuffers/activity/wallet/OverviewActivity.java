@@ -21,7 +21,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.firebase.ktx.Firebase;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.communicator.LoginRequestListener;
@@ -402,7 +401,7 @@ public class OverviewActivity extends AppCompatActivity implements LoginRequestL
     @Override
     public void onProfileUpdate() {
         //Log.e(TAG, "onProfileUpdate: onProfileUpdate");
-        Intent intent = new Intent(OverviewActivity.this, ProfileActivity.class);
+        Intent intent = new Intent(OverviewActivity.this, CustomerProfileActivity.class);
         startActivity(intent);
         finish();
     }

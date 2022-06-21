@@ -25,16 +25,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.stuffer.stuffers.activity.lunex_card.LunexMoreActivity;
 import com.stuffer.stuffers.activity.shop_mall.ShopAdapter;
-import com.stuffer.stuffers.activity.shop_mall.SopActivity;
 import com.stuffer.stuffers.activity.wallet.AccountActivity;
 import com.stuffer.stuffers.activity.wallet.MerchantMapsActivity;
 import com.stuffer.stuffers.activity.wallet.PayNowActivity;
-import com.stuffer.stuffers.activity.wallet.ProfileActivity;
 import com.stuffer.stuffers.adapter.recyclerview.AllGiftProduct;
-import com.stuffer.stuffers.api.Constants;
 import com.stuffer.stuffers.communicator.OnTransactionPinSuccess;
 import com.stuffer.stuffers.communicator.ShopListener;
-import com.stuffer.stuffers.fragments.bottom_fragment.BottomSonyPlayStation;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomTransactionPin;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomUpdateProfile;
 import com.stuffer.stuffers.fragments.homeitem.EntertainmentFragment;
@@ -69,7 +65,6 @@ import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.communicator.SideWalletListener;
 import com.stuffer.stuffers.communicator.StartActivityListener;
 import com.stuffer.stuffers.fragments.dialog.ErrorDialogFragment;
-import com.stuffer.stuffers.fragments.dialog.ProfileErrorDialogFragment;
 import com.stuffer.stuffers.models.output.GetTopShoppingOffersModel;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
@@ -235,10 +230,12 @@ public class HomeFragment extends Fragment implements ShopListener {
             textSliderView.getBundle().putString("extra", name);
             slider_home.addSlider(textSliderView);
         }
+
         slider_home.setPresetTransformer(SliderLayout.Transformer.Default);
         slider_home.setCustomIndicator(custom_indicator_home);
         slider_home.setPadding(0, 0, 0, 5);
         slider_home.setCustomAnimation(new ChildAnimationExample());
+
         //for slider 2
         for (String name : file_maps2.keySet()) {
             TextSliderView textSliderView = new TextSliderView(getActivity());
@@ -265,6 +262,7 @@ public class HomeFragment extends Fragment implements ShopListener {
         slider_home2.setCustomIndicator(custom_indicator_home2);
         slider_home2.setPadding(0, 0, 0, 5);
         slider_home2.setCustomAnimation(new ChildAnimationExample());
+
         addClickListener();
 
         Bundle arguments = this.getArguments();
@@ -317,7 +315,7 @@ public class HomeFragment extends Fragment implements ShopListener {
                     mBottomTransDialog.show(getChildFragmentManager(), mBottomTransDialog.getTag());
                     mBottomTransDialog.setCancelable(false);
                 } else {
-                    /* mBottomTransDialog = new BottomTransactionPin();
+                  /*mBottomTransDialog = new BottomTransactionPin();
                     mBottomTransDialog.show(getChildFragmentManager(), mBottomTransDialog.getTag());
                     mBottomTransDialog.setCancelable(false);*/
                 }
@@ -328,36 +326,7 @@ public class HomeFragment extends Fragment implements ShopListener {
         }
     }
 
-    private void showUpdateProfileDialog() {
-        String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
-        if (StringUtils.isEmpty(vaultValue)) {
-            ErrorDialogFragment errorDialogFragment = new ErrorDialogFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString(AppoConstants.INFO, getString(R.string.account_see_error));
-            errorDialogFragment.setArguments(bundle);
-            errorDialogFragment.setCancelable(false);
-            errorDialogFragment.show(getChildFragmentManager(), errorDialogFragment.getTag());
-        } else {
-            try {
-                JSONObject root = new JSONObject(vaultValue);
-                JSONObject result = root.getJSONObject(AppoConstants.RESULT);
-                JSONObject customerDetails = result.getJSONObject(AppoConstants.CUSTOMERDETAILS);
-                if (customerDetails.getString(AppoConstants.COUNTRYID).isEmpty() || customerDetails.getString(AppoConstants.COUNTRYID).equalsIgnoreCase("0")) {
 
-
-                } else {
-                    Log.e(TAG, "showUpdateProfileDialog: no need to call");
-                    showProfileDialog();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
-        }
-
-
-    }
 
     private void showProfileDialog() {
         mBottomUpdateProfile = new BottomUpdateProfile();

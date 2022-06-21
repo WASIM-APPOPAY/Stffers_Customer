@@ -1,6 +1,7 @@
 package com.stuffer.stuffers.activity.wallet;
 
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_LANGUAGE;
+import static com.stuffer.stuffers.utils.DataVaultManager.TANDC;
 
 import android.content.Context;
 import android.content.Intent;
@@ -51,12 +52,16 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
         }
         setContentView(R.layout.splash);
 
+
         tvCheck = (CheckBox) findViewById(R.id.tvCheck);
         tvAgree = (MyTextView) findViewById(R.id.tvAgree);
         tvTapInfo = (MyTextViewBold) findViewById(R.id.tvTapInfo);
         tvLanguage = (MyTextViewBold) findViewById(R.id.tvLanguage);
 
-
+        String mTandc = DataVaultManager.getInstance(SplashActivity.this).getVaultValue(TANDC);
+        if (!StringUtils.isEmpty(mTandc)) {
+            tvCheck.setChecked(true);
+        }
         tvAgree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,10 +116,12 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    DataVaultManager.getInstance(SplashActivity.this).saveTerm("check");
                     DataVaultManager.getInstance(SplashActivity.this).saveComingFromSplash("no");
                     Intent i = new Intent(SplashActivity.this, HomeActivity.class);
                     startActivity(i);
                     finish();
+
                 }
             }, SPLASH_TIMEOUT);
         } else {
@@ -122,6 +129,7 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
                 @Override
                 public void run() {
                     // DataVaultManager.getInstance(SplashActivity.this).saveComingFromSplash("no");
+                    DataVaultManager.getInstance(SplashActivity.this).saveTerm("check");
                     Intent i = new Intent(SplashActivity.this, SignInActivity.class);
                     startActivity(i);
                     finish();

@@ -22,8 +22,6 @@
         android:textColor="@color/Tex"
         android:textSize="14sp" />
 
-
-
     <com.stuffer.stuffers.views.MyTextView
         android:id="@+id/tvProfileDetails"
         android:layout_width="match_parent"

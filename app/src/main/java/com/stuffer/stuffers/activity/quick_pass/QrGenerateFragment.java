@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +21,6 @@ import com.bumptech.glide.Glide;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.FianceTab.UnionPayActivity;
-import com.stuffer.stuffers.activity.wallet.AccountActivity;
-import com.stuffer.stuffers.activity.wallet.ProfileActivity;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainUAPIInterface;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomNotCard;

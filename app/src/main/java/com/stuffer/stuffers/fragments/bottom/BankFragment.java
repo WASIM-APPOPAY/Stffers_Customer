@@ -448,7 +448,6 @@ public class BankFragment extends Fragment {
             int countryCode = numberProto.getCountryCode();
             Log.e(TAG, "onActivityResult: " + countryCode);
             edtCustomerCountryCode.setCountryForPhoneCode(countryCode);
-
             long nationalNumber = numberProto.getNationalNumber();
             edtphone_number.setText(String.valueOf(nationalNumber));
         } catch (NumberParseException e) {

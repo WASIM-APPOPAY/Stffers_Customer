@@ -530,6 +530,7 @@ public class SignupAcitivity extends AppCompatActivity implements BankSelectList
 
         //verifyMobileNumber(phoneCode + mobileNumber);
         verifyMobileNumber(phWithCode);
+        //createNewUser();
 
 
     }
@@ -685,7 +686,7 @@ public class SignupAcitivity extends AppCompatActivity implements BankSelectList
         mainAPIInterface.postCreateUserAccount(index).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.e(TAG, "onResponse: "+response );
+                //Log.e(TAG, "onResponse: "+response );
                 dialog.dismiss();
                 if (response.isSuccessful()) {
                     String str = new Gson().toJson(response.body());

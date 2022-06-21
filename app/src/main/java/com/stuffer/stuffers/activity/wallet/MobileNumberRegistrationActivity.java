@@ -100,7 +100,6 @@ public class MobileNumberRegistrationActivity extends AppCompatActivity implemen
         customer_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent newIntent = new Intent(MobileNumberRegistrationActivity.this, SignInActivity.class);
                 startActivity(newIntent);
                 finish();
@@ -126,9 +125,6 @@ public class MobileNumberRegistrationActivity extends AppCompatActivity implemen
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
-                    //requestForOtp();
-
                     if (AppoPayApplication.isNetworkAvailable(MobileNumberRegistrationActivity.this)) {
                         verifyMobileNumber(strCustomerCountryCode + mDominicaAreaCode + edtCustomerMobileNumber.getText().toString().trim());
                     } else {
@@ -196,7 +192,7 @@ public class MobileNumberRegistrationActivity extends AppCompatActivity implemen
                 selectedCountryNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
                 if (selectedCountryNameCode.equalsIgnoreCase("DO")) {
                     mDominicaAreaCode = "";
-                    tvAreaCodeDo.setVisibility(View.VISIBLE);
+                    tvAreaCodeDo.setVisibility(View.GONE);
                 } else {
                     mDominicaAreaCode = "";
                     tvAreaCodeDo.setVisibility(View.GONE);
@@ -460,5 +456,6 @@ public class MobileNumberRegistrationActivity extends AppCompatActivity implemen
         }
         mDominicaAreaCode = mAreaList.get(pos);
         tvAreaCodeDo.setText("Area Code : " + mDominicaAreaCode);
+        //1954-07-29
     }
 }

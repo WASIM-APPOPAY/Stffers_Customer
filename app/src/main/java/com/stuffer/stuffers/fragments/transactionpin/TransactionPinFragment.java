@@ -135,7 +135,7 @@ public class TransactionPinFragment extends Fragment {
                 selectedCountryNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
                 if (selectedCountryNameCode.equalsIgnoreCase("DO")) {
                     mDominicaAreaCode = "";
-                    tvAreaCodeDo.setVisibility(View.VISIBLE);
+                    tvAreaCodeDo.setVisibility(View.GONE);
                 } else {
                     mDominicaAreaCode = "";
                     tvAreaCodeDo.setVisibility(View.GONE);

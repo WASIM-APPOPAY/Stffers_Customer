@@ -118,6 +118,7 @@ public interface MainAPIInterface<R extends Retrofit> {
             "Content-Type: application/json",
             "Access-Control-Allow-Origin: appopay.com"
     })
+
     @POST(com.stuffer.stuffers.api.Constants.POST_SENT_LUNEX_GIFT_CARD)
     Call<JsonObject> postSentLunexGiftCard(@Body JsonObject body, @Header("Authorization") String xAccessToken);
 
@@ -866,6 +867,9 @@ public interface MainAPIInterface<R extends Retrofit> {
     @POST(com.stuffer.stuffers.api.Constants.OCR_BANK)
     Call<JsonObject> getExtractedDataOfBank(@Body JsonObject param);
 
+
+    @GET(Constants.CUSTOMERQRCODE)
+    Call<JsonObject> getCustomerQrCode(@Path("customerId") String id);
 
 }
 

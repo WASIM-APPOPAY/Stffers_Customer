@@ -94,7 +94,7 @@
     <string name="btn_backspace"> la espalda </string>
     <string name="info_receiver_mobile_number"> Introduzca el número de teléfono móvil del receptor </string>
     <string name="info_valid_mobile_number"> Introduzca un número de teléfono móvil válido </string>
-    <string name="info_phone_top_up"> Top-Up de teléfono </string>
+    <string name="info_phone_top_up"> Cantidad a recargar </string>
     <string name="info_select_dob"> por favor seleccione la fecha de nacimiento </string>
     <string name="search_info_transfer_money"> Buscar por número de teléfono móvil para la transferencia de importe </string>
     <string name="search_info_request_money"> Buscar por número de teléfono móvil para solicitar dinero </string>

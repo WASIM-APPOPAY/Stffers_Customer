@@ -36,7 +36,6 @@ import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.MyContextWrapper;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.FianceTab.DominaActivity;
-import com.stuffer.stuffers.activity.FianceTab.FinanceActivity;
 import com.stuffer.stuffers.activity.FianceTab.UnionPayActivity;
 import com.stuffer.stuffers.activity.FianceTab.WalletNewBankActivity;
 import com.stuffer.stuffers.activity.contact.ContactDemoActivity;
@@ -77,7 +76,6 @@ import com.stuffer.stuffers.fragments.bottom_fragment.BottomAccountCreated;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomLinkAccount;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomNotCard;
 import com.stuffer.stuffers.fragments.dialog.ErrorDialogFragment;
-import com.stuffer.stuffers.fragments.dialog.ProfileErrorDialogFragment;
 import com.stuffer.stuffers.fragments.quick_pay.WalletTransferFragment2;
 import com.stuffer.stuffers.models.output.CurrencyResult;
 import com.stuffer.stuffers.utils.AppoConstants;
@@ -314,7 +312,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent profileIntent = new Intent(HomeActivity.this, ProfileActivity.class);
+                        Intent profileIntent = new Intent(HomeActivity.this, CustomerProfileActivity.class);
                         startActivity(profileIntent);
                     }
                 }, 200);
@@ -495,6 +493,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
 
             }
         } catch (Exception e) {
+
 
         }
 
@@ -680,7 +679,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
 
     @Override
     public void onProfileUpdate() {
-        Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+        Intent intent = new Intent(HomeActivity.this, CustomerProfileActivity.class);
         startActivity(intent);
     }
 

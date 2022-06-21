@@ -180,8 +180,7 @@ public class ForgotPasswordFragment extends Fragment {
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
-                    }
-
+                   }
                 }
 
             }

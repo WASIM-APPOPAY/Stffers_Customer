@@ -32,5 +32,4 @@ public class MyTextView extends AppCompatTextView {
             setTypeface(tf);
         }
     }
-
 }

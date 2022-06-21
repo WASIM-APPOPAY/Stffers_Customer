@@ -78,7 +78,7 @@
     <string name="btn_backspace">Back</string>
     <string name="info_receiver_mobile_number">Enter receiver mobile number</string>
     <string name="info_valid_mobile_number">Enter valid mobile number</string>
-    <string name="info_phone_top_up">Phone Top-Up</string>
+    <string name="info_phone_top_up">Amount to Top-Up</string>
     <string name="info_select_dob">please select date of birth</string>
     <string name="search_info_transfer_money">Search by Mobile number for amount transfer</string>
     <string name="search_info_request_money">Search by Mobile number for request money</string>

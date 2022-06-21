@@ -10,8 +10,8 @@ android {
         minSdk 21
         targetSdk 31
         multiDexEnabled true
-        versionCode 7
-        versionName "1.0.7"
+        versionCode 10
+        versionName "1.0.10"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         /*jackOptions {
@@ -47,7 +47,7 @@ android {
         }
 
         /*debug {
-            minifyEnabled false
+            mini fyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }*/
 

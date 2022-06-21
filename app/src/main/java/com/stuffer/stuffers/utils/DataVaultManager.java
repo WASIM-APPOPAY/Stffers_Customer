@@ -42,6 +42,7 @@ public class DataVaultManager {
     public static final String KEY_TOKEN = "token";
     public static final String KEY_USER_ID1 = "userid1";
     public static final String KEY_IDPATH = "idpath";
+    public static final String TANDC="tandc";
 
     private static PrivateDataVault vault;
     private static DataVaultManager dataVaultManager;
@@ -217,4 +218,9 @@ public class DataVaultManager {
     }
 
 
+    public void saveTerm(String check) {
+        checkVaultStatus();
+        vault.setString(TANDC, check);
+        vault.lock();
+    }
 }

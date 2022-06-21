@@ -7,21 +7,15 @@
     <color name="colorAccent">#052f73</color>
     <color name="teal_200">#AAB8CD</color>
     <color name="teal_700">#073C8C</color>
-
-
     <color name="colorAccent2">#002163</color>
     <color name="icon_color">#607D8B</color>
-
     <color name="white_shade">#FAFAFA</color>
-
     <color name="colortext">#100b20</color>
     <color name="colorhint">#a9aaac</color>
-
     <color name="trans1">#40000000</color>
     <color name="trans">#20000000</color>
     <color name="colorGreenProgressBars">#34b7f1</color>
     <color name="colorRipple">#A9A9F5</color>
-
     <color name="colorSlideIndicator">#dd4b39</color>
     <color name="colorSlideIndicatorLight">#8fdd4b39</color>
     <color name="colorUnSelectedTab">#E6E6E6</color>
