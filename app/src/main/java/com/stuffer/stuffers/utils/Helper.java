@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -2958,6 +2959,23 @@ public class Helper {
     }
 
 
+    public static String getMerchantWalletAccount(JSONObject object) {
+        try {
+            //JSONObject object = new JSONObject(jsonObject);
+            Log.e(TAG, "getMerchantWalletAccount: "+object.toString() );
+            //JSONObject result = object.getJSONObject(AppoConstants.RESULT);
+            JSONObject result = object;
+            JSONObject merchantDetails = result.getJSONObject(AppoConstants.MERCHANTDETAILS);
+            JSONArray merchantAccounts = merchantDetails.getJSONArray(AppoConstants.MERCHNATACCOUNTS);
+            JSONObject indexAccounts = merchantAccounts.getJSONObject(0);
+            String accountnumber = indexAccounts.getString(AppoConstants.ACCOUNTNUMBER);
+            return accountnumber;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }
 
 

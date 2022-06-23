@@ -75,7 +75,7 @@ import retrofit2.Response;
 
 public class AppoPayFragment extends Fragment {
 
-
+    String merchantWalletAccount;
     private View mView;
     MainAPIInterface mainAPIInterface;
     ProgressDialog dialog;
@@ -99,6 +99,9 @@ public class AppoPayFragment extends Fragment {
     private BottotmPinFragment bottotmPinFragment;
     private Dialog mDialog;
     private File mFileSSort;
+    private String valueMerchantName;
+    private String valuePhone;
+    private String valueCountry;
 
     public AppoPayFragment() {
         // Required empty public constructor
@@ -131,6 +134,7 @@ public class AppoPayFragment extends Fragment {
         btnPayNow = (MyButton) mView.findViewById(R.id.btnPayNow);
         Bundle arguments = this.getArguments();
         resultScan = arguments.getString(AppoConstants.MERCHANTSCANCODE);
+
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,6 +175,8 @@ public class AppoPayFragment extends Fragment {
         //showSuccessDialog("param result");
 
         //showPayDialogLikeUnion("param result");
+
+
         getMerchantProfile();
         showMerchantDetails();
 
@@ -181,17 +187,23 @@ public class AppoPayFragment extends Fragment {
         dialog = new ProgressDialog(getActivity());
         dialog.setMessage(getString(R.string.info_getting_merchant_details));
         dialog.show();
+        String ph = "";
+        String area = "";
 
         String accessToken = DataVaultManager.getInstance(getActivity()).getVaultValue(KEY_ACCESSTOKEN);
-        splitScan = resultScan.split("\\|");
-
-        //39990571040177995008382|Cerca24|63516303|507|USD|321654876534215|78434
-        //39990571000477995008382|cerca24|63516303|507|support@cerca24.com|USD
-        //3999057104983043521|COOPSME|8295648095|1|DOP|703231926574220|71299
-
-
-        String ph = splitScan[2];
-        String area = splitScan[3];
+        try {
+            JSONObject mRoot = new JSONObject(resultScan);
+            JSONObject countryCode = mRoot.getJSONObject("countryCode");
+            String valueCountry = countryCode.getString("value");
+            JSONObject merchantAccountInformation = mRoot.getJSONObject("merchantAccountInformation");
+            JSONObject merchant21 = merchantAccountInformation.getJSONObject("21");
+            JSONObject merchantValue = merchant21.getJSONObject("value");
+            String valuePhone = merchantValue.getString("value");
+            area = valueCountry;
+            ph = valuePhone;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
         String bearer_ = Helper.getAppendAccessToken("bearer ", accessToken);
@@ -215,6 +227,8 @@ public class AppoPayFragment extends Fragment {
                         }
                         JSONObject jsonObject = indexMerchant.getJSONObject(AppoConstants.RESULT);
                         if (jsonObject.getBoolean(AppoConstants.ENABLE)) {
+
+                            merchantWalletAccount = Helper.getMerchantWalletAccount(jsonObject);
                             showMerchantDetails();
                             getLatestUserDetails();
                         } else {
@@ -283,26 +297,47 @@ public class AppoPayFragment extends Fragment {
 
 
     private void showMerchantDetails() {
-        ///39990571000401411953042|Marhaba|69974712|null|patricia@marhabapty.com|usd
-        //39990571040177995008382|Cerca24|63516303|507|USD|321654876534215|78434
-        //39990571000477995008382|cerca24|63516303|507|support@cerca24.com|USD
+
         conversionRates = 1;
         tvCardMerchant.setVisibility(View.VISIBLE);
-        tvHeader.setText(splitScan[1]);
+        /*tvHeader.setText(splitScan[1]);
         merchantAreaCode = splitScan[3];
         merchantMobileNumber = splitScan[2];
-        //merchantEmailId = splitScan[4].trim();
+
         String mobileWithCode = "(+" + merchantAreaCode + ") " + merchantMobileNumber;
         tvCodeMobile.setText(mobileWithCode);
         tvEmialId.setText("TID : " + splitScan[5]);
-        //tvEmialId.setVisibility(View.GONE);
-        //tvIndex5.setText(splitScan[5]);
         tvIndex5.setText("MID : " + splitScan[splitScan.length - 1]);
         tvIndex5.setVisibility(View.VISIBLE);
-
-        //String accountWithType = ": " + splitScan[0] + "-" + splitScan[splitScan.length - 1];
         String accountWithType = ": " + splitScan[0] + "-" + splitScan[4];
-        tvAccountNos.setText(accountWithType);
+        tvAccountNos.setText(accountWithType);*/
+
+        try {
+            JSONObject mRoot = new JSONObject(resultScan);
+            JSONObject countryCode = mRoot.getJSONObject("countryCode");
+            valueCountry = countryCode.getString("value");
+            JSONObject merchantAccountInformation = mRoot.getJSONObject("merchantAccountInformation");
+            JSONObject merchant21 = merchantAccountInformation.getJSONObject("21");
+            JSONObject merchantValue = merchant21.getJSONObject("value");
+            valuePhone = merchantValue.getString("value");
+            JSONObject merchantNameJson = mRoot.getJSONObject("merchantName");
+            valueMerchantName = merchantNameJson.getString("value");
+            tvHeader.setText(valueMerchantName);
+            tvCodeMobile.setText("(+" + valueCountry + ") " + valuePhone);
+            JSONObject merchant07 = merchantAccountInformation.getJSONObject("07");
+            JSONObject valueMerchant07 = merchant07.getJSONObject("value");
+            String valueTID = valueMerchant07.getString("value");
+            tvEmialId.setText("TID : " + valueTID);
+            JSONObject merchant09 = merchantAccountInformation.getJSONObject("09");
+            JSONObject valueMerchant09 = merchant09.getJSONObject("value");
+            String valueMID = valueMerchant09.getString("value");
+            tvIndex5.setText("MID : " + valueMID);
+            tvIndex5.setVisibility(View.VISIBLE);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void getLatestUserDetails() {
@@ -435,13 +470,13 @@ public class AppoPayFragment extends Fragment {
                 tvFromAccount.setText(mListTemp.get(0));
                 mFromPosition = 0;
 
-                if (splitScan[splitScan.length - 1].equalsIgnoreCase(mListAccount.get(0).getCurrencyCode())) {
+                //if (splitScan[splitScan.length - 1].equalsIgnoreCase(mListAccount.get(0).getCurrencyCode())) {
                     conversionRates = 1;
                     tvConversionRates.setText(String.valueOf(conversionRates));
-                } else {
+                //} else {
                     //Log.e(TAG, "readUserAccounts: no need");
                     //getConversionBaseRate(mFromPosition);
-                }
+                //}
 
 
             }
@@ -489,10 +524,10 @@ public class AppoPayFragment extends Fragment {
             return;
         }
 
-        if (splitScan[0].equalsIgnoreCase(mListAccount.get(fromAccountPosition).getAccountnumber())) {
+        /*if (splitScan[0].equalsIgnoreCase(mListAccount.get(fromAccountPosition).getAccountnumber())) {
             showSameAccountErrors();
             return;
-        }
+        }*/
 
         if (Float.parseFloat(mListAccount.get(fromAccountPosition).getCurrentbalance()) >= Float.parseFloat(tvAmountCredit.getText().toString().trim())) {
             showBottomPinDialog();
@@ -663,10 +698,10 @@ public class AppoPayFragment extends Fragment {
  *         currencycode: newbarcodetext[6]
  */
 
-        params.addProperty(AppoConstants.MERCHANTNAME, splitScan[1]);
-        params.addProperty(AppoConstants.MERCHANTACCOUNT, splitScan[0]);
-        params.addProperty(AppoConstants.MERCHANTNUMBER, splitScan[2]);
-        params.addProperty(AppoConstants.MERCHANTAREACODE, splitScan[3]);
+        params.addProperty(AppoConstants.MERCHANTNAME, valueMerchantName);
+        params.addProperty(AppoConstants.MERCHANTACCOUNT,  merchantWalletAccount);
+        params.addProperty(AppoConstants.MERCHANTNUMBER,valuePhone );
+        params.addProperty(AppoConstants.MERCHANTAREACODE, valueCountry);
         params.addProperty(AppoConstants.AMOUNT, tvAmountCredit.getText().toString().trim());
 
         try {
@@ -772,7 +807,7 @@ public class AppoPayFragment extends Fragment {
         tvCurrencyPay.setText("Currency : " + mCurrencyId);
         tvTransactionTime.setText("Transaction Time : " + getDateTime());
         tvVoucherPay.setText("Transaction No : " + param);
-        String info = "<font color='#FF0000'>" + "<b>" + "Paid to " + splitScan[1].toUpperCase() + "</b></font>" + "<br>" + "SUCCESS";
+        String info = "<font color='#FF0000'>" + "<b>" + "Paid to " + valueMerchantName + "</b></font>" + "<br>" + "SUCCESS";
         tvInfo.setText(Html.fromHtml(info));
 
         btnClose.setOnClickListener(new View.OnClickListener() {

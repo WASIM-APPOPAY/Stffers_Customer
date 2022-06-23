@@ -17,6 +17,9 @@ import android.widget.Toast;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.emv.qrcode.decoder.mpm.DecoderMpm;
+import com.emv.qrcode.model.mpm.MerchantPresentedMode;
+import com.google.gson.Gson;
 import com.google.zxing.Result;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.R;
@@ -62,9 +65,9 @@ public class ScanAppopayFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.e(TAG, "run: called :: " + result.getText());
+                        //Log.e(TAG, "run: called :: " + result.getText());
                         String scanText = result.getText();
-                        String[] scanTextArrays = scanText.split("\\|");
+                        //String[] scanTextArrays = scanText.split("\\|");
                         if (AppoPayApplication.isNetworkAvailable(getContext())) {
                             String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
                             if (StringUtils.isEmpty(vaultValue)) {
@@ -76,30 +79,14 @@ public class ScanAppopayFragment extends Fragment {
                                 errorDialogFragment.show(getChildFragmentManager(), errorDialogFragment.getTag());
                             } else {
                                 try {
-                                    /*JSONObject root = new JSONObject(vaultValue);
-                                    JSONObject result = root.getJSONObject(AppoConstants.RESULT);
-                                    JSONObject customerDetails = result.getJSONObject(AppoConstants.CUSTOMERDETAILS);
-                                    if (customerDetails.getString(AppoConstants.COUNTRYID).isEmpty() || customerDetails.getString(AppoConstants.COUNTRYID).equalsIgnoreCase("0")) {
-                                        ProfileErrorDialogFragment fragment = new ProfileErrorDialogFragment();
-                                        Bundle bundle = new Bundle();
-                                        bundle.putString(AppoConstants.INFO, getString(R.string.profile_update_error1));
-                                        fragment.setArguments(bundle);
-                                        fragment.setCancelable(false);
-                                        fragment.show(getChildFragmentManager(), fragment.getTag());
-                                    } else {
-                                        if (!(scanTextArrays.length > 5)) {
-                                            Toast.makeText(getContext(), getString(R.string.error_merchant_details), Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            mListener.onInnerRequestListener(scanText);
-                                        }
-                                    }*/
-                                    if (!(scanTextArrays.length > 5)) {
-                                        Toast.makeText(getContext(), getString(R.string.error_merchant_details), Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        mListener.onInnerRequestListener(scanText);
-                                    }
+                                    MerchantPresentedMode decode = DecoderMpm.decode(scanText, MerchantPresentedMode.class);
+
+                                    scanText = new Gson().toJson(decode);
+                                    mListener.onInnerRequestListener(scanText);
+
                                 } catch (Exception e) {
                                     e.printStackTrace();
+                                    Toast.makeText(getActivity(), "Not a valid QR-Code Format", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         } else {
