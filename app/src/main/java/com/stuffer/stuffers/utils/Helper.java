@@ -99,17 +99,8 @@ public class Helper {
             "  },\n" +
             "  {\n" +
             "    \"areacode\": \"1809\",\n" +
-            "    \"areacode_with_name\": \"(+1809) DOMINICAN REPUBLIC\"\n" +
+            "    \"areacode_with_name\": \"(+1) DOMINICAN REPUBLIC\"\n" +
             "  },\n" +
-            "  {\n" +
-            "    \"areacode\": \"1829\",\n" +
-            "    \"areacode_with_name\": \"(+1829) DOMINICAN REPUBLIC\"\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"areacode\": \"1849\",\n" +
-            "    \"areacode_with_name\": \"(+1849) DOMINICAN REPUBLIC\"\n" +
-            "  },\n" +
-
             "  {\n" +
             "    \"areacode\": \"1246\",\n" +
             "    \"areacode_with_name\": \"(+1246) BARBADOS\"\n" +
@@ -2432,6 +2423,24 @@ public class Helper {
         return null;
         //currentbalance
     }
+    public static String getCustomerAccountId() {
+        try {
+            JSONObject object = new JSONObject(Helper.getUserDetails());
+            JSONObject result = object.getJSONObject(AppoConstants.RESULT);
+            JSONObject customerDetails = result.getJSONObject(AppoConstants.CUSTOMERDETAILS);
+            JSONArray customerAccounts = customerDetails.getJSONArray(AppoConstants.CUSTOMERACCOUNT);
+            JSONObject indexAccounts = customerAccounts.getJSONObject(0);
+            String id = indexAccounts.getString(AppoConstants.ID);
+            return id;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+        //currentbalance
+    }
+
+
 
 
 
@@ -2962,7 +2971,7 @@ public class Helper {
     public static String getMerchantWalletAccount(JSONObject object) {
         try {
             //JSONObject object = new JSONObject(jsonObject);
-            Log.e(TAG, "getMerchantWalletAccount: "+object.toString() );
+            //Log.e(TAG, "getMerchantWalletAccount: "+object.toString() );
             //JSONObject result = object.getJSONObject(AppoConstants.RESULT);
             JSONObject result = object;
             JSONObject merchantDetails = result.getJSONObject(AppoConstants.MERCHANTDETAILS);

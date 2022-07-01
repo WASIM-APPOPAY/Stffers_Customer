@@ -33,6 +33,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.emv.qrcode.core.model.mpm.TagLengthString;
+import com.emv.qrcode.decoder.mpm.DecoderMpm;
+import com.emv.qrcode.model.mpm.MerchantPresentedMode;
+import com.emv.qrcode.model.mpm.UnreservedTemplate;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.stuffer.stuffers.AppoPayApplication;
@@ -66,6 +70,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -102,6 +107,7 @@ public class AppoPayFragment extends Fragment {
     private String valueMerchantName;
     private String valuePhone;
     private String valueCountry;
+    private MerchantPresentedMode mDecode;
 
     public AppoPayFragment() {
         // Required empty public constructor
@@ -133,7 +139,14 @@ public class AppoPayFragment extends Fragment {
         tvConversionRates = (MyTextView) mView.findViewById(R.id.tvConversionRates);
         btnPayNow = (MyButton) mView.findViewById(R.id.btnPayNow);
         Bundle arguments = this.getArguments();
-        resultScan = arguments.getString(AppoConstants.MERCHANTSCANCODE);
+        String scanText = arguments.getString(AppoConstants.MERCHANTSCANCODE);
+        Log.e("TAG", "onCreateView: scanText "+scanText );
+       // resultScan = arguments.getString(AppoConstants.MERCHANTSCANCODE);
+        mDecode = DecoderMpm.decode(scanText, MerchantPresentedMode.class);
+        //String s = new Gson().toJson(decode);
+
+        resultScan = new Gson().toJson(mDecode);
+        Log.e("TAG", "onCreateView: onGson : "+resultScan );
 
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,6 +193,8 @@ public class AppoPayFragment extends Fragment {
         getMerchantProfile();
         showMerchantDetails();
 
+
+
         return mView;
     }
 
@@ -187,21 +202,24 @@ public class AppoPayFragment extends Fragment {
         dialog = new ProgressDialog(getActivity());
         dialog.setMessage(getString(R.string.info_getting_merchant_details));
         dialog.show();
-        String ph = "";
-        String area = "";
+        TagLengthString countryCode1 = mDecode.getCountryCode();
+        String value = countryCode1.getValue();
+        String area=value;
+        String ph="";
+
 
         String accessToken = DataVaultManager.getInstance(getActivity()).getVaultValue(KEY_ACCESSTOKEN);
         try {
             JSONObject mRoot = new JSONObject(resultScan);
-            JSONObject countryCode = mRoot.getJSONObject("countryCode");
-            String valueCountry = countryCode.getString("value");
-            JSONObject merchantAccountInformation = mRoot.getJSONObject("merchantAccountInformation");
-            JSONObject merchant21 = merchantAccountInformation.getJSONObject("21");
-            JSONObject merchantValue = merchant21.getJSONObject("value");
-            String valuePhone = merchantValue.getString("value");
-            area = valueCountry;
-            ph = valuePhone;
+            JSONObject unreserveds = mRoot.getJSONObject("unreserveds");
+            JSONObject unreserved80 = unreserveds.getJSONObject("80");
+            JSONObject unreservedvalue = unreserved80.getJSONObject("value");
+            JSONObject contextSpecificData = unreservedvalue.getJSONObject("contextSpecificData");
+            JSONObject contextSpecificData03 = contextSpecificData.getJSONObject("03");
+            String phoneNumber = contextSpecificData03.getString("value");
+            ph=phoneNumber;
         } catch (JSONException e) {
+            Log.e("TAG", "getMerchantProfile: " + resultScan);
             e.printStackTrace();
         }
 
@@ -300,39 +318,55 @@ public class AppoPayFragment extends Fragment {
 
         conversionRates = 1;
         tvCardMerchant.setVisibility(View.VISIBLE);
-        /*tvHeader.setText(splitScan[1]);
-        merchantAreaCode = splitScan[3];
-        merchantMobileNumber = splitScan[2];
 
-        String mobileWithCode = "(+" + merchantAreaCode + ") " + merchantMobileNumber;
-        tvCodeMobile.setText(mobileWithCode);
-        tvEmialId.setText("TID : " + splitScan[5]);
-        tvIndex5.setText("MID : " + splitScan[splitScan.length - 1]);
-        tvIndex5.setVisibility(View.VISIBLE);
-        String accountWithType = ": " + splitScan[0] + "-" + splitScan[4];
-        tvAccountNos.setText(accountWithType);*/
+        TagLengthString countryCode1 = mDecode.getCountryCode();
+        valueCountry = countryCode1.getValue();
+        TagLengthString merchantNameTL = mDecode.getMerchantName();
+        valueMerchantName = merchantNameTL.getValue();
+
 
         try {
             JSONObject mRoot = new JSONObject(resultScan);
-            JSONObject countryCode = mRoot.getJSONObject("countryCode");
-            valueCountry = countryCode.getString("value");
-            JSONObject merchantAccountInformation = mRoot.getJSONObject("merchantAccountInformation");
-            JSONObject merchant21 = merchantAccountInformation.getJSONObject("21");
-            JSONObject merchantValue = merchant21.getJSONObject("value");
-            valuePhone = merchantValue.getString("value");
-            JSONObject merchantNameJson = mRoot.getJSONObject("merchantName");
-            valueMerchantName = merchantNameJson.getString("value");
+            JSONObject unreserveds = mRoot.getJSONObject("unreserveds");
+            JSONObject unreserved80 = unreserveds.getJSONObject("80");
+            JSONObject unreservedvalue = unreserved80.getJSONObject("value");
+            JSONObject contextSpecificData = unreservedvalue.getJSONObject("contextSpecificData");
+            JSONObject contextSpecificData03 = contextSpecificData.getJSONObject("03");
+            valuePhone = contextSpecificData03.getString("value");
+
+
+        } catch (JSONException e) {
+            Log.e("TAG", "getMerchantProfile: " + resultScan);
+            e.printStackTrace();
+        }
+
+        try {
+            JSONObject mRoot = new JSONObject(resultScan);
+
             tvHeader.setText(valueMerchantName);
             tvCodeMobile.setText("(+" + valueCountry + ") " + valuePhone);
-            JSONObject merchant07 = merchantAccountInformation.getJSONObject("07");
-            JSONObject valueMerchant07 = merchant07.getJSONObject("value");
-            String valueTID = valueMerchant07.getString("value");
+            JSONObject additionalDataField = mRoot.getJSONObject("additionalDataField");
+            JSONObject additionalDataFieldValue = additionalDataField.getJSONObject("value");
+            JSONObject additionalConsumerDataRequest = additionalDataFieldValue.getJSONObject("additionalConsumerDataRequest");
+            String valueMID = additionalConsumerDataRequest.getString("value");
+            JSONObject terminalLabel = additionalDataFieldValue.getJSONObject("terminalLabel");
+            String valueTID = terminalLabel.getString("value");
+
+
+
             tvEmialId.setText("TID : " + valueTID);
-            JSONObject merchant09 = merchantAccountInformation.getJSONObject("09");
-            JSONObject valueMerchant09 = merchant09.getJSONObject("value");
-            String valueMID = valueMerchant09.getString("value");
             tvIndex5.setText("MID : " + valueMID);
             tvIndex5.setVisibility(View.VISIBLE);
+            if (mRoot.has("transactionAmount")){
+                JSONObject transactionAmount = mRoot.getJSONObject("transactionAmount");
+                String value = transactionAmount.getString("value");
+                edAmount.setText(value);
+                edAmount.setEnabled(false);
+                edAmount.setClickable(false);
+            }else {
+                edAmount.setEnabled(true);
+                edAmount.setClickable(true);
+            }
 
 
         } catch (JSONException e) {
@@ -471,11 +505,11 @@ public class AppoPayFragment extends Fragment {
                 mFromPosition = 0;
 
                 //if (splitScan[splitScan.length - 1].equalsIgnoreCase(mListAccount.get(0).getCurrencyCode())) {
-                    conversionRates = 1;
-                    tvConversionRates.setText(String.valueOf(conversionRates));
+                conversionRates = 1;
+                tvConversionRates.setText(String.valueOf(conversionRates));
                 //} else {
-                    //Log.e(TAG, "readUserAccounts: no need");
-                    //getConversionBaseRate(mFromPosition);
+                //Log.e(TAG, "readUserAccounts: no need");
+                //getConversionBaseRate(mFromPosition);
                 //}
 
 
@@ -699,8 +733,8 @@ public class AppoPayFragment extends Fragment {
  */
 
         params.addProperty(AppoConstants.MERCHANTNAME, valueMerchantName);
-        params.addProperty(AppoConstants.MERCHANTACCOUNT,  merchantWalletAccount);
-        params.addProperty(AppoConstants.MERCHANTNUMBER,valuePhone );
+        params.addProperty(AppoConstants.MERCHANTACCOUNT, merchantWalletAccount);
+        params.addProperty(AppoConstants.MERCHANTNUMBER, valuePhone);
         params.addProperty(AppoConstants.MERCHANTAREACODE, valueCountry);
         params.addProperty(AppoConstants.AMOUNT, tvAmountCredit.getText().toString().trim());
 

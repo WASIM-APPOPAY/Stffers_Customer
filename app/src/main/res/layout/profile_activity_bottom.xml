@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <com.stuffer.stuffers.views.MyTextView
+        android:visibility="gone"
         android:id="@+id/txtUpdateProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,6 +41,7 @@
         android:textSize="14sp" />
 
     <com.stuffer.stuffers.views.MyTextView
+        android:visibility="gone"
         android:id="@+id/tvDeliveryAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,6 +57,7 @@
         android:textSize="14sp" />
 
      <com.stuffer.stuffers.views.MyTextView
+         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
@@ -69,6 +72,7 @@
         android:textSize="14sp" />
 
      <com.stuffer.stuffers.views.MyTextView
+         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
@@ -85,6 +89,7 @@
 
 
     <com.stuffer.stuffers.views.MyTextView
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"

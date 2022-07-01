@@ -2,6 +2,7 @@ package com.stuffer.stuffers.asyntask;
 
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -46,15 +47,14 @@ public class RegisterDevice extends AsyncTask<String, Void, Void> {
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        //Log.e(TAG, "onResponse: success");
+                        Log.e(TAG, "onResponse: success");
                         //showToast("successfully updated");
-
                     }
 
                     @Override
                     public void onError(ANError anError) {
 
-                        //Log.e(TAG, "onError: " + anError.getErrorDetail());
+                        Log.e(TAG, "onError: " + anError.getErrorDetail());
                         //Log.e(TAG, "onError: " + anError.getErrorBody());
                         showToast(anError.getErrorBody());
 
@@ -63,7 +63,7 @@ public class RegisterDevice extends AsyncTask<String, Void, Void> {
                 });
         return null;
     }
-
+    //GET https://prodapi.appopay.com/api/qrcode/customer/287
     // Helper for showing tests
     void showToast(String text) {
         mHandler.post(new Runnable() {

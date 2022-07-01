@@ -212,11 +212,13 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         tvSacnQrCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isPermissionGranted()) {
+                Intent intentQr = new Intent(CustomerProfileActivity.this, GenerateQrDynamicActivity.class);
+                startActivity(intentQr);
+                /*if (isPermissionGranted()) {
                     initQuickPass();
                 } else {
                     ActivityCompat.requestPermissions(CustomerProfileActivity.this, new String[]{Manifest.permission.CAMERA}, AppoConstants.CAMERA_REQUEST_CODE);
-                }
+                }*/
 
             }
         });
@@ -257,7 +259,24 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         };
         countryCodePicker.setDialogEventsListener(mLis);
 
-
+        try {
+            String phoneCode = Helper.getPhoneCode();
+            //String phoneCode = "1";
+            String senderMobileNumber = String.valueOf(Helper.getSenderMobileNumber());
+            //String senderMobileNumber = "8092345454";
+            //Log.e(TAG, "onCreate: senderMobileNumber : " + senderMobileNumber);
+            if (phoneCode.equalsIgnoreCase("1")) {
+                if (senderMobileNumber.startsWith("809") || senderMobileNumber.startsWith("829") || senderMobileNumber.startsWith("849")) {
+                    countryCodePicker.setCountryForNameCode("DO");
+                } else {
+                    countryCodePicker.setCountryForPhoneCode(!Helper.getPhoneCode().equals("") ? Integer.parseInt(Helper.getPhoneCode()) : countryCodePicker.getDefaultCountryCodeAsInt());
+                }
+            } else {
+                countryCodePicker.setCountryForPhoneCode(!Helper.getPhoneCode().equals("") ? Integer.parseInt(Helper.getPhoneCode()) : countryCodePicker.getDefaultCountryCodeAsInt());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //getSavedCard();
         //showNoCardDialog();
 
@@ -434,7 +453,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
             mRootUnion.put("unionPayRequest", mUninoRequestTemp);
             JsonObject mRoot = new JsonParser().parse(mRootUnion.toString()).getAsJsonObject();
             showLoading();
-           
+
             apiServiceUNIONPay.getQRandBardCode(mRoot, UnionConstant.QRCODE_REQUEST_PATH, authToken, UnionConstant.CONTENT_TYPE)
                     .enqueue(new Callback<JsonObject>() {
                         @Override
@@ -544,6 +563,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         }
     }
 
+
     public void show() {
         mProgressDialog = new ProgressDialog(CustomerProfileActivity.this);
         mProgressDialog.setMessage(getString(R.string.info_please_wait_dots));
@@ -567,7 +587,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
                 try {
                     JSONObject mResult = new JSONObject(s);
                     if (mResult.getString(AppoConstants.MESSAGE).equalsIgnoreCase(AppoConstants.SUCCESS)) {
-                        String resultQRCODE=mResult.getString(AppoConstants.RESULT);
+                        String resultQRCODE = mResult.getString(AppoConstants.RESULT);
                         String mQrCode1 = resultQRCODE.substring(resultQRCODE.indexOf(",") + 1);
                         final byte[] decodedBytes = Base64.decode(mQrCode1, Base64.DEFAULT);
                         Glide.with(CustomerProfileActivity.this).load(decodedBytes).into(customerQrCodeQrCode);
@@ -586,7 +606,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 hideDialog();
                 Log.e(TAG, "onFailure: " + t.getMessage());
-                Toast.makeText(CustomerProfileActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CustomerProfileActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -596,8 +616,8 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         //Log.e(TAG, "initViews: " + android_id);
-        customerQrCodeQrCode=findViewById(R.id.customerQrCodeQrCode);
-        frameLayout=findViewById(R.id.frameLayout);
+        customerQrCodeQrCode = findViewById(R.id.customerQrCodeQrCode);
+        frameLayout = findViewById(R.id.frameLayout);
         txtUpdateProfile = (MyTextView) findViewById(R.id.txtUpdateProfile);
         tvUserName = findViewById(R.id.tvUserName);
         tvUserMobile = findViewById(R.id.tvUserMobile);
@@ -673,14 +693,6 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         }
 
 
-
-
-
-
-
-
-
-
         public void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
@@ -693,30 +705,10 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
     }
 
 
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == AppoConstants.PROFILE_REQUEST) {
-            if (resultCode == Activity.RESULT_OK) {
-                mUserName = data.getStringExtra(AppoConstants.USERNAME);
-                mEmail = data.getStringExtra(AppoConstants.EMIAL);
-                mMobileNo = data.getStringExtra(AppoConstants.MOBILENUMBER);
-                mDob = data.getStringExtra(AppoConstants.DOB);
-                mCountryId = data.getIntExtra(AppoConstants.COUNTRYID, 0);
-                mStateId = data.getIntExtra(AppoConstants.STATEID, 0);
-                mCityName = data.getStringExtra(AppoConstants.CITYNAME);
-                mTransPin = data.getStringExtra(AppoConstants.TRANSACTIONPIN);
-                mScreenPin = data.getStringExtra(AppoConstants.SCREENLOCKPIN);
-                mAddress = data.getStringExtra(AppoConstants.ADDRESS);
-                mZipCode = data.getStringExtra(AppoConstants.ZIPCODE2);
-                updateUserProfile();
-            } else {
-                //////Log.e(TAG, "onActivityResult: result canceled ");
-            }
-
-        } else if (requestCode == AppoConstants.QUICK_PASS_REQUEST) {
+        if (requestCode == AppoConstants.QUICK_PASS_REQUEST) {
             if (resultCode == RESULT_OK) {
                 ////  Log.e(TAG, "onActivityResult: success called");
                 AppoPayApplication.UPDATE_WALLET = true;
@@ -726,95 +718,6 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
                 AppoPayApplication.UPDATE_WALLET = false;
             }
         }
-    }
-
-    //for activity result
-    private void updateUserProfile() {
-        try {
-            JSONObject index = new JSONObject(vaultValue);
-            JSONObject jsonResult = index.getJSONObject(AppoConstants.RESULT);
-
-            JsonObject sentIndex = new JsonObject();
-            sentIndex.addProperty(AppoConstants.ID, jsonResult.getString(AppoConstants.ID));
-            sentIndex.addProperty(AppoConstants.FIRSTNAME, jsonResult.getString(AppoConstants.FIRSTNAME));
-            sentIndex.addProperty(AppoConstants.LASTNAME, jsonResult.getString(AppoConstants.LASTNAME));
-            sentIndex.addProperty(AppoConstants.USERNAME, jsonResult.getString(AppoConstants.USERNAME));
-            sentIndex.addProperty(AppoConstants.PASSWORD, jsonResult.getString(AppoConstants.PASSWORD));
-            sentIndex.addProperty(AppoConstants.EMIAL, jsonResult.getString(AppoConstants.EMIAL));
-            sentIndex.addProperty(AppoConstants.ACCOUNTEXPIRED, jsonResult.getString(AppoConstants.ACCOUNTEXPIRED));
-            sentIndex.addProperty(AppoConstants.ACCOUNTLOCKED, jsonResult.getString(AppoConstants.ACCOUNTLOCKED));
-            sentIndex.addProperty(AppoConstants.CREDENTIALSEXPIRED, jsonResult.getString(AppoConstants.CREDENTIALSEXPIRED));
-            sentIndex.addProperty(AppoConstants.ENABLE, jsonResult.getString(AppoConstants.ENABLE));
-            sentIndex.addProperty(AppoConstants.MOBILENUMBER, jsonResult.getString(AppoConstants.MOBILENUMBER));
-            sentIndex.addProperty(AppoConstants.TRANSACTIONPIN, mTransPin);
-            sentIndex.addProperty(AppoConstants.PHONECODE, jsonResult.getString(AppoConstants.PHONECODE));
-
-            sentIndex.addProperty(AppoConstants.USERTYPE, (String) null);
-            sentIndex.addProperty(AppoConstants.STORENAME, (String) null);
-            sentIndex.addProperty(AppoConstants.LATITUDE, 0);
-            sentIndex.addProperty(AppoConstants.LONGITUDE, 0);
-            sentIndex.addProperty(AppoConstants.SECURITYANSWER, "dollar_sent");
-            sentIndex.addProperty(AppoConstants.SCREENLOCKPIN, mScreenPin);
-
-            JsonArray jsonArrayRole = new JsonArray();
-            jsonArrayRole.add("USER");
-            sentIndex.add(AppoConstants.ROLE, jsonArrayRole);
-
-            JSONObject jsonCustomerDetails = jsonResult.getJSONObject(AppoConstants.CUSTOMERDETAILS);
-
-            JsonObject sentJsonCustomerDetails = new JsonObject();
-            sentJsonCustomerDetails.addProperty(AppoConstants.ID, jsonCustomerDetails.getString(AppoConstants.ID));
-            sentJsonCustomerDetails.addProperty(AppoConstants.FIRSTNAME, jsonCustomerDetails.getString(AppoConstants.FIRSTNAME));
-            sentJsonCustomerDetails.addProperty(AppoConstants.LASTNAME, jsonCustomerDetails.getString(AppoConstants.LASTNAME));
-            sentJsonCustomerDetails.addProperty(AppoConstants.MIDDLENAME, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.CARDTOKEN, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.COUNTRYID, mCountryId);
-            sentJsonCustomerDetails.addProperty(AppoConstants.STATEID, mStateId);
-            sentJsonCustomerDetails.addProperty(AppoConstants.ADDRESS, mAddress);
-            sentJsonCustomerDetails.addProperty(AppoConstants.CITYNAME, mCityName);
-            sentJsonCustomerDetails.addProperty(AppoConstants.ZIPCODE2, mZipCode);
-
-            sentJsonCustomerDetails.addProperty(AppoConstants.DOB, mDob);
-            sentJsonCustomerDetails.addProperty(AppoConstants.CURRENCYID, Helper.getCurrencyId());
-            sentJsonCustomerDetails.addProperty(AppoConstants.MONTHLYINCOME, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.PASSPORTNUMBER, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.EXPIRYDATE, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.BANKACCOUNT, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.IMAGEURL, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.BANKUSERNAME, (String) null);
-
-            sentJsonCustomerDetails.addProperty(AppoConstants.BANKUSERNAME, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.MERCHANTQRCODE, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.ISDEAL, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.CURRENCYSYMBOL, mListAccount.get(0).getCurrencyCode());
-            sentJsonCustomerDetails.addProperty(AppoConstants.IDCUENTA, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.IDASOCIADO, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.ISPLASTICO, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.SOURCEOFINCOME, (String) null);
-            JsonArray sentJsonArrayCustomerAccounts = new JsonArray();
-            JSONArray jsonArrayCustomerAccount = jsonCustomerDetails.getJSONArray(AppoConstants.CUSTOMERACCOUNT);
-
-
-            for (int i = 0; i < jsonArrayCustomerAccount.length(); i++) {
-                JSONObject jsonObjectIndex = jsonArrayCustomerAccount.getJSONObject(i);
-                JsonObject jsonObjectAccount = new JsonParser().parse(jsonObjectIndex.toString()).getAsJsonObject();
-                sentJsonArrayCustomerAccounts.add(jsonObjectAccount);
-            }
-            sentJsonCustomerDetails.add(AppoConstants.CUSTOMERACCOUNTS, sentJsonArrayCustomerAccounts);
-            sentIndex.add(AppoConstants.CUSTOMERDETAILS, sentJsonCustomerDetails);
-            //Log.e(TAG, "updateUserProfile: " + sentIndex);
-            /*String s = new Gson().toJson(sentIndex.toString());
-
-            JSONObject jsonObject = new JSONObject(s);
-            Log.e(TAG, "updateUserProfile: " + jsonObject);*/
-            processUpdateRequest(sentIndex);
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-
-        }
-
     }
 
 
@@ -832,45 +735,6 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         startActivity(intentUnion);
     }
 
-
-    private void processUpdateRequest(JsonObject sentIndex) {
-        String accessToken = DataVaultManager.getInstance(CustomerProfileActivity.this).getVaultValue(KEY_ACCESSTOKEN);
-        dialog = new ProgressDialog(CustomerProfileActivity.this);
-        dialog.setMessage(getString(R.string.info_updaing_profile));
-        dialog.show();
-        String bearer_ = Helper.getAppendAccessToken("bearer ", accessToken);
-
-
-        mainAPIInterface.postUpdateUserProfile(sentIndex, bearer_).enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                dialog.dismiss();
-                if (response.isSuccessful()) {
-                    String res = new Gson().toJson(response);
-                    Toast.makeText(CustomerProfileActivity.this, getString(R.string.info_profile_successfully_updated), Toast.LENGTH_SHORT).show();
-                    tvProfileDetails.setVisibility(View.VISIBLE);
-                    txtUpdateProfile.setVisibility(View.GONE);
-                    onUpdateProfile();
-                } else {
-                    if (response.code() == 401) {
-                        DataVaultManager.getInstance(CustomerProfileActivity.this).saveUserDetails("");
-                        DataVaultManager.getInstance(CustomerProfileActivity.this).saveUserAccessToken("");
-                        Intent intent = new Intent(CustomerProfileActivity.this, SignInActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    } else if (response.code() == 400) {
-
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                dialog.dismiss();
-            }
-        });
-
-    }
 
     private void invalidateUserInfo() {
         vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);

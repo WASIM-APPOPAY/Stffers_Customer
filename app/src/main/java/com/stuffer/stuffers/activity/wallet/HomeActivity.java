@@ -916,7 +916,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
             String phoneCode = Helper.getPhoneCode();
             Long senderMobileNumber = Helper.getSenderMobileNumber();
             mJSON.put("mobile_number", phoneCode + senderMobileNumber);
-            //Log.e(TAG, "updateDevice: called"+mJSON);
+            Log.e(TAG, "updateDevice: called"+mJSON);
             //RegisterDevice mRegister = new RegisterDevice("https://labapi.appopay.com/api/users/registerdevice", mJSON);
             RegisterDevice mRegister = new RegisterDevice("https://prodapi.appopay.com/api/users/registerdevice", mJSON);
             mRegister.execute();

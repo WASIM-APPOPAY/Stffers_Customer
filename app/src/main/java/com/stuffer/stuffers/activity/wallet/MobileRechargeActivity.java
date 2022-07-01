@@ -276,9 +276,18 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
 
     @Override
     public void onCustomCountryCodeSelect(String code) {
-        tvAreaCode.setText("+" + code);
-        mAraaCode = code;
+
+
         if (code.equalsIgnoreCase("1809")) {
+            tvAreaCode.setText("+" + "1");
+            mAraaCode = "1";
+            mDominicaCode = "1";
+        } else {
+            tvAreaCode.setText("+" + code);
+            mAraaCode = code;
+            mDominicaCode = "";
+        }
+        /*if (code.equalsIgnoreCase("1809")) {
             mDominicaCode = "809";
         } else if (code.equalsIgnoreCase("1829")) {
             mDominicaCode = "829";
@@ -286,7 +295,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
             mDominicaCode = "849";
         } else {
             mDominicaCode = "";
-        }
+        }*/
 
         getCarriers();
 
@@ -297,7 +306,12 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
         dialog.setMessage("Please wait.");
         dialog.show();
         JsonObject param = new JsonObject();
-        param.addProperty(AppoConstants.COUNTRYCODE, mAraaCode);
+        if (mDominicaCode.isEmpty()){
+            param.addProperty(AppoConstants.COUNTRYCODE, mAraaCode);
+        }else {
+            param.addProperty(AppoConstants.COUNTRYCODE, "1809");
+        }
+
         ////Log.e(TAG, "getCarriers: " + param.toString());
 //        mainAPIInterface.getProductResponse(param).enqueue(new Callback<ProductResponse>() {
         mainAPIInterfaceNode.getProductResponse(param).enqueue(new Callback<ProductResponse>() {
@@ -763,8 +777,8 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
         sentParams.addProperty(AppoConstants.ORIGINALAMOUNT, finalAmount1);
         sentParams.addProperty(AppoConstants.PAYAMOUNT, finalAmount1);
         sentParams.addProperty(AppoConstants.PRODUCTCODE, mListProduct.get(mCarrierPosition).getProductCode());
-        String code="";
-        code=mAraaCode;
+        String code = "";
+        code = mAraaCode;
         if (code.equalsIgnoreCase("1809")) {
             sentParams.addProperty(AppoConstants.RECEIVERAREACODE, "1");
         } else if (code.equalsIgnoreCase("1829")) {

@@ -1,6 +1,7 @@
 package com.stuffer.stuffers.asyntask;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -29,7 +30,9 @@ public class NotificationHelper extends AsyncTask<String, Void, Void> {
 
     @Override
     protected Void doInBackground(String... strings) {
-
+        Log.e(TAG, "doInBackground: "+mRequestUrl );
+        Log.e(TAG, "doInBackground: body : "+mRequestParam );
+        Log.e(TAG, "doInBackground: Authorization : "+mBearear );
         AndroidNetworking.post(mRequestUrl)
                 .setTag("READNOTICE")
                 .setPriority(Priority.MEDIUM)

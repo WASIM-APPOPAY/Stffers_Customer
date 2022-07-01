@@ -191,7 +191,7 @@ public class MobileNumberRegistrationActivity extends AppCompatActivity implemen
             public void onCountrySelected() {
                 selectedCountryNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
                 if (selectedCountryNameCode.equalsIgnoreCase("DO")) {
-                    mDominicaAreaCode = "";
+                    //mDominicaAreaCode = "";
                     tvAreaCodeDo.setVisibility(View.GONE);
                 } else {
                     mDominicaAreaCode = "";

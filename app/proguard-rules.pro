@@ -95,10 +95,12 @@
 -keepclassmembers class com.stuffer.stuffers.fragments.bottom.chatmodel.*.* { *; }
 -keepclassmembers class com.stuffer.stuffers.fragments.bottom.chatnotification.*.* { *; }
 -keepclassmembers class com.stuffer.stuffers.activity.contact.*.* { *; }
--keepclassmembers class com.emv.qrcode.model.*.*{*;}
--keepclassmembers class com.emv.qrcode.core.*.*{*;}
--keepclassmembers class com.emv.qrcode.decoder.*.*{*;}
--keepclassmembers class com.emv.qrcode.validators*.*{*;}
+-keep class com.emv.qrcode.model.*.*{*;}
+-keep class com.emv.qrcode.core.*.*{*;}
+-keep class com.emv.qrcode.decoder.*.*{*;}
+-keep class com.emv.qrcode.validators*.*{*;}
+#-dontoptimize
+
 
 -dontwarn org.bouncycastle.**
 -dontwarn org.conscrypt.**
@@ -112,6 +114,25 @@
 -dontwarn org.aspectj.lang.NoAspectBoundException
 -dontwarn org.aspectj.lang.annotation.AfterThrowing
 -dontwarn org.aspectj.lang.annotation.Aspect
+-keep class com.google.gson.** { *; }
+
+-keepclassmembers class * extends android.os.AsyncTask {
+	protected void onPreExecute();
+	protected *** doInBackground(...);
+	protected void onPostExecute(...);
+}
+-keep public class * implements java.lang.reflect.Type
+
+#-keep class java.**,javax.**,com.sun.**,android.** {
+ #  static final %                *;
+  # static final java.lang.String *;
+  #*;
+#}
+#keep java.lang.String.**
+-keep class * {
+    java.lang.String *;
+}
+
 #-addconfigurationdebugging
 
 #-keepclasseswithmembers ,allowobfuscation class com.stuffer.stuffers.AppoPayApplication { <init>(); }

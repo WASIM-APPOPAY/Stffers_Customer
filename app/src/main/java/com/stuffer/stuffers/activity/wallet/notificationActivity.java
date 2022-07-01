@@ -74,9 +74,11 @@ public class notificationActivity extends AppCompatActivity {
             String accesstoken = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_ACCESSTOKEN);
             //String url = Constants.APPOPAY_BASE_URL+ "/api/wallet/notifications?access_token=" + accesstoken;
             String url = Constants.APPOPAY_BASE_URL + "api/wallet/notifications";
+            Log.e(TAG, "readCountNotifications: Url : "+url );
             JSONObject param = new JSONObject();
             String bearer_ = Helper.getAppendAccessToken("bearer ", accesstoken);
             param.put(AppoConstants.USERID, userIds);
+
 
 
             NotificationHelper notificationHelper = new NotificationHelper(url, bearer_, param, new NotificationHelper.NoticeReadListener() {

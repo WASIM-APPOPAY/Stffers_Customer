@@ -81,7 +81,7 @@ public class ScanAppopayFragment extends Fragment {
                                 try {
                                     MerchantPresentedMode decode = DecoderMpm.decode(scanText, MerchantPresentedMode.class);
 
-                                    scanText = new Gson().toJson(decode);
+                                    //scanText = new Gson().toJson(decode);
                                     mListener.onInnerRequestListener(scanText);
 
                                 } catch (Exception e) {

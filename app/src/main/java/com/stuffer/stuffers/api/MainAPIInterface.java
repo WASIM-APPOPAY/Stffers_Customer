@@ -871,6 +871,9 @@ public interface MainAPIInterface<R extends Retrofit> {
     @GET(Constants.CUSTOMERQRCODE)
     Call<JsonObject> getCustomerQrCode(@Path("customerId") String id);
 
+    @GET(Constants.CUSTOMERDYNAMICQRCODE)
+    Call<JsonObject> getCustomerDynamicQrCode(@Path("userId") String userId,@Path("amount") String amount,@Path("isImage") String isImage);
+
 }
 
 

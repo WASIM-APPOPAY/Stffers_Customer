@@ -2,7 +2,6 @@ package com.stuffer.stuffers.api;
 
 
 public class Constants {
-
     public static final String APPOPAY_BASE_URL = "https://prodapi.appopay.com/";
     //public static final String APPOPAY_BASE_URL = "https://labapi.appopay.com/";
     public static final String APPOPAY_BASE_NODE_URL = "https://prodapi-node.appopay.com/";
@@ -236,4 +235,8 @@ public class Constants {
 
     public static final String ERRORCODE = "errorCode";
     public static final String CUSTOMERQRCODE = "api/qrcode/customer/{customerId}";
+    public static final String CUSTOMERDYNAMICQRCODE = "api/qrcode/emv/customer/dynamic/v2/{userId}/{amount}/{isImage}";
+
+
+
 }

@@ -46,6 +46,7 @@
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/activity_finance.xml" value="0.15476699444206926" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/activity_forgot_password_actvivity.xml" value="0.196875" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/activity_gas_payment.xml" value="0.196875" />
+        <entry key="..\:/StuffersAppopay/app/src/main/res/layout/activity_generate_qr_dynamic.xml" value="0.15476699444206926" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/activity_gift_card.xml" value="0.28556806550665303" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/activity_insurance.xml" value="0.2" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/activity_invite_contact.xml" value="0.17027027027027028" />
@@ -215,7 +216,7 @@
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/my_toolbar.xml" value="0.196875" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/pay_now_activity.xml" value="0.12635869565217392" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/pay_user_activity.xml" value="0.15715579710144928" />
-        <entry key="..\:/StuffersAppopay/app/src/main/res/layout/profile_activity.xml" value="0.12635869565217392" />
+        <entry key="..\:/StuffersAppopay/app/src/main/res/layout/profile_activity.xml" value="0.25" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/profile_activity_bottom.xml" value="0.25" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/profile_bottom_dialog.xml" value="0.14583333333333334" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/profile_toolbar.xml" value="0.1616075245831552" />
