@@ -53,6 +53,10 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
         <activity
+            android:name=".activity.wallet.Registration"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+        <activity
             android:name=".activity.wallet.GenerateQrDynamicActivity"
             android:exported="false" />
         <activity
@@ -303,6 +307,7 @@
             android:name=".activity.wallet.VerifyOtpActivity"
             android:windowSoftInputMode="stateHidden|adjustResize|adjustPan" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".activity.wallet.SplashActivity"
             android:exported="true">
             <intent-filter>

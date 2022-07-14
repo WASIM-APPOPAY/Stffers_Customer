@@ -30,9 +30,9 @@ public class NotificationHelper extends AsyncTask<String, Void, Void> {
 
     @Override
     protected Void doInBackground(String... strings) {
-        Log.e(TAG, "doInBackground: "+mRequestUrl );
+       /* Log.e(TAG, "doInBackground: "+mRequestUrl );
         Log.e(TAG, "doInBackground: body : "+mRequestParam );
-        Log.e(TAG, "doInBackground: Authorization : "+mBearear );
+        Log.e(TAG, "doInBackground: Authorization : "+mBearear );*/
         AndroidNetworking.post(mRequestUrl)
                 .setTag("READNOTICE")
                 .setPriority(Priority.MEDIUM)

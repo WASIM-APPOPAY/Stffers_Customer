@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.wallet.SignInActivity;
@@ -52,6 +53,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.michaelrocks.libphonenumber.android.NumberParseException;
 import io.michaelrocks.libphonenumber.android.PhoneNumberUtil;
 import io.michaelrocks.libphonenumber.android.Phonenumber;
@@ -95,12 +97,15 @@ public class BankFragment extends Fragment {
     private ArrayList<String> mAreaList;
     private AreaCodeDialog mAreaDialog;
     private String selectedCountryCode;
+    private CircleImageView ivSender;
+    private String receiverAvatar="";
 
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         mView = inflater.inflate(R.layout.bank_fragment, container, false);
+        ivSender = mView.findViewById(R.id.ivSender);
         tvAreaCodeDo = (MyTextViewBold) mView.findViewById(R.id.tvAreaCodeDo);
         btnChange = mView.findViewById(R.id.btnChange);
         tvNameH = (MyTextViewBold) mView.findViewById(R.id.tvNameH);
@@ -211,7 +216,10 @@ public class BankFragment extends Fragment {
                 getAreaCodes();
             }
         });
-
+        String senderAvatar = Helper.getSenderAvatar();
+        if (!StringUtils.isEmpty(senderAvatar)) {
+            Glide.with(getActivity()).load(senderAvatar).placeholder(R.mipmap.ic_profile).centerCrop().into(ivSender);
+        }
 
         return mView;
     }
@@ -258,6 +266,12 @@ public class BankFragment extends Fragment {
                             //Log.e(TAG, "onResponse: " + true);
                             Toast.makeText(getContext(), getString(R.string.error_user_detail_not_found), Toast.LENGTH_SHORT).show();
                         } else {
+                            try {
+                                receiverAvatar = Helper.getReceiverAvatar(new JSONObject(res));
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+
                             getCurrency();
                         }
                     } catch (JSONException e) {
@@ -346,7 +360,7 @@ public class BankFragment extends Fragment {
             }
 
             if (mListAccount.size() > 0) {
-                ActiveAccountAdapter activeAccountAdapter = new ActiveAccountAdapter(getContext(), mListAccount, nameWithMobile);
+                ActiveAccountAdapter activeAccountAdapter = new ActiveAccountAdapter(getContext(), mListAccount, nameWithMobile,receiverAvatar);
                 rvActiveAccounts.setAdapter(activeAccountAdapter);
 
             }
@@ -402,6 +416,7 @@ public class BankFragment extends Fragment {
             objReceiver.put(AppoConstants.RECIEVERNAME, recivername);
             objReceiver.put(AppoConstants.RECIEVERUSERID, reciveruserid);
             objReceiver.put(AppoConstants.EMIAL, reciveremail);
+            objReceiver.put(AppoConstants.RECEIVERIMAGE,receiverAvatar);
             //Log.e(TAG, "sentParam: " + objReceiver.toString());
             //mListener.onAccountTransfer(objReceiver, resultCurrency, response);
             mListener.onAccountTransfer(objReceiver, resultCurrency, null);

@@ -347,12 +347,12 @@ public class HomeFragment extends Fragment implements ShopListener {
         TabLayout.Tab fifthTab = menuTabLayout.newTab();
         fifthTab.setCustomView(getTabView(getString(R.string.info_finance), R.drawable.ic_finance_tab_icon));
         menuTabLayout.addTab(fifthTab);
-        TabLayout.Tab firstTab = menuTabLayout.newTab();
+        /*TabLayout.Tab firstTab = menuTabLayout.newTab();
         firstTab.setCustomView(getTabView(getString(R.string.info_lifestyle), R.drawable.ic_lifestyle_tab_icon));
         menuTabLayout.addTab(firstTab);
         TabLayout.Tab forthTab = menuTabLayout.newTab();
         forthTab.setCustomView(getTabView(getString(R.string.info_payment), R.drawable.ic_payment_tab_icon));
-        menuTabLayout.addTab(forthTab);
+        menuTabLayout.addTab(forthTab);*/
 
         TabLayout.Tab tab = menuTabLayout.getTabAt(0);
         if (tab != null) {
@@ -366,7 +366,7 @@ public class HomeFragment extends Fragment implements ShopListener {
 
         }
 
-        menuTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        /*menuTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 // get the current selected tab's position and replace the fragment accordingly
@@ -401,7 +401,7 @@ public class HomeFragment extends Fragment implements ShopListener {
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
-        });
+        });*/
 
     }
 

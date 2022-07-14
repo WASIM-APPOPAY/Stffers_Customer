@@ -211,6 +211,10 @@ public class GenerateQrDynamicActivity extends AppCompatActivity implements View
                         tvUserName.setVisibility(View.VISIBLE);
                         tvInfo.setVisibility(View.VISIBLE);
                         frameCountry.setVisibility(View.VISIBLE);
+                    }else {
+                        if (mResult.getString("result").equalsIgnoreCase("failed")){
+                            Toast.makeText(GenerateQrDynamicActivity.this, ""+mResult.getString("message"), Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                 } catch (JSONException e) {

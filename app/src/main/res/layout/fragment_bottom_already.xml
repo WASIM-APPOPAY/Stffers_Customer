@@ -39,11 +39,11 @@
 
 
         <com.stuffer.stuffers.views.MyTextViewBold
+            android:id="@+id/tvCommonContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="12dp"
-            android:id="@+id/tvCommonContent"
             android:text="@string/info_dear_user_your_phone_no_is_already_register_n_thank_you_for_using_our_service"
             android:textSize="14sp" />
 
@@ -52,7 +52,7 @@
             android:id="@+id/btnCommonOk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="end"
             android:text="@string/info_ok"
             android:textColor="@color/white"
             android:theme="@style/MaterialButton"

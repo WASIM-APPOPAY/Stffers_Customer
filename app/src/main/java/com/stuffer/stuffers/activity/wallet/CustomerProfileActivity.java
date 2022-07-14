@@ -177,21 +177,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         } else {
             Toast.makeText(this, "" + getString(R.string.no_inteenet_connection), Toast.LENGTH_SHORT).show();
         }
-        txtUpdateProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (StringUtils.isEmpty(vaultValue)) {
-                    showErrorDialog();
-                } else {
-                    if (AppoPayApplication.isNetworkAvailable(CustomerProfileActivity.this)) {
-                        Intent intentUpdate = new Intent(CustomerProfileActivity.this, UpdateProfileActivity.class);
-                        startActivityForResult(intentUpdate, AppoConstants.PROFILE_REQUEST);
-                    } else {
-                        Toast.makeText(CustomerProfileActivity.this, "" + getString(R.string.no_inteenet_connection), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
+
 
 
         tvProfileDetails.setOnClickListener(new View.OnClickListener() {
@@ -223,15 +209,8 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
             }
         });
 
-        //txtUpdateProfile.setVisibility(View.VISIBLE);
 
-        tvDeliveryAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentAddress = new Intent(CustomerProfileActivity.this, DeliveryAddressActivity.class);
-                startActivity(intentAddress);
-            }
-        });
+
 
         /*String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_TOKEN);
         if (!StringUtils.isEmpty(vaultValue)) {
@@ -240,25 +219,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
             getSavedCard();
         }*/
 
-
-        CountryCodePicker.DialogEventsListener mLis = new CountryCodePicker.DialogEventsListener() {
-            @Override
-            public void onCcpDialogOpen(Dialog dialog) {
-                dialog.dismiss();
-            }
-
-            @Override
-            public void onCcpDialogDismiss(DialogInterface dialogInterface) {
-
-            }
-
-            @Override
-            public void onCcpDialogCancel(DialogInterface dialogInterface) {
-
-            }
-        };
         countryCodePicker.setDialogEventsListener(mLis);
-
         try {
             String phoneCode = Helper.getPhoneCode();
             //String phoneCode = "1";
@@ -279,9 +240,23 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         }
         //getSavedCard();
         //showNoCardDialog();
-
-
     }
+    CountryCodePicker.DialogEventsListener mLis = new CountryCodePicker.DialogEventsListener() {
+        @Override
+        public void onCcpDialogOpen(Dialog dialog) {
+            dialog.dismiss();
+        }
+
+        @Override
+        public void onCcpDialogDismiss(DialogInterface dialogInterface) {
+
+        }
+
+        @Override
+        public void onCcpDialogCancel(DialogInterface dialogInterface) {
+
+        }
+    };
 
 
     private void getSavedCard() {
@@ -544,17 +519,10 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
                     tvProfileDetails.setVisibility(View.VISIBLE);
                     txtUpdateProfile.setVisibility(View.GONE);
                 }
-                /*if (customerDetails.getString(AppoConstants.COUNTRYID).isEmpty() || customerDetails.getString(AppoConstants.COUNTRYID).equalsIgnoreCase("0")) {//|| zipCode.equalsIgnoreCase("null")) {
-                    txtUpdateProfile.setVisibility(View.VISIBLE);
-                    tvProfileDetails.setVisibility(View.GONE);
-                } else {
-                    tvProfileDetails.setVisibility(View.VISIBLE);
-                    txtUpdateProfile.setVisibility(View.GONE);
-                }*/
-
             }
-            String customerId = Helper.getCustomerId();
-            getCustomerQrCode(customerId);
+            //String customerId = Helper.getCustomerId();
+            String customerAccountId = Helper.getCustomerAccountId();
+            getCustomerQrCode(customerAccountId);
 
 
         } catch (JSONException e) {
@@ -581,24 +549,27 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 hideDialog();
-                //  Log.e(TAG, "onResponse: " + response);
-                // Log.e(TAG, "onResponse: " + new Gson().toJson(response.body()));
-                String s = new Gson().toJson(response.body());
-                try {
-                    JSONObject mResult = new JSONObject(s);
-                    if (mResult.getString(AppoConstants.MESSAGE).equalsIgnoreCase(AppoConstants.SUCCESS)) {
-                        String resultQRCODE = mResult.getString(AppoConstants.RESULT);
-                        String mQrCode1 = resultQRCODE.substring(resultQRCODE.indexOf(",") + 1);
-                        final byte[] decodedBytes = Base64.decode(mQrCode1, Base64.DEFAULT);
-                        Glide.with(CustomerProfileActivity.this).load(decodedBytes).into(customerQrCodeQrCode);
-                        //Log.e(TAG, "onResponse: called" );
-                        frameLayout.setVisibility(View.VISIBLE);
-                    }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (response.code()==200){
+                    String s = new Gson().toJson(response.body());
+                    try {
+                        JSONObject mResult = new JSONObject(s);
+                        if (mResult.getString(AppoConstants.MESSAGE).equalsIgnoreCase(AppoConstants.SUCCESS)) {
+                            String resultQRCODE = mResult.getString(AppoConstants.RESULT);
+                            String mQrCode1 = resultQRCODE.substring(resultQRCODE.indexOf(",") + 1);
+                            final byte[] decodedBytes = Base64.decode(mQrCode1, Base64.DEFAULT);
+                            Glide.with(CustomerProfileActivity.this).load(decodedBytes).into(customerQrCodeQrCode);
+                            //Log.e(TAG, "onResponse: called" );
+                            frameLayout.setVisibility(View.VISIBLE);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else {
+                    Toast.makeText(CustomerProfileActivity.this, "Error : "+response.code(), Toast.LENGTH_LONG).show();
                 }
-                //mQrCode = resultQRCODE.substring(resultQRCODE.indexOf(",") + 1);
+
 
             }
 

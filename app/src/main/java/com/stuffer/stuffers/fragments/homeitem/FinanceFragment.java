@@ -103,14 +103,14 @@ public class FinanceFragment extends Fragment {
             }
         });
 
-        layoutRequest.setOnClickListener(new View.OnClickListener() {
+        /*layoutRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intentTarjeta = new Intent(getActivity(), TarjetaActivity.class);
                 startActivity(intentTarjeta);
 
             }
-        });
+        });*/
 
         layoutExists.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,6 +129,7 @@ public class FinanceFragment extends Fragment {
                 startActivity(intentUnion);
             }
         });
+
         layoutAppopay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

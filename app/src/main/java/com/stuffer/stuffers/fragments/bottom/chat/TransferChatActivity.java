@@ -32,6 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.stuffer.stuffers.AppoPayApplication;
@@ -53,6 +54,7 @@ import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
 import com.stuffer.stuffers.views.MyTextViewBold;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,6 +70,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -108,6 +111,8 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
     private AlertDialog mDialog;
     private File mFileSSort;
     private String mFromCId, mFromCCode;
+    private CircleImageView ivSender, ivReceiver;
+    private String receiverAvatar;
 
     private void setupActionBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -173,6 +178,8 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         String mAmount = getIntent().getStringExtra(AppoConstants.AMOUNT);
         String mAreaCode = getIntent().getStringExtra(AppoConstants.AREACODE);
         String mPhWithCode = getIntent().getStringExtra(AppoConstants.PHWITHCODE);
+        ivSender = (CircleImageView) findViewById(R.id.ivSender);
+        ivReceiver = (CircleImageView) findViewById(R.id.ivReceiver);
 
         tvFromAccount = (MyTextView) findViewById(R.id.tvFromAccount);
         tvName = (MyTextViewBold) findViewById(R.id.tvName);
@@ -187,7 +194,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         try {
             edAmount.setText(mAmount);
             Helper.hideKeyboard(edAmount, TransferChatActivity.this);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         tvFromAccount.setText(Helper.getWalletAccountNumber());
@@ -215,7 +222,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
             mFromCCode = "DOP";
         }
         String substring = mPhWithCode.substring(mAreaCode.length());
-        Log.e(TAG, "onCreate: phone number : "+substring );
+        Log.e(TAG, "onCreate: phone number : " + substring);
         onSearchRequest(substring, mAreaCode);
 
         edAmount.addTextChangedListener(new TextWatcher() {
@@ -263,6 +270,11 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
             }
         });
 
+        String senderAvatar = Helper.getSenderAvatar();
+        if (!StringUtils.isEmpty(senderAvatar)) {
+            Glide.with(TransferChatActivity.this).load(senderAvatar).placeholder(R.mipmap.ic_profile).centerCrop().into(ivSender);
+        }
+
     }
 
     public void showDialog() {
@@ -298,6 +310,11 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
                             //Log.e(TAG, "onResponse: " + true);
                             Toast.makeText(TransferChatActivity.this, getString(R.string.error_user_details_not_exists), Toast.LENGTH_SHORT).show();
                         } else {
+                            try {
+                                receiverAvatar = Helper.getReceiverAvatar(new JSONObject(res));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             getCurrency();
                         }
                     } catch (JSONException e) {
@@ -415,6 +432,10 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
             receiverEmail = obj.getString(AppoConstants.EMIAL);
             tvName1.setText(recname);
             tvBalance1.setText("+" + recareacode + "" + recmobilenumber);
+
+            if (!StringUtils.isEmpty(receiverAvatar)) {
+                Glide.with(TransferChatActivity.this).load(receiverAvatar).placeholder(R.mipmap.ic_profile).centerCrop().into(ivReceiver);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -873,7 +894,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
             String packageName = resolveInfo.activityInfo.packageName;
             grantUriPermission(packageName, uriForFile, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
-      startActivityForResult(chooser,198);
+        startActivityForResult(chooser, 198);
 
     }
 
@@ -911,8 +932,8 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         /*if (resultCode == 198) {
             Log.e(TAG, "onActivityResult: called 198 ");
 */
-        }
     }
+}
     /*@Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

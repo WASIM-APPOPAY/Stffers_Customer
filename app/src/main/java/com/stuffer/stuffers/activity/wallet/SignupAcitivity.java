@@ -168,9 +168,10 @@ public class SignupAcitivity extends AppCompatActivity implements BankSelectList
         setContentView(R.layout.customer_detail_layout);
 
         apiServiceOCR = ApiUtils.getApiServiceOCR();
+        mainAPIInterface = ApiUtils.getAPIService();
         newCalendar = Calendar.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        mainAPIInterface = ApiUtils.getAPIService();
+
 
         btnSignUp = (MyTextView) findViewById(R.id.btnSignUp);
         btnSignIn = (MyTextView) findViewById(R.id.btnSignIn);

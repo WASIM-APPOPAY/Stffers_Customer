@@ -34,6 +34,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.bumptech.glide.Glide;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.wallet.InnerPayActivity;
@@ -64,6 +65,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,6 +81,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -115,6 +118,7 @@ public class WalletTransferFragment2 extends Fragment {
     private MyTextView tvBalance, tvBalance1;
     private Dialog mDialog;
     private File mFileSSort;
+    private CircleImageView ivSender, ivReceiver;
 
 
     public WalletTransferFragment2() {
@@ -131,9 +135,12 @@ public class WalletTransferFragment2 extends Fragment {
         receiveruser = arguments.getString(AppoConstants.SENTUSER);
         resultCurrency = arguments.getParcelableArrayList(AppoConstants.SENTCURRENCY);
         mTransferAmount = arguments.getString("amount");
+
         //sentBaseConversion = arguments.getString(AppoConstants.SENTBASECONVERSION);
         View view = inflater.inflate(R.layout.fragment_wallet_transfer2, container, false);
         mainAPIInterface = ApiUtils.getAPIService();
+        ivSender = view.findViewById(R.id.ivSender);
+        ivReceiver = view.findViewById(R.id.ivReceiver);
 
         tvFromAccount = (MyTextView) view.findViewById(R.id.tvFromAccount);
         tvName = (MyTextViewBold) view.findViewById(R.id.tvName);
@@ -165,10 +172,7 @@ public class WalletTransferFragment2 extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                /*if (conversionRates == 0) {
-                    Toast.makeText(getContext(), getString(R.string.error_select_from_account), Toast.LENGTH_SHORT).show();
-                    return;
-                }*/
+
                 try {
                     String inputAmount = edAmount.getText().toString().trim();
                     if (inputAmount.length() > 0) {
@@ -181,10 +185,10 @@ public class WalletTransferFragment2 extends Fragment {
                     }
 
                 } catch (Exception e) {
-                    //Log.e(TAG, "onTextChanged: error");
+
                     e.printStackTrace();
                     if (edAmount.getText().toString().trim().isEmpty()) {
-                        //no need to show invalid format
+
                     } else {
                         Toast.makeText(getContext(), getString(R.string.info_invalid_format), Toast.LENGTH_SHORT).show();
                         btnTransfer.setEnabled(false);
@@ -207,7 +211,10 @@ public class WalletTransferFragment2 extends Fragment {
                 verifyDetails();
             }
         });
-
+        String senderAvatar = Helper.getSenderAvatar();
+        if (!StringUtils.isEmpty(senderAvatar)) {
+            Glide.with(getActivity()).load(senderAvatar).placeholder(R.mipmap.ic_profile).centerCrop().into(ivSender);
+        }
 
         setReceiverDetails();
         getCurrentUserDetails();
@@ -232,6 +239,14 @@ public class WalletTransferFragment2 extends Fragment {
 
             recuserid = obj.getString(AppoConstants.RECIEVERUSERID);
             receiverEmail = obj.getString(AppoConstants.EMIAL);
+            try {
+                String avatar = obj.getString(AppoConstants.RECEIVERIMAGE);
+                if (!StringUtils.isEmpty(avatar)) {
+                    Glide.with(getActivity()).load(avatar).placeholder(R.mipmap.ic_profile).centerCrop().into(ivReceiver);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             tvName1.setText(recname);
             tvBalance1.setText("+" + recareacode + "" + recmobilenumber);

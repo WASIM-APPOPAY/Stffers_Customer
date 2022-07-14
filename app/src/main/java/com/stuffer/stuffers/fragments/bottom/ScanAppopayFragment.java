@@ -96,19 +96,7 @@ public class ScanAppopayFragment extends Fragment {
                 });
             }
         });
-//39990571040177995008382|Cerca24|63516303|507|USD|321654876534215|78434
 
-       /* if (AppoPayApplication.isNetworkAvailable(getContext())) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.e("TAG", "run: ");
-                    mListener.onRequestListener("6367820101870174396|Cerca 24|63516303|507| support@cerca24.com|undefined|USD");
-                }
-            });
-        } else {
-            Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_SHORT).show();
-        }*/
 
 
         scannerView.setOnClickListener(new View.OnClickListener() {

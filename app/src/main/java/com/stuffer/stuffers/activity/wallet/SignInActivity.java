@@ -159,9 +159,12 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent newIntent = new Intent(SignInActivity.this, MobileNumberRegistrationActivity.class);
-                startActivity(newIntent);
+                Intent mIntent = new Intent(SignInActivity.this, Registration.class);
+                startActivity(mIntent);
                 finish();
+                /*Intent newIntent = new Intent(SignInActivity.this, MobileNumberRegistrationActivity.class);
+                startActivity(newIntent);
+                finish();*/
                 /*Intent intent = new Intent(SignInActivity.this, ContactDemoActivity.class);
                 startActivity(intent);*/
             }
@@ -209,7 +212,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
             }
         });
         //a958b66129babb52
-         MerchantPresentedMode decode = DecoderMpm.decode("00020101021215312500034400020344100000000000006520459725303344540115802HK5913Test Merchant6002HK626001200000000000000000000005200000000000000000000007080000001063045855", MerchantPresentedMode.class);
+        MerchantPresentedMode decode = DecoderMpm.decode("00020101021215312500034400020344100000000000006520459725303344540115802HK5913Test Merchant6002HK626001200000000000000000000005200000000000000000000007080000001063045855", MerchantPresentedMode.class);
         //MerchantPresentedMode decode = DecoderMpm.decode("00020101021215314701034400020344001584054110306520453995303840540510.005802US5918UPI QRC test K 8406009test city62600120202109142058300020350520202109142058300020350708000100016304E2FB", MerchantPresentedMode.class);
         //String param = new Gson().toJson(decode);
         //Log.e(TAG, "onCreate: " + param);
@@ -505,10 +508,17 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
 
                                 jsonObject = obj.getJSONObject(AppoConstants.RESULT);
                                 mUserId = jsonObject.getString(AppoConstants.ID);
+                                try {
+                                    if (jsonObject.getString(AppoConstants.AVATAR).startsWith("http")) {
+                                        DataVaultManager.getInstance(AppoPayApplication.getInstance()).saveIdImagePath(jsonObject.getString(AppoConstants.AVATAR));
+                                    }
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
                                 createAccountInFirebase(jsonObject.getString(AppoConstants.EMIAL), selectedCountryCode + edtMobile.getText().toString().trim());
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                    Toast.makeText(SignInActivity.this, "Details Not Found", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignInActivity.this, "Details Not Found", Toast.LENGTH_SHORT).show();
                                 DataVaultManager.getInstance(SignInActivity.this).saveUserDetails("");
                             }
 

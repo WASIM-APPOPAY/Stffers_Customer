@@ -100,8 +100,8 @@ public class InnerPayActivity extends AppCompatActivity implements TransactionPi
         setupActionBar();
         if (isPermissionGranted()){
             if (savedInstanceState==null){
-              ScanAppopayFragment mScanAppopayFragment=new ScanAppopayFragment();
-              initFragments(mScanAppopayFragment);
+                ScanAppopayFragment mScanAppopayFragment=new ScanAppopayFragment();
+                initFragments(mScanAppopayFragment);
             }
         }else {
             ActivityCompat.requestPermissions(InnerPayActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, AppoConstants.CAMERA_REQUEST_CODE);

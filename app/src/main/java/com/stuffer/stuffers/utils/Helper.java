@@ -2675,22 +2675,7 @@ public class Helper {
         mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_beauty_amp_grooming), R.mipmap.cat_beauty));
         mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_bags_amp_luggage), R.mipmap.cat_bags));
         mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_gift_vouchers), R.mipmap.cat_giftvoucher));
-        /*mListShop.add(new ShopModel("Grocery", R.mipmap.cat_grocery));
-        mListShop.add(new ShopModel("Resturant", R.drawable.restaurant_icon2));
-        mListShop.add(new ShopModel("Pharmacy", R.drawable.cross1));
-        mListShop.add(new ShopModel("Mobile", R.mipmap.cat_mobile));
-        mListShop.add(new ShopModel("Man", R.mipmap.cat_men));
-        mListShop.add(new ShopModel("Women", R.mipmap.cat_women));
-        mListShop.add(new ShopModel("Electronics", R.mipmap.cat_electronics));
-        mListShop.add(new ShopModel("TV & Appliances", R.mipmap.cat_tvac));
-        mListShop.add(new ShopModel("Lap Tops", R.mipmap.cat_pc));
-        mListShop.add(new ShopModel("Home & Kithcen", R.mipmap.cat_kitcheb));
-        mListShop.add(new ShopModel("Health & Fitness", R.mipmap.cat_health));
-        mListShop.add(new ShopModel("Kids Toys", R.mipmap.cat_kids));
-        mListShop.add(new ShopModel("Beauty & Grooming", R.mipmap.cat_beauty));
-        mListShop.add(new ShopModel("Bags & Luggage", R.mipmap.cat_bags));
-        mListShop.add(new ShopModel("Gift Vouchers", R.mipmap.cat_giftvoucher));
-        */
+
         return mListShop;
 
 
@@ -2980,6 +2965,30 @@ public class Helper {
             String accountnumber = indexAccounts.getString(AppoConstants.ACCOUNTNUMBER);
             return accountnumber;
 
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public static String getSenderAvatar() {
+        try {
+            JSONObject object = new JSONObject(Helper.getUserDetails());
+            JSONObject result = object.getJSONObject(AppoConstants.RESULT);
+            String avatar = result.getString(AppoConstants.AVATAR);
+            return avatar;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public static String getReceiverAvatar(JSONObject object){
+        try {
+            JSONObject result=object.getJSONObject(AppoConstants.RESULT);
+            String avatar = result.getString(AppoConstants.AVATAR);
+            return avatar;
         } catch (JSONException e) {
             e.printStackTrace();
         }

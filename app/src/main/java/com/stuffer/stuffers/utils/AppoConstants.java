@@ -231,6 +231,9 @@ public class AppoConstants {
     public static final String COUNTRYNAMECODE = "countrynamecode";
     public static final String MERCHANTDETAILS = "merchantDetails";
     public static final String MERCHNATACCOUNTS = "merchantAccounts";
+    public static final String PARAM = "param";
+    public static final String AVATAR = "avatar";
+    public static final String RECEIVERIMAGE = "receiverimage";
 
 
     //DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");;

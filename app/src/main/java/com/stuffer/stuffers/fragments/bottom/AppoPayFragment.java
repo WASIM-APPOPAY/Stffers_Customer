@@ -784,12 +784,9 @@ public class AppoPayFragment extends Fragment {
                             showPayDialogLikeUnion(responsePayment.getString(AppoConstants.RESULT));
                         }
 
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-
                 } else {
                     if (response.code() == 401) {
                         DataVaultManager.getInstance(getActivity()).saveUserDetails("");

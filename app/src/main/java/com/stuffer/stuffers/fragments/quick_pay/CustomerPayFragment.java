@@ -80,6 +80,7 @@ public class CustomerPayFragment extends Fragment {
     private ImageView ivContactList;
     private String reciveremail;
     private PhoneNumberUtil phoneUtil;
+    private String receiverAvatar="";
 
     public CustomerPayFragment() {
         // Required empty public constructor
@@ -212,6 +213,7 @@ public class CustomerPayFragment extends Fragment {
                             //Log.e(TAG, "onResponse: " + true);
                             Toast.makeText(getContext(), getString(R.string.error_user_details_not_exists), Toast.LENGTH_SHORT).show();
                         } else {
+                            receiverAvatar = Helper.getReceiverAvatar(new JSONObject(res));
                             getCurrency();
                         }
                     } catch (JSONException e) {
@@ -307,7 +309,7 @@ public class CustomerPayFragment extends Fragment {
 
                 //tvAccounts.setText("(" + mListAccount.get(0).getAccountnumber() + "-" + mListAccount.get(0).getCurrencyCode() + ")");
                 //cardUser.setVisibility(View.VISIBLE);
-                ActiveAccountAdapter activeAccountAdapter = new ActiveAccountAdapter(getContext(), mListAccount, nameWithMobile);
+                ActiveAccountAdapter activeAccountAdapter = new ActiveAccountAdapter(getContext(), mListAccount, nameWithMobile,receiverAvatar);
                 rvActiveAccounts.setAdapter(activeAccountAdapter);
 
             }

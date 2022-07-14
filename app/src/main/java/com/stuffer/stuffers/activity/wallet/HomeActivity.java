@@ -12,6 +12,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +34,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.MyContextWrapper;
 import com.stuffer.stuffers.R;
@@ -78,6 +81,7 @@ import com.stuffer.stuffers.fragments.bottom_fragment.BottomNotCard;
 import com.stuffer.stuffers.fragments.dialog.ErrorDialogFragment;
 import com.stuffer.stuffers.fragments.quick_pay.WalletTransferFragment2;
 import com.stuffer.stuffers.models.output.CurrencyResult;
+import com.stuffer.stuffers.my_camera.CameraActivity;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.utils.Helper;
@@ -98,11 +102,16 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -139,14 +148,19 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
     private MyTextView tvVersion;
     private BottomNotCard mBottomNotCard;
     private BottomLinkAccount mBottomLinkAc;
+    private FrameLayout frameLayout;
+    private CircleImageView ivUser;
+    private ProgressDialog mProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainAPIInterface = ApiUtils.getAPIService();
-        tvUserName = findViewById(R.id.tvUserName);
-        tvPhone = findViewById(R.id.tvPhone);
+        ivUser = findViewById(R.id.ivUser);
+        frameLayout = findViewById(R.id.frameLayout);
+        tvUserName = findViewById(R.id.tvDrawername);
+        tvPhone = findViewById(R.id.tvDrawerNo);
         tvSideBalance = findViewById(R.id.tvSideBalance);
         frameNotification = findViewById(R.id.frameNotification);
         tvTotalNoti = findViewById(R.id.tvTotalNoti);
@@ -227,6 +241,9 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
                 }, 250);
             }
         });
+
+
+
 
         layoutLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -357,6 +374,25 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
             tvVersion.setText("App Version : " + version);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
+        }
+
+        frameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //drawer_layout.openDrawer(GravityCompat.START);
+                drawer_layout.closeDrawer(GravityCompat.START);
+                String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+                Intent mIntentQrCode = new Intent(HomeActivity.this, CameraActivity.class);
+                mIntentQrCode.putExtra("front", true);
+                startActivityForResult(mIntentQrCode, 201);
+            }
+        });
+        String idPath = DataVaultManager.getInstance(HomeActivity.this).getVaultValue(DataVaultManager.KEY_IDPATH);
+        if (!StringUtils.isEmpty(idPath)) {
+            if (idPath.startsWith("http"))
+                Glide.with(HomeActivity.this).load(idPath).fitCenter().into(ivUser);
+            else
+                Glide.with(HomeActivity.this).load(new File(idPath)).fitCenter().into(ivUser);
         }
 
     }
@@ -754,11 +790,95 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
                 Intent intentFianceNew = new Intent(HomeActivity.this, WalletNewBankActivity.class);
                 startActivityForResult(intentFianceNew, 1003);
             }
+        } else if (resultCode == RESULT_OK && data.getExtras() != null) {
+            try {
+                Log.e(TAG, "onActivityResult: called");
+                String stringExtra = data.getStringExtra(AppoConstants.IMAGE_PATH);
+                //File file=new File(stringExtra);
+                File file2 = new File(stringExtra);
+                FileInputStream imageInFile = new FileInputStream(file2);
+                byte[] imgData = new byte[(int) file2.length()];
+                imageInFile.read(imgData);
+                String imageDataString = encodeImage(imgData);
+                //Log.e(TAG, "onActivityResult: " + imageDataString);
+                Glide.with(HomeActivity.this).load(new File(stringExtra)).fitCenter().into(ivUser);
+                DataVaultManager.getInstance(HomeActivity.this).saveIdImagePath(stringExtra);
+                uploadUserAvatar(imageDataString);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             // Log.e(TAG, "onActivityResult: else bottom called" );
             bottomify_nav.setActiveNavigationIndex(0);
             allowParam = false;
         }
+    }
+
+    public void showLoading() {
+        mProgress = new ProgressDialog(HomeActivity.this);
+        mProgress.setMessage("Please wait....");
+        mProgress.show();
+    }
+
+    public void hideLoading() {
+        mProgress.dismiss();
+        mProgress = null;
+    }
+    public void uploadUserAvatar(String avatar) {
+        showLoading();
+        int userId = Helper.getUserId();
+        JsonObject mReqPayload = new JsonObject();
+        mReqPayload.addProperty("userId", userId);
+        //mReqPayload.addProperty("userId", "userId");
+        mReqPayload.addProperty("avatar", "data:image/jpeg;base64," + avatar);
+
+        mainAPIInterface.putUserAvatar(mReqPayload).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                hideLoading();
+                JsonObject body = response.body();
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject mPrev = new JSONObject(body.toString());
+                        if (mPrev.getString("message").equalsIgnoreCase("success")) {
+                            String jsonUserDetails = mPrev.toString();
+                            DataVaultManager.getInstance(HomeActivity.this).saveUserDetails(jsonUserDetails);
+                            JSONObject jsonObject = mPrev.getJSONObject(AppoConstants.RESULT);
+                            String avatar = jsonObject.getString("avatar");
+                            //Log.e(TAG, "onResponse: avatar::" + avatar);
+                            drawer_layout.openDrawer(GravityCompat.START);
+                            DataVaultManager.getInstance(HomeActivity.this).saveIdImagePath(avatar);
+                            Toast.makeText(HomeActivity.this, "avatar updated successfully", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                /*if (response.code() == 200) {
+                    Log.e(TAG, "onResponse: " + response);
+                    String res = new Gson().toJson(response.body());
+                    JSONObject
+
+                } else {
+                    Toast.makeText(HomeActivity.this, "Error : " + response.code(), Toast.LENGTH_SHORT).show();
+                }*/
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                hideLoading();
+                Toast.makeText(HomeActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private String encodeImage(byte[] imgData) {
+        return Base64.encodeToString(imgData, Base64.DEFAULT);
     }
 
 
@@ -804,20 +924,16 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
     }
 
     @Override
-    public void onFinanceRequest(int code){
-       if (code==-1) {
-           Intent intent = new Intent(HomeActivity.this, MobileRechargeActivity.class);
-           startActivityForResult(intent, AppoConstants.RECHARGE_REQUEST_CODE);
-       }
-       else {
-           bottomify_nav.setActiveNavigationIndex(code);
-       }
-
+    public void onFinanceRequest(int code) {
+        if (code == -1) {
+            Intent intent = new Intent(HomeActivity.this, MobileRechargeActivity.class);
+            startActivityForResult(intent, AppoConstants.RECHARGE_REQUEST_CODE);
+        } else {
+            bottomify_nav.setActiveNavigationIndex(code);
+        }
 
 
     }
-
-
 
 
     //for merchant pay
@@ -916,7 +1032,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
             String phoneCode = Helper.getPhoneCode();
             Long senderMobileNumber = Helper.getSenderMobileNumber();
             mJSON.put("mobile_number", phoneCode + senderMobileNumber);
-            Log.e(TAG, "updateDevice: called"+mJSON);
+            //Log.e(TAG, "updateDevice: called" + mJSON);
             //RegisterDevice mRegister = new RegisterDevice("https://labapi.appopay.com/api/users/registerdevice", mJSON);
             RegisterDevice mRegister = new RegisterDevice("https://prodapi.appopay.com/api/users/registerdevice", mJSON);
             mRegister.execute();
@@ -1190,8 +1306,8 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
     @Override
     public void onAreaSelected(int pos) {
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.mainContainer);
-        if (currentFragment instanceof BankFragment){
-            ((BankFragment)currentFragment).updateAreaCode(pos);
+        if (currentFragment instanceof BankFragment) {
+            ((BankFragment) currentFragment).updateAreaCode(pos);
         }
 
     }

@@ -250,7 +250,7 @@ public class SearchCustomerGiftCardFragment extends Fragment {
             }
 
             if (mListAccount.size() > 0) {
-                ActiveAccountAdapter activeAccountAdapter = new ActiveAccountAdapter(getContext(), mListAccount, nameWithMobile);
+                ActiveAccountAdapter activeAccountAdapter = new ActiveAccountAdapter(getContext(), mListAccount, nameWithMobile,"");
                 rvActiveAccounts.setAdapter(activeAccountAdapter);
 
             }

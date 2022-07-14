@@ -62,8 +62,14 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, mCameraFragment)
                     .commit();
+            if (getIntent().hasExtra("front")) {
+                mCameraFragment.setFacing(CameraConstants.FACING_FRONT);
+            }
         } else {
             mCameraFragment = (MyCameraFragment) getSupportFragmentManager().findFragmentById(R.id.container);
+            if (getIntent().hasExtra("front")) {
+                mCameraFragment.setFacing(CameraConstants.FACING_FRONT);
+            }
         }
 
         mPictureButton = (Button) findViewById(R.id.picture);

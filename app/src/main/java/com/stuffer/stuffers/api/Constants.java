@@ -238,5 +238,5 @@ public class Constants {
     public static final String CUSTOMERDYNAMICQRCODE = "api/qrcode/emv/customer/dynamic/v2/{userId}/{amount}/{isImage}";
 
 
-
+    public static final String USERAVATAR="api/users/avatar/update";
 }
