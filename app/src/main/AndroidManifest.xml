@@ -53,6 +53,10 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
         <activity
+            android:name=".activity.wallet.FundCountry"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.wallet.Registration"
             android:screenOrientation="portrait"
             android:exported="false" />

@@ -655,6 +655,7 @@ data.</string>
     <string name="info_select_your_app_language">Select Your App Language</string>
     <string name="info_apply">Apply</string>
     <string name="info_term_condition">Please Accept Term and Conditions.</string>
+    <string name="info_payments_methods"><![CDATA[<![CDATA[<u>Payments Methods</u>]]>></string>
 
 
     //Pulse Aceptar y Continuar para aceptar las condiciones de servicio

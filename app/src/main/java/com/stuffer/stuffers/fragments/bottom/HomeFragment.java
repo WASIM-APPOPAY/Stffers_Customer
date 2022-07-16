@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.stuffer.stuffers.activity.lunex_card.LunexMoreActivity;
 import com.stuffer.stuffers.activity.shop_mall.ShopAdapter;
 import com.stuffer.stuffers.activity.wallet.AccountActivity;
+import com.stuffer.stuffers.activity.wallet.FundCountry;
 import com.stuffer.stuffers.activity.wallet.MerchantMapsActivity;
 import com.stuffer.stuffers.activity.wallet.PayNowActivity;
 import com.stuffer.stuffers.adapter.recyclerview.AllGiftProduct;
@@ -572,7 +573,7 @@ public class HomeFragment extends Fragment implements ShopListener {
             public void onClick(View view) {
 
 
-                String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
+                /*String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
                 if (StringUtils.isEmpty(vaultValue)) {
                     ErrorDialogFragment errorDialogFragment = new ErrorDialogFragment();
                     Bundle bundle = new Bundle();
@@ -585,29 +586,10 @@ public class HomeFragment extends Fragment implements ShopListener {
                     Intent intent = new Intent(getActivity(), AddMoneyToWallet.class);
                     startActivity(intent);
 
+                }*/
+                Intent intent = new Intent(getActivity(), FundCountry.class);
+                startActivity(intent);
 
-                    /*try {
-                        JSONObject root = new JSONObject(vaultValue);
-                        JSONObject result = root.getJSONObject(AppoConstants.RESULT);
-                        JSONObject customerDetails = result.getJSONObject(AppoConstants.CUSTOMERDETAILS);
-                        if (customerDetails.getString(AppoConstants.COUNTRYID).isEmpty() || customerDetails.getString(AppoConstants.COUNTRYID).equalsIgnoreCase("0")) {//|| zipCode.equalsIgnoreCase("null")) {
-                            ProfileErrorDialogFragment fragment = new ProfileErrorDialogFragment();
-                            Bundle bundle = new Bundle();
-                            bundle.putString(AppoConstants.INFO, getString(R.string.profile_update_error1));
-                            fragment.setArguments(bundle);
-                            fragment.setCancelable(false);
-                            fragment.show(getChildFragmentManager(), fragment.getTag());
-                        } else {
-
-                            Intent intent = new Intent(getActivity(), AddMoneyToWallet.class);
-                            startActivity(intent);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }*/
-
-
-                }
 
             }
         });

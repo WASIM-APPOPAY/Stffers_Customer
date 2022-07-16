@@ -338,9 +338,8 @@ public interface MainAPIInterface<R extends Retrofit> {
     Call<JsonObject> putUpdateUserProfile(@Body JsonObject body, @Header("Authorization") String xAccessToken);
 
 
-   @POST(com.stuffer.stuffers.api.Constants.POST_UPDATE_PROFILE)
+    @POST(com.stuffer.stuffers.api.Constants.POST_UPDATE_PROFILE)
     Call<JsonObject> postUpdateUserProfile(@Body JsonObject body, @Header("Authorization") String xAccessToken);
-
 
 
     @Headers({
@@ -872,7 +871,7 @@ public interface MainAPIInterface<R extends Retrofit> {
     Call<JsonObject> getCustomerQrCode(@Path("customerId") String id);
 
     @GET(Constants.CUSTOMERDYNAMICQRCODE)
-    Call<JsonObject> getCustomerDynamicQrCode(@Path("userId") String userId,@Path("amount") String amount,@Path("isImage") String isImage);
+    Call<JsonObject> getCustomerDynamicQrCode(@Path("userId") String userId, @Path("amount") String amount, @Path("isImage") String isImage);
 
     @PUT(Constants.USERAVATAR)
     Call<JsonObject> putUserAvatar(@Body JsonObject body);
