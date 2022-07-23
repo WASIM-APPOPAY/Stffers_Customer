@@ -18,6 +18,7 @@ import com.stuffer.stuffers.activity.FianceTab.DominaActivity;
 import com.stuffer.stuffers.activity.FianceTab.FinanceActivity;
 import com.stuffer.stuffers.activity.FianceTab.TarjetaActivity;
 import com.stuffer.stuffers.activity.FianceTab.UnionPayActivity;
+import com.stuffer.stuffers.activity.cashSends.CashSend;
 import com.stuffer.stuffers.activity.finance.GoBankActivity;
 import com.stuffer.stuffers.activity.finance.InsuranceActivity;
 import com.stuffer.stuffers.activity.finance.LoanActivity;
@@ -103,14 +104,14 @@ public class FinanceFragment extends Fragment {
             }
         });
 
-        /*layoutRequest.setOnClickListener(new View.OnClickListener() {
+        layoutRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentTarjeta = new Intent(getActivity(), TarjetaActivity.class);
-                startActivity(intentTarjeta);
+                Intent mIntent = new Intent(getActivity(), CashSend.class);
+                startActivity(mIntent);
 
             }
-        });*/
+        });
 
         layoutExists.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,7 +148,7 @@ public class FinanceFragment extends Fragment {
         layoutTransfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              mFinanceListener.onFinanceRequest(3);
+                mFinanceListener.onFinanceRequest(3);
             }
         });
         layoutUnionPay.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +161,7 @@ public class FinanceFragment extends Fragment {
         llRecharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             mFinanceListener.onFinanceRequest(-1);
+                mFinanceListener.onFinanceRequest(-1);
             }
         });
 
@@ -196,7 +197,7 @@ public class FinanceFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        mFinanceListener= (FinanceListener) context;
+        mFinanceListener = (FinanceListener) context;
 
     }
 }

@@ -27,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -2423,6 +2424,7 @@ public class Helper {
         return null;
         //currentbalance
     }
+
     public static String getCustomerAccountId() {
         try {
             JSONObject object = new JSONObject(Helper.getUserDetails());
@@ -2441,10 +2443,6 @@ public class Helper {
     }
 
 
-
-
-
-
     public static String getUserDetails() {
         if (mUserDetails == null) {
             mUserDetails = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
@@ -2454,8 +2452,8 @@ public class Helper {
         }
     }
 
-    public static void setUserDetailsNull(){
-        mUserDetails=null;
+    public static void setUserDetailsNull() {
+        mUserDetails = null;
     }
 
     public static String getSenderName() {
@@ -2501,6 +2499,19 @@ public class Helper {
             JSONObject object = new JSONObject(Helper.getUserDetails());
             JSONObject result = object.getJSONObject(AppoConstants.RESULT);
             return result.getString(AppoConstants.PHONECODE) + result.getString(AppoConstants.MOBILENUMBER);
+            // return result.getString(AppoConstants.MOBILENUMBER);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getNumberWithCountryCodeSpace() {
+        try {
+            JSONObject object = new JSONObject(Helper.getUserDetails());
+            JSONObject result = object.getJSONObject(AppoConstants.RESULT);
+            return "+" + result.getString(AppoConstants.PHONECODE) + " " + result.getString(AppoConstants.MOBILENUMBER);
             // return result.getString(AppoConstants.MOBILENUMBER);
 
         } catch (JSONException e) {
@@ -2984,15 +2995,55 @@ public class Helper {
         return "";
     }
 
-    public static String getReceiverAvatar(JSONObject object){
+    public static String getReceiverAvatar(JSONObject object) {
         try {
-            JSONObject result=object.getJSONObject(AppoConstants.RESULT);
+            JSONObject result = object.getJSONObject(AppoConstants.RESULT);
             String avatar = result.getString(AppoConstants.AVATAR);
             return avatar;
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static String getCurrencySymble() {
+        try {
+            JSONObject object = new JSONObject(Helper.getUserDetails());
+            JSONObject result = object.getJSONObject(AppoConstants.RESULT);
+            JSONObject customerDetails = result.getJSONObject(AppoConstants.CUSTOMERDETAILS);
+
+            if (customerDetails.getString(AppoConstants.CURRENCYSYMBOL).equalsIgnoreCase("null")) {
+                return "";
+            } else {
+                return customerDetails.getString(AppoConstants.CURRENCYSYMBOL);
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public static String getDateOfBirth(String dob) {
+        //milliseconds
+        Log.e(TAG, "getDateOfBirth: "+dob);
+        long milliSec = Long.parseLong(dob);
+
+        // Creating date format
+        //DateFormat simple = new SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z");
+        DateFormat simple = new SimpleDateFormat("dd MMM yyyy");
+
+        // Creating date from milliseconds
+        // using Date() constructor
+        Date result = new Date(milliSec);
+
+        // Formatting Date according to the
+        // given format
+        //System.out.println(simple.format(result));
+        Log.e(TAG, "getTimeDateOther: " + simple.format(result));
+
+        return simple.format(result);
     }
 }
 

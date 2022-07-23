@@ -221,6 +221,7 @@
                 app:fabCustomSize="60dp" />
 
             <com.stuffer.stuffers.views.MyTextView
+                android:visibility="gone"
 
                 android:id="@+id/customer_login"
                 android:layout_width="match_parent"

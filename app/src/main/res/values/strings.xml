@@ -656,6 +656,11 @@ data.</string>
     <string name="info_apply">Apply</string>
     <string name="info_term_condition">Please Accept Term and Conditions.</string>
     <string name="info_payments_methods"><![CDATA[<![CDATA[<u>Payments Methods</u>]]>></string>
+    <!--<string name="info_customer_details"><![CDATA[<![CDATA[<u>Customer Details</u>]]>></string>-->
+    <string name="info_customer_details">Customer Details</string>
+    <string name="info_benifi_details">Beneficiary Details</string>
+    <string name="info_destination_details">Destination Details</string>
+    <string name="info_payment_details">Payment Details</string>
 
 
     //Pulse Aceptar y Continuar para aceptar las condiciones de servicio

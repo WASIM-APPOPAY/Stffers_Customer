@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -22,15 +23,18 @@ import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.communicator.LanguageListener;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomLanguage;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomNotCard;
+import com.stuffer.stuffers.utils.AppSignatureHelper;
 import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.views.MyTextView;
 import com.stuffer.stuffers.views.MyTextViewBold;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
+
 
 public class SplashActivity extends AppCompatActivity implements LanguageListener {
-
+    private static final String TAG = "SplashActivity";
     // Splash screen timer
     private static final int SPLASH_TIMEOUT = 100;
     ImageView secondaryImage;
@@ -51,7 +55,9 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
             return;
         }
         setContentView(R.layout.splash);
-
+        /*AppSignatureHelper mAppSignatureHelper = new AppSignatureHelper(AppoPayApplication.getInstance());
+        ArrayList<String> appSignatures = mAppSignatureHelper.getAppSignatures();
+        Log.e(TAG, "onCreate: " + appSignatures.get(0));*/
 
         tvCheck = (CheckBox) findViewById(R.id.tvCheck);
         tvAgree = (MyTextView) findViewById(R.id.tvAgree);

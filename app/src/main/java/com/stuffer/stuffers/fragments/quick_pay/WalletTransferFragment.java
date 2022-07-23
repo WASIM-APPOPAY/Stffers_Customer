@@ -513,14 +513,12 @@ public class WalletTransferFragment extends Fragment {
     }
 
     private void calculateCommission() {
-        ////Log.e(TAG, "calculateCommission: " + jsonCommission.toString());
         try {
             JSONObject jsonResult = jsonCommission.getJSONObject(AppoConstants.RESULT);
             float bankcommission = Float.parseFloat(jsonResult.getString(AppoConstants.BANKCOMMISSION));
             float processingCommission = Float.parseFloat(jsonResult.getString(AppoConstants.PROCESSINGFEES));
             float flatbankcomission = Float.parseFloat(jsonResult.getString(AppoConstants.FLATBANKCOMMISSION));
             float flatprocessingcomission = Float.parseFloat(jsonResult.getString(AppoConstants.FLATPROCESSINGFEES));
-            //float fundamount = Float.parseFloat(tvAmountCredit.getText().toString().trim());
             float fundamount = Float.parseFloat(edAmount.getText().toString().trim());
             float taxPercentage = Float.parseFloat(jsonResult.getString(AppoConstants.TAXPERCENTAGE));
             String taxon = jsonResult.getString(AppoConstants.TAXON);
@@ -539,17 +537,10 @@ public class WalletTransferFragment extends Fragment {
             if (taxon.equalsIgnoreCase(AppoConstants.FEES)) {
                 taxes = (float)Helper.getTwoDecimal(((processingfees * taxPercentage) / 100));
                 amountaftertax_fees = (float)Helper.getTwoDecimal(fundamount + ((processingfees * taxPercentage) / 100) + processingfees);
-                ////Log.e(TAG, "calculateCommission: if called");
             } else {
                 taxes = (float)Helper.getTwoDecimal((fundamount * taxPercentage) / 100);
-                //amountaftertax_fees = Helper.getTwoDecimal(fundamount + ((fundamount * taxPercentage) / 100) + processingfees);
                 amountaftertax_fees = (float)Helper.getTwoDecimal(fundamount + ((fundamount * taxPercentage) / 100));
-                ////Log.e(TAG, "calculateCommission: else caleed");
             }
-
-            ////Log.e(TAG, "calculateCommission: " + amountaftertax_fees);
-
-
             showYouAboutToPay();
 
         } catch (JSONException e) {

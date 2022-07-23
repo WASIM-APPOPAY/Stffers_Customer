@@ -53,13 +53,17 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
         <activity
+            android:screenOrientation="portrait"
+            android:name=".activity.cashSends.CashSend"
+            android:exported="false" />
+        <activity
             android:name=".activity.wallet.FundCountry"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.wallet.Registration"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.wallet.GenerateQrDynamicActivity"
             android:exported="false" />
@@ -311,9 +315,9 @@
             android:name=".activity.wallet.VerifyOtpActivity"
             android:windowSoftInputMode="stateHidden|adjustResize|adjustPan" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".activity.wallet.SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

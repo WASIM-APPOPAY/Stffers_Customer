@@ -41,6 +41,7 @@
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/activity_account.xml" value="0.12635869565217392" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/activity_camera.xml" value="0.13125" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/activity_cash_out.xml" value="0.196875" />
+        <entry key="..\:/StuffersAppopay/app/src/main/res/layout/activity_cash_send.xml" value="0.15476699444206926" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/activity_clients.xml" value="0.196875" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/activity_demo.xml" value="0.2" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/activity_document_scan.xml" value="0.1743659420289855" />
@@ -123,6 +124,7 @@
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_appo_pay.xml" value="0.196875" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_bank_child.xml" value="0.33" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_bar_code.xml" value="0.15806159420289856" />
+        <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_beneficiary_details.xml" value="0.2" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_bottom_account_created.xml" value="0.196875" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_bottom_additional.xml" value="0.15806159420289856" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_bottom_already.xml" value="0.2" />
@@ -142,6 +144,7 @@
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_chat2.xml" value="0.15806159420289856" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_chat_tab.xml" value="0.15806159420289856" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_country.xml" value="0.15476699444206926" />
+        <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_customer_details.xml" value="0.15476699444206926" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_customer_pay.xml" value="0.2" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_display_image.xml" value="0.15806159420289856" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_emv_qr.xml" value="0.15806159420289856" />
@@ -171,6 +174,7 @@
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_screenlock_update.xml" value="0.15806159420289856" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_search_customer_gift_card.xml" value="0.15806159420289856" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_select_image.xml" value="0.15806159420289856" />
+        <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_send_money_to_bank.xml" value="0.22" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_sent_gift_card.xml" value="0.15806159420289856" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_shop_item.xml" value="0.15806159420289856" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_shop_item_details.xml" value="0.15806159420289856" />
@@ -223,6 +227,7 @@
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/layout_dialog_areacode.xml" value="0.196875" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/layout_dialog_insurance.xml" value="0.196875" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/layout_profile_error_dialog.xml" value="0.196875" />
+        <entry key="..\:/StuffersAppopay/app/src/main/res/layout/layout_risk.xml" value="0.15476699444206926" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/my_toolbar.xml" value="0.196875" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/pay_now_activity.xml" value="0.12635869565217392" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/pay_user_activity.xml" value="0.15715579710144928" />
