@@ -8,7 +8,7 @@
     tools:context=".activity.cashSends.BeneficiaryDetails">
 
     <com.stuffer.stuffers.views.MyTextViewBold
-        android:id="@+id/cTvTitle"
+        android:id="@+id/tvTitleTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -16,6 +16,8 @@
         android:text="@string/info_payments_methods"
         android:textColor="@color/black"
         android:textSize="18sp" />
+
+
     <ScrollView
         android:layout_weight="1"
         android:layout_width="match_parent"
@@ -24,6 +26,179 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.stuffer.stuffers.views.MyTextViewBold
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:text="Sending Currency"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/tvSendingCurrency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center|center_vertical"
+                        android:hint="select currency"
+
+                        android:letterSpacing="0.2"
+
+                        android:minHeight="40dp"
+                        android:padding="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.stuffer.stuffers.views.MyTextViewBold
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="Destination Country"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/tvDestination"
+                        android:drawableEnd="@drawable/ic_dropdown"
+                        android:drawableTint="@color/black"
+                        android:textColor="@color/black"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+
+                        android:gravity="center_vertical"
+                        android:hint="select country"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.2"
+
+                        android:minHeight="40dp"
+                        android:padding="5dp"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.stuffer.stuffers.views.MyTextViewBold
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="Payment Mode"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/tvPaymentMode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:drawableEnd="@drawable/ic_dropdown"
+                        android:drawableTint="@color/black"
+                        android:gravity="center_vertical"
+
+                        android:hint="select mode"
+                        android:minHeight="40dp"
+
+                        android:padding="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.stuffer.stuffers.views.MyTextViewBold
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="Destination Currency"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/tvDesCurrency"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:textColor="@color/black"
+
+                        android:gravity="center_vertical"
+                        android:hint="select currency"
+                        android:letterSpacing="0.2"
+
+                        android:minHeight="40dp"
+                        android:padding="5dp"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_marginTop="5dp"
+                android:id="@+id/cTvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="8dp"
+                android:text="@string/info_payments_methods"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -55,9 +55,9 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
             return;
         }
         setContentView(R.layout.splash);
-        /*AppSignatureHelper mAppSignatureHelper = new AppSignatureHelper(AppoPayApplication.getInstance());
+        AppSignatureHelper mAppSignatureHelper = new AppSignatureHelper(AppoPayApplication.getInstance());
         ArrayList<String> appSignatures = mAppSignatureHelper.getAppSignatures();
-        Log.e(TAG, "onCreate: " + appSignatures.get(0));*/
+        Log.e(TAG, "onCreate: " + appSignatures.get(0));
 
         tvCheck = (CheckBox) findViewById(R.id.tvCheck);
         tvAgree = (MyTextView) findViewById(R.id.tvAgree);

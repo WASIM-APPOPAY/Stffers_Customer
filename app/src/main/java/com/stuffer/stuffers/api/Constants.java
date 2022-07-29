@@ -25,6 +25,9 @@ public class Constants {
     public static final String GET_LOGIN_DETAILS = "api/users/findbyMobile/{mobileno}/{areacode}/CUSTOMER";
     public static final String GET_COUNTRY_CODE = "api/configurations/country";
     public static final String POST_GENERATE_OTP = "api/otp/generateotp";
+    public static final String POST_GENERATE_SMS = "api/sms/send";
+    public static final String GET_VERIFY_SMS = "api/sms/verify/opt/{givenOtp}";
+
     public static final String POST_VERIFY_OTP = "api/otp/verifyOTP";
     public static final String CHECK_MOBILE_NUMBER = "api/users/checkmobile/{phone_number}/CUSTOMER";
     public static final String CHECK_EMIAL_ID = "api/users/verifyemail/{user_email}";

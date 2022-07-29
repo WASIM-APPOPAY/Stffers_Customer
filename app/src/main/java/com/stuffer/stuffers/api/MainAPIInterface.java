@@ -378,6 +378,10 @@ public interface MainAPIInterface<R extends Retrofit> {
     @POST(com.stuffer.stuffers.api.Constants.POST_VERIFY_OTP)
     Call<String> getVerificationStatus(@Body JsonObject body);
 
+    @GET(Constants.GET_VERIFY_SMS)
+    Call<JsonObject> verifiedGivenOtp(@Path("givenOtp") String otp);
+
+
 
     @Headers({
             "Accept: application/json",
@@ -385,6 +389,15 @@ public interface MainAPIInterface<R extends Retrofit> {
     })
     @POST(com.stuffer.stuffers.api.Constants.POST_GENERATE_OTP)
     Call<String> getOtpforUserVerificaiton(@Body JsonObject body);
+
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json"
+    })
+    @POST(com.stuffer.stuffers.api.Constants.POST_GENERATE_SMS)
+    Call<JsonObject> getOtpforUser(@Body JsonObject body);
+
+
 
 
     @GET(com.stuffer.stuffers.api.Constants.GET_COUNTRY_CODE)

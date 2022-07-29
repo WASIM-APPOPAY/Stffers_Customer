@@ -653,6 +653,7 @@ public class HomeFragment extends Fragment implements ShopListener {
                 }
             }
         });
+
         layoutMerchant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

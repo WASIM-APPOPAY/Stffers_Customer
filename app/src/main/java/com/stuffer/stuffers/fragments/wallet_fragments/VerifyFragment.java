@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.communicator.VerifiedListener;
 import com.stuffer.stuffers.utils.AppoConstants;
+import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
 
@@ -39,7 +41,7 @@ import retrofit2.Response;
 
 
 public class VerifyFragment extends Fragment {
-
+    private static final String TAG = "VerifyFragment";
     String mParamNameCode, mParamCountryCode, mParamMobile, mParamEmail, mParamAdd;
     View mView;
     private Timer newTimer;
@@ -115,7 +117,7 @@ public class VerifyFragment extends Fragment {
                     edtOtpNumber.setFocusable(true);
                     edtOtpNumber.setError(getString(R.string.info_enter_otp));
                 } else {
-                    confirmOtpRequest();
+                    getConfirmation();
                 }
                 //mVerifiedListener.onVerified(mParamNameCode, mParamCountryCode, mParamMobile);
             }
@@ -132,46 +134,32 @@ public class VerifyFragment extends Fragment {
         return mView;
     }
 
-    private void confirmOtpRequest() {
 
+    public void getConfirmation() {
         showProgress(getString(R.string.info_verifying_otp));
-        JsonObject params = new JsonObject();
-        params.addProperty("phone_number", "+" + mParamCountryCode + mParamMobile);
-        params.addProperty("otp_number", edtOtpNumber.getText().toString().trim());
-        //{"phone_number":"+919836683269"}
-        //{"otp_number":"986578"}
-
-
-        mainAPIInterface.getVerificationStatus(params).enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                hideProgress();
-                if (response.isSuccessful()) {
-                    if (response.body().equalsIgnoreCase("false")) {
-                        Toast.makeText(getActivity(), getString(R.string.info_verification_failed_given_otp), Toast.LENGTH_LONG).show();
-                    } else {
-                        mVerifiedListener.onVerified(mParamNameCode, mParamCountryCode, mParamMobile);
-
+        mainAPIInterface.verifiedGivenOtp(edtOtpNumber.getText().toString().trim())
+                .enqueue(new Callback<JsonObject>() {
+                    @Override
+                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                        hideProgress();
+                        if (response.isSuccessful()) {
+                            if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
+                                Helper.showLongMessage(getActivity(), "Successfully Verified!...");
+                                mVerifiedListener.onVerified(mParamNameCode, mParamCountryCode, mParamMobile);
+                            } else {
+                                if (response.body().get("result").getAsString().equalsIgnoreCase("failed")) {
+                                    Helper.showErrorMessage(getActivity(), response.body().get("message").getAsString());
+                                }
+                            }
+                        }
                     }
 
-                } else {
-                    if (newTimer != null) {
-                        newTimer.cancel();
-                        txtTimer.setVisibility(View.GONE);
+                    @Override
+                    public void onFailure(Call<JsonObject> call, Throwable t) {
+                        hideProgress();
+
                     }
-                    Toast.makeText(getActivity(), getString(R.string.info_verification_failed_given_otp), Toast.LENGTH_LONG).show();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                hideProgress();
-                //Log.e("tag", t.getMessage().toString());
-            }
-        });
-
-
+                });
     }
 
     public void showProgress(String msg) {
@@ -187,36 +175,34 @@ public class VerifyFragment extends Fragment {
         }
     }
 
+
     private void requestForOtp() {
-
-
         showProgress(getString(R.string.info_sending_otp));
         JsonObject param = new JsonObject();
+        param.addProperty("mobileNumber", mParamMobile);
+        param.addProperty("phoneCode", mParamCountryCode);
 
-        param.addProperty("phone_number", "+" + mParamCountryCode + mParamMobile);
-        //{"phone_number":"+919836683269"}
 
-        //Log.e("TAG", "requestForOtp: " + param.toString());
-
-        mainAPIInterface.getOtpforUserVerificaiton(param).enqueue(new Callback<String>() {
+        mainAPIInterface.getOtpforUser(param).enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 hideProgress();
                 if (response.isSuccessful()) {
-                    if (response.body().equalsIgnoreCase("0")) {
-                        Toast.makeText(getActivity(), getString(R.string.info_verify_your_phone_number2), Toast.LENGTH_LONG).show();
-                    } else {
+                    if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
                         startTimer();
-
+                    } else {
+                        if (response.body().get("result").getAsString().equalsIgnoreCase("failed")) {
+                            Helper.showErrorMessage(getActivity(), response.body().get("message").getAsString());
+                        }
                     }
-
                 } else {
                     Toast.makeText(getActivity(), getString(R.string.info_request_otp_failed), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e(TAG, "onFailure: " + t.getMessage());
                 hideProgress();
 
             }
@@ -242,7 +228,8 @@ public class VerifyFragment extends Fragment {
     };
 
     private void startTimer() {
-        seconds = 60;
+        seconds = 59;
+        minutes = 4;
         if (newTimer == null) {
             newTimer = new Timer();
         }
@@ -253,13 +240,14 @@ public class VerifyFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            txtTimer.setText(String.valueOf(minutes) + ":" + String.valueOf(seconds));
+                            txtTimer.setText(String.valueOf(minutes) + ":" + String.valueOf(seconds) + "s");
                             txtTimer.setVisibility(View.VISIBLE);
                             seconds -= 1;
-                            if (seconds == 0) {
+                            if (seconds == 0 && minutes == 0) {
                                 //btnResendOtp.setVisibility(View.VISIBLE);
                                 txtTimer.setText(String.valueOf(minutes) + ":" + String.valueOf(seconds));
-                                seconds = 60;
+                                seconds = 59;
+                                minutes = 4;
                                 txtTimer.setVisibility(View.GONE);
                                 //minutes = minutes - 1;
                                 newTimer.cancel();
@@ -267,6 +255,10 @@ public class VerifyFragment extends Fragment {
                                 llReOtp.setVisibility(View.VISIBLE);
                                 llVerificationOtp.setVisibility(View.GONE);
 
+
+                            } else if (seconds == 0 && minutes > 0) {
+                                seconds = 59;
+                                minutes = minutes - 1;
 
                             }
                         }
@@ -282,5 +274,11 @@ public class VerifyFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mVerifiedListener = (VerifiedListener) context;
+    }
+
+    public void inputOtp(String group) {
+        edtOtpNumber.setText(group);
+        getConfirmation();
+
     }
 }

@@ -17,10 +17,11 @@ import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.communicator.CalculationListener;
 import com.stuffer.stuffers.communicator.CountrySelectListener;
 import com.stuffer.stuffers.communicator.BeneficiaryListener;
+import com.stuffer.stuffers.communicator.DestinationListener;
 import com.stuffer.stuffers.communicator.ModeListener;
 import com.stuffer.stuffers.communicator.OnItemSelect;
 
-public class CashSend extends AppCompatActivity implements CountrySelectListener, OnItemSelect, BeneficiaryListener, CalculationListener, ModeListener {
+public class CashSend extends AppCompatActivity implements CountrySelectListener, OnItemSelect, BeneficiaryListener, CalculationListener, ModeListener, DestinationListener {
 
     private TextView toolbarTitle;
 
@@ -120,8 +121,16 @@ public class CashSend extends AppCompatActivity implements CountrySelectListener
     @Override
     public void onModeSelected(int pos) {
         Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.containerCashSend);
-        if (fragmentById instanceof SendMoneyToBank) {
-            ((SendMoneyToBank) fragmentById).hideModeDialog(pos);
+        if (fragmentById instanceof BeneficiaryDetails) {
+            ((BeneficiaryDetails) fragmentById).hideModeDialog(pos);
+        }
+    }
+
+    @Override
+    public void onDestinationSelect(String region, String country, String payoutCurrency) {
+        Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.containerCashSend);
+        if (fragmentById instanceof BeneficiaryDetails) {
+            ((BeneficiaryDetails) fragmentById).hideDestinationDialog(region,country,payoutCurrency);
         }
     }
 }

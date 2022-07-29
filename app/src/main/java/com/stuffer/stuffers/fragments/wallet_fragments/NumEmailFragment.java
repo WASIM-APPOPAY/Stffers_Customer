@@ -40,6 +40,7 @@ import com.stuffer.stuffers.fragments.bottom_fragment.BottomAlreadyFragment;
 import com.stuffer.stuffers.models.Country.CountryCodeResponse;
 import com.stuffer.stuffers.models.Country.Result;
 import com.stuffer.stuffers.utils.AppoConstants;
+import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.views.MyEditText;
 
 import org.json.JSONException;
@@ -71,7 +72,7 @@ public class NumEmailFragment extends Fragment {
     private ProgressDialog mProgress;
     MainAPIInterface mainAPIInterface;
     List<Result> mListCountry;
-    private Integer mCountyId=0;
+    private Integer mCountyId = 0;
 
     public NumEmailFragment() {
         // Required empty public constructor
@@ -111,7 +112,7 @@ public class NumEmailFragment extends Fragment {
                 mNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
                 mCountryName = edtCustomerCountryCode.getSelectedCountryName();
                 mEmail = edtEmail.getText().toString().trim();
-                if (edtCustomerMobileNumber.getText().toString().trim().isEmpty()) {
+                /*if (edtCustomerMobileNumber.getText().toString().trim().isEmpty()) {
                     edtCustomerMobileNumber.setError(getString(R.string.info_enter_mobile_number));
                     edtCustomerMobileNumber.requestFocus();
                     edtCustomerMobileNumber.setFocusable(true);
@@ -128,10 +129,11 @@ public class NumEmailFragment extends Fragment {
                     placesAutocomplete.requestFocus();
                     placesAutocomplete.setFocusable(true);
                     return;
-                }
+                }*/
                 //mOtpRequestListener.onOtpRequest("IN", "91", "9836683269", "mdwasim508@gmail.com", "bankra mondal para killa math kolkata 711403, West Bengal","27");
 
-                verifyMobileNumber(mCountryCode + mMobileNumber);
+                //verifyMobileNumber(mCountryCode + mMobileNumber);
+                requestForOtp();
             }
         });
         edtCustomerCountryCode.setExcludedCountries(getString(R.string.info_exclude_countries));
@@ -293,40 +295,37 @@ public class NumEmailFragment extends Fragment {
                 break;
             }
         }
-    requestForOtp();
+        requestForOtp();
 
     }
 
     private void requestForOtp() {
-
-
         showProgress(getString(R.string.info_sending_otp));
         JsonObject param = new JsonObject();
+        param.addProperty("mobileNumber",  mMobileNumber);
+        param.addProperty("phoneCode",  mCountryCode );
 
-        param.addProperty("phone_number", "+" + mCountryCode + mMobileNumber);
-        //{"phone_number":"+919836683269"}
 
-        //Log.e("TAG", "requestForOtp: " + param.toString());
-
-        mainAPIInterface.getOtpforUserVerificaiton(param).enqueue(new Callback<String>() {
+        mainAPIInterface.getOtpforUser(param).enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 hideProgress();
                 if (response.isSuccessful()) {
-                    if (response.body().equalsIgnoreCase("0")) {
-                        Toast.makeText(getActivity(), getString(R.string.info_verify_your_phone_number2), Toast.LENGTH_LONG).show();
-                    } else {
-
+                    if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
                         mOtpRequestListener.onOtpRequest(mNameCode, mCountryCode, mMobileNumber, mEmail, placesAutocomplete.getText().toString().trim(), String.valueOf(mCountyId));
+                    } else {
+                        if (response.body().get("result").getAsString().equalsIgnoreCase("failed")) {
+                            Helper.showErrorMessage(getActivity(), response.body().get("message").getAsString());
+                        }
                     }
-
                 } else {
                     Toast.makeText(getActivity(), getString(R.string.info_request_otp_failed), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e(TAG, "onFailure: " + t.getMessage());
                 hideProgress();
 
             }

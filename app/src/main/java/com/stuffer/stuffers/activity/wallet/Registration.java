@@ -1,13 +1,21 @@
 package com.stuffer.stuffers.activity.wallet;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.communicator.CarrierSelectListener;
@@ -17,12 +25,21 @@ import com.stuffer.stuffers.fragments.bottom.HomeFragment;
 import com.stuffer.stuffers.fragments.wallet_fragments.IdentityFragment;
 import com.stuffer.stuffers.fragments.wallet_fragments.NumEmailFragment;
 import com.stuffer.stuffers.fragments.wallet_fragments.VerifyFragment;
+import com.stuffer.stuffers.myService.AppSMSBroadcastReceiver;
+import com.stuffer.stuffers.myService.SMSReceiver;
 import com.stuffer.stuffers.utils.AppoConstants;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Registration extends AppCompatActivity implements OtpRequestListener, VerifiedListener, CarrierSelectListener {
     String mNameCode, mCountryCode, mMobileNo, mEmailId, mAddress, mCountryId;
     String[] descriptionData = {"Step One", "Step Two", "Step Three"};
     StateProgressBar stateProgressBar;
+    private SMSReceiver smsReceiver;
+    private static final String TAG = "Registration";
+    private AppSMSBroadcastReceiver appSMSBroadcastReceiver;
+    private IntentFilter intentFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +47,12 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         setContentView(R.layout.activity_registration);
         stateProgressBar = (StateProgressBar) findViewById(R.id.my_progress_bar_id);
         stateProgressBar.setStateDescriptionData(descriptionData);
+        smsListener();
+        initBroadCast();
+        registerReceiver(appSMSBroadcastReceiver, intentFilter);
         NumEmailFragment mNumEmailFragment = new NumEmailFragment();
         intiFragment(mNumEmailFragment);
+
 
     }
 
@@ -64,7 +85,7 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
 
     @Override
     public void onOtpRequest(String nameCode, String countryCode, String mobileNumber, String emailId, String address, String countryId) {
-         state(1);
+        state(1);
         mNameCode = nameCode;
         mCountryCode = countryCode;
         mMobileNo = mobileNumber;
@@ -82,6 +103,7 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         VerifyFragment mVerifyFragment = new VerifyFragment();
         mVerifyFragment.setArguments(mBundle);
         intiFragment(mVerifyFragment);
+
 
     }
 
@@ -122,10 +144,10 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
                 Log.d("message", "popping backstack");
                 getSupportFragmentManager().popBackStack();
                 Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.containerSignUp);
-                if (fragmentById instanceof VerifyFragment){
+                if (fragmentById instanceof VerifyFragment) {
                     state(1);
                     stateProgressBar.checkStateCompleted(false);
-                }else if (fragmentById instanceof NumEmailFragment){
+                } else if (fragmentById instanceof NumEmailFragment) {
                     state(1);
                     stateProgressBar.checkStateCompleted(false);
                 }
@@ -138,4 +160,60 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         }
 
     }
+
+
+    private void showToast(String msg) {
+        Toast.makeText(Registration.this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    //#]Your OTP is:845285,3z8jiQN9JSV
+    private void initBroadCast() {
+        intentFilter = new IntentFilter("com.google.android.gms.auth.api.phone.SMS_RETRIEVED");
+        appSMSBroadcastReceiver = new AppSMSBroadcastReceiver();
+        appSMSBroadcastReceiver.setOnSmsReceiveListener(new AppSMSBroadcastReceiver.OnSmsReceiveListener() {
+            @Override
+            public void onReceive(String messageCode) {
+                Log.e(TAG, "onReceive: " + messageCode);
+                Toast.makeText(Registration.this, messageCode, Toast.LENGTH_SHORT).show();
+
+                Pattern otpPattern=Pattern.compile("(|^)\\d{6}");
+                Matcher matcher=otpPattern.matcher(messageCode);
+                Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.containerSignUp);
+                if (fragmentById instanceof VerifyFragment) {
+                    if (matcher.find()) {
+                        String group = matcher.group(0);
+                        ((VerifyFragment) fragmentById).inputOtp(group);
+                    }
+                }
+            }
+        });
+
+    }
+
+    private void smsListener() {
+        SmsRetrieverClient client = SmsRetriever.getClient(this);
+        client.startSmsRetriever();
+    }
+
+
+
+    /*@Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(appSMSBroadcastReceiver, intentFilter);
+    }*/
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(appSMSBroadcastReceiver);
+    }
+
+    /*@Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(appSMSBroadcastReceiver);
+    }*/
+
+
 }

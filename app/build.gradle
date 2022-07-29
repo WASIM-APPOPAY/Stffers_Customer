@@ -192,11 +192,17 @@ dependencies {
 
     implementation 'io.card:android-sdk:5.5.1'
     implementation 'com.kofigyan.stateprogressbar:stateprogressbar:1.0.0'
-
+    implementation 'com.google.android.gms:play-services-base:18.1.0'
     //implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.10'
     /*implementation 'org.bouncycastle:bcprov-jdk15on:1.60'
     implementation 'com.j256.ormlite:ormlite-core:5.1'
     implementation 'com.j256.ormlite:ormlite-android:5.1'
     implementation 'com.google.guava:guava:26.0-android'*/
+    implementation 'com.google.android.gms:play-services-auth:20.2.0'
+    implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
+
+    // Note: If you have migrated your code to AndroidX than add this for LocalBroadCastManager
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+
 }
 apply plugin: 'com.google.gms.google-services'

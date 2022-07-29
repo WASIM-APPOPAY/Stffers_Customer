@@ -533,6 +533,16 @@
         <service
             android:name=".asyntask.MyJobIntentService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <!--<receiver
+            android:name=".myService.SMSReceiver"
+            android:exported="true"
+            android:permission="com.google.android.gms.auth.api.phone.permission.SEND"
+            >
+            <intent-filter>
+                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
+            </intent-filter>
+        </receiver>-->
     </application>
 
 </manifest>

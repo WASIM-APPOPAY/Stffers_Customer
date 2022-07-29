@@ -20,7 +20,7 @@ import com.stuffer.stuffers.views.MyTextViewBold;
 import java.util.ArrayList;
 
 
-public class SendMoneyToBank extends Fragment implements View.OnClickListener {
+public class SendMoneyToBank extends Fragment {//implements View.OnClickListener {
 
 
     private View mView;
@@ -48,14 +48,14 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_send_money_to_bank, container, false);
-        tvTitleTop = mView.findViewById(R.id.tvTitleTop);
+        //tvTitleTop = mView.findViewById(R.id.tvTitleTop);
         tvTitleBottom = mView.findViewById(R.id.tvTitleBottom);
-        tvSendingCurrency = mView.findViewById(R.id.tvSendingCurrency);
-        tvPaymentMode = mView.findViewById(R.id.tvPaymentMode);
-        tvPaymentMode.setOnClickListener(this);
-        tvTitleTop.setText(Html.fromHtml("<u>" + getString(R.string.info_destination_details) + "</u>"));
+        //tvSendingCurrency = mView.findViewById(R.id.tvSendingCurrency);
+        //tvPaymentMode = mView.findViewById(R.id.tvPaymentMode);
+        //tvPaymentMode.setOnClickListener(this);
+        //tvTitleTop.setText(Html.fromHtml("<u>" + getString(R.string.info_destination_details) + "</u>"));
         tvTitleBottom.setText(Html.fromHtml("<u>" + getString(R.string.info_payment_details) + "</u>"));
-        setDetails();
+        //setDetails();
         return mView;
     }
 
@@ -74,12 +74,12 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
         mModeDialog.show(getChildFragmentManager(), mModeDialog.getTag());
     }
 
-    private void setDetails() {
+    /*private void setDetails() {
         String currencySymbol = Helper.getCurrencySymble();
         tvSendingCurrency.setText(currencySymbol);
-    }
+    }*/
 
-    @Override
+   /* @Override
     public void onClick(View view) {
         if (view.getId() == R.id.tvPaymentMode) {
             showModeDialog();
@@ -92,5 +92,5 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
             mModeDialog=null;
         }
         tvPaymentMode.setText(mModeList.get(pos));
-    }
+    }*/
 }

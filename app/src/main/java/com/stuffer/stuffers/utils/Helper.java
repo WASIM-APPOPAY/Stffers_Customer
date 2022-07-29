@@ -270,6 +270,11 @@ public class Helper {
     public static void showErrorMessage(Context context, String message) {
         Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
     }
+    public static void showLongMessage(Context context, String message) {
+        Toast.makeText(context, "" + message, Toast.LENGTH_LONG).show();
+    }
+
+
 
     /**
      * @param dateString
