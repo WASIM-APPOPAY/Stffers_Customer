@@ -5,6 +5,7 @@ import static com.stuffer.stuffers.utils.DataVaultManager.TANDC;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.MyContextWrapper;
 import com.stuffer.stuffers.R;
@@ -76,6 +79,8 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
                     return;
                 }
                 setupUI();
+               /* boolean smsRetrieverApiAvailable = isSmsRetrieverApiAvailable(SplashActivity.this);
+                Log.e(TAG, "onClick: "+String.valueOf(smsRetrieverApiAvailable) );*/
             }
         });
 
@@ -101,6 +106,28 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
         });
 
 
+    }
+
+    private static final String MIN_SUPPORTED_PLAY_SERVICES_VERSION = "10.2";
+
+    public static boolean isSmsRetrieverApiAvailable(Context context) {
+
+        if (!isPlayServicesAvailable(context)) {
+            return false;
+        }
+
+        try {
+            String playServicesVersionName = context.getPackageManager().getPackageInfo(GoogleApiAvailability.GOOGLE_PLAY_SERVICES_PACKAGE, 0).versionName; // should be >10.2.0
+            return playServicesVersionName.compareTo(MIN_SUPPORTED_PLAY_SERVICES_VERSION) > 0;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
+    private static boolean isPlayServicesAvailable(Context context) {
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = googleApiAvailability.isGooglePlayServicesAvailable(context);
+        return resultCode == ConnectionResult.SUCCESS;
     }
 
     private void showLanDialogue() {
@@ -145,6 +172,27 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
 
     }
 
+    // 1. Enter Autorization No
+    // 2. Enter Autorization No Cancel
+    /*
+    {
+    "payInCurrency": "USD",
+    "payoutCurrency": "INR",
+    "transferCurrency": "USD",
+    "transferAmount": "100",
+    "paymentMode": "Bank"
+    }
+     */
+    /*
+
+    {
+  "payInCurrency": "INR",
+  "paymentMode": "Bank",
+  "payoutCurrency": "USD",
+  "transferAmount": "100",
+  "transferCurrency": "INR"
+}
+     */
 
     @Override
     public void onLanguageSelect(String lan) {

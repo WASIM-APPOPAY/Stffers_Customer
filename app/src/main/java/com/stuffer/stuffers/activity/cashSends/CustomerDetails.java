@@ -40,7 +40,7 @@ public class CustomerDetails extends Fragment implements View.OnClickListener {
 
 
     private View mView;
-    MyTextView cTvName, cTvDob, cTvAddress, cTvMobile, cTvPhone, cTvNational, cTvRisk, cBtnNext;
+    MyTextView cTvName, cTvDob, cTvAddress, cTvMobile, cTvPhone, cTvNational, cBtnNext;
     MyTextViewBold cTvTitle;
     private ProgressDialog mProgress;
     private MainAPIInterface mainAPIInterface;
@@ -75,10 +75,10 @@ public class CustomerDetails extends Fragment implements View.OnClickListener {
         cTvMobile = mView.findViewById(R.id.cTvMobile);
         cTvNational = mView.findViewById(R.id.cTvNational);
         cTvPhone = mView.findViewById(R.id.cTvPhone);
-        cTvRisk = mView.findViewById(R.id.cTvRisk);
+
         cBtnNext = mView.findViewById(R.id.cBtnNext);
         cTvNational.setOnClickListener(this);
-        cTvRisk.setOnClickListener(this);
+
         cBtnNext.setOnClickListener(this);
 
         setDetails();
@@ -162,11 +162,11 @@ public class CustomerDetails extends Fragment implements View.OnClickListener {
                 countryDialogFragment.show(getChildFragmentManager(), countryDialogFragment.getTag());
 
             }
-        } else if (view.getId() == R.id.cTvRisk) {
+        } /*else if (view.getId() == R.id.cTvRisk) {
             mRiskLevel = new RiskDialog();
             mRiskLevel.setCancelable(false);
             mRiskLevel.show(getChildFragmentManager(), mRiskLevel.getTag());
-        } else if (view.getId() == R.id.cBtnNext) {
+        } */else if (view.getId() == R.id.cBtnNext) {
 
             mListener.onBeneficiaryRequest();
         }
@@ -188,7 +188,7 @@ public class CustomerDetails extends Fragment implements View.OnClickListener {
         if (mRiskLevel != null) {
             mRiskLevel.dismiss();
         }
-        cTvRisk.setText("Natural Person.");
+        //cTvRisk.setText("Natural Person.");
 
     }
 

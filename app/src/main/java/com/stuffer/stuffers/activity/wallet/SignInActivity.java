@@ -212,7 +212,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
             }
         });
         //a958b66129babb52
-        MerchantPresentedMode decode = DecoderMpm.decode("00020101021215312500034400020344100000000000006520459725303344540115802HK5913Test Merchant6002HK626001200000000000000000000005200000000000000000000007080000001063045855", MerchantPresentedMode.class);
+        //MerchantPresentedMode decode = DecoderMpm.decode("00020101021215312500034400020344100000000000006520459725303344540115802HK5913Test Merchant6002HK626001200000000000000000000005200000000000000000000007080000001063045855", MerchantPresentedMode.class);
         //MerchantPresentedMode decode = DecoderMpm.decode("00020101021215314701034400020344001584054110306520453995303840540510.005802US5918UPI QRC test K 8406009test city62600120202109142058300020350520202109142058300020350708000100016304E2FB", MerchantPresentedMode.class);
         //String param = new Gson().toJson(decode);
         //Log.e(TAG, "onCreate: " + param);
@@ -269,91 +269,9 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         Log.e("TAG", "getRandomNumberString: " + String.format("%06d", number));
     }
 
-/*    public void verifyEmailId(String emailId) {
-        dialog = new ProgressDialog(SignInActivity.this);
-        dialog.setMessage(getString(R.string.info_verifying_email));
-        dialog.show();
-
-        mainAPIInterface.getEmailIdStatus(emailId).enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                dialog.dismiss();
-                if (response.isSuccessful()) {
-                    String str = new Gson().toJson(response.body());
-                    try {
-                        JSONObject jsonObject = new JSONObject(str);
-                        if (jsonObject.get("message").equals(AppoConstants.SUCCESS) && !jsonObject.getBoolean("result")) {
-                            //Log.e("TAG", "onResponse: Email " + jsonObject.toString());
-                            //createNewUser();
-                        } else {
-                            Toast.makeText(SignInActivity.this, getString(R.string.error_email_already_exists), Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                } else {
-                    Toast.makeText(SignInActivity.this, getString(R.string.error_email_verification_failed), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("tag", t.getMessage().toString());
-                dialog.dismiss();
-
-            }
-        });
-
-    }*/
-
-    public void create() {
-        String strUserEmail = "support@appopay.com";
-        String phWithCode = "50763516303";
-        mAuth.createUserWithEmailAndPassword(strUserEmail, phWithCode)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                            String userid = firebaseUser.getUid();
-                            reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
-
-                            HashMap<String, String> hashMap = new HashMap<>();
-                            hashMap.put("id", userid);
-                            hashMap.put("username", "Mohamad Alharazi");
-                            hashMap.put("imageURL", "default");
-                            hashMap.put("verification", "verified");
-                            hashMap.put("email_id", strUserEmail);
-                            hashMap.put("phone_number", phWithCode);
-                            hashMap.put("search", "Mohamad Alharazi".toString().trim().toLowerCase());
-
-                            reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
-                                        //dialog.dismiss();
-                                        Intent intent = new Intent(SignInActivity.this, SignInActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                }
-                            });
 
 
-                        } else {
 
-                            Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
-                            //dialog.dismiss();
-                            Intent intent = new Intent(SignInActivity.this, SignInActivity.class);
-                            startActivity(intent);
-                            finish();
-
-                        }
-                    }
-                });
-    }
 
     private void userMapping() {
         dialog = new ProgressDialog(SignInActivity.this);
@@ -497,7 +415,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                 if (response.isSuccessful()) {
                     try {
                         JSONObject mPrev = new JSONObject(body.toString());
-                        Log.e(TAG, "onResponse: " + mPrev.toString());
+                        //Log.e(TAG, "onResponse: " + mPrev.toString());
                         if (mPrev.getString("message").equalsIgnoreCase("success")) {
                             String jsonUserDetails = mPrev.toString();
                             //Log.e(TAG, "onResponse: 2" + jsonUserDetails);

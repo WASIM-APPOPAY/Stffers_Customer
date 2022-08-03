@@ -1,136 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#e8e8e8">
-
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar"></include>
-
-    <LinearLayout
-        android:id="@+id/lin1"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/rect"
-        android:orientation="vertical"
-        android:paddingBottom="10dp">
+        android:layout_height="match_parent"
+        android:background="#e8e8e8">
 
-        <com.stuffer.stuffers.views.MyTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:text="Thanks for order!"
-            android:textColor="@color/Tex"
-            android:textSize="25dp" />
-
-        <View
-
-            android:layout_width="250dp"
-            android:layout_height="5dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/dash_line" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="200dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:src="@mipmap/ic_thank_you" />
-
-        <View
-            android:layout_width="250dp"
-            android:layout_height="5dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/dash_line" />
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"></include>
 
         <LinearLayout
+            android:id="@+id/lin1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="05dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rect"
             android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"
-            android:paddingRight="10dp">
+            android:paddingBottom="10dp">
 
-            <LinearLayout
+            <com.stuffer.stuffers.views.MyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="10dp">
-
-                <com.stuffer.stuffers.views.MyTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="1x"
-                    android:textColor="@color/textSub"
-                    android:textSize="20dp"
-                    android:visibility="invisible" />
-
-                <com.stuffer.stuffers.views.MyTextView
-                    android:id="@+id/thanksProductName"
-                    android:layout_width="160dp"
-                    android:layout_height="8dp"
-                    android:layout_marginLeft="10dp"
-                    android:text="Product name"
-                    android:textColor="@color/textSub"
-                    android:textSize="18dp" />
-
-                <com.stuffer.stuffers.views.MyTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginLeft="25dp"
-                    android:text="46,500 RS"
-                    android:textColor="@color/textSub"
-                    android:textSize="18dp"
-                    android:visibility="invisible" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
-
-
-                <com.stuffer.stuffers.views.MyTextView
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="Delivery Address"
-                    android:textColor="@color/textSub"
-                    android:textSize="10dp"
-                    android:textStyle="italic" />
-
-                <com.stuffer.stuffers.views.MyTextView
-                    android:id="@+id/deliveryAddress"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginTop="10dp"
-                    android:text="Mumbra, Thane"
-                    android:textColor="@color/textSub"
-                    android:textSize="14dp"
-                    android:textStyle="italic|bold" />
-
-
-            </LinearLayout>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:text="Thanks for order!"
+                android:textColor="@color/Tex"
+                android:textSize="25dp" />
 
             <View
 
+                android:layout_width="250dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/dash_line" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="200dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:src="@mipmap/ic_thank_you" />
+
+            <View
                 android:layout_width="250dp"
                 android:layout_height="5dp"
                 android:layout_gravity="center"
@@ -139,71 +55,290 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="05dp"
-                android:orientation="horizontal"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp">
 
-                android:paddingTop="10dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp">
 
-                <com.stuffer.stuffers.views.MyTextView
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:text="1x"
+                        android:textColor="@color/textSub"
+                        android:textSize="20dp"
+                        android:visibility="invisible" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/thanksProductName"
+                        android:layout_width="160dp"
+                        android:layout_height="8dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="Product name"
+                        android:textColor="@color/textSub"
+                        android:textSize="18dp" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="25dp"
+                        android:text="46,500 RS"
+                        android:textColor="@color/textSub"
+                        android:textSize="18dp"
+                        android:visibility="invisible" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:text="Delivery Address"
+                        android:textColor="@color/textSub"
+                        android:textSize="10dp"
+                        android:textStyle="italic" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/deliveryAddress"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="10dp"
+                        android:text="Mumbra, Thane"
+                        android:textColor="@color/textSub"
+                        android:textSize="14dp"
+                        android:textStyle="italic|bold" />
+
+
+                </LinearLayout>
+
+                <View
+
+                    android:layout_width="250dp"
+                    android:layout_height="5dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/dash_line" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="4"
-                    android:gravity="center"
-                    android:text="TOTAL"
-                    android:textColor="@color/textSub"
-                    android:textSize="16sp" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="05dp"
+                    android:orientation="horizontal"
 
-                <com.stuffer.stuffers.views.MyTextView
-                    android:id="@+id/totalAmount"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
+                    android:paddingTop="10dp">
 
-                    android:gravity="right"
-                    android:text="$1"
-                    android:textColor="@color/red"
-                    android:textSize="25dp" />
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="4"
+                        android:gravity="center"
+                        android:text="TOTAL"
+                        android:textColor="@color/textSub"
+                        android:textSize="16sp" />
 
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/totalAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+
+                        android:gravity="right"
+                        android:text="$1"
+                        android:textColor="@color/red"
+                        android:textSize="25dp" />
+
+
+                </LinearLayout>
 
             </LinearLayout>
+
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/txtYourOrderSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/orange_click_bg"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp"
+                android:text="Go To Your Orders"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
 
         </LinearLayout>
 
 
-        <com.stuffer.stuffers.views.MyTextView
-            android:id="@+id/txtYourOrderSection"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/orange_click_bg"
-            android:gravity="center"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="10dp"
-            android:text="Go To Your Orders"
-            android:textColor="@color/white"
-            android:textSize="18dp" />
-
-    </LinearLayout>
+            android:layout_below="@+id/lin1"
+            android:layout_alignStart="@+id/lin1"
+            android:layout_alignLeft="@+id/lin1"
+            android:layout_alignEnd="@+id/lin1"
+            android:layout_alignRight="@+id/lin1"
+            android:src="@drawable/line" />
 
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lin1"
-        android:layout_alignStart="@+id/lin1"
-        android:layout_alignLeft="@+id/lin1"
-        android:layout_alignEnd="@+id/lin1"
-        android:layout_alignRight="@+id/lin1"
-        android:src="@drawable/line" />
+    </RelativeLayout>
+<!--
+    <?xml version="1.0"?>
+<soapenv:Envelope
+xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+xmlns:ser="Ser">
+<soapenv:Header/>
+<soapenv:Body>
+    <ser:SendTransfer>
+        &lt;!&ndash;Optional:&ndash;&gt;
+        <ser:Req>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Credentials>
+                <ser:PartnerCode>********</ser:PartnerCode>
+                &lt;!&ndash;Optional:&ndash;&gt;
+                <ser:UserName>********</ser:UserName>
+                &lt;!&ndash;Optional:&ndash;&gt;
+                <ser:UserPassword>********</ser:UserPassword>
+            </ser:Credentials>
+
+            &lt;!&ndash;Optional:&ndash;&gt;
+
+            <ser:ClientTxnNO></ser:ClientTxnNO>
+            &lt;!&ndash;Optional:&ndash;&gt;
 
 
-</RelativeLayout>
+
+            <ser:PayOutCurrency>INR</ser:PayOutCurrency>
+
+            <ser:TransferAmount>100</ser:TransferAmount>
+
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Payout_Partner_Unique_Code>0</ser:Payout_Partner_Unique_Code>
+            &lt;!&ndash;Optional:&ndash;&gt;
+
+            <ser:Payout_Country>IND</ser:Payout_Country>
+
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Remitter_First_Name>Sender_FirstName</ser:Remitter_First_Name>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Remitter_Last_Name>Sender_LastName</ser:Remitter_Last_Name>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Remitter_TelNo>3454356435</ser:Remitter_TelNo>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Remitter_MobileNo>3454356435</ser:Remitter_MobileNo>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Remitter_Email>abc@gmail.com</ser:Remitter_Email>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Remitter_Address1>Demo Address</ser:Remitter_Address1>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Remitter_Address2></ser:Remitter_Address2>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Remitter_Address3></ser:Remitter_Address3>
+            <ser:Remitter_IDType>4</ser:Remitter_IDType>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Remitter_IDDesc>ID</ser:Remitter_IDDesc>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Remitter_IDNumber>R9811169Rr4WF</ser:Remitter_IDNumber>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Remitter_IDType_IssueDate>10-05-2020</ser:Remitter_IDType_IssueDate>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Remitter_IDType_ExpiryDate>10-07-2025</ser:Remitter_IDType_ExpiryDate>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Remitter_DOB>05-10-1989</ser:Remitter_DOB>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Remitter_Gender></ser:Remitter_Gender>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Remitter_Nationality>IND</ser:Remitter_Nationality>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:CustomerRelation>16</ser:CustomerRelation>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Message_ToBeneficiary></ser:Message_ToBeneficiary>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Beneficiary_First_Name>Bene_FirstName</ser:Beneficiary_First_Name>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Beneficiary_Last_Name>Bene_lastName</ser:Beneficiary_Last_Name>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Beneficiary_TelNo>913453457545</ser:Beneficiary_TelNo>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Beneficiary_MobileNo>3454356435</ser:Beneficiary_MobileNo>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Beneficiary_Email></ser:Beneficiary_Email>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Beneficiary_Address1>Mumbai</ser:Beneficiary_Address1>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Beneficiary_Address2></ser:Beneficiary_Address2>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Beneficiary_Address3>626204</ser:Beneficiary_Address3>
+            <ser:Beneficiary_IDType>0</ser:Beneficiary_IDType>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Beneficiary_IDDesc></ser:Beneficiary_IDDesc>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Beneficiary_IDNumber></ser:Beneficiary_IDNumber>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Beneficiary_IDType_IssueDate></ser:Beneficiary_IDType_IssueDate>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Beneficiary_IDType_ExpiryDate></ser:Beneficiary_IDType_ExpiryDate>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Beneficiary_DOB></ser:Beneficiary_DOB>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Beneficiary_Gender></ser:Beneficiary_Gender>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Beneficiary_Nationality>IND</ser:Beneficiary_Nationality>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Benficiary_BankCode>988148</ser:Benficiary_BankCode>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:PaymentMode>BANK</ser:PaymentMode>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Benificiary_BankAcNo>65476547645754</ser:Benificiary_BankAcNo>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Benificiary_BankAcName>AXIS BANK</ser:Benificiary_BankAcName>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Benificiary_BankAddress1>Mumbai</ser:Benificiary_BankAddress1>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Benificiary_BankAddress2></ser:Benificiary_BankAddress2>
+            <ser:PurposeCode>20</ser:PurposeCode>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Payin_Country>GBR</ser:Payin_Country>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Payin_Currency>USD</ser:Payin_Currency>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Settlement_Currency>INR</ser:Settlement_Currency>
+            <ser:Remitter_PayIn_Amt>100</ser:Remitter_PayIn_Amt>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:Msg_PayOut_Branch></ser:Msg_PayOut_Branch>
+            <ser:Contact_Benificiary>false</ser:Contact_Benificiary>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:RPTNO>0</ser:RPTNO>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:SourceofIncome>6</ser:SourceofIncome>
+            &lt;!&ndash;Optional:&ndash;&gt;
+            <ser:UserID></ser:UserID>
+        </ser:Req>
+    </ser:SendTransfer>
+</soapenv:Body>
+</soapenv:Envelope>-->

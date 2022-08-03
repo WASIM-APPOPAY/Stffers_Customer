@@ -234,6 +234,8 @@ public class AppoConstants {
     public static final String PARAM = "param";
     public static final String AVATAR = "avatar";
     public static final String RECEIVERIMAGE = "receiverimage";
+    public static final String SENDERCURRENCY = "sendercurrency";
+    public static final String RECEIVERCURRENCY = "receivercurrency";
 
 
     //DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");;

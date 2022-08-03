@@ -49,13 +49,14 @@
                         android:textSize="18sp" />
 
                     <com.stuffer.stuffers.views.MyTextView
+                        android:layout_marginEnd="10dp"
                         android:id="@+id/tvSendingCurrency"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:gravity="center|center_vertical"
-                        android:hint="select currency"
+
 
                         android:letterSpacing="0.2"
 
@@ -382,7 +383,7 @@
                             android:textSize="16sp" />
 
                         <com.stuffer.stuffers.views.MyTextViewBold
-                            android:id="@+id/cBtnNext"
+                            android:id="@+id/tvFetchBank"
                             style="@style/MaterialButton1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

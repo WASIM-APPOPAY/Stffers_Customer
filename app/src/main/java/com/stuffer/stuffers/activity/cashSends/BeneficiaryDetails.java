@@ -45,14 +45,15 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
     MyTextViewBold cTvTitle;
     private CalculationListener mListener;
     private MyTextView bBtnNext;
-    private MyTextViewBold tvTitleTop;
+    private MyTextViewBold tvTitleTop, tvFetchBank;
     private ArrayList<String> mModeList;
     private ModeDialog mModeDialog;
-    private MyTextView tvSendingCurrency, tvPaymentMode, tvDestination,tvDesCurrency;
+    private MyTextView tvSendingCurrency, tvPaymentMode, tvDestination, tvDesCurrency;
     private ProgressDialog mLoader;
     List<DetinationCurrency.Result> mListDestination;
     private static final String TAG = "BeneficiaryDetails";
     private DestinationDialog mDestinationDialog;
+    private String mPayOut;
 
     public BeneficiaryDetails() {
         // Required empty public constructor
@@ -74,6 +75,7 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_beneficiary_details, container, false);
         tvTitleTop = mView.findViewById(R.id.tvTitleTop);
+        tvFetchBank = mView.findViewById(R.id.tvFetchBank);
         cTvTitle = mView.findViewById(R.id.cTvTitle);
         tvSendingCurrency = mView.findViewById(R.id.tvSendingCurrency);
         tvDestination = mView.findViewById(R.id.tvDestination);
@@ -82,6 +84,7 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
         tvPaymentMode.setOnClickListener(this);
         bBtnNext = mView.findViewById(R.id.bBtnNext);
         bBtnNext.setOnClickListener(this);
+        tvFetchBank.setOnClickListener(this);
         tvDestination.setOnClickListener(this);
         cTvTitle.setText(Html.fromHtml("<u>" + getString(R.string.info_benifi_details) + "</u>"));
         tvTitleTop.setText(Html.fromHtml("<u>" + getString(R.string.info_destination_details) + "</u>"));
@@ -117,7 +120,7 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
                             Gson gson = new Gson();
                             Type type = new TypeToken<List<DetinationCurrency.Result>>() {
                             }.getType();
-                            mListDestination=new ArrayList<>();
+                            mListDestination = new ArrayList<>();
                             List<DetinationCurrency.Result> mListTemp = gson.fromJson(String.valueOf(result), type);
                             for (int i = 0; i < mListTemp.size(); i++) {
                                 if (mListTemp.get(i).getModalities().equalsIgnoreCase("All Banks")) {
@@ -158,12 +161,48 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.bBtnNext) {
-            mListener.onCalculationRequest();
+            if (tvDestination.getText().toString().trim().isEmpty()) {
+                Helper.showLongMessage(getActivity(), "PLEASE select Destination Country");
+                return;
+            }
+            mListener.onCalculationRequest(Helper.getCurrencySymble(), mPayOut);
         } else if (view.getId() == R.id.tvPaymentMode) {
             showModeDialog();
         } else if (view.getId() == R.id.tvDestination) {
             showDestinationCountry();
-        }
+        } /*else if (view.getId() == R.id.tvFetchBank) {
+            JSONObject mRequestIFSCbody = new JSONObject();
+            try {
+                mRequestIFSCbody.put("bankName", "string");
+                mRequestIFSCbody.put("branchIfsc", "SBIN0008209");
+                mRequestIFSCbody.put("branchName", "string");
+                mRequestIFSCbody.put("city", "string");
+                mRequestIFSCbody.put("countryCode", "IND");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }*/
+    }
+
+    private void getBankDetailsByIFSC() {
+        showLoading(getString(R.string.info_please_wait_dots));
+        AndroidNetworking.post("http://3.140.192.123:8080/api/transfer/getBankNetworkList")
+             //   .addJSONObjectBody()
+                .build().getAsJSONObject(new JSONObjectRequestListener() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+            }
+
+            @Override
+            public void onError(ANError anError) {
+
+            }
+        });
+
     }
 
     private void showDestinationCountry() {
@@ -201,8 +240,9 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
     public void hideDestinationDialog(String region, String country, String payoutCurrency) {
         if (mDestinationDialog != null)
             mDestinationDialog.dismiss();
-        Log.e(TAG, "hideDestinationDialog: "+region );
-        tvDesCurrency.setText("Payout Currency : "+payoutCurrency);
+        Log.e(TAG, "hideDestinationDialog: " + region);
+        mPayOut = payoutCurrency;
+        tvDesCurrency.setText("Payout Currency : " + payoutCurrency);
         tvDestination.setText(country);
 
     }
