@@ -270,10 +270,10 @@ public class Helper {
     public static void showErrorMessage(Context context, String message) {
         Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
     }
+
     public static void showLongMessage(Context context, String message) {
         Toast.makeText(context, "" + message, Toast.LENGTH_LONG).show();
     }
-
 
 
     /**
@@ -3032,7 +3032,7 @@ public class Helper {
 
     public static String getDateOfBirth(String dob) {
         //milliseconds
-        Log.e(TAG, "getDateOfBirth: "+dob);
+        Log.e(TAG, "getDateOfBirth: " + dob);
         long milliSec = Long.parseLong(dob);
 
         // Creating date format
@@ -3049,6 +3049,16 @@ public class Helper {
         Log.e(TAG, "getTimeDateOther: " + simple.format(result));
 
         return simple.format(result);
+    }
+
+    public static String beneficiaryFirstName(String mRecName) {
+        String[] s = mRecName.split(" ");
+        return s[0];
+    }
+
+    public static String beneficiaryLastName(String mRecName) {
+        String[] s = mRecName.split(" ");
+        return s[s.length - 1];
     }
 }
 

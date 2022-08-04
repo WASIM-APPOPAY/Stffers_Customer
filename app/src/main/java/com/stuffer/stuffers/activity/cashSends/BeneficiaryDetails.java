@@ -27,6 +27,7 @@ import com.stuffer.stuffers.fragments.dialog.ModeDialog;
 import com.stuffer.stuffers.models.output.DetinationCurrency;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.Helper;
+import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
 import com.stuffer.stuffers.views.MyTextViewBold;
 
@@ -54,6 +55,8 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
     private static final String TAG = "BeneficiaryDetails";
     private DestinationDialog mDestinationDialog;
     private String mPayOut;
+    private String mCountryNameCode;
+    private MyEditText bEdIfsc, bEdFullName, bEdBankName, bEdAcNo, bEdBranch;
 
     public BeneficiaryDetails() {
         // Required empty public constructor
@@ -63,10 +66,10 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
+        if (getArguments() != null) {
+            mCountryNameCode = getArguments().getString(AppoConstants.COUNTRYNAMECODE);
+
+        }
     }
 
     @Override
@@ -81,6 +84,13 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
         tvDestination = mView.findViewById(R.id.tvDestination);
         tvDesCurrency = mView.findViewById(R.id.tvDesCurrency);
         tvPaymentMode = mView.findViewById(R.id.tvPaymentMode);
+        bEdIfsc = mView.findViewById(R.id.bEdIfsc);
+        bEdFullName = mView.findViewById(R.id.bEdFullName);
+        bEdBankName = mView.findViewById(R.id.bEdBankName);
+        bEdAcNo = mView.findViewById(R.id.bEdAcNo);
+        bEdBranch = mView.findViewById(R.id.bEdBranch);
+
+
         tvPaymentMode.setOnClickListener(this);
         bBtnNext = mView.findViewById(R.id.bBtnNext);
         bBtnNext.setOnClickListener(this);
@@ -165,41 +175,85 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
                 Helper.showLongMessage(getActivity(), "PLEASE select Destination Country");
                 return;
             }
-            mListener.onCalculationRequest(Helper.getCurrencySymble(), mPayOut);
+            if (bEdFullName.getText().toString().trim().isEmpty()) {
+                bEdFullName.setError("enter name as on bank");
+                bEdFullName.requestFocus();
+                return;
+            }
+            if (bEdBankName.getText().toString().trim().isEmpty()) {
+                bEdBankName.setError("enter bank name");
+                bEdBankName.requestFocus();
+                requireActivity();
+            }
+            if (bEdAcNo.getText().toString().trim().isEmpty()) {
+                bEdAcNo.setError("enter bank account no");
+                bEdAcNo.requestFocus();
+                requireActivity();
+            }
+            if (bEdBranch.getText().toString().trim().isEmpty()) {
+                bEdBranch.setError("enter branch name");
+                bEdBranch.requestFocus();
+                requireActivity();
+            }
+
+
+            mListener.onCalculationRequest(Helper.getCurrencySymble(), mPayOut,
+                    bEdFullName.getText().toString().trim(),
+                    bEdBankName.getText().toString().trim(),
+                    bEdAcNo.getText().toString().trim(), bEdBranch.getText().toString().trim(), bEdIfsc.getText().toString().trim());
         } else if (view.getId() == R.id.tvPaymentMode) {
             showModeDialog();
         } else if (view.getId() == R.id.tvDestination) {
             showDestinationCountry();
-        } /*else if (view.getId() == R.id.tvFetchBank) {
+        } else if (view.getId() == R.id.tvFetchBank) {
+            if (bEdIfsc.getText().toString().trim().isEmpty()) {
+                bEdIfsc.setError("enter ifsc code");
+                return;
+            }
             JSONObject mRequestIFSCbody = new JSONObject();
             try {
-                mRequestIFSCbody.put("bankName", "string");
-                mRequestIFSCbody.put("branchIfsc", "SBIN0008209");
-                mRequestIFSCbody.put("branchName", "string");
-                mRequestIFSCbody.put("city", "string");
-                mRequestIFSCbody.put("countryCode", "IND");
+                mRequestIFSCbody.put("bankName", "");
+                mRequestIFSCbody.put("branchIfsc", bEdIfsc.getText().toString().trim());
+                mRequestIFSCbody.put("branchName", "");
+                mRequestIFSCbody.put("city", "");
+                mRequestIFSCbody.put("countryCode", mCountryNameCode);
+                getBankDetailsByIFSC(mRequestIFSCbody);
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
 
-        }*/
+        }
     }
 
-    private void getBankDetailsByIFSC() {
+    private void getBankDetailsByIFSC(JSONObject mRequestIFSCbody) {
         showLoading(getString(R.string.info_please_wait_dots));
         AndroidNetworking.post("http://3.140.192.123:8080/api/transfer/getBankNetworkList")
-             //   .addJSONObjectBody()
+                .addJSONObjectBody(mRequestIFSCbody)
                 .build().getAsJSONObject(new JSONObjectRequestListener() {
             @Override
             public void onResponse(JSONObject response) {
+                hideLoading();
+                Helper.hideKeyboard(bEdBranch, getActivity());
+                Log.e(TAG, "onResponse: " + response);
+                JSONArray result = null;
+                try {
+                    result = response.getJSONArray("result");
+                    JSONObject mResultObj = result.getJSONObject(0);
+                    bEdBankName.setText(mResultObj.getString("bankName"));
+                    bEdBranch.setText(mResultObj.getString("branchName"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
 
             @Override
             public void onError(ANError anError) {
-
+                hideLoading();
+                Log.e(TAG, "onError: " + anError.getErrorBody());
+                Log.e(TAG, "onError: " + anError.getErrorDetail());
             }
         });
 

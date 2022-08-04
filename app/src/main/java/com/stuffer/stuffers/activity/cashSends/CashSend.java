@@ -26,6 +26,7 @@ import com.stuffer.stuffers.utils.AppoConstants;
 public class CashSend extends AppCompatActivity implements CountrySelectListener, OnItemSelect, BeneficiaryListener, CalculationListener, ModeListener, DestinationListener {
 
     private TextView toolbarTitle;
+    private String mNationalityCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +78,11 @@ public class CashSend extends AppCompatActivity implements CountrySelectListener
     }
 
     @Override
-    public void onCountrySelected(String countryName, String countryId, int countryCode, int pos) {
+    public void onCountrySelected(String countryName, String countryCode, int code, int pos) {
         Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.containerCashSend);
         if (fragmentById instanceof CustomerDetails) {
-            Log.e("onCountrySelected: ", countryName + " : " + countryId);
-            ((CustomerDetails) fragmentById).setNationality(countryName, countryId, countryCode, pos);
+            Log.e("onCountrySelected: ", countryName + " : " + countryCode);
+            ((CustomerDetails) fragmentById).setNationality(countryName, countryCode, code, pos);
         }
     }
 
@@ -94,10 +95,14 @@ public class CashSend extends AppCompatActivity implements CountrySelectListener
     }
 
     @Override
-    public void onBeneficiaryRequest() {
+    public void onBeneficiaryRequest(String nameCode) {
+        mNationalityCode=nameCode;
         BeneficiaryDetails mBeneficiaryDetails = new BeneficiaryDetails();
-
+        Bundle mBundle = new Bundle();
+        mBundle.putString(AppoConstants.COUNTRYNAMECODE, nameCode);
+        mBeneficiaryDetails.setArguments(mBundle);
         initFragment(mBeneficiaryDetails);
+
     }
 
     @Override
@@ -131,12 +136,22 @@ public class CashSend extends AppCompatActivity implements CountrySelectListener
         }
     }
 
+
     @Override
-    public void onCalculationRequest(String sendingCurrency, String receiverCurrency) {
+    public void onCalculationRequest(String sendingCurrency, String receiverCurrency,
+                                     String mRecName, String mRecBankName,
+                                     String mRecAcNo, String mRecBranch, String mRecIFSC) {
         SendMoneyToBank mSendMoneyToBank = new SendMoneyToBank();
         Bundle mBundle = new Bundle();
         mBundle.putString(AppoConstants.SENDERCURRENCY, sendingCurrency);
         mBundle.putString(AppoConstants.RECEIVERCURRENCY, receiverCurrency);
+        mBundle.putString(AppoConstants.RECEIVERNAME,mRecName);
+        mBundle.putString(AppoConstants.RECEIVERBANKNAME,mRecBankName);
+        mBundle.putString(AppoConstants.RECEIVERBANKACCOUNT,mRecAcNo);
+        mBundle.putString(AppoConstants.RECEIVERBRANCH,mRecBranch);
+        mBundle.putString(AppoConstants.RECEIVERBANKCODE,mRecIFSC);
+        mBundle.putString(AppoConstants.SENDERNATIONALITY,mNationalityCode);
+
         mSendMoneyToBank.setArguments(mBundle);
         initFragment(mSendMoneyToBank);
     }

@@ -236,6 +236,12 @@ public class AppoConstants {
     public static final String RECEIVERIMAGE = "receiverimage";
     public static final String SENDERCURRENCY = "sendercurrency";
     public static final String RECEIVERCURRENCY = "receivercurrency";
+    public static final String RECEIVERNAME = "receivername";
+    public static final String RECEIVERBANKNAME = "receiverbankname";
+    public static final String RECEIVERBANKACCOUNT = "receiverbankaccount";
+    public static final String RECEIVERBRANCH = "receiverbranch";
+    public static final String RECEIVERBANKCODE = "receiverbankcode";
+    public static final String SENDERNATIONALITY = "sendernationality";
 
 
     //DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");;

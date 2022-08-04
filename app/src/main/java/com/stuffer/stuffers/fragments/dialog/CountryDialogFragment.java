@@ -152,7 +152,10 @@ public class CountryDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         Helper.hideKeyboard(edSearch,mContext);
-                        mCountryListener.onCountrySelected(mListFilter.get(getAdapterPosition()).getCountryname(), mListFilter.get(getAdapterPosition()).getCountrycode(), mListFilter.get(getAdapterPosition()).getId(), getAdapterPosition());
+                        mCountryListener.onCountrySelected(mListFilter.get(getAdapterPosition()).getCountryname(),
+                                mListFilter.get(getAdapterPosition()).getCountrycode(),
+                                mListFilter.get(getAdapterPosition()).getId(),
+                                getAdapterPosition());
                         dismiss();
                     }
                 });

@@ -47,6 +47,7 @@ public class CustomerDetails extends Fragment implements View.OnClickListener {
     private List<Result> mListCountry;
     private RiskDialog mRiskLevel;
     private BeneficiaryListener mListener;
+    private String mNationalityCode="";
 
     public CustomerDetails() {
         // Required empty public constructor
@@ -168,11 +169,11 @@ public class CustomerDetails extends Fragment implements View.OnClickListener {
             mRiskLevel.show(getChildFragmentManager(), mRiskLevel.getTag());
         } */else if (view.getId() == R.id.cBtnNext) {
 
-            mListener.onBeneficiaryRequest();
+            mListener.onBeneficiaryRequest(mNationalityCode);
         }
     }
 
-    public void setNationality(String countryName, String countryId, int countryCode, int pos) {
+    public void setNationality(String countryName, String countryCode, int code, int pos) {
         for (int i = 0; i < mListCountry.size(); i++) {
             if (countryName.equalsIgnoreCase(mListCountry.get(i).getCountryname())) {
                 //mCountyId = mListCountry.get(i).getId();
@@ -180,6 +181,8 @@ public class CustomerDetails extends Fragment implements View.OnClickListener {
             }
         }
         cTvNational.setText(countryName);
+
+        mNationalityCode=countryCode;
         cTvNational.setAllCaps(true);
     }
 
