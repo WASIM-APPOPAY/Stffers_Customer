@@ -50,7 +50,8 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
     private MyEditText edSendAmount;
     private ProgressDialog mLoader;
     List<CalTransfer.Result> mListCal;
-    private String mSender, mReceiverCurrency, mRecName, mRecBankName, mRecBankAccount, mRecBranch, mRecBankCode, mNationalityCode;
+    private String mSender, mReceiverCurrency, mRecName, mRecBankName, mRecBankAccount
+            , mRecBranch, mRecBankCode, mNationalityCode,mPurposeTransfer,mSourceIncome;
 
     public SendMoneyToBank() {
         // Required empty public constructor
@@ -69,6 +70,8 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
             mRecBranch = getArguments().getString(AppoConstants.RECEIVERBRANCH);
             mRecBankCode = getArguments().getString(AppoConstants.RECEIVERBANKCODE);
             mNationalityCode = getArguments().getString(AppoConstants.SENDERNATIONALITY);
+            mPurposeTransfer=getArguments().getString(AppoConstants.PURPOSEOFTRANSFER);
+            mSourceIncome=getArguments().getString(AppoConstants.SOURCE_OF_INCOME);
         }
     }
 
@@ -130,79 +133,100 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
                 mSendingObject.put("payoutCurrency", mReceiverCurrency); //on selected rec curr in prev screen
                 mSendingObject.put("transferAmount", edSendAmount.getText().toString().trim());
                 mSendingObject.put("paymentMode", "BANK");
+                Log.e(TAG, "onClick: Calculation : "+mSendingObject );
                 calculateTransfer(mSendingObject);
+
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         } else if (view.getId() == R.id.cTvNow) {
-            makeRequestBody();
+            JSONObject mSendBody = new JSONObject();
+            try {
+                mSendBody.put("clientTxnNO", "");
+                mSendBody.put("payoutCurrency", mReceiverCurrency);
+                mSendBody.put("transferAmount", cTvPayOut.getText().toString().trim());
+                mSendBody.put("payoutPartnerUniqueCode", "0");
+                mSendBody.put("payoutCountry", "IND");
+                mSendBody.put("remitterFirstName", Helper.getFirstName());
+                mSendBody.put("remitterLastName", Helper.getLastName());
+                mSendBody.put("remitterTelNo", Helper.getNumberWithCountryCode());
+                mSendBody.put("remitterMobileNo", Helper.getNumberWithCountryCode());
+                mSendBody.put("remitterEmail", Helper.getEmail());
+                mSendBody.put("remitterAddress1", Helper.getAddress());
+                mSendBody.put("remitterAddress2", "");
+                mSendBody.put("remitterAddress3", "");
+                mSendBody.put("remitterIDType", "");
+                mSendBody.put("remitterIDNumber", "");
+                mSendBody.put("remitterIDDesc", "");
+                mSendBody.put("remitterIDTypeIssueDate", "");
+                mSendBody.put("remitterIDTypeExpiryDate", "");
+                mSendBody.put("remitterDOB", "");
+                mSendBody.put("remitterGender", "");
+                mSendBody.put("remitterNationality", mNationalityCode);
+                mSendBody.put("customerRelation", "16");//
+                mSendBody.put("messageToBeneficiary", "");
+                String mFirstName = Helper.beneficiaryFirstName(mRecName);
+                mSendBody.put("beneficiaryFirstName", mFirstName);
+                String mLastName=Helper.beneficiaryLastName(mRecName);
+                mSendBody.put("beneficiaryLastName", mLastName);
+                mSendBody.put("beneficiaryTelNo", "");//O
+                mSendBody.put("beneficiaryMobileNo", "");//M
+                mSendBody.put("beneficiaryEmail", "");
+                mSendBody.put("beneficiaryAddress1", "");//M
+                mSendBody.put("beneficiaryAddress2", "");
+                mSendBody.put("beneficiaryAddress3", "");
+                mSendBody.put("beneficiaryIDType", "0");
+                mSendBody.put("beneficiaryIDDesc", "");
+                mSendBody.put("beneficiaryIDNumber", "");
+                mSendBody.put("beneficiaryIDTypeIssueDate", "");
+                mSendBody.put("beneficiaryIDTypeExpiryDate", "");
+                mSendBody.put("beneficiaryDOB", "");
+                mSendBody.put("beneficiaryGender", "");
+                mSendBody.put("beneficiaryNationality", "");
+                mSendBody.put("benficiaryBankCode", mRecBankCode);
+                mSendBody.put("paymentMode", "BANK");
+                mSendBody.put("benificiaryBankAcNo", mRecBankAccount);
+                mSendBody.put("benificiaryBankAcName", mRecBankName);
+                mSendBody.put("benificiaryBankAddress1", "");
+                mSendBody.put("benificiaryBankAddress2", "");
+                mSendBody.put("purposeCode", mPurposeTransfer);//purpose code to call api
+                mSendBody.put("payinCountry", mNationalityCode);//
+                mSendBody.put("payinCurrency", Helper.getCurrencySymble());
+                mSendBody.put("settlementCurrency", mReceiverCurrency);
+                mSendBody.put("remitterPayInAmt", cTvTotalPayable.getText().toString().trim());
+                mSendBody.put("msgPayOutBranch", "");
+                mSendBody.put("contactBenificiary", "false");
+                mSendBody.put("rptno", "0");
+                mSendBody.put("sourceofIncome", mSourceIncome); //call the api
+                mSendBody.put("userID", "");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            makeRequestBody(mSendBody);
         }
     }
 
-    private void makeRequestBody() {
+    private void makeRequestBody(JSONObject mSendBody) {
+     showLoading(getString(R.string.info_please_wait_dots));
+     AndroidNetworking.post("http://3.140.192.123:8080/api/transfer/sendTransfer")
+             .addJSONObjectBody(mSendBody)
+             .build()
+             .getAsJSONObject(new JSONObjectRequestListener() {
+                 @Override
+                 public void onResponse(JSONObject response) {
+                     hideLoading();
+                     Log.e(TAG, "onResponse: Send : "+response );
+                 }
 
-        JSONObject mSendBody = new JSONObject();
-        try {
-            mSendBody.put("clientTxnNO", "");
-            mSendBody.put("payoutCurrency", mReceiverCurrency);
-            mSendBody.put("transferAmount", cTvPayOut.getText().toString().trim());
-            mSendBody.put("payoutPartnerUniqueCode", "0");
-            mSendBody.put("payoutCountry", "IND");
-            mSendBody.put("remitterFirstName", Helper.getFirstName());
-            mSendBody.put("remitterLastName", Helper.getLastName());
-            mSendBody.put("remitterTelNo", Helper.getNumberWithCountryCode());
-            mSendBody.put("remitterMobileNo", Helper.getNumberWithCountryCode());
-            mSendBody.put("remitterEmail", Helper.getEmail());
-            mSendBody.put("remitterAddress1", Helper.getAddress());
-            mSendBody.put("remitterAddress2", "");
-            mSendBody.put("remitterAddress3", "");
-            mSendBody.put("remitterIDType", "");
-            mSendBody.put("remitterIDNumber", "");
-            mSendBody.put("remitterIDDesc", "");
-            mSendBody.put("remitterIDTypeIssueDate", "");
-            mSendBody.put("remitterIDTypeExpiryDate", "");
-            mSendBody.put("remitterDOB", "");
-            mSendBody.put("remitterGender", "");
-            mSendBody.put("remitterNationality", "IND");
-            mSendBody.put("customerRelation", "16");
-            mSendBody.put("messageToBeneficiary", "");
-            String mFirstName = Helper.beneficiaryFirstName(mRecName);
-            mSendBody.put("beneficiaryFirstName", mFirstName);
-            String mLastName=Helper.beneficiaryLastName(mRecName);
-            mSendBody.put("beneficiaryLastName", mLastName);
-            mSendBody.put("beneficiaryTelNo", "");//O
-            mSendBody.put("beneficiaryMobileNo", "");//M
-            mSendBody.put("beneficiaryEmail", "");
-            mSendBody.put("beneficiaryAddress1", "");//M
-            mSendBody.put("beneficiaryAddress2", "");
-            mSendBody.put("beneficiaryAddress3", "");
-            mSendBody.put("beneficiaryIDType", "0");
-            mSendBody.put("beneficiaryIDDesc", "");
-            mSendBody.put("beneficiaryIDNumber", "");
-            mSendBody.put("beneficiaryIDTypeIssueDate", "");
-            mSendBody.put("beneficiaryIDTypeExpiryDate", "");
-            mSendBody.put("beneficiaryDOB", "");
-            mSendBody.put("beneficiaryGender", "");
-            mSendBody.put("beneficiaryNationality", mNationalityCode);
-            mSendBody.put("benficiaryBankCode", mRecBankCode);
-            mSendBody.put("paymentMode", "BANK");
-            mSendBody.put("benificiaryBankAcNo", mRecBankAccount);
-            mSendBody.put("benificiaryBankAcName", mRecBankName);
-            mSendBody.put("benificiaryBankAddress1", "");
-            mSendBody.put("benificiaryBankAddress2", "");
-            mSendBody.put("purposeCode", "20");//purpose code
-            mSendBody.put("payinCountry", "GBR");
-            mSendBody.put("payinCurrency", Helper.getCurrencySymble());
-            mSendBody.put("settlementCurrency", mReceiverCurrency);
-            mSendBody.put("remitterPayInAmt", cTvTotalPayable.getText().toString().trim());
-            mSendBody.put("msgPayOutBranch", "");
-            mSendBody.put("contactBenificiary", "false");
-            mSendBody.put("rptno", "0");
-            mSendBody.put("sourceofIncome", "");
-            mSendBody.put("userID", "");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+                 @Override
+                 public void onError(ANError anError) {
+                     hideLoading();
+                     Log.e(TAG, "onError: Send : "+anError.getErrorBody() );
+                     Log.e(TAG, "onError: Send : "+anError.getErrorDetail() );
+                 }
+             });
+
 
 
     }

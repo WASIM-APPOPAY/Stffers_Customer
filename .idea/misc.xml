@@ -145,7 +145,7 @@
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_chat2.xml" value="0.15806159420289856" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_chat_tab.xml" value="0.15806159420289856" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_country.xml" value="0.15476699444206926" />
-        <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_customer_details.xml" value="0.15476699444206926" />
+        <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_customer_details.xml" value="0.25" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_customer_pay.xml" value="0.2" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_display_image.xml" value="0.15806159420289856" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/fragment_emv_qr.xml" value="0.15806159420289856" />
@@ -229,6 +229,7 @@
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/layout_dialog_insurance.xml" value="0.196875" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/layout_profile_error_dialog.xml" value="0.196875" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/layout_risk.xml" value="0.15476699444206926" />
+        <entry key="..\:/StuffersAppopay/app/src/main/res/layout/layout_source_income.xml" value="0.1616075245831552" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/my_toolbar.xml" value="0.196875" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/pay_now_activity.xml" value="0.12635869565217392" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/pay_user_activity.xml" value="0.15715579710144928" />
@@ -246,6 +247,7 @@
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/row_category_items.xml" value="0.15806159420289856" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/row_chat_one_to_one_left.xml" value="0.15806159420289856" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/row_chat_one_to_one_right.xml" value="0.15806159420289856" />
+        <entry key="..\:/StuffersAppopay/app/src/main/res/layout/row_common.xml" value="0.1616075245831552" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/row_common_item.xml" value="0.15806159420289856" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/row_contact_item.xml" value="0.15806159420289856" />
         <entry key="..\:/StuffersAppopay/app/src/main/res/layout/row_countries.xml" value="0.15476699444206926" />

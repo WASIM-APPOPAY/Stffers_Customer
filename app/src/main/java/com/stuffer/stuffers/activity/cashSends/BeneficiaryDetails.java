@@ -253,6 +253,16 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
             public void onError(ANError anError) {
                 hideLoading();
                 Log.e(TAG, "onError: " + anError.getErrorBody());
+                String errorBody = anError.getErrorBody();
+                try {
+                    JSONObject mBody = new JSONObject(errorBody);
+                    if (mBody.has(AppoConstants.MESSAGE)) {
+                        Helper.showLongMessage(getActivity(), mBody.getString(AppoConstants.MESSAGE));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 Log.e(TAG, "onError: " + anError.getErrorDetail());
             }
         });

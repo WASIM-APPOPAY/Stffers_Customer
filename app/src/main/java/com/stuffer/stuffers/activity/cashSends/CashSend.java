@@ -19,14 +19,17 @@ import com.stuffer.stuffers.communicator.CalculationListener;
 import com.stuffer.stuffers.communicator.CountrySelectListener;
 import com.stuffer.stuffers.communicator.BeneficiaryListener;
 import com.stuffer.stuffers.communicator.DestinationListener;
+import com.stuffer.stuffers.communicator.IncomeListener;
 import com.stuffer.stuffers.communicator.ModeListener;
 import com.stuffer.stuffers.communicator.OnItemSelect;
+import com.stuffer.stuffers.communicator.PurposeListener;
 import com.stuffer.stuffers.utils.AppoConstants;
 
-public class CashSend extends AppCompatActivity implements CountrySelectListener, OnItemSelect, BeneficiaryListener, CalculationListener, ModeListener, DestinationListener {
+public class CashSend extends AppCompatActivity implements CountrySelectListener, OnItemSelect, BeneficiaryListener, CalculationListener, ModeListener, DestinationListener, IncomeListener, PurposeListener {
 
     private TextView toolbarTitle;
     private String mNationalityCode;
+    private String mIncomeId, mPurposeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +99,7 @@ public class CashSend extends AppCompatActivity implements CountrySelectListener
 
     @Override
     public void onBeneficiaryRequest(String nameCode) {
-        mNationalityCode=nameCode;
+        mNationalityCode = nameCode;
         BeneficiaryDetails mBeneficiaryDetails = new BeneficiaryDetails();
         Bundle mBundle = new Bundle();
         mBundle.putString(AppoConstants.COUNTRYNAMECODE, nameCode);
@@ -145,14 +148,34 @@ public class CashSend extends AppCompatActivity implements CountrySelectListener
         Bundle mBundle = new Bundle();
         mBundle.putString(AppoConstants.SENDERCURRENCY, sendingCurrency);
         mBundle.putString(AppoConstants.RECEIVERCURRENCY, receiverCurrency);
-        mBundle.putString(AppoConstants.RECEIVERNAME,mRecName);
-        mBundle.putString(AppoConstants.RECEIVERBANKNAME,mRecBankName);
-        mBundle.putString(AppoConstants.RECEIVERBANKACCOUNT,mRecAcNo);
-        mBundle.putString(AppoConstants.RECEIVERBRANCH,mRecBranch);
-        mBundle.putString(AppoConstants.RECEIVERBANKCODE,mRecIFSC);
-        mBundle.putString(AppoConstants.SENDERNATIONALITY,mNationalityCode);
+        mBundle.putString(AppoConstants.RECEIVERNAME, mRecName);
+        mBundle.putString(AppoConstants.RECEIVERBANKNAME, mRecBankName);
+        mBundle.putString(AppoConstants.RECEIVERBANKACCOUNT, mRecAcNo);
+        mBundle.putString(AppoConstants.RECEIVERBRANCH, mRecBranch);
+        mBundle.putString(AppoConstants.RECEIVERBANKCODE, mRecIFSC);
+        mBundle.putString(AppoConstants.SENDERNATIONALITY, mNationalityCode);
+        mBundle.putString(AppoConstants.PURPOSEOFTRANSFER,mPurposeId);
+        mBundle.putString(AppoConstants.SOURCE_OF_INCOME,mIncomeId);
 
         mSendMoneyToBank.setArguments(mBundle);
         initFragment(mSendMoneyToBank);
+    }
+
+    @Override
+    public void onIncomeSelected(String sourceOfIncome, String incomeId) {
+        mIncomeId = incomeId;
+        Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.containerCashSend);
+        if (fragmentById instanceof CustomerDetails) {
+            ((CustomerDetails) fragmentById).hideSource(sourceOfIncome);
+        }
+    }
+
+    @Override
+    public void onPurposeConfirm(String purposeName, String purposeId) {
+        mPurposeId = purposeId;
+        Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.containerCashSend);
+        if (fragmentById instanceof CustomerDetails) {
+            ((CustomerDetails) fragmentById).hidePurpose(purposeName);
+        }
     }
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center_horizontal"
+    android:layout_width="330dp"
+    android:layout_height="400dp"
+    android:minWidth="330dp"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.stuffer.stuffers.views.MyEditText
+        android:layout_marginTop="8dp"
+        android:id="@+id/edSearch"
+        android:drawablePadding="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/edit_text_rounded"
+        android:drawableLeft="@drawable/ic_search_black_24dp"
+        android:hint="Source Of Income"
+
+        android:paddingStart="10dp"
+        tools:ignore="RtlSymmetry" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:id="@+id/rvSource"
+        android:layout_width="330dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:listitem="@layout/row_country" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnOk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/info_close"
+            android:textColor="@color/white"
+            android:theme="@style/MaterialButton" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

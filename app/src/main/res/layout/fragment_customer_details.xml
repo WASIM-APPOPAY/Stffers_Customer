@@ -16,13 +16,16 @@
         android:text="@string/info_payments_methods"
         android:textColor="@color/black"
         android:textSize="18sp" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,13 +94,13 @@
                         android:textSize="18sp" />
 
                     <com.stuffer.stuffers.views.MyTextView
-                        android:drawableEnd="@drawable/ic_dropdown"
-                        android:drawableTint="@color/black"
                         android:id="@+id/cTvNational"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
+                        android:drawableEnd="@drawable/ic_dropdown"
+                        android:drawableTint="@color/black"
                         android:gravity="center_vertical"
                         android:minHeight="45dp"
                         android:padding="5dp"
@@ -119,8 +122,8 @@
 
                     <com.stuffer.stuffers.views.MyTextViewBold
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:padding="5dp"
                         android:text="Risk Level"
                         android:textColor="@color/colorPrimary"
@@ -128,13 +131,13 @@
 
                     <com.stuffer.stuffers.views.MyTextView
 
-                        android:drawableTint="@color/black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:letterSpacing="0.1"
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
+                        android:drawableTint="@color/black"
                         android:gravity="center_vertical"
+                        android:letterSpacing="0.1"
                         android:minHeight="45dp"
                         android:padding="5dp"
                         android:text="   Natural Person   "
@@ -143,6 +146,81 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.stuffer.stuffers.views.MyTextViewBold
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:text="Source Of Income"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/cTvSource"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:drawableTint="@color/black"
+                        android:gravity="center_vertical"
+                        android:letterSpacing="0.1"
+                        android:minHeight="45dp"
+                        android:padding="5dp"
+                        android:text="please select"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.stuffer.stuffers.views.MyTextViewBold
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:text="Purpose Of Transacton"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/cTvPurpose"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:drawableTint="@color/black"
+                        android:gravity="center_vertical"
+                        android:letterSpacing="0.1"
+                        android:minHeight="45dp"
+                        android:padding="5dp"
+                        android:text="please select"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
 
             <com.stuffer.stuffers.views.MyCheckBox
                 android:layout_width="wrap_content"
@@ -169,7 +247,6 @@
         </LinearLayout>
 
     </ScrollView>
-
 
 
 </LinearLayout>

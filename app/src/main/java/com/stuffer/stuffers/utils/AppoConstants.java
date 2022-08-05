@@ -242,6 +242,9 @@ public class AppoConstants {
     public static final String RECEIVERBRANCH = "receiverbranch";
     public static final String RECEIVERBANKCODE = "receiverbankcode";
     public static final String SENDERNATIONALITY = "sendernationality";
+    public static final String PURPOSEOFTRANSFER = "purposeOfTransfer";
+    public static final String PURPOSEOFTRANSFERID="purposeOfTransferId";
+    public static final String NAME = "name";
 
 
     //DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");;
