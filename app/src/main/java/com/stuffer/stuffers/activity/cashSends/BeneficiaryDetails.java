@@ -20,10 +20,14 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.api.ApiUtils;
+import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.communicator.CalculationListener;
 import com.stuffer.stuffers.fragments.dialog.CountryDialogFragment;
 import com.stuffer.stuffers.fragments.dialog.DestinationDialog;
 import com.stuffer.stuffers.fragments.dialog.ModeDialog;
+import com.stuffer.stuffers.models.Country.CountryCodeResponse;
+import com.stuffer.stuffers.models.Country.Result;
 import com.stuffer.stuffers.models.output.DetinationCurrency;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.Helper;
@@ -38,6 +42,10 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class BeneficiaryDetails extends Fragment implements View.OnClickListener {
@@ -55,8 +63,12 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
     private static final String TAG = "BeneficiaryDetails";
     private DestinationDialog mDestinationDialog;
     private String mPayOut;
+    MainAPIInterface apiService;
     private String mCountryNameCode;
     private MyEditText bEdIfsc, bEdFullName, bEdBankName, bEdAcNo, bEdBranch;
+    private List<Result> mListCountry;
+    private String mPayOutCountry;
+    private String mDestinationCountry;
 
     public BeneficiaryDetails() {
         // Required empty public constructor
@@ -76,6 +88,8 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        apiService = ApiUtils.getAPIService();
         mView = inflater.inflate(R.layout.fragment_beneficiary_details, container, false);
         tvTitleTop = mView.findViewById(R.id.tvTitleTop);
         tvFetchBank = mView.findViewById(R.id.tvFetchBank);
@@ -100,7 +114,38 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
         tvTitleTop.setText(Html.fromHtml("<u>" + getString(R.string.info_destination_details) + "</u>"));
         setDetails();
         getDestinationCurrency();
+        //getCountryList();
         return mView;
+    }
+
+
+    private void getCountryList() {
+        showLoading(getString(R.string.info_getting_country_code));
+
+        apiService.getCountryCode().enqueue(new Callback<CountryCodeResponse>() {
+            @Override
+            public void onResponse(Call<CountryCodeResponse> call, Response<CountryCodeResponse> response) {
+                hideLoading();
+                if (response.isSuccessful()) {
+                    if (response.body().getMessage().equalsIgnoreCase("success")) {
+                        mListCountry = new ArrayList<>();
+                        mListCountry = response.body().getResult();
+                        for (int i = 0; i < mListCountry.size(); i++) {
+                            if (mDestinationCountry.equalsIgnoreCase(mListCountry.get(i).getCountryname())) {
+                                mPayOutCountry = mListCountry.get(i).getCountrycode();
+                                break;
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CountryCodeResponse> call, Throwable t) {
+                hideLoading();
+            }
+        });
     }
 
     public void showLoading(String message) {
@@ -183,24 +228,24 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
             if (bEdBankName.getText().toString().trim().isEmpty()) {
                 bEdBankName.setError("enter bank name");
                 bEdBankName.requestFocus();
-                requireActivity();
+                return;
             }
             if (bEdAcNo.getText().toString().trim().isEmpty()) {
                 bEdAcNo.setError("enter bank account no");
                 bEdAcNo.requestFocus();
-                requireActivity();
+                return;
             }
             if (bEdBranch.getText().toString().trim().isEmpty()) {
                 bEdBranch.setError("enter branch name");
                 bEdBranch.requestFocus();
-                requireActivity();
+                return;
             }
 
 
             mListener.onCalculationRequest(Helper.getCurrencySymble(), mPayOut,
                     bEdFullName.getText().toString().trim(),
                     bEdBankName.getText().toString().trim(),
-                    bEdAcNo.getText().toString().trim(), bEdBranch.getText().toString().trim(), bEdIfsc.getText().toString().trim());
+                    bEdAcNo.getText().toString().trim(), bEdBranch.getText().toString().trim(), bEdIfsc.getText().toString().trim(), mPayOutCountry);
         } else if (view.getId() == R.id.tvPaymentMode) {
             showModeDialog();
         } else if (view.getId() == R.id.tvDestination) {
@@ -216,7 +261,7 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
                 mRequestIFSCbody.put("branchIfsc", bEdIfsc.getText().toString().trim());
                 mRequestIFSCbody.put("branchName", "");
                 mRequestIFSCbody.put("city", "");
-                mRequestIFSCbody.put("countryCode", mCountryNameCode);
+                mRequestIFSCbody.put("countryCode", mPayOutCountry);
                 getBankDetailsByIFSC(mRequestIFSCbody);
 
             } catch (JSONException e) {
@@ -305,9 +350,20 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
         if (mDestinationDialog != null)
             mDestinationDialog.dismiss();
         Log.e(TAG, "hideDestinationDialog: " + region);
+        mDestinationCountry = country;
         mPayOut = payoutCurrency;
         tvDesCurrency.setText("Payout Currency : " + payoutCurrency);
         tvDestination.setText(country);
+        if (mListCountry == null) {
+            getCountryList();
+        } else {
+            for (int i = 0; i < mListCountry.size(); i++) {
+                if (country.equalsIgnoreCase(mListCountry.get(i).getCountryname())) {
+                    mPayOutCountry = mListCountry.get(i).getCountrycode();
+                    break;
+                }
+            }
+        }
 
     }
 }

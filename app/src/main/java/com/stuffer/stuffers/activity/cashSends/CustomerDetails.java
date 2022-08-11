@@ -275,6 +275,7 @@ public class CustomerDetails extends Fragment implements View.OnClickListener {
             mRiskLevel.show(getChildFragmentManager(), mRiskLevel.getTag());
         } */ else if (view.getId() == R.id.cBtnNext) {
 
+
             mListener.onBeneficiaryRequest(mNationalityCode);
         } else if (view.getId() == R.id.cTvSource) {
             mDialogSource = new SourceDialog();

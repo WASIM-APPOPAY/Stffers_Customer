@@ -3,6 +3,7 @@ package com.stuffer.stuffers.activity.cashSends;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -19,12 +20,17 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.api.ApiUtils;
+import com.stuffer.stuffers.api.Constants;
+import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.fragments.dialog.BankDialog;
 import com.stuffer.stuffers.fragments.dialog.ModeDialog;
+import com.stuffer.stuffers.models.Country.CountryCodeResponse;
 import com.stuffer.stuffers.models.output.CalTransfer;
 import com.stuffer.stuffers.models.output.DetinationCurrency;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.Helper;
+import com.stuffer.stuffers.views.MyButton;
 import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
 import com.stuffer.stuffers.views.MyTextViewBold;
@@ -38,6 +44,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class SendMoneyToBank extends Fragment implements View.OnClickListener {
 
@@ -50,8 +60,10 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
     private MyEditText edSendAmount;
     private ProgressDialog mLoader;
     List<CalTransfer.Result> mListCal;
-    private String mSender, mReceiverCurrency, mRecName, mRecBankName, mRecBankAccount
-            , mRecBranch, mRecBankCode, mNationalityCode,mPurposeTransfer,mSourceIncome;
+    private String mSender, mReceiverCurrency, mRecName, mRecBankName, mRecBankAccount, mRecBranch, mRecBankCode, mNationalityCode, mPurposeTransfer, mSourceIncome;
+    MainAPIInterface apiService;
+    private String mPayoutCountry;
+    private AlertDialog mDialogSuccess;
 
     public SendMoneyToBank() {
         // Required empty public constructor
@@ -70,15 +82,19 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
             mRecBranch = getArguments().getString(AppoConstants.RECEIVERBRANCH);
             mRecBankCode = getArguments().getString(AppoConstants.RECEIVERBANKCODE);
             mNationalityCode = getArguments().getString(AppoConstants.SENDERNATIONALITY);
-            mPurposeTransfer=getArguments().getString(AppoConstants.PURPOSEOFTRANSFER);
-            mSourceIncome=getArguments().getString(AppoConstants.SOURCE_OF_INCOME);
+            mPurposeTransfer = getArguments().getString(AppoConstants.PURPOSEOFTRANSFER);
+            mSourceIncome = getArguments().getString(AppoConstants.SOURCE_OF_INCOME);
+            mPayoutCountry = getArguments().getString(AppoConstants.PAYOUTCOUNTRY);
         }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        apiService = ApiUtils.getAPIService();
         mView = inflater.inflate(R.layout.fragment_send_money_to_bank, container, false);
         tvDescription = mView.findViewById(R.id.tvDescription);
         cTvExchange = mView.findViewById(R.id.cTvExchange);
@@ -90,6 +106,7 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
         tvTitleBottom = mView.findViewById(R.id.tvTitleBottom);
         cTvCalculate = mView.findViewById(R.id.cTvCalculate);
         cTvNow = mView.findViewById(R.id.cTvNow);
+        cTvNow.setOnClickListener(this);
         cTvCalculate.setOnClickListener(this);
 
         tvTitleBottom.setText(Html.fromHtml("<u>" + getString(R.string.info_payment_details) + "</u>"));
@@ -124,6 +141,10 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.cTvCalculate) {
+            if (edSendAmount.getText().toString().trim().isEmpty()) {
+                edSendAmount.setError("please enter transfer AMOUNT");
+                return;
+            }
             try {
                 JSONObject mSendingObject = new JSONObject();
                 //mSendingObject.put("payInCurrency", "USD");// i have usd
@@ -133,7 +154,7 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
                 mSendingObject.put("payoutCurrency", mReceiverCurrency); //on selected rec curr in prev screen
                 mSendingObject.put("transferAmount", edSendAmount.getText().toString().trim());
                 mSendingObject.put("paymentMode", "BANK");
-                Log.e(TAG, "onClick: Calculation : "+mSendingObject );
+                Log.e(TAG, "onClick: Calculation : " + mSendingObject);
                 calculateTransfer(mSendingObject);
 
 
@@ -141,13 +162,17 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
                 e.printStackTrace();
             }
         } else if (view.getId() == R.id.cTvNow) {
+            if (cTvPayOut.getText().toString().trim().isEmpty()) {
+                Helper.showLongMessage(getActivity(), "Please Calculate Transfer Amount.");
+                return;
+            }
             JSONObject mSendBody = new JSONObject();
             try {
                 mSendBody.put("clientTxnNO", "");
                 mSendBody.put("payoutCurrency", mReceiverCurrency);
                 mSendBody.put("transferAmount", cTvPayOut.getText().toString().trim());
                 mSendBody.put("payoutPartnerUniqueCode", "0");
-                mSendBody.put("payoutCountry", "IND");
+                mSendBody.put("payoutCountry", mPayoutCountry);
                 mSendBody.put("remitterFirstName", Helper.getFirstName());
                 mSendBody.put("remitterLastName", Helper.getLastName());
                 mSendBody.put("remitterTelNo", Helper.getNumberWithCountryCode());
@@ -164,11 +189,11 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
                 mSendBody.put("remitterDOB", "");
                 mSendBody.put("remitterGender", "");
                 mSendBody.put("remitterNationality", mNationalityCode);
-                mSendBody.put("customerRelation", "16");//
+                mSendBody.put("customerRelation", "");//
                 mSendBody.put("messageToBeneficiary", "");
                 String mFirstName = Helper.beneficiaryFirstName(mRecName);
                 mSendBody.put("beneficiaryFirstName", mFirstName);
-                String mLastName=Helper.beneficiaryLastName(mRecName);
+                String mLastName = Helper.beneficiaryLastName(mRecName);
                 mSendBody.put("beneficiaryLastName", mLastName);
                 mSendBody.put("beneficiaryTelNo", "");//O
                 mSendBody.put("beneficiaryMobileNo", "");//M
@@ -200,6 +225,7 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
                 mSendBody.put("rptno", "0");
                 mSendBody.put("sourceofIncome", mSourceIncome); //call the api
                 mSendBody.put("userID", "");
+                Log.e(TAG, "onClick: " + mSendBody);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -208,27 +234,77 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
     }
 
     private void makeRequestBody(JSONObject mSendBody) {
-     showLoading(getString(R.string.info_please_wait_dots));
-     AndroidNetworking.post("http://3.140.192.123:8080/api/transfer/sendTransfer")
-             .addJSONObjectBody(mSendBody)
-             .build()
-             .getAsJSONObject(new JSONObjectRequestListener() {
-                 @Override
-                 public void onResponse(JSONObject response) {
-                     hideLoading();
-                     Log.e(TAG, "onResponse: Send : "+response );
-                 }
-
-                 @Override
-                 public void onError(ANError anError) {
-                     hideLoading();
-                     Log.e(TAG, "onError: Send : "+anError.getErrorBody() );
-                     Log.e(TAG, "onError: Send : "+anError.getErrorDetail() );
-                 }
-             });
-
+        showLoading(getString(R.string.info_please_wait_dots));
+        AndroidNetworking.post("http://13.58.156.32:8080/api/appopay/send-transfer")
+                .addJSONObjectBody(mSendBody)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        hideLoading();
+                        //Log.e(TAG, "onResponse: Send : " + response);
+                        try {
+                            JSONObject mJSONResult = response.getJSONObject(AppoConstants.RESULT);
+                            if (mJSONResult.getString(AppoConstants.APPROVESTATUS).equalsIgnoreCase(AppoConstants.PENDING)) {
+                                showSuccessDialog(mJSONResult.getString(AppoConstants.APPROVESTATUS));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
 
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        hideLoading();
+                        String errorBody = anError.getErrorBody();
+                        if (!StringUtils.isEmpty(errorBody)) {
+                            try {
+                                JSONObject mJson = new JSONObject(errorBody);
+                                if (mJson.has("message")) {
+                                    Helper.showLongMessage(getActivity(), mJson.getString("message"));
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+
+
+    }
+
+    private void showSuccessDialog(String info) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogLayout = inflater.inflate(R.layout.dialog_success_cashdend, null);
+        MyTextView tvInfo = dialogLayout.findViewById(R.id.tvInfo);
+        MyTextViewBold tvTransStatus = dialogLayout.findViewById(R.id.tvTransStatus);
+        tvTransStatus.setText(info);
+        MyButton btnClose = dialogLayout.findViewById(R.id.btnClose);
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hidePayments();
+
+            }
+        });
+
+        builder.setView(dialogLayout);
+
+        mDialogSuccess = builder.create();
+
+        mDialogSuccess.setCanceledOnTouchOutside(false);
+
+        mDialogSuccess.show();
+    }
+
+    private void hidePayments() {
+        if (mDialogSuccess!=null && mDialogSuccess.isShowing()){
+            mDialogSuccess.dismiss();
+        }
+        getActivity().finish();
     }
 
     public void showLoading(String message) {
@@ -302,4 +378,5 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
 
 
     }
+
 }

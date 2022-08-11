@@ -245,6 +245,11 @@ public class AppoConstants {
     public static final String PURPOSEOFTRANSFER = "purposeOfTransfer";
     public static final String PURPOSEOFTRANSFERID="purposeOfTransferId";
     public static final String NAME = "name";
+    public static final String PAYOUTCOUNTRY = "payoutCountry";
+    public static final String APPROVESTATUS = "approveStatus";
+    public static final String PENDING = "pending";
+    public static final String APPROVESTATUS = "approveStatus";
+    public static final String PENDING = "pending";
 
 
     //DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");;

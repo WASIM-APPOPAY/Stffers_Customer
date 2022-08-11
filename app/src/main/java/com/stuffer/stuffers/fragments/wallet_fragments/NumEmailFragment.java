@@ -106,13 +106,13 @@ public class NumEmailFragment extends Fragment {
         floatingOtpNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+//wd element
                 mMobileNumber = edtCustomerMobileNumber.getText().toString();
                 mCountryCode = edtCustomerCountryCode.getSelectedCountryCode();
                 mNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
                 mCountryName = edtCustomerCountryCode.getSelectedCountryName();
                 mEmail = edtEmail.getText().toString().trim();
-                /*if (edtCustomerMobileNumber.getText().toString().trim().isEmpty()) {
+                if (edtCustomerMobileNumber.getText().toString().trim().isEmpty()) {
                     edtCustomerMobileNumber.setError(getString(R.string.info_enter_mobile_number));
                     edtCustomerMobileNumber.requestFocus();
                     edtCustomerMobileNumber.setFocusable(true);
@@ -129,11 +129,11 @@ public class NumEmailFragment extends Fragment {
                     placesAutocomplete.requestFocus();
                     placesAutocomplete.setFocusable(true);
                     return;
-                }*/
+                }
                 //mOtpRequestListener.onOtpRequest("IN", "91", "9836683269", "mdwasim508@gmail.com", "bankra mondal para killa math kolkata 711403, West Bengal","27");
 
-                //verifyMobileNumber(mCountryCode + mMobileNumber);
-                requestForOtp();
+                verifyMobileNumber(mCountryCode + mMobileNumber);
+                //requestForOtp();
             }
         });
         edtCustomerCountryCode.setExcludedCountries(getString(R.string.info_exclude_countries));

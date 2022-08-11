@@ -292,6 +292,7 @@
     <string name="error_transaction_pin_length">Transaction pin should be in 6 digit</string>
     <string name="info_sending_request">Please wait, Sending your request</string>
     <string name="info_success_recharge">Thank you!\n Your Recharge Successfully Done</string>
+    <string name="info_success_cashsend">Thank you!\n We are Processing your Request.</string>
     <string name="info_status">Status :</string>
     <string name="info_all">All</string>
     <string name="info_hindi">Hindi</string>

@@ -24,6 +24,9 @@ import com.stuffer.stuffers.communicator.ModeListener;
 import com.stuffer.stuffers.communicator.OnItemSelect;
 import com.stuffer.stuffers.communicator.PurposeListener;
 import com.stuffer.stuffers.utils.AppoConstants;
+import com.stuffer.stuffers.utils.Helper;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class CashSend extends AppCompatActivity implements CountrySelectListener, OnItemSelect, BeneficiaryListener, CalculationListener, ModeListener, DestinationListener, IncomeListener, PurposeListener {
 
@@ -99,6 +102,14 @@ public class CashSend extends AppCompatActivity implements CountrySelectListener
 
     @Override
     public void onBeneficiaryRequest(String nameCode) {
+        if (StringUtils.isEmpty(mIncomeId)) {
+            Helper.showLongMessage(CashSend.this, "Please select Source of Income");
+            return;
+        }
+        if (StringUtils.isEmpty(mPurposeId)) {
+            Helper.showLongMessage(CashSend.this, "Please select Purpose of Transaction");
+            return;
+        }
         mNationalityCode = nameCode;
         BeneficiaryDetails mBeneficiaryDetails = new BeneficiaryDetails();
         Bundle mBundle = new Bundle();
@@ -143,7 +154,7 @@ public class CashSend extends AppCompatActivity implements CountrySelectListener
     @Override
     public void onCalculationRequest(String sendingCurrency, String receiverCurrency,
                                      String mRecName, String mRecBankName,
-                                     String mRecAcNo, String mRecBranch, String mRecIFSC) {
+                                     String mRecAcNo, String mRecBranch, String mRecIFSC, String mPayout) {
         SendMoneyToBank mSendMoneyToBank = new SendMoneyToBank();
         Bundle mBundle = new Bundle();
         mBundle.putString(AppoConstants.SENDERCURRENCY, sendingCurrency);
@@ -154,8 +165,9 @@ public class CashSend extends AppCompatActivity implements CountrySelectListener
         mBundle.putString(AppoConstants.RECEIVERBRANCH, mRecBranch);
         mBundle.putString(AppoConstants.RECEIVERBANKCODE, mRecIFSC);
         mBundle.putString(AppoConstants.SENDERNATIONALITY, mNationalityCode);
-        mBundle.putString(AppoConstants.PURPOSEOFTRANSFER,mPurposeId);
-        mBundle.putString(AppoConstants.SOURCE_OF_INCOME,mIncomeId);
+        mBundle.putString(AppoConstants.PURPOSEOFTRANSFER, mPurposeId);
+        mBundle.putString(AppoConstants.SOURCE_OF_INCOME, mIncomeId);
+        mBundle.putString(AppoConstants.PAYOUTCOUNTRY, mPayout);
 
         mSendMoneyToBank.setArguments(mBundle);
         initFragment(mSendMoneyToBank);
