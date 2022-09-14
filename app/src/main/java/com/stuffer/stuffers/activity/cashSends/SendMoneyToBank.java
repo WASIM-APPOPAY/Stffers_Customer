@@ -1,5 +1,6 @@
 package com.stuffer.stuffers.activity.cashSends;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
@@ -64,6 +65,7 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
     MainAPIInterface apiService;
     private String mPayoutCountry;
     private AlertDialog mDialogSuccess;
+    private Dialog dialogError;
 
     public SendMoneyToBank() {
         // Required empty public constructor
@@ -155,6 +157,14 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
                 mSendingObject.put("transferAmount", edSendAmount.getText().toString().trim());
                 mSendingObject.put("paymentMode", "BANK");
                 Log.e(TAG, "onClick: Calculation : " + mSendingObject);
+
+                String currantBalance = Helper.getCurrantBalance();
+
+                if (Float.parseFloat(edSendAmount.getText().toString().trim()) > Float.parseFloat(currantBalance)) {
+                    showBalanceError();
+                    return;
+                }
+
                 calculateTransfer(mSendingObject);
 
 
@@ -164,6 +174,13 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
         } else if (view.getId() == R.id.cTvNow) {
             if (cTvPayOut.getText().toString().trim().isEmpty()) {
                 Helper.showLongMessage(getActivity(), "Please Calculate Transfer Amount.");
+                return;
+            }
+
+            String currantBalance = Helper.getCurrantBalance();
+
+            if (Float.parseFloat(edSendAmount.getText().toString().trim()) > Float.parseFloat(currantBalance)) {
+                showBalanceError();
                 return;
             }
             JSONObject mSendBody = new JSONObject();
@@ -233,9 +250,43 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
         }
     }
 
+    private void showBalanceError() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getLayoutInflater();
+
+        View dialogLayout = inflater.inflate(R.layout.dialog_balance_error, null);
+        MyTextView tvTitle=dialogLayout.findViewById(R.id.tvTitle);
+        MyTextView tvInfo=dialogLayout.findViewById(R.id.tvInfo);
+       tvTitle.setText("CASH SEND");
+       tvInfo.setText("Your account doesn\'t have enough balance to Transfer.");
+
+
+
+        MyButton btnClose = dialogLayout.findViewById(R.id.btnClose);
+
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialogError.dismiss();
+            }
+        });
+
+
+        builder.setView(dialogLayout);
+
+        dialogError = builder.create();
+
+        dialogError.setCanceledOnTouchOutside(false);
+
+        dialogError.show();
+    }
+
     private void makeRequestBody(JSONObject mSendBody) {
         showLoading(getString(R.string.info_please_wait_dots));
-        AndroidNetworking.post("http://13.58.156.32:8080/api/appopay/send-transfer")
+      //  AndroidNetworking.post("http://13.58.156.32:8080/api/appopay/send-transfer")
+        AndroidNetworking.post("https://api-prod.cashsends.com:8080/api/appopay/send-transfer")
                 .addJSONObjectBody(mSendBody)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -323,7 +374,8 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
 
     private void calculateTransfer(JSONObject mSendingObject) {
         showLoading(getString(R.string.info_please_wait_dots));
-        AndroidNetworking.post("http://3.140.192.123:8080/api/transfer/calTransfer")
+        //AndroidNetworking.post("http://3.140.192.123:8080/api/transfer/calTransfer")
+        AndroidNetworking.post("https://api-prod.cashsends.com:8080/api/transfer/calTransfer")
                 .addJSONObjectBody(mSendingObject)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {

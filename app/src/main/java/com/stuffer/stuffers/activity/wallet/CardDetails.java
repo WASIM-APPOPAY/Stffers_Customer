@@ -29,6 +29,7 @@ import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.views.CardDateEditText;
 import com.stuffer.stuffers.views.CardNumberEditText;
 import com.stuffer.stuffers.views.MyButton;
+import com.stuffer.stuffers.views.MyCardEditText;
 import com.stuffer.stuffers.views.MyCheckBox;
 
 import org.json.JSONException;
@@ -43,7 +44,7 @@ import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_DETIALS;
 
 public class CardDetails extends AppCompatActivity {
     private static final String TAG = "CardDetails";
-    private CardNumberEditText card_number_field_text;
+    private MyCardEditText card_number_field_text;
     private TextInputEditText cardholder_field_text;
     private CardDateEditText expiry_date_field_text;
     private TextInputEditText card_filed_cvv;
@@ -60,7 +61,7 @@ public class CardDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_details);
         mainAPIInterface = ApiUtils.getAPIService();
-        card_number_field_text = (CardNumberEditText) findViewById(R.id.card_number_field_text);
+        card_number_field_text = (MyCardEditText) findViewById(R.id.card_number_field_text);
         cardholder_field_text = (TextInputEditText) findViewById(R.id.cardholder_field_text);
         expiry_date_field_text = (CardDateEditText) findViewById(R.id.expiry_date_field_text);
         card_filed_cvv = (TextInputEditText) findViewById(R.id.card_filed_cvv);
@@ -167,7 +168,6 @@ public class CardDetails extends AppCompatActivity {
             String id = result.getString(AppoConstants.ID);
             String firstName = result.getString(AppoConstants.FIRSTNAME);
             String lastName = result.getString(AppoConstants.LASTNAME);
-
             JsonObject sentPayloads = new JsonObject();
             sentPayloads.addProperty(AppoConstants.CARDFIRSTNAME, "");
             sentPayloads.addProperty(AppoConstants.CARDLASTNAME, cardLastName);
@@ -182,10 +182,7 @@ public class CardDetails extends AppCompatActivity {
             } else {
                 sentPayloads.addProperty(AppoConstants.ISDEFAULT, false);
             }
-
             sentPayloads.addProperty(AppoConstants.LASTNAME, lastName);
-            Log.e(TAG, "verifyCardDetails: " + sentPayloads.toString());
-
             saveCardType(sentPayloads, accesstoken);
 
         } catch (JSONException e) {
@@ -217,15 +214,10 @@ public class CardDetails extends AppCompatActivity {
                             } else {
                                 Toast.makeText(CardDetails.this, "Status : " + result, Toast.LENGTH_SHORT).show();
                             }
-
                         }
-
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-                    //Log.e(TAG, "onResponse: save card :" + res);
                 } else {
                     if (response.code() == 401) {
                         DataVaultManager.getInstance(CardDetails.this).saveUserDetails("");
@@ -240,7 +232,6 @@ public class CardDetails extends AppCompatActivity {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
             }
         });
 

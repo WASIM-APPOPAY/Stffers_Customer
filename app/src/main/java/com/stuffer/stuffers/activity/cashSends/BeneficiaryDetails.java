@@ -164,7 +164,8 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
 
     private void getDestinationCurrency() {
         showLoading(getString(R.string.info_please_wait_dots));
-        AndroidNetworking.get("http://3.140.192.123:8080/api/appopay/country-with-currency")
+        //AndroidNetworking.get("http://3.140.192.123:8080/api/appopay/country-with-currency")
+        AndroidNetworking.get("https://api-prod.cashsends.com:8080/api/appopay/country-with-currency")
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
@@ -184,7 +185,8 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
                                 }
                             }
                             String country = mListDestination.get(0).getCountry();
-                            Log.e(TAG, "onResponse: " + country);
+                            //Log.e(TAG, "onResponse: " + country);
+                            //getPaymentMode();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -274,7 +276,8 @@ public class BeneficiaryDetails extends Fragment implements View.OnClickListener
 
     private void getBankDetailsByIFSC(JSONObject mRequestIFSCbody) {
         showLoading(getString(R.string.info_please_wait_dots));
-        AndroidNetworking.post("http://3.140.192.123:8080/api/transfer/getBankNetworkList")
+        //AndroidNetworking.post("http://3.140.192.123:8080/api/transfer/getBankNetworkList")
+        AndroidNetworking.post("https://api-prod.cashsends.com:8080/api/transfer/getBankNetworkList")
                 .addJSONObjectBody(mRequestIFSCbody)
                 .build().getAsJSONObject(new JSONObjectRequestListener() {
             @Override

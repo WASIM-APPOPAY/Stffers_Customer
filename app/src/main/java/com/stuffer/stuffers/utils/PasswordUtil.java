@@ -17,6 +17,7 @@ public final class PasswordUtil {
     private static final double QUALITY_POOR = 10;
     private static final double QUALITY_MEDIUM = 26;
     private static final double QUALITY_STRONG = 31;
+
     public static final String REGEX_PASSWORD_POLICY="Minimum password length is 8 characters"+"<br>" +
             "Required at least one "+ "<font color='#00baf2'>"+"uppercase letter"+ "</font>"+" from latin alphaber(A-Z)"+"<br>" +
             "Required at least one " +"<font color='#00baf2'>"+"lowercase letter"+ "</font>"+" from latin alphaber(a-z)"+"<br>" +

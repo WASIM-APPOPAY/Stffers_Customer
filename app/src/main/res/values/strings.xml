@@ -523,7 +523,8 @@
 
     <string name="switch_camera">Switch camera</string>
     <string name="info_zip_code">Zip Code</string>
-    <string name="google_maps_api_key">AIzaSyBJ-gfrAjD6HQ_1FllX8KhyKeCzx-3YZYc</string>
+    <!--<string name="google_maps_api_key">AIzaSyBJ-gfrAjD6HQ_1FllX8KhyKeCzx-3YZYc</string>-->
+    <string name="google_maps_api_key">AIzaSyAPKs9Pj1dxZSG-MH5OrNxUO0sytf5bQII</string>
     <string name="info_clave">Clave</string>
 
     <string name="no_inteenet_connection"> No internet connection available</string>

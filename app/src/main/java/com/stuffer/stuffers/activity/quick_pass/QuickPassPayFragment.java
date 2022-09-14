@@ -881,6 +881,8 @@ public class QuickPassPayFragment extends Fragment {
             }
         });
 
+
+
         builder.setView(dialogLayout);
 
         dialogMerchant = builder.create();

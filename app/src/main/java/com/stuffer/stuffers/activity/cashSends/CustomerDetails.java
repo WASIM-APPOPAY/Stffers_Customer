@@ -112,7 +112,8 @@ public class CustomerDetails extends Fragment implements View.OnClickListener {
     private void getPurpose() {
         showProgress(getString(R.string.info_please_wait_dots));
 
-        AndroidNetworking.get("http://3.140.192.123:8080/api/transfer/getPurposeOfTransferList/" + mNationalityCode)
+        //AndroidNetworking.get("http://3.140.192.123:8080/api/transfer/getPurposeOfTransferList/" + mNationalityCode)
+        AndroidNetworking.get("https://api-prod.cashsends.com:8080/api/transfer/getPurposeOfTransferList/" + mNationalityCode)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
@@ -151,7 +152,8 @@ public class CustomerDetails extends Fragment implements View.OnClickListener {
 
     private void getSourceOfIncome() {
         showProgress(getString(R.string.info_please_wait_dots));
-        AndroidNetworking.get("http://3.140.192.123:8080/api/appopay/source-of-income")
+        //AndroidNetworking.get("http://3.140.192.123:8080/api/appopay/source-of-income")
+        AndroidNetworking.get("https://api-prod.cashsends.com:8080/api/appopay/source-of-income")
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override

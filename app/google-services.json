@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "496137498192",
+    "firebase_url": "https://stuffersappopay-default-rtdb.firebaseio.com",
     "project_id": "stuffersappopay",
     "storage_bucket": "stuffersappopay.appspot.com"
   },
@@ -19,6 +20,14 @@
           "android_info": {
             "package_name": "com.stuffer.stuffers",
             "certificate_hash": "af4cde64c0f4b1820f71c2acb31119eeb12df22d"
+          }
+        },
+        {
+          "client_id": "496137498192-ps46qat78h4eqnf112faoiifppb6hl5c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stuffer.stuffers",
+            "certificate_hash": "7403a124b191a90bf975bcaf73d959508a0ae45e"
           }
         },
         {

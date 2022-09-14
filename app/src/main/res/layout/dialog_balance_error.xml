@@ -16,6 +16,7 @@
             android:src="@drawable/appopay_gift_card" />
 
         <com.stuffer.stuffers.views.MyTextView
+            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

@@ -2,6 +2,7 @@ package com.stuffer.stuffers.api;
 
 
 public class Constants {
+    //https://prodapi.appopay.com/api/users/savecardtype
     public static final String APPOPAY_BASE_URL = "https://prodapi.appopay.com/";
     //public static final String APPOPAY_BASE_URL = "https://labapi.appopay.com/";
     public static final String APPOPAY_BASE_NODE_URL = "https://prodapi-node.appopay.com/";

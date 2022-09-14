@@ -99,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp">
 
-                    <com.stuffer.stuffers.views.CardNumberEditText
+                    <com.stuffer.stuffers.views.MyCardEditText
                         android:id="@+id/card_number_field_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

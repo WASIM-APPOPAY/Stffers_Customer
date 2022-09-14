@@ -3,6 +3,8 @@ package com.stuffer.stuffers.fragments.bottom;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -81,6 +83,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -187,7 +190,7 @@ public class HomeFragment extends Fragment implements ShopListener {
         // llOwnGiftCard = (LinearLayout) mView.findViewById(R.id.llOwnGiftCard);
 
         checkIsLoginEnable();
-
+        //layoutByCard
 
         /*file_maps.put("Sale banner 1", R.drawable.small_banner1);
         file_maps.put("Sale banner 2", R.drawable.small_banner1);
@@ -238,6 +241,16 @@ public class HomeFragment extends Fragment implements ShopListener {
         slider_home.setCustomAnimation(new ChildAnimationExample());
 
         //for slider 2
+       // 1.19
+         //       2.19
+           //             3.12
+             //                   4.11
+               //                         5.19
+                 //                               6.18
+                   //                                     7.46
+
+
+
         for (String name : file_maps2.keySet()) {
             TextSliderView textSliderView = new TextSliderView(getActivity());
             // initialize a SliderLayout
@@ -316,7 +329,7 @@ public class HomeFragment extends Fragment implements ShopListener {
                     mBottomTransDialog.show(getChildFragmentManager(), mBottomTransDialog.getTag());
                     mBottomTransDialog.setCancelable(false);
                 } else {
-                  /*mBottomTransDialog = new BottomTransactionPin();
+                    /*mBottomTransDialog = new BottomTransactionPin();
                     mBottomTransDialog.show(getChildFragmentManager(), mBottomTransDialog.getTag());
                     mBottomTransDialog.setCancelable(false);*/
                 }
@@ -573,7 +586,7 @@ public class HomeFragment extends Fragment implements ShopListener {
             public void onClick(View view) {
 
 
-                /*String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
+                String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
                 if (StringUtils.isEmpty(vaultValue)) {
                     ErrorDialogFragment errorDialogFragment = new ErrorDialogFragment();
                     Bundle bundle = new Bundle();
@@ -586,9 +599,9 @@ public class HomeFragment extends Fragment implements ShopListener {
                     Intent intent = new Intent(getActivity(), AddMoneyToWallet.class);
                     startActivity(intent);
 
-                }*/
-                Intent intent = new Intent(getActivity(), FundCountry.class);
-                startActivity(intent);
+                }
+                /*Intent intent = new Intent(getActivity(), FundCountry.class);
+                startActivity(intent);*/
 
 
             }

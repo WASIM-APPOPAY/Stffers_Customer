@@ -248,8 +248,8 @@ public class AppoConstants {
     public static final String PAYOUTCOUNTRY = "payoutCountry";
     public static final String APPROVESTATUS = "approveStatus";
     public static final String PENDING = "pending";
-    public static final String APPROVESTATUS = "approveStatus";
-    public static final String PENDING = "pending";
+    //public static final String APPROVESTATUS = "approveStatus";
+    //public static final String PENDING = "pending";
 
 
     //DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");;

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.room.util.StringUtil;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,6 +44,7 @@ import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.views.MyEditText;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -96,6 +98,7 @@ public class NumEmailFragment extends Fragment {
         btnClearAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mAddress="";
                 placesAutocomplete.setText("");
                 placesAutocomplete.setAdapter(mAutoAdapter);
                 placesAutocomplete.setEnabled(true);
@@ -130,8 +133,15 @@ public class NumEmailFragment extends Fragment {
                     placesAutocomplete.setFocusable(true);
                     return;
                 }
+                if (StringUtils.isEmpty(mAddress)) {
+                    placesAutocomplete.setError(getString(R.string.info_your_address));
+                    placesAutocomplete.requestFocus();
+                    placesAutocomplete.setFocusable(true);
+                    return;
+                }
                 //mOtpRequestListener.onOtpRequest("IN", "91", "9836683269", "mdwasim508@gmail.com", "bankra mondal para killa math kolkata 711403, West Bengal","27");
-
+                //Log.e(TAG, "onClick: Add 1 : "+mAddress );
+                //Log.e(TAG, "onClick: Add 2 : "+placesAutocomplete.getText().toString() );
                 verifyMobileNumber(mCountryCode + mMobileNumber);
                 //requestForOtp();
             }
@@ -193,6 +203,9 @@ public class NumEmailFragment extends Fragment {
             }
         });
     }
+
+    //ANWARI KHATOON 59 f
+    //MOHAMMAD HAFIJ 74 MALE
 
     public void verifyEmailId(String emailId) {
 
@@ -312,12 +325,12 @@ public class NumEmailFragment extends Fragment {
                 hideProgress();
                 if (response.isSuccessful()) {
                     if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
-                        mOtpRequestListener.onOtpRequest(mNameCode, mCountryCode, mMobileNumber, mEmail, placesAutocomplete.getText().toString().trim(), String.valueOf(mCountyId));
+                        mOtpRequestListener.onOtpRequest(mNameCode, mCountryCode, mMobileNumber, mEmail, mAddress, String.valueOf(mCountyId));
                     } else {
                         if (response.body().get("result").getAsString().equalsIgnoreCase("failed")) {
                             Helper.showErrorMessage(getActivity(), response.body().get("message").getAsString());
                         }
-                    }
+                        }
                 } else {
                     Toast.makeText(getActivity(), getString(R.string.info_request_otp_failed), Toast.LENGTH_LONG).show();
                 }
@@ -341,6 +354,7 @@ public class NumEmailFragment extends Fragment {
         placesAutocomplete.setAdapter(mAutoAdapter);
     }
 
+    private String mAddress="";
     private AdapterView.OnItemClickListener autocompleteClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> mAutoAdapterView, View view, int i, long l) {
@@ -365,6 +379,8 @@ public class NumEmailFragment extends Fragment {
                         public void onSuccess(FetchPlaceResponse task) {
                             String address = task.getPlace().getAddress();
                             String name = task.getPlace().getName();
+
+                            mAddress=name +","+address;
                             placesAutocomplete.setAdapter(null);
                             placesAutocomplete.setText(name + "," + address);
                             placesAutocomplete.setEnabled(false);

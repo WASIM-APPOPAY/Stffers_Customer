@@ -541,7 +541,8 @@
     <string name="info_clave">Clave</string>
 
 
-    <string name="google_maps_api_key">AIzaSyBJ-gfrAjD6HQ_1FllX8KhyKeCzx-3YZYc</string>
+    <!--<string name="google_maps_api_key">AIzaSyBJ-gfrAjD6HQ_1FllX8KhyKeCzx-3YZYc</string>-->
+    <string name="google_maps_api_key">AIzaSyAPKs9Pj1dxZSG-MH5OrNxUO0sytf5bQII</string>
     <string name="info_chinese">中国人</string>
     <string name="info_upload_your_id">Cargue su identificación</string>
     <string name="info_nueva_cuenta">nueva cuenta</string>

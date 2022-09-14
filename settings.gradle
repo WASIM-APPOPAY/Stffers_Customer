@@ -31,4 +31,4 @@ dependencyResolutionManagement {
 
 include ':app'
 //include ':SDKenhancement2.0.2-pm'
-rootProject.name = "Appopay"
+rootProject.name = "Stuffer-Customer"

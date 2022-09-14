@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -56,12 +58,14 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -82,7 +86,6 @@ public class WalletCardActivity extends AppCompatActivity implements CurrencySel
     private String areacode;
     private String mobileNumber;
     ArrayList<AccountModel> mListAccount;
-    //LinearLayout layoutCurrency;
     private String mCardType;
     //Gopal Gung address
     private List<CurrencyResult> result;
@@ -91,15 +94,11 @@ public class WalletCardActivity extends AppCompatActivity implements CurrencySel
     private int mCurrencyId;
     private String mCurrencyCode;
     private MyEditText edAmount;
-    //private MyTextView tvConversionRates;
-    //private MyTextView tvAmountCredit;
     private TextInputEditText cardholder_field_text;
     private CardNumberEditText card_number_field_text;
     private CardDateEditText expiry_date_field;
     private TextInputEditText card_filed_cvv;
     private MyButton btnTransfer;
-    //private MyTextView tvSelectBankCurrency;
-    private float conversionRates;
     private Dialog dialogFund;
     private JSONObject jsonCommission;
     private float bankfees;
@@ -431,6 +430,7 @@ public class WalletCardActivity extends AppCompatActivity implements CurrencySel
      */
 
     private void makePayment() {
+
         JsonObject paramSent = new JsonObject();
         paramSent.addProperty(AppoConstants.ACCOUNTNUMBER, mListAccount.get(0).getAccountnumber());
         paramSent.addProperty(AppoConstants.AREACODE, Integer.parseInt(Objects.requireNonNull(Helper.getSenderAreaCode())));
@@ -456,9 +456,10 @@ public class WalletCardActivity extends AppCompatActivity implements CurrencySel
         paramSent.addProperty(AppoConstants.sFIRSTNAME, Helper.getFirstName());
         paramSent.addProperty(AppoConstants.sLASTNAME, Helper.getLastName());
 
-        paramSent.addProperty(AppoConstants.CITY, Helper.getCityName());
+        /*paramSent.addProperty(AppoConstants.CITY, Helper.getCityName());
         int stateId = Integer.parseInt(Helper.getStateId());
         int countryId = Integer.parseInt(Helper.getCountryId());
+        Log.e(TAG, "makePayment: " + countryId);
 
         for (int i = 0; i < mListCountry.size(); i++) {
             if (mListCountry.get(i).getId().equals(countryId)) {
@@ -474,8 +475,65 @@ public class WalletCardActivity extends AppCompatActivity implements CurrencySel
         }
         paramSent.addProperty(AppoConstants.STATE, mStateName);
         paramSent.addProperty(AppoConstants.COUNTRY, mCountryName);
-        paramSent.addProperty(AppoConstants.ZIPCODE, "");
-        // Log.e(TAG, "makePayment: " + paramSent.toString());
+        paramSent.addProperty(AppoConstants.ZIPCODE, "");*/
+        Geocoder mGeocoder = new Geocoder(WalletCardActivity.this);
+
+
+        List<Address> fromLocationName = null;
+        String mCountry = "", mState = "", mCity = "", mZipCode = "";
+        try {
+            fromLocationName = mGeocoder.getFromLocationName(Helper.getAddress(), 1);
+            //List<Address> fromLocationName = mGeocoder.getFromLocationName("Sky Level, Calle 79B Oeste, Panamá, Panama", 1);
+            //List<Address> fromLocationName = mGeocoder.getFromLocationName("Calle Pedro Ignacio Espaillat,C. Pedro Ignacio Espaillat, Santo Domingo, República Dominicana", 1);
+            for (int i = 0; i < fromLocationName.size(); i++) {
+                mCountry = fromLocationName.get(i).getCountryName();
+                //Log.e(TAG, "showTransaPinDialog: :: country "+fromLocationName.get(i).getCountryName() );
+                mState = fromLocationName.get(i).getLocality();
+                //Log.e(TAG, "showTransaPinDialog: :: state "+fromLocationName.get(i).getLocality() );
+                //Log.e(TAG, "showTransaPinDialog: :: city "+fromLocationName.get(i).getSubLocality() );
+                mCity = fromLocationName.get(i).getSubLocality();
+                //Log.e(TAG, "showTransaPinDialog: :: pincode "+fromLocationName.get(i).getPostalCode() );
+                mZipCode = fromLocationName.get(i).getPostalCode();
+
+            }
+            if (!StringUtils.isEmpty(mCountry)) {
+                paramSent.addProperty(AppoConstants.COUNTRY, mCountry);
+            } else {
+                paramSent.addProperty(AppoConstants.COUNTRY, (String) null);
+            }
+            if (!StringUtils.isEmpty(mState)) {
+                paramSent.addProperty(AppoConstants.STATE, mState);
+            } else {
+                paramSent.addProperty(AppoConstants.STATE, (String) null);
+            }
+            if (!StringUtils.isEmpty(mCity)) {
+                paramSent.addProperty(AppoConstants.CITY, mCity);
+            } else {
+                try {
+                    if (mState.equalsIgnoreCase("Panamá")&&mCountry.equalsIgnoreCase("Panama")) {
+                        paramSent.addProperty(AppoConstants.CITY, "Panama");
+                    } else {
+                        paramSent.addProperty(AppoConstants.CITY, (String) null);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    paramSent.addProperty(AppoConstants.CITY, (String) null);
+                }
+
+            }
+            if (!StringUtils.isEmpty(mZipCode)) {
+                paramSent.addProperty(AppoConstants.ZIPCODE, mZipCode);
+            } else {
+                paramSent.addProperty(AppoConstants.ZIPCODE, "123456");
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        //Log.e(TAG, "makePayment: " + paramSent.toString());
         creditFundToWallet(paramSent);
     }
 
@@ -719,29 +777,28 @@ public class WalletCardActivity extends AppCompatActivity implements CurrencySel
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-            // Log.e(TAG, "onActivityResult: elase called");
-            if (requestCode == MY_SCAN_REQUEST_CODE_TOP ) {//|| requestCode == RESULT_SCAN_SUPPRESSED) {               // RESULT_SCAN_SUPPRESSED
-                Log.e(TAG, "onActivityResult: called signature");
-                Bitmap myBitmap = CardIOActivity.getCapturedCardImage(data);
-                if (myBitmap!=null){
-                    //pcf.setImageBitmap(myBitmap);
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                    byte[] imageBytes = byteArrayOutputStream.toByteArray();
-                    String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-                    //uploadFile(stringExtraPath);
-                    JsonObject mSent = new JsonObject();
-                    mSent.addProperty("image", imageString);
-                    showLoading();
-                    getDataFromImage(mSent);
-                }else {
-                    //Log.e(TAG, "onActivityResult: " );
-                }
-
-
+        // Log.e(TAG, "onActivityResult: elase called");
+        if (requestCode == MY_SCAN_REQUEST_CODE_TOP) {//|| requestCode == RESULT_SCAN_SUPPRESSED) {               // RESULT_SCAN_SUPPRESSED
+            Log.e(TAG, "onActivityResult: called signature");
+            Bitmap myBitmap = CardIOActivity.getCapturedCardImage(data);
+            if (myBitmap != null) {
+                //pcf.setImageBitmap(myBitmap);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                byte[] imageBytes = byteArrayOutputStream.toByteArray();
+                String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+                //uploadFile(stringExtraPath);
+                JsonObject mSent = new JsonObject();
+                mSent.addProperty("image", imageString);
+                showLoading();
+                getDataFromImage(mSent);
+            } else {
+                //Log.e(TAG, "onActivityResult: " );
             }
-        }
 
+
+        }
+    }
 
 
     private void getDataFromImage(JsonObject mRoot) {
@@ -892,9 +949,6 @@ public class WalletCardActivity extends AppCompatActivity implements CurrencySel
                 if (response.isSuccessful()) {
                     JsonObject body = response.body();
                     String res = body.toString();
-
-                    //String res = new Gson().toJson(response.body());
-                    //Log.e(TAG, "onResponse: getprofile :" + res);
                     DataVaultManager.getInstance(WalletCardActivity.this).saveUserDetails(res);
                     getCurrencyCode();
                 } else {
@@ -944,9 +998,6 @@ public class WalletCardActivity extends AppCompatActivity implements CurrencySel
     private void readUserAccounts() {
         mListAccount = new ArrayList<>();
         String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
-
-        ////Log.e(TAG, "readUserAccounts: " + vaultValue);
-
         try {
             JSONObject root = new JSONObject(vaultValue);
             JSONObject objResult = root.getJSONObject(AppoConstants.RESULT);
@@ -958,12 +1009,9 @@ public class WalletCardActivity extends AppCompatActivity implements CurrencySel
                 model.setAccountnumber(index.getString(AppoConstants.ACCOUNTNUMBER));
                 String mIncryptAccount = getAccountNumber(index.getString(AppoConstants.ACCOUNTNUMBER));
                 model.setAccountEncrypt(mIncryptAccount);
-                //Log.e(TAG, "readUserAccounts: encrypt ::  " + mIncryptAccount);
                 if (index.has(AppoConstants.ACCOUNTSTATUS)) {
-                    //Log.e(TAG, "readUserAccounts: AccountStatus : " + index.getString(AppoConstants.ACCOUNTSTATUS));
                     model.setAccountstatus(index.getString(AppoConstants.ACCOUNTSTATUS));
                 } else {
-                    //Log.e(TAG, "readUserAccounts: AccountStatus : " + "null");
                     model.setAccountstatus("");
                 }
                 model.setCurrencyid(index.getString(AppoConstants.CURRENCYID));
@@ -993,15 +1041,10 @@ public class WalletCardActivity extends AppCompatActivity implements CurrencySel
             @Override
             public void onResponse(Call<CountryCodeResponse> call, Response<CountryCodeResponse> response) {
                 dialog.dismiss();
-                //Log.e(TAG, "onResponse: " + new Gson().toJson(response));
                 if (response.isSuccessful()) {
                     if (response.body().getMessage().equalsIgnoreCase("success")) {
-                        //mListMain = new ArrayList<>();
-                        //mListMain=response.body().getResult();
                         mListCountry = new ArrayList<>();
                         mListCountry = response.body().getResult();
-                        //Result result = new Result();
-
 
                         //initCountryCode();
                     }
