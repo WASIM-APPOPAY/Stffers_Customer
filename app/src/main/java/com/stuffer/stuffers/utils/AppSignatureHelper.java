@@ -15,6 +15,12 @@ import java.util.Arrays;
  * Created on : May 21, 2019
  * Author     : AndroidWave
  */
+//https://prishanmaduka.medium.com/generate-hash-keys-properly-for-android-sms-retriever-api-c26b9be42ddc
+    //.\a.sh --package "com.stuffer.stuffers" --keystore E:\StufferJks\Tempjks.jks
+    //SHA-256 output in hex: 5e17f6fa1d1fab22040d93db9b6d3ceab02fa9e70011c58ad8af1f9330801428
+    //First 8 bytes encoded by base64: Xhf2+h0fqyI
+    //SMS Retriever hash code:  Xhf2+h0fqyI
+
 public class AppSignatureHelper extends ContextWrapper {
     private static final String TAG = "AppSignatureHelper";
     private static final String HASH_TYPE = "SHA-256";

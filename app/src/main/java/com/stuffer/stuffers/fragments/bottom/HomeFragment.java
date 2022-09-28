@@ -606,8 +606,10 @@ public class HomeFragment extends Fragment implements ShopListener {
 
             }
         });
+
         ShopAdapter adapter = new ShopAdapter(getActivity(), mList, this);
         rvShop.setAdapter(adapter);
+
 
         llTransferMoney.setOnClickListener(new View.OnClickListener() {
             @Override

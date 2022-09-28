@@ -7,21 +7,34 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.communicator.AreaSelectListener;
 import com.stuffer.stuffers.communicator.FragmentReplaceListener;
 import com.stuffer.stuffers.fragments.forgot_password.ForgotPasswordFragment;
 import com.stuffer.stuffers.fragments.forgot_password.VerifyMobileFragment;
 import com.stuffer.stuffers.fragments.transactionpin.TransactionPinUpdateFragment;
+import com.stuffer.stuffers.myService.AppSMSBroadcastReceiver;
 import com.stuffer.stuffers.utils.AppoConstants;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ForgotPasswordActvivity extends AppCompatActivity implements FragmentReplaceListener, AreaSelectListener {
+
+    private IntentFilter intentFilter;
+    private AppSMSBroadcastReceiver appSMSBroadcastReceiver;
+    private static final String TAG = "ForgotPasswordActvivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +52,10 @@ public class ForgotPasswordActvivity extends AppCompatActivity implements Fragme
             forgotPasswordFragment.setArguments(bundle);
             initFragments(forgotPasswordFragment);*/
         }
+        smsListener();
+        initBroadCast();
+        registerReceiver(appSMSBroadcastReceiver, intentFilter);
+
 
 
 
@@ -51,6 +68,34 @@ public class ForgotPasswordActvivity extends AppCompatActivity implements Fragme
             ((VerifyMobileFragment)fragmentById).updateAreaCode(pos);
         }
 
+    }
+
+    private void initBroadCast() {
+        intentFilter = new IntentFilter("com.google.android.gms.auth.api.phone.SMS_RETRIEVED");
+        appSMSBroadcastReceiver = new AppSMSBroadcastReceiver();
+        appSMSBroadcastReceiver.setOnSmsReceiveListener(new AppSMSBroadcastReceiver.OnSmsReceiveListener() {
+            @Override
+            public void onReceive(String messageCode) {
+                Log.e(TAG, "onReceive: " + messageCode);
+                Toast.makeText(ForgotPasswordActvivity.this, messageCode, Toast.LENGTH_SHORT).show();
+
+                Pattern otpPattern=Pattern.compile("(|^)\\d{6}");
+                Matcher matcher=otpPattern.matcher(messageCode);
+                Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.mainContainer);
+                if (fragmentById instanceof VerifyMobileFragment) {
+                    if (matcher.find()) {
+                        String group = matcher.group(0);
+                        ((VerifyMobileFragment) fragmentById).inputOtp(group);
+                    }
+                }
+            }
+        });
+
+    }
+
+    private void smsListener() {
+        SmsRetrieverClient client = SmsRetriever.getClient(this);
+        client.startSmsRetriever();
     }
 
     private void setupActionBar() {

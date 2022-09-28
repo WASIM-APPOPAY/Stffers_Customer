@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -15,12 +16,14 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonObject;
 import com.hbb20.CountryCodePicker;
+import com.stuffer.stuffers.BuildConfig;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.communicator.FragmentReplaceListener;
 import com.stuffer.stuffers.fragments.dialog.AreaCodeDialog;
 import com.stuffer.stuffers.utils.AppoConstants;
+import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
 import com.stuffer.stuffers.views.MyTextViewBold;
@@ -38,7 +41,7 @@ import retrofit2.Response;
  */
 public class TransactionPinFragment extends Fragment {
     private FragmentReplaceListener mReplaceListener;
-    private FloatingActionButton send_customer_otp, confirm_otp;
+    private ImageView send_customer_otp, confirm_otp;
     private Timer newTimer;
     MyEditText edtCustomerMobileNumber, edtOtpNumber;
     CountryCodePicker edtCustomerCountryCode;
@@ -124,7 +127,8 @@ public class TransactionPinFragment extends Fragment {
                     edtOtpNumber.setFocusable(true);
                     edtOtpNumber.setError(getString(R.string.info_enter_otp));
                 } else {
-                    confirmOtpRequest();
+                    //confirmOtpRequest();
+                    getConfirmation();
                 }
             }
         });
@@ -187,36 +191,45 @@ public class TransactionPinFragment extends Fragment {
         dialog.show();
         JsonObject param = new JsonObject();
 
-        param.addProperty("phone_number", "+" + strCustomerCountryCode + mDominicaAreaCode + edtCustomerMobileNumber.getText().toString().trim());
+        //param.addProperty("phone_number", "+" + strCustomerCountryCode + mDominicaAreaCode + edtCustomerMobileNumber.getText().toString().trim());
+
+        if (BuildConfig.DEBUG) {
+            param.addProperty("hashKey", "Ovjaes9qCGm");
+        } else {
+            param.addProperty("hashKey", "Xhf2+h0fqyI");
+        }
+        param.addProperty("mobileNumber", edtCustomerMobileNumber.getText().toString().trim());
+        param.addProperty("phoneCode", strCustomerCountryCode);
 
         //Log.e("TAG", "requestForOtp: " + param.toString());
 
-        mainAPIInterface.getOtpforUserVerificaiton(param).enqueue(new Callback<String>() {
+        mainAPIInterface.getOtpforUser(param).enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    if (response.body().equalsIgnoreCase("0")) {
-                        Toast.makeText(getContext(), getString(R.string.info_verify_your_phone_number2), Toast.LENGTH_SHORT).show();
-                    } else {
-
-                        response.body();
-                        //Log.e("TAG", "onResponse: " + response.body());
-                        //Log.e("TAG", "onResponse: " + new Gson().toJson(response));
+                    if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
                         txtTimer.setVisibility(View.VISIBLE);
                         startTimer();
-
                         llVerification.setVisibility(View.GONE);
                         llVerification2.setVisibility(View.VISIBLE);
+                    } else {
+                        if (response.body().get("result").getAsString().equalsIgnoreCase("failed")) {
+                            Helper.showErrorMessage(getActivity(), response.body().get("message").getAsString());
+                        }
                     }
 
+
+
+
+
                 } else {
-                    Toast.makeText(getContext(), getString(R.string.info_otp_request_failed), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.info_request_otp_failed), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
                 //Log.e("tag", t.getMessage().toString());
             }
@@ -225,7 +238,7 @@ public class TransactionPinFragment extends Fragment {
     }
 
 
-    private void startTimer() {
+    /*private void startTimer() {
         if (newTimer == null) {
             newTimer = new Timer();
         }
@@ -255,6 +268,51 @@ public class TransactionPinFragment extends Fragment {
             }
 
         }, 0, 1000);
+    }*/
+    private void startTimer() {
+        seconds = 59;
+        minutes = 4;
+        if (newTimer == null) {
+            newTimer = new Timer();
+        }
+        newTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            txtTimer.setText(String.valueOf(minutes) + ":" + String.valueOf(seconds) + "s");
+                            txtTimer.setVisibility(View.VISIBLE);
+                            seconds -= 1;
+                            if (seconds == 0 && minutes == 0) {
+                                //btnResendOtp.setVisibility(View.VISIBLE);
+                                txtTimer.setText(String.valueOf(minutes) + ":" + String.valueOf(seconds));
+                                seconds = 59;
+                                minutes = 4;
+                                txtTimer.setVisibility(View.GONE);
+                                //minutes = minutes - 1;
+                                newTimer.cancel();
+                                newTimer = null;
+                                btnResendOtp.setVisibility(View.VISIBLE);
+                                llVerification.setVisibility(View.VISIBLE);
+                                llVerification2.setVisibility(View.GONE);
+//                                llReOtp.setVisibility(View.VISIBLE);
+//                                llVerificationOtp.setVisibility(View.GONE);
+
+
+                            } else if (seconds == 0 && minutes > 0) {
+                                seconds = 59;
+                                minutes = minutes - 1;
+
+                            }
+                        }
+
+                    });
+                }
+            }
+
+        }, 0, 1000);
     }
 
 
@@ -273,16 +331,41 @@ public class TransactionPinFragment extends Fragment {
         dialog.show();
 
         JsonObject param = new JsonObject();
-        param.addProperty("phone_number", "+" + strCustomerCountryCode + mDominicaAreaCode + edtCustomerMobileNumber.getText().toString().trim());
+        //param.addProperty("phone_number", "+" + strCustomerCountryCode + mDominicaAreaCode + edtCustomerMobileNumber.getText().toString().trim());
+        if (BuildConfig.DEBUG) {
+            param.addProperty("hashKey", "Ovjaes9qCGm");
+        } else {
+            param.addProperty("hashKey", "Xhf2+h0fqyI");
+        }
+        param.addProperty("mobileNumber", edtCustomerMobileNumber.getText().toString().trim());
+        param.addProperty("phoneCode", strCustomerCountryCode);
 
-        mainAPIInterface.getOtpforUserVerificaiton(param).enqueue(new Callback<String>() {
+        mainAPIInterface.getOtpforUser(param).enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
+                    if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
+                        txtTimer.setVisibility(View.VISIBLE);
+                        startTimer();
+                        llVerification.setVisibility(View.GONE);
+                        llVerification2.setVisibility(View.VISIBLE);
+                    } else {
+                        if (response.body().get("result").getAsString().equalsIgnoreCase("failed")) {
+                            Helper.showErrorMessage(getActivity(), response.body().get("message").getAsString());
+                        }
+                    }
+
+
+
+
+
+                } else {
+                    Toast.makeText(getActivity(), getString(R.string.info_request_otp_failed), Toast.LENGTH_LONG).show();
+                }
+
+                /*if (response.isSuccessful()) {
                     response.body();
-                    //Log.e("TAG", "onResponse: " + response.body());
-                    //Log.e("TAG", "onResponse: " + new Gson().toJson(response));
                     txtTimer.setVisibility(View.VISIBLE);
                     startTimer();
                     btnResendOtp.setVisibility(View.GONE);
@@ -291,16 +374,83 @@ public class TransactionPinFragment extends Fragment {
 
                 } else {
                     Toast.makeText(getActivity(), getString(R.string.info_otp_request_failed), Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
                 //Log.e("tag", t.getMessage().toString());
             }
         });
     }
+
+
+
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            mReplaceListener = (FragmentReplaceListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Parent should implement FragmentReplaceListener");
+        }
+
+    }
+
+    @Override
+    public void onDetach() {
+        if (newTimer != null) {
+            newTimer.cancel();
+        }
+        super.onDetach();
+
+    }
+
+    public void inputOtp(String group) {
+        edtOtpNumber.setText(group);
+        getConfirmation();
+    }
+    public void getConfirmation() {
+        strCustomerPhone = edtCustomerMobileNumber.getText().toString();
+        strCustomerCountryCode = edtCustomerCountryCode.getSelectedCountryCode();
+        dialog = new ProgressDialog(getActivity());
+        dialog.setMessage("Verifying OTP.");
+        dialog.show();
+        mainAPIInterface.verifiedGivenOtp(edtOtpNumber.getText().toString().trim())
+                .enqueue(new Callback<JsonObject>() {
+                    @Override
+                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful()) {
+                            if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
+                                Helper.showLongMessage(getActivity(), "Successfully Verified!...");
+                                String phWithCode = strCustomerCountryCode + mDominicaAreaCode + strCustomerPhone;
+                                Bundle bundle = new Bundle();
+                                bundle.putString(AppoConstants.PHONECODE, strCustomerCountryCode);
+                                bundle.putString(AppoConstants.MOBILENUMBER, strCustomerPhone);
+                                bundle.putString(AppoConstants.PHWITHCODE, phWithCode);
+                                if (mReplaceListener != null) {
+                                    mReplaceListener.onFragmentReplaceClick(bundle);
+                                }
+
+                            } else {
+                                if (response.body().get("result").getAsString().equalsIgnoreCase("failed")) {
+                                    Helper.showErrorMessage(getActivity(), response.body().get("message").getAsString());
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<JsonObject> call, Throwable t) {
+                        dialog.dismiss();
+
+                    }
+                });
+    }
+
 
     private void confirmOtpRequest() {
         strCustomerPhone = edtCustomerMobileNumber.getText().toString();
@@ -353,26 +503,4 @@ public class TransactionPinFragment extends Fragment {
 
 
     }
-
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        try {
-            mReplaceListener = (FragmentReplaceListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException("Parent should implement FragmentReplaceListener");
-        }
-
-    }
-
-    @Override
-    public void onDetach() {
-        if (newTimer != null) {
-            newTimer.cancel();
-        }
-        super.onDetach();
-
-    }
-
 }

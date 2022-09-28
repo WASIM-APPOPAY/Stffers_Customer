@@ -48,6 +48,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -119,9 +120,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/bg_rectangle"
                 android:orientation="vertical"
                 android:padding="5dp">
@@ -152,9 +153,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/bg_rectangle"
                 android:orientation="vertical"
                 android:padding="5dp">
@@ -174,14 +175,16 @@
                     android:background="@drawable/bg_border_address"
                     android:orientation="horizontal">
 
-                    <AutoCompleteTextView
+                    <com.stuffer.stuffers.views.MyEditText
                         android:id="@+id/placesAutocomplete"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
                         android:background="@null"
+                        android:gravity="start"
                         android:hint="type your address"
+                        android:lines="2"
                         android:padding="16dp" />
 
                     <ImageView
@@ -193,19 +196,175 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:padding="10dp"
-                        android:src="@drawable/ic_clear_black_24dp"
+                        android:src="@drawable/ic_forward"
+                        android:visibility="gone"
                         app:tint="@color/colorPrimaryDark" />
                 </LinearLayout>
 
             </LinearLayout>
 
-            <!--<com.stuffer.stuffers.views.MyButton
-                style="@style/MaterialButton"
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="8dp"
-                android:text="Next" />-->
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_rectangle"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="State"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:background="@drawable/bg_border_address"
+                    android:orientation="horizontal">
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/tvState"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:hint="your state name"
+                        android:padding="16dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/ivState"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_forward"
+                        app:tint="@color/colorPrimaryDark" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_rectangle"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="City"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:background="@drawable/bg_border_address"
+                    android:orientation="horizontal">
+
+                    <com.stuffer.stuffers.views.MyEditText
+                        android:id="@+id/tvCity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:singleLine="true"
+                        android:hint="your city name"
+                        android:imeOptions="actionNext|flagNoExtractUi"
+                        android:padding="16dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/ivCity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_clear_black_24dp"
+                        android:visibility="gone"
+                        app:tint="@color/colorPrimaryDark" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_rectangle"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Zip Code(Optional) if country dos't have zip code "
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:background="@drawable/bg_border_address"
+                    android:orientation="horizontal">
+
+                    <com.stuffer.stuffers.views.MyEditText
+                        android:id="@+id/tvZip"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:singleLine="true"
+                        android:digits="0123456789"
+                        android:hint="your zip code"
+                        android:imeOptions="actionDone|flagNoExtractUi"
+                        android:inputType="number"
+                        android:padding="16dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/ivZipCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_clear_black_24dp"
+                        android:visibility="gone"
+                        app:tint="@color/colorPrimaryDark" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/floatingOtpNext"
@@ -221,9 +380,8 @@
                 app:fabCustomSize="60dp" />
 
             <com.stuffer.stuffers.views.MyTextView
-                android:visibility="gone"
-
                 android:id="@+id/customer_login"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/forgot_password_bg"
@@ -233,7 +391,8 @@
                 android:padding="10dp"
                 android:text="@string/info_sign_in"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone" />
 
 
         </LinearLayout>

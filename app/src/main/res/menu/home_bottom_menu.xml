@@ -7,10 +7,10 @@
         android:icon="@drawable/ic_home"
         android:title="@string/info_home" />
 
-    <item
+    <!--<item
         android:id="@+id/action_shopping"
         android:icon="@drawable/ic_shopping"
-        android:title="@string/info_mall" />
+        android:title="@string/info_mall" />-->
 
     <item
         android:id="@+id/action_scan"

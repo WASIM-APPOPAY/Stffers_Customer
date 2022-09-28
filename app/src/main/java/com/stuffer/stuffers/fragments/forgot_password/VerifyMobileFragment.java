@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.stuffer.stuffers.BuildConfig;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
@@ -55,6 +57,7 @@ public class VerifyMobileFragment extends Fragment {
     private String mDominicaAreaCode = "";
     private ArrayList<String> mAreaList;
     private AreaCodeDialog mAreaDialog;
+    private ProgressBar progress;
 
     public VerifyMobileFragment() {
         // Required empty public constructor
@@ -67,6 +70,7 @@ public class VerifyMobileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_verify_mobile, container, false);
         send_customer_otp = view.findViewById(R.id.send_customer_otp);
+        progress = view.findViewById(R.id.progress);
         confirm_otp = view.findViewById(R.id.confirm_otp);
         tvAreaCodeDo = (MyTextViewBold) view.findViewById(R.id.tvAreaCodeDo);
         edtCustomerMobileNumber = view.findViewById(R.id.edtCustomerMobileNumber);
@@ -121,7 +125,8 @@ public class VerifyMobileFragment extends Fragment {
                     edtOtpNumber.setError(getString(R.string.info_enter_otp));
                 } else {
                     Helper.hideKeyboard(edtOtpNumber, getContext());
-                    confirmOtpRequest();
+                    //confirmOtpRequest();
+                    getConfirmation();
                 }
             }
         });
@@ -177,38 +182,45 @@ public class VerifyMobileFragment extends Fragment {
         dialog.show();
         JsonObject param = new JsonObject();
 
-        param.addProperty("phone_number", "+" + strCustomerCountryCode + mDominicaAreaCode + edtCustomerMobileNumber.getText().toString().trim());
+        //param.addProperty("phone_number", "+" + strCustomerCountryCode + mDominicaAreaCode + edtCustomerMobileNumber.getText().toString().trim());
 
-        ////Log.e("TAG", "requestForOtp: " + param.toString());
+        if (BuildConfig.DEBUG) {
+            param.addProperty("hashKey", "Ovjaes9qCGm");
+        } else {
+            param.addProperty("hashKey", "Xhf2+h0fqyI");
+        }
+        param.addProperty("mobileNumber", edtCustomerMobileNumber.getText().toString().trim());
+        param.addProperty("phoneCode", strCustomerCountryCode);
 
-        mainAPIInterface.getOtpforUserVerificaiton(param).enqueue(new Callback<String>() {
+        //Log.e("TAG", "requestForOtp: " + param.toString());
+
+        mainAPIInterface.getOtpforUser(param).enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    if (response.body().equalsIgnoreCase("0")) {
-                        Toast.makeText(getContext(), getString(R.string.info_verify_your_phone_number2), Toast.LENGTH_SHORT).show();
-                    } else {
-
-                        //response.body();
-                        ////Log.e("TAG", "onResponse: " + response.body());
-                        ////Log.e("TAG", "onResponse: " + new Gson().toJson(response));
+                    if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
+                        progress.setVisibility(View.VISIBLE);
                         txtTimer.setVisibility(View.VISIBLE);
                         startTimer();
-
                         llVerification.setVisibility(View.GONE);
                         llVerification2.setVisibility(View.VISIBLE);
+                    } else {
+                        if (response.body().get("result").getAsString().equalsIgnoreCase("failed")) {
+                            Helper.showErrorMessage(getActivity(), response.body().get("message").getAsString());
+                        }
                     }
 
+
                 } else {
-                    Toast.makeText(getContext(), getString(R.string.info_otp_request_failed), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.info_request_otp_failed), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-//                Log.e("tag", t.getMessage().toString());
+                //Log.e("tag", t.getMessage().toString());
             }
         });
 
@@ -216,32 +228,46 @@ public class VerifyMobileFragment extends Fragment {
 
 
     private void startTimer() {
+        seconds = 59;
+        minutes = 4;
         if (newTimer == null) {
             newTimer = new Timer();
         }
         newTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        txtTimer.setText(String.valueOf(minutes) + ":" + String.valueOf(seconds));
-                        seconds -= 1;
-                        if (seconds == 0) {
-                            //btnResendOtp.setVisibility(View.VISIBLE);
-                            txtTimer.setText(String.valueOf(minutes) + ":" + String.valueOf(seconds));
-                            seconds = 59;
-                            txtTimer.setVisibility(View.GONE);
-                            //minutes = minutes - 1;
-                            newTimer.cancel();
-                            newTimer = null;
-                            btnResendOtp.setVisibility(View.VISIBLE);
-                            llVerification.setVisibility(View.VISIBLE);
-                            llVerification2.setVisibility(View.GONE);
-                        }
-                    }
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            txtTimer.setText(String.valueOf(minutes) + ":" + String.valueOf(seconds) + "s");
+                            txtTimer.setVisibility(View.VISIBLE);
+                            seconds -= 1;
+                            if (seconds == 0 && minutes == 0) {
+                                //btnResendOtp.setVisibility(View.VISIBLE);
+                                txtTimer.setText(String.valueOf(minutes) + ":" + String.valueOf(seconds));
+                                seconds = 59;
+                                minutes = 4;
+                                txtTimer.setVisibility(View.GONE);
+                                //minutes = minutes - 1;
+                                newTimer.cancel();
+                                newTimer = null;
+                                btnResendOtp.setVisibility(View.VISIBLE);
+                                llVerification.setVisibility(View.VISIBLE);
+                                llVerification2.setVisibility(View.GONE);
+//                                llReOtp.setVisibility(View.VISIBLE);
+//                                llVerificationOtp.setVisibility(View.GONE);
 
-                });
+
+                            } else if (seconds == 0 && minutes > 0) {
+                                seconds = 59;
+                                minutes = minutes - 1;
+
+                            }
+                        }
+
+                    });
+                }
             }
 
         }, 0, 1000);
@@ -263,16 +289,39 @@ public class VerifyMobileFragment extends Fragment {
         dialog.show();
 
         JsonObject param = new JsonObject();
-        param.addProperty("phone_number", "+" + strCustomerCountryCode + mDominicaAreaCode + edtCustomerMobileNumber.getText().toString().trim());
+        //param.addProperty("phone_number", "+" + strCustomerCountryCode + mDominicaAreaCode + edtCustomerMobileNumber.getText().toString().trim());
+        if (BuildConfig.DEBUG) {
+            param.addProperty("hashKey", "Ovjaes9qCGm");
+        } else {
+            param.addProperty("hashKey", "Xhf2+h0fqyI");
+        }
+        param.addProperty("mobileNumber", edtCustomerMobileNumber.getText().toString().trim());
+        param.addProperty("phoneCode", strCustomerCountryCode);
 
-        mainAPIInterface.getOtpforUserVerificaiton(param).enqueue(new Callback<String>() {
+        mainAPIInterface.getOtpforUser(param).enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
+                    if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
+                        progress.setVisibility(View.VISIBLE);
+                        txtTimer.setVisibility(View.VISIBLE);
+                        startTimer();
+                        llVerification.setVisibility(View.GONE);
+                        llVerification2.setVisibility(View.VISIBLE);
+                    } else {
+                        if (response.body().get("result").getAsString().equalsIgnoreCase("failed")) {
+                            Helper.showErrorMessage(getActivity(), response.body().get("message").getAsString());
+                        }
+                    }
+
+
+                } else {
+                    Toast.makeText(getActivity(), getString(R.string.info_request_otp_failed), Toast.LENGTH_LONG).show();
+                }
+
+                /*if (response.isSuccessful()) {
                     response.body();
-                    //// Log.e("TAG", "onResponse: " + response.body());
-                    ////Log.e("TAG", "onResponse: " + new Gson().toJson(response));
                     txtTimer.setVisibility(View.VISIBLE);
                     startTimer();
                     btnResendOtp.setVisibility(View.GONE);
@@ -281,15 +330,61 @@ public class VerifyMobileFragment extends Fragment {
 
                 } else {
                     Toast.makeText(getActivity(), getString(R.string.info_otp_request_failed), Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-//                Log.e("tag", t.getMessage().toString());
+                //Log.e("tag", t.getMessage().toString());
             }
         });
+    }
+
+
+    public void inputOtp(String group) {
+        edtOtpNumber.setText(group);
+        getConfirmation();
+    }
+
+    public void getConfirmation() {
+        strCustomerPhone = edtCustomerMobileNumber.getText().toString();
+        strCustomerCountryCode = edtCustomerCountryCode.getSelectedCountryCode();
+        dialog = new ProgressDialog(getActivity());
+        dialog.setMessage("Verifying OTP.");
+        dialog.show();
+        mainAPIInterface.verifiedGivenOtp(edtOtpNumber.getText().toString().trim())
+                .enqueue(new Callback<JsonObject>() {
+                    @Override
+                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful()) {
+                            if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
+                                Helper.showLongMessage(getActivity(), "Successfully Verified!...");
+                                String phWithCode = strCustomerCountryCode + mDominicaAreaCode + strCustomerPhone;
+                                Bundle bundle = new Bundle();
+                                bundle.putString(AppoConstants.PHONECODE, strCustomerCountryCode);
+                                bundle.putString(AppoConstants.MOBILENUMBER, strCustomerPhone);
+                                bundle.putString(AppoConstants.PHWITHCODE, phWithCode);
+                                progress.setVisibility(View.GONE);
+                                if (mReplaceListener != null) {
+                                    mReplaceListener.onFragmentReplaceClick(bundle);
+                                }
+
+                            } else {
+                                if (response.body().get("result").getAsString().equalsIgnoreCase("failed")) {
+                                    Helper.showErrorMessage(getActivity(), response.body().get("message").getAsString());
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<JsonObject> call, Throwable t) {
+                        dialog.dismiss();
+
+                    }
+                });
     }
 
     private void confirmOtpRequest() {

@@ -298,7 +298,16 @@
                 android:adjustViewBounds="true"
                 android:padding="10dp"
                 android:src="@drawable/appopay_resize_logo" />
+            <ProgressBar
+                android:visibility="gone"
+                android:id="@+id/progress"
+                android:layout_gravity="center"
+                app:indicatorColor="@color/black"
+                android:progressTint="@color/colorPrimary"
+                android:foregroundTint="@color/colorPrimary"
 
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
 
         </LinearLayout>
 

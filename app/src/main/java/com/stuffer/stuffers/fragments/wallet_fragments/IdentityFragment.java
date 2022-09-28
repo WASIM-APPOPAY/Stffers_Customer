@@ -104,12 +104,12 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
     private String mReqDateFormat = "yyyy-MM-dd";
     private boolean mAllow = false;
     private androidx.appcompat.app.AlertDialog dialogExtract;
-    String mParamNameCode, mParamCountryCode, mParamMobile, mParamEmail, mParamAdd, mParamCountryId;
+    String mParamNameCode, mParamCountryCode, mParamMobile, mParamEmail, mParamAdd, mParamCountryId, mParamZip, mParamCity, mParamStateId;
     private String fullName;
-    private String fName,lName;
+    private String fName, lName;
     private String mIdName;
     private ProgressDialog mProgress;
-    private String strUserEmail,strUserPassword;
+    private String strUserEmail, strUserPassword;
     private FirebaseAuth mAuth;
     private DatabaseReference reference;
 
@@ -128,6 +128,9 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
             mParamEmail = getArguments().getString(AppoConstants.EMIAL_ID);
             mParamAdd = getArguments().getString(AppoConstants.ADDRESS);
             mParamCountryId = getArguments().getString(AppoConstants.COUNTRYID);
+            mParamStateId = getArguments().getString(AppoConstants.STATEID);
+            mParamZip = getArguments().getString(AppoConstants.ZIPCODE2);
+            mParamCity = getArguments().getString(AppoConstants.CITY);
         }
     }
     //https://github.com/badoualy/stepper-indicator
@@ -248,6 +251,7 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
 
         }
     }
+
     public void showProgress(String msg) {
         mProgress = new ProgressDialog(getActivity());
         mProgress.setMessage(msg);
@@ -265,7 +269,7 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
         JsonObject index = new JsonObject();
         index.addProperty(AppoConstants.FIRSTNAME, fName);
         index.addProperty(AppoConstants.LASTNAME, lName);
-        index.addProperty(AppoConstants.USERNAME, mParamCountryCode+mParamMobile);
+        index.addProperty(AppoConstants.USERNAME, mParamCountryCode + mParamMobile);
         index.addProperty(AppoConstants.PASSWORD, txtUserPassword.getText().toString().trim());
         index.addProperty(AppoConstants.EMIAL, mParamEmail);
         index.addProperty(AppoConstants.MOBILENUMBER, Long.parseLong(mParamMobile));
@@ -284,13 +288,16 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
         customerDetails.addProperty(AppoConstants.LASTNAME, lName.toUpperCase());
         customerDetails.addProperty(AppoConstants.DOB, mDob);
         customerDetails.addProperty(AppoConstants.COUNTRYID, mParamCountryId);
-        customerDetails.addProperty(AppoConstants.STATEID, "0");
+        customerDetails.addProperty(AppoConstants.STATEID, mParamStateId);
         customerDetails.addProperty(AppoConstants.EXPIRYDATE, mExpiry);
         customerDetails.addProperty(AppoConstants.ADDRESS, mParamAdd);
+        customerDetails.addProperty(AppoConstants.ZIPCODE2, mParamZip);
+        customerDetails.addProperty(AppoConstants.CITY, mParamCity);
+
         customerDetails.addProperty(AppoConstants.IDNUMBER, tvIdNo.getText().toString().trim());
         customerDetails.addProperty(AppoConstants.IDTYPE, mIdName);
         index.add(AppoConstants.CUSTOMERDETAILS, customerDetails);
-        //Log.e(TAG, "makeRequest: "+index.toString() );
+        //Log.e(TAG, "makeRequest: " + index.toString());
 
         showProgress("Please wait, creating your account");
 
@@ -334,7 +341,7 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
         showProgress(getString(R.string.info_creating_account));
         strUserEmail = mParamEmail;
         strUserPassword = txtUserPassword.getText().toString().trim();
-        String phWithCode=mParamCountryCode+mParamMobile;
+        String phWithCode = mParamCountryCode + mParamMobile;
         mAuth.createUserWithEmailAndPassword(strUserEmail, phWithCode)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -345,7 +352,7 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
                             reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
                             HashMap<String, String> hashMap = new HashMap<>();
-                            hashMap.put("area_code",String.valueOf(mParamCountryCode));
+                            hashMap.put("area_code", String.valueOf(mParamCountryCode));
                             hashMap.put("id", userid);
                             hashMap.put("username", txtUserName.getText().toString());
                             hashMap.put("imageURL", "default");

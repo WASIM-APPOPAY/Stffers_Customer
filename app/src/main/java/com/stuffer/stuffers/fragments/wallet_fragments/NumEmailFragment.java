@@ -3,7 +3,9 @@ package com.stuffer.stuffers.fragments.wallet_fragments;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -31,6 +33,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.hbb20.CountryCodePicker;
 import com.stuffer.stuffers.AppoPayApplication;
+import com.stuffer.stuffers.BuildConfig;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.wallet.MobileNumberRegistrationActivity;
 import com.stuffer.stuffers.adapter.address.AutoCompleteAdapter;
@@ -38,11 +41,14 @@ import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.communicator.OtpRequestListener;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomAlreadyFragment;
+import com.stuffer.stuffers.fragments.dialog.StateDialogFragment;
 import com.stuffer.stuffers.models.Country.CountryCodeResponse;
 import com.stuffer.stuffers.models.Country.Result;
+import com.stuffer.stuffers.models.Country.State;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.views.MyEditText;
+import com.stuffer.stuffers.views.MyTextView;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
@@ -65,7 +71,8 @@ public class NumEmailFragment extends Fragment {
     private FloatingActionButton floatingOtpNext;
     private OtpRequestListener mOtpRequestListener;
     private MyEditText edtCustomerMobileNumber, edtEmail;
-    private AutoCompleteTextView placesAutocomplete;
+    //private AutoCompleteTextView placesAutocomplete;
+    private MyEditText placesAutocomplete;
     private ImageView btnClearAll;
     AutoCompleteAdapter mAutoAdapter;
     private PlacesClient mPlaceClient;
@@ -75,6 +82,12 @@ public class NumEmailFragment extends Fragment {
     MainAPIInterface mainAPIInterface;
     List<Result> mListCountry;
     private Integer mCountyId = 0;
+    List<State> mStates;
+    ImageView ivState;
+    MyTextView tvState;
+    MyEditText tvCity, tvZip;
+
+    private int mStateId;
 
     public NumEmailFragment() {
         // Required empty public constructor
@@ -93,15 +106,18 @@ public class NumEmailFragment extends Fragment {
         edtCustomerCountryCode = mView.findViewById(R.id.edtCustomerCountryCode);
         placesAutocomplete = mView.findViewById(R.id.placesAutocomplete);
         btnClearAll = mView.findViewById(R.id.btnClearAll);
+        ivState = mView.findViewById(R.id.ivState);
+        tvState = mView.findViewById(R.id.tvState);
         edtEmail = mView.findViewById(R.id.edtEmail);
+        tvZip = mView.findViewById(R.id.tvZip);
+        tvCity = mView.findViewById(R.id.tvCity);
 
         btnClearAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAddress="";
+                mAddress = "";
                 placesAutocomplete.setText("");
-                placesAutocomplete.setAdapter(mAutoAdapter);
-                placesAutocomplete.setEnabled(true);
+
             }
         });
 
@@ -127,18 +143,23 @@ public class NumEmailFragment extends Fragment {
                     edtEmail.requestFocus();
                     return;
                 }
+
                 if (placesAutocomplete.getText().toString().trim().isEmpty()) {
                     placesAutocomplete.setError(getString(R.string.info_your_address));
                     placesAutocomplete.requestFocus();
                     placesAutocomplete.setFocusable(true);
                     return;
                 }
-                if (StringUtils.isEmpty(mAddress)) {
-                    placesAutocomplete.setError(getString(R.string.info_your_address));
-                    placesAutocomplete.requestFocus();
-                    placesAutocomplete.setFocusable(true);
+                if (tvState.getText().toString().trim().isEmpty()) {
+                    Helper.showErrorMessage(getActivity(), "Please Select State");
                     return;
                 }
+                if (tvCity.getText().toString().trim().isEmpty()) {
+                    Helper.showErrorMessage(getActivity(), "Please Enter City Name");
+                    return;
+                }
+
+
                 //mOtpRequestListener.onOtpRequest("IN", "91", "9836683269", "mdwasim508@gmail.com", "bankra mondal para killa math kolkata 711403, West Bengal","27");
                 //Log.e(TAG, "onClick: Add 1 : "+mAddress );
                 //Log.e(TAG, "onClick: Add 2 : "+placesAutocomplete.getText().toString() );
@@ -146,14 +167,41 @@ public class NumEmailFragment extends Fragment {
                 //requestForOtp();
             }
         });
+
         edtCustomerCountryCode.setExcludedCountries(getString(R.string.info_exclude_countries));
 
-        if (!Places.isInitialized()) {
-            Places.initialize(AppoPayApplication.getInstance(), getString(R.string.google_maps_api_key));
-        }
+        mCountryName = edtCustomerCountryCode.getSelectedCountryName();
 
-        mPlaceClient = Places.createClient(getActivity());
-        initAutoCompleteTextView();
+        /*if (!Places.isInitialized()) {
+            Places.initialize(AppoPayApplication.getInstance(), getString(R.string.google_maps_api_key));
+        }*/
+
+        //mPlaceClient = Places.createClient(getActivity());
+        //initAutoCompleteTextView();
+        edtCustomerCountryCode.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                mCountryName = edtCustomerCountryCode.getSelectedCountryName();
+                tvState.setText("");
+
+                getCountryList();
+            }
+        });
+
+        ivState.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListCountry != null && mListCountry.size() > 0) {
+                    StateDialogFragment stateDialogFragment = new StateDialogFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList(AppoConstants.STATE, (ArrayList<? extends Parcelable>) mStates);
+                    stateDialogFragment.setArguments(bundle);
+                    stateDialogFragment.setCancelable(false);
+                    stateDialogFragment.show(getChildFragmentManager(), stateDialogFragment.getTag());
+                }
+            }
+        });
+        getCountryList();
 
         return mView;
 
@@ -225,8 +273,9 @@ public class NumEmailFragment extends Fragment {
                         if (jsonObject.get("message").equals(AppoConstants.SUCCESS) && !jsonObject.getBoolean("result")) {
 
                             //createNewUser();
-                            getCountryList();
+                            //getCountryList();
                             //Toast.makeText(getActivity(), "Everything Ok", Toast.LENGTH_SHORT).show();
+                            requestForOtp();
                         } else {
                             Toast.makeText(getActivity(), getString(R.string.error_email_already_exists), Toast.LENGTH_SHORT).show();
                             BottomAlreadyFragment fragmentBottomAlready = new BottomAlreadyFragment();
@@ -295,8 +344,10 @@ public class NumEmailFragment extends Fragment {
     }
 
     private void disableSelectCountry() {
-        //Log.e(TAG, "disableSelectCountry: " + mCountryName);
+        Log.e(TAG, "disableSelectCountry: " + mCountryName);
+        int pos = -1;
         for (int i = 0; i < mListCountry.size(); i++) {
+            pos = pos + 1;
             String countryname = mListCountry.get(i).getCountryname();
             String regex = "\\s+";
             //Replacing the pattern with single space
@@ -308,15 +359,22 @@ public class NumEmailFragment extends Fragment {
                 break;
             }
         }
-        requestForOtp();
+        mStates = mListCountry.get(pos).getStates();
 
     }
 
     private void requestForOtp() {
         showProgress(getString(R.string.info_sending_otp));
         JsonObject param = new JsonObject();
-        param.addProperty("mobileNumber",  mMobileNumber);
-        param.addProperty("phoneCode",  mCountryCode );
+        param.addProperty("mobileNumber", mMobileNumber);
+        if (BuildConfig.DEBUG){
+            param.addProperty("hashKey", "Ovjaes9qCGm");
+        }else {
+            param.addProperty("hashKey", "Xhf2+h0fqyI");
+        }
+
+
+        param.addProperty("phoneCode", mCountryCode);
 
 
         mainAPIInterface.getOtpforUser(param).enqueue(new Callback<JsonObject>() {
@@ -325,12 +383,18 @@ public class NumEmailFragment extends Fragment {
                 hideProgress();
                 if (response.isSuccessful()) {
                     if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
-                        mOtpRequestListener.onOtpRequest(mNameCode, mCountryCode, mMobileNumber, mEmail, mAddress, String.valueOf(mCountyId));
+                        String zip;
+                        if (StringUtils.isEmpty(tvZip.getText().toString().trim())) {
+                            zip = "-1";
+                        } else {
+                            zip = tvZip.getText().toString().trim();
+                        }
+                        mOtpRequestListener.onOtpRequest(mNameCode, mCountryCode, mMobileNumber, mEmail, mAddress, String.valueOf(mCountyId), mStateId, zip, tvCity.getText().toString().trim());
                     } else {
                         if (response.body().get("result").getAsString().equalsIgnoreCase("failed")) {
                             Helper.showErrorMessage(getActivity(), response.body().get("message").getAsString());
                         }
-                        }
+                    }
                 } else {
                     Toast.makeText(getActivity(), getString(R.string.info_request_otp_failed), Toast.LENGTH_LONG).show();
                 }
@@ -347,15 +411,15 @@ public class NumEmailFragment extends Fragment {
     }
 
 
-    private void initAutoCompleteTextView() {
+    /*private void initAutoCompleteTextView() {
         placesAutocomplete.setThreshold(1);
         placesAutocomplete.setOnItemClickListener(autocompleteClickListener);
         mAutoAdapter = new AutoCompleteAdapter(getActivity(), mPlaceClient);
         placesAutocomplete.setAdapter(mAutoAdapter);
-    }
+    }*/
 
-    private String mAddress="";
-    private AdapterView.OnItemClickListener autocompleteClickListener = new AdapterView.OnItemClickListener() {
+    private String mAddress = "";
+    /*private AdapterView.OnItemClickListener autocompleteClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> mAutoAdapterView, View view, int i, long l) {
 
@@ -397,7 +461,7 @@ public class NumEmailFragment extends Fragment {
             }
 
         }
-    };
+    };*/
 
 
     @Override
@@ -405,5 +469,10 @@ public class NumEmailFragment extends Fragment {
         super.onAttach(context);
         mOtpRequestListener = (OtpRequestListener) context;
 
+    }
+
+    public void setStateName(String statename, int stateid) {
+        tvState.setText(statename);
+        mStateId = stateid;
     }
 }

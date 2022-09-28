@@ -580,7 +580,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
                 fragmentTransaction.commit();
                 break;
 
-            case 1:
+            /*case 1:
                 hideItem();
                 Fragment fragment2 = new MallFragment();
 
@@ -589,9 +589,9 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
                 fragmentTransaction2.addToBackStack(null);
                 fragmentTransaction2.replace(R.id.mainContainer, fragment2);
                 fragmentTransaction2.commit();
-                break;
+                break;*/
 
-            case 2:
+            case 1:
                 hideItem();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
@@ -641,7 +641,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
                 }
                 break;*/
 
-            case 3:
+            case 2:
                 hideItem();
                 BankFragment fragment4 = new BankFragment();
                 FragmentManager fragmentManager4 = getSupportFragmentManager();
@@ -651,7 +651,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
                 fragmentTransaction4.commit();
                 break;
 
-            case 4:
+            case 3:
                 visibleItem();
                 Fragment fragment5 = new ChatTabFragment();
                 FragmentManager fragmentManager5 = getSupportFragmentManager();

@@ -16,11 +16,15 @@
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/custom_drawable_layout.xml" value="0.22" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/dialog_balance_error.xml" value="0.25" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_beneficiary_details.xml" value="0.22" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_num_email.xml" value="0.25" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_verify_mobile.xml" value="0.15217391304347827" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/home_fragment.xml" value="0.18" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/home_topbar_layout.xml" value="0.16032608695652173" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/layout_below_profile.xml" value="0.16032608695652173" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/layout_deafult_card.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/layout_dialog_carrier.xml" value="0.15217391304347827" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/my_toolbar.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/menu/home_bottom_menu.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

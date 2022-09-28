@@ -20,6 +20,7 @@ import com.kofigyan.stateprogressbar.StateProgressBar;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.communicator.CarrierSelectListener;
 import com.stuffer.stuffers.communicator.OtpRequestListener;
+import com.stuffer.stuffers.communicator.StateSelectListener;
 import com.stuffer.stuffers.communicator.VerifiedListener;
 import com.stuffer.stuffers.fragments.bottom.HomeFragment;
 import com.stuffer.stuffers.fragments.wallet_fragments.IdentityFragment;
@@ -32,7 +33,7 @@ import com.stuffer.stuffers.utils.AppoConstants;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Registration extends AppCompatActivity implements OtpRequestListener, VerifiedListener, CarrierSelectListener {
+public class Registration extends AppCompatActivity implements OtpRequestListener, VerifiedListener, CarrierSelectListener , StateSelectListener {
     String mNameCode, mCountryCode, mMobileNo, mEmailId, mAddress, mCountryId;
     String[] descriptionData = {"Step One", "Step Two", "Step Three"};
     StateProgressBar stateProgressBar;
@@ -40,6 +41,7 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
     private static final String TAG = "Registration";
     private AppSMSBroadcastReceiver appSMSBroadcastReceiver;
     private IntentFilter intentFilter;
+    private String mStateId,mZipCode,mCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +86,7 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
 
 
     @Override
-    public void onOtpRequest(String nameCode, String countryCode, String mobileNumber, String emailId, String address, String countryId) {
+    public void onOtpRequest(String nameCode, String countryCode, String mobileNumber, String emailId, String address, String countryId,int stateId, String zipCode,String city) {
         state(1);
         mNameCode = nameCode;
         mCountryCode = countryCode;
@@ -93,6 +95,11 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         mAddress = address;
         mCountryId = countryId;
 
+        mStateId= String.valueOf(stateId);
+        mZipCode=zipCode;
+        mCity=city;
+
+
 
         Bundle mBundle = new Bundle();
         mBundle.putString(AppoConstants.COUNTRYNAMECODE, nameCode);
@@ -100,6 +107,9 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         mBundle.putString(AppoConstants.MOBILENUMBER, mobileNumber);
         mBundle.putString(AppoConstants.EMIAL_ID, emailId);
         mBundle.putString(AppoConstants.ADDRESS, address);
+        mBundle.putString(AppoConstants.STATEID, String.valueOf(stateId));
+        mBundle.putString(AppoConstants.ZIPCODE2,zipCode);
+        mBundle.putString(AppoConstants.CITY,city);
         VerifyFragment mVerifyFragment = new VerifyFragment();
         mVerifyFragment.setArguments(mBundle);
         intiFragment(mVerifyFragment);
@@ -117,6 +127,9 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         mBundle.putString(AppoConstants.EMIAL_ID, mEmailId);
         mBundle.putString(AppoConstants.ADDRESS, mAddress);
         mBundle.putString(AppoConstants.COUNTRYID, mCountryId);
+        mBundle.putString(AppoConstants.STATEID, mStateId);
+        mBundle.putString(AppoConstants.ZIPCODE2,mZipCode);
+        mBundle.putString(AppoConstants.CITY,mCity);
 
         mIdentityFragment.setArguments(mBundle);
         intiFragment(mIdentityFragment);
@@ -207,6 +220,14 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(appSMSBroadcastReceiver);
+    }
+
+    @Override
+    public void onStateSelected(String statename, int stateid) {
+        Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.containerSignUp);
+        if (fragmentById instanceof NumEmailFragment) {
+            ((NumEmailFragment) fragmentById).setStateName(statename,stateid);
+        }
     }
 
     /*@Override

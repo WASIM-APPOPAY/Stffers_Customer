@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonObject;
 import com.hbb20.CountryCodePicker;
+import com.stuffer.stuffers.BuildConfig;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.wallet.MobileNumberRegistrationActivity;
 import com.stuffer.stuffers.activity.wallet.SignupAcitivity;
@@ -42,7 +43,7 @@ import retrofit2.Response;
 
 public class VerifyFragment extends Fragment {
     private static final String TAG = "VerifyFragment";
-    String mParamNameCode, mParamCountryCode, mParamMobile, mParamEmail, mParamAdd;
+    String mParamNameCode, mParamCountryCode, mParamMobile, mParamEmail, mParamAdd,mParamZip,mParamCity,mParamStateId;
     View mView;
     private Timer newTimer;
     private MyTextView txtTimer, tvHeadingVerify, tvOtpHeading;
@@ -72,6 +73,9 @@ public class VerifyFragment extends Fragment {
             mParamMobile = getArguments().getString(AppoConstants.MOBILENUMBER);
             mParamEmail = getArguments().getString(AppoConstants.EMIAL_ID);
             mParamAdd = getArguments().getString(AppoConstants.ADDRESS);
+            mParamStateId=getArguments().getString(AppoConstants.STATEID);
+            mParamZip=getArguments().getString(AppoConstants.ZIPCODE2);
+            mParamCity=getArguments().getString(AppoConstants.CITY);
         }
     }
 
@@ -180,6 +184,11 @@ public class VerifyFragment extends Fragment {
         showProgress(getString(R.string.info_sending_otp));
         JsonObject param = new JsonObject();
         param.addProperty("mobileNumber", mParamMobile);
+        if (BuildConfig.DEBUG){
+            param.addProperty("hashKey", "Ovjaes9qCGm");
+        }else {
+            param.addProperty("hashKey", "Xhf2+h0fqyI");
+        }
         param.addProperty("phoneCode", mParamCountryCode);
 
 
