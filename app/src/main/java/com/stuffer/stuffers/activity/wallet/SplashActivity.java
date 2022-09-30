@@ -23,10 +23,12 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.MyContextWrapper;
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.api.Constants;
 import com.stuffer.stuffers.communicator.LanguageListener;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomLanguage;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomNotCard;
 import com.stuffer.stuffers.utils.AppSignatureHelper;
+import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.views.MyTextView;
 import com.stuffer.stuffers.views.MyTextViewBold;
@@ -95,6 +97,11 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
             @Override
             public void onClick(View view) {
                 tvCheck.setChecked(true);
+                Intent intent=new Intent(SplashActivity.this,UrlsActivity.class);
+                intent.putExtra(AppoConstants.TITLE,"Terms and Condition");
+                intent.putExtra(AppoConstants.NAME, Constants.TERM_AND_CONDITIONS);
+                startActivity(intent);
+
             }
         });
 

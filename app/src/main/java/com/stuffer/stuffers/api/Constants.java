@@ -14,7 +14,7 @@ public class Constants {
     public static final String POST_JWE = "getJWEToken";
     public static final String POST_JWS = "getJWSToken";
     public static final String POST_QR_BAR_CODE = "generate/qrcodeandbarcode";
-    public static final String CARD_FACE_DOWNLOAD="cardfacedownloading";
+    public static final String CARD_FACE_DOWNLOAD = "cardfacedownloading";
     public static final String UNION_PAY_JWS = "api/configurations/generateJWS";
     public static final String POST_CARD_ENROLLMENT = "cardenrollment";
     public static final String POST_JWE_CONTENT = "parseJWEContent";
@@ -233,7 +233,7 @@ public class Constants {
     public static final String BASE_OCR = "http://3.141.54.113:8889/";
     //public static final String BASE_OCR = "http://54.253.233.223:8889/";
     public static final String OCR_ID = "ocr/idcard_base64";
-    public static final String OCR_BANK="ocr/credit_base64";
+    public static final String OCR_BANK = "ocr/credit_base64";
     //http://3.141.54.113:8889/ocr/credit_base64
 
 
@@ -242,5 +242,6 @@ public class Constants {
     public static final String CUSTOMERDYNAMICQRCODE = "api/qrcode/emv/customer/dynamic/v2/{userId}/{amount}/{isImage}";
 
 
-    public static final String USERAVATAR="api/users/avatar/update";
+    public static final String USERAVATAR = "api/users/avatar/update";
+    public static final String TERM_AND_CONDITIONS = "api/term-condition";
 }
