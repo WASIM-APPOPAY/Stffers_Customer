@@ -20,40 +20,6 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:visibility="gone">
-
-            <com.stuffer.stuffers.views.MyTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="20dp"
-                android:padding="10dp"
-                android:text="Prepaid"
-                android:textColor="@color/Black"
-                android:textSize="18sp" />
-
-            <Switch
-                android:id="@+id/rechargeSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:padding="10dp" />
-
-            <com.stuffer.stuffers.views.MyTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="20dp"
-                android:padding="10dp"
-                android:text="Postpaid"
-                android:textColor="@color/Black"
-                android:textSize="18sp" />
-
-        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,12 +34,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="5dp"
-                android:drawableRight="@drawable/ic_dropdown"
+                android:drawableRight="@drawable/ccp_ic_arrow_drop_down"
                 android:gravity="center"
+                android:paddingLeft="10dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
                 android:text="@string/info_area_code"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:drawableTint="@color/colorPrimary"
@@ -82,27 +49,30 @@
             <!--android:hint="Enter Phone Number"-->
             <com.stuffer.stuffers.views.MyEditText
                 android:id="@+id/edtphone_number"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/edit_text_no_round_bg"
-
                 android:hint="Enter number to recharge"
+
                 android:imeOptions="actionDone|flagNoExtractUi"
                 android:inputType="number"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:textColorHint="@color/black" />
 
             <ImageView
                 android:id="@+id/ivContactList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
                 android:layout_gravity="center_vertical"
-                android:background="?attr/selectableItemBackground"
+                android:layout_marginTop="@dimen/dp_5"
+                android:background="@drawable/bg_circle_link"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="10dp"
-                android:src="@drawable/ic_contact_list" />
+                android:src="@drawable/ic_contact_list"
+                app:tint="@color/black" />
 
 
         </LinearLayout>
@@ -123,7 +93,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/edit_text_no_round_bg"
-            android:drawableRight="@drawable/ic_dropdown"
+            android:drawableRight="@drawable/ccp_ic_arrow_drop_down"
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:padding="10dp"
@@ -137,7 +107,7 @@
             android:layout_height="1dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@color/grey_light_tertiary" />
+            android:background="@color/colorPrimary" />
 
 
         <RelativeLayout
@@ -227,6 +197,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
+
+            android:background="@drawable/bg_border_address"
             android:minHeight="?attr/actionBarSize">
 
             <com.stuffer.stuffers.views.MyTextView
@@ -256,9 +228,6 @@
     </LinearLayout>
 
     <!-- </androidx.core.widget.NestedScrollView>-->
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
+    <include layout="@layout/common_bottom_layout" />
 
-        android:src="@drawable/banner1" />
 </LinearLayout>

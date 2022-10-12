@@ -50,6 +50,7 @@ import com.stuffer.stuffers.api.Constants;
 import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.asyntask.NotificationHelper;
 import com.stuffer.stuffers.asyntask.RegisterDevice;
+import com.stuffer.stuffers.commonChat.chat.BottomChatFragment;
 import com.stuffer.stuffers.communicator.AreaSelectListener;
 import com.stuffer.stuffers.communicator.FinanceListener;
 import com.stuffer.stuffers.communicator.InnerScanListener;
@@ -561,7 +562,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
 
             case 0:
                 hideItem();
-                Fragment fragment = new HomeFragment();
+                /*Fragment fragment = new HomeFragment();
                 if (allowParam) {
                     Bundle bundle = new Bundle();
                     bundle.putString(AppoConstants.INFO, "1");
@@ -571,8 +572,9 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
                     Bundle bundle = new Bundle();
                     bundle.putString(AppoConstants.INFO, "0");
                     fragment.setArguments(bundle);
-                }
-                //  Log.e(TAG, "onNavigationItemChanged: called :: " + 1);
+                }*/
+                BottomChatFragment fragment=new BottomChatFragment();
+
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.addToBackStack(null);

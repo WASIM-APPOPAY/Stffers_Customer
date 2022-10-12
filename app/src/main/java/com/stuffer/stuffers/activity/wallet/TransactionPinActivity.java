@@ -30,7 +30,7 @@ import com.stuffer.stuffers.utils.AppoConstants;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TransactionPinActivity extends AppCompatActivity implements FragmentReplaceListener , AreaSelectListener {
+public class TransactionPinActivity extends AppCompatActivity implements FragmentReplaceListener, AreaSelectListener {
     private static final String TAG = "TransactionPinActivity";
     private String oldTransactionPin;
     private IntentFilter intentFilter;
@@ -49,17 +49,20 @@ public class TransactionPinActivity extends AppCompatActivity implements Fragmen
         } else {
             //Log.e(TAG, "onCreate: not called");
         }
+
+        smsListener();
+        initBroadCast();
+        registerReceiver(appSMSBroadcastReceiver, intentFilter);
     }
 
     @Override
     public void onAreaSelected(int pos) {
         Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.mainContainer);
-        if (fragmentById instanceof TransactionPinFragment){
-            ((TransactionPinFragment)fragmentById).updateAreaCode(pos);
+        if (fragmentById instanceof TransactionPinFragment) {
+            ((TransactionPinFragment) fragmentById).updateAreaCode(pos);
         }
 
     }
-
 
 
     public void initFragments(Fragment params) {
@@ -129,8 +132,8 @@ public class TransactionPinActivity extends AppCompatActivity implements Fragmen
                 Log.e(TAG, "onReceive: " + messageCode);
                 Toast.makeText(TransactionPinActivity.this, messageCode, Toast.LENGTH_SHORT).show();
 
-                Pattern otpPattern=Pattern.compile("(|^)\\d{6}");
-                Matcher matcher=otpPattern.matcher(messageCode);
+                Pattern otpPattern = Pattern.compile("(|^)\\d{6}");
+                Matcher matcher = otpPattern.matcher(messageCode);
                 Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.mainContainer);
                 if (fragmentById instanceof TransactionPinFragment) {
                     if (matcher.find()) {

@@ -1,29 +1,45 @@
 package com.stuffer.stuffers.activity.wallet;
 
+import static android.os.Build.VERSION.SDK_INT;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_LANGUAGE;
 import static com.stuffer.stuffers.utils.DataVaultManager.TANDC;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.MyContextWrapper;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.api.Constants;
+import com.stuffer.stuffers.commonChat.chat.NumberActivity;
+import com.stuffer.stuffers.commonChat.chatModel.User;
+import com.stuffer.stuffers.commonChat.chatUtils.ChatHelper;
 import com.stuffer.stuffers.communicator.LanguageListener;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomLanguage;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomNotCard;
@@ -48,6 +64,8 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
     private MyTextViewBold tvLanguage;
     private BottomLanguage mBottomLanguage;
     private CheckBox tvCheck;
+    private LinearLayout rLayout;
+    private ChatHelper chatHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,16 +78,20 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
             return;
         }
         setContentView(R.layout.splash);
-        AppSignatureHelper mAppSignatureHelper = new AppSignatureHelper(AppoPayApplication.getInstance());
+        /*AppSignatureHelper mAppSignatureHelper = new AppSignatureHelper(AppoPayApplication.getInstance());
         ArrayList<String> appSignatures = mAppSignatureHelper.getAppSignatures();
-        Log.e(TAG, "onCreate: " + appSignatures.get(0));
+        Log.e(TAG, "onCreate: " + appSignatures.get(0));*/
 
         tvCheck = (CheckBox) findViewById(R.id.tvCheck);
         tvAgree = (MyTextView) findViewById(R.id.tvAgree);
         tvTapInfo = (MyTextViewBold) findViewById(R.id.tvTapInfo);
         tvLanguage = (MyTextViewBold) findViewById(R.id.tvLanguage);
+        rLayout = findViewById(R.id.rLayout);
 
         String mTandc = DataVaultManager.getInstance(SplashActivity.this).getVaultValue(TANDC);
+        chatHelper = new ChatHelper(this);
+        boolean checkPermission = checkPermission();
+
         if (!StringUtils.isEmpty(mTandc)) {
             tvCheck.setChecked(true);
         }
@@ -80,14 +102,23 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
                     Toast.makeText(SplashActivity.this, getString(R.string.info_term_condition), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                setupUI();
-               /* boolean smsRetrieverApiAvailable = isSmsRetrieverApiAvailable(SplashActivity.this);
-                Log.e(TAG, "onClick: "+String.valueOf(smsRetrieverApiAvailable) );*/
+                if (checkPermission) {
+                    User loggedInUser = chatHelper.getLoggedInUser();
+                    String s = new Gson().toJson(loggedInUser);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            setupUI();
+                        }
+                    }, SPLASH_TIMEOUT);
+                } else {
+                    showPermission(getString(R.string.permission_desc_storage));
+                }
+
             }
         });
 
-        //Tap Agree and Continue to accept the Term of Condition.
-        //String tapInfoText="message &quot;quote string 1&quot;";
+
         String tapInfoText1 = "<font color='#029DDC'>" + getString(R.string.info_split1) + " " + "&quot;" + getString(R.string.info_split2) + "&quot;" + "</font>" + "<font color='#029DDC'>" + " " + getString(R.string.info_split3) + "</font>";
         String tapInfoText2 = "<font color='#FB8310'>" + " " + getString(R.string.info_split4) + "</font>";
         String wholeText = tapInfoText1 + tapInfoText2;
@@ -97,8 +128,8 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
             @Override
             public void onClick(View view) {
                 tvCheck.setChecked(true);
-                Intent intent=new Intent(SplashActivity.this,UrlsActivity.class);
-                intent.putExtra(AppoConstants.TITLE,"Terms and Condition");
+                Intent intent = new Intent(SplashActivity.this, UrlsActivity.class);
+                intent.putExtra(AppoConstants.TITLE, "Terms and Condition");
                 intent.putExtra(AppoConstants.NAME, Constants.TERM_AND_CONDITIONS);
                 startActivity(intent);
 
@@ -117,19 +148,6 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
 
     private static final String MIN_SUPPORTED_PLAY_SERVICES_VERSION = "10.2";
 
-    public static boolean isSmsRetrieverApiAvailable(Context context) {
-
-        if (!isPlayServicesAvailable(context)) {
-            return false;
-        }
-
-        try {
-            String playServicesVersionName = context.getPackageManager().getPackageInfo(GoogleApiAvailability.GOOGLE_PLAY_SERVICES_PACKAGE, 0).versionName; // should be >10.2.0
-            return playServicesVersionName.compareTo(MIN_SUPPORTED_PLAY_SERVICES_VERSION) > 0;
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
-        }
-    }
 
     private static boolean isPlayServicesAvailable(Context context) {
         GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
@@ -138,10 +156,6 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
     }
 
     private void showLanDialogue() {
-        //mBottomNotCard = new BottomNotCard();
-        //mBottomNotCard.show(getSupportFragmentManager(), mBottomNotCard.getTag());
-        //mBottomNotCard.setCancelable(false);
-
         mBottomLanguage = new BottomLanguage();
         mBottomLanguage.show(getSupportFragmentManager(), mBottomLanguage.getTag());
         mBottomLanguage.setCancelable(false);
@@ -149,8 +163,7 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
     }
 
 
-    private void setupUI() {
-        //Log.e("TAG", "setupUI: "+ DataVaultManager.getInstance(this).getVaultValue(DataVaultManager.KEY_ACCESSTOKEN));
+    /*private void setupUI() {
         String keyUserDetails = DataVaultManager.getInstance(this).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
         if (!StringUtils.isEmpty(keyUserDetails)) {
             new Handler().postDelayed(new Runnable() {
@@ -158,7 +171,7 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
                 public void run() {
                     DataVaultManager.getInstance(SplashActivity.this).saveTerm("check");
                     DataVaultManager.getInstance(SplashActivity.this).saveComingFromSplash("no");
-                    Intent i = new Intent(SplashActivity.this, HomeActivity.class);
+                    Intent i = new Intent(SplashActivity.this, HomeActivity2.class);
                     startActivity(i);
                     finish();
 
@@ -168,7 +181,6 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    // DataVaultManager.getInstance(SplashActivity.this).saveComingFromSplash("no");
                     DataVaultManager.getInstance(SplashActivity.this).saveTerm("check");
                     Intent i = new Intent(SplashActivity.this, SignInActivity.class);
                     startActivity(i);
@@ -177,29 +189,31 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
             }, SPLASH_TIMEOUT);
         }
 
+    }*/
+
+    private void setupUI() {
+        //startActivity(new Intent(SplashActivity.this, chatHelper.getLoggedInUser() != null ? HomeActivity2.class : NumberActivity.class));
+        String keyUserDetails = DataVaultManager.getInstance(this).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+        if (chatHelper.getLoggedInUser() != null) {
+            /*if (!StringUtils.isEmpty(keyUserDetails)) {
+                Intent i = new Intent(SplashActivity.this, HomeActivity2.class);
+                startActivity(i);
+                finish();
+            } else {
+                startActivity(new Intent(SplashActivity.this, SignInActivity.class));
+                finish();
+            }*/
+            Intent i = new Intent(SplashActivity.this, HomeActivity2.class);
+            startActivity(i);
+            finish();
+        } else {
+            startActivity(new Intent(SplashActivity.this, NumberActivity.class));
+            finish();
+        }
+
+
     }
 
-    // 1. Enter Autorization No
-    // 2. Enter Autorization No Cancel
-    /*
-    {
-    "payInCurrency": "USD",
-    "payoutCurrency": "INR",
-    "transferCurrency": "USD",
-    "transferAmount": "100",
-    "paymentMode": "Bank"
-    }
-     */
-    /*
-
-    {
-  "payInCurrency": "INR",
-  "paymentMode": "Bank",
-  "payoutCurrency": "USD",
-  "transferAmount": "100",
-  "transferCurrency": "INR"
-}
-     */
 
     @Override
     public void onLanguageSelect(String lan) {
@@ -213,13 +227,95 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        //fetch from shared preference also save to the same when applying. default is English
-        //String language = MyPreferenceUtil.getInstance().getString(MyConstants.PARAM_LANGUAGE, "en");
+
         String userLanguage = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_LANGUAGE);
         if (StringUtils.isEmpty(userLanguage)) {
-            ////Log.e(TAG, "attachBaseContext: english called");
             userLanguage = "en";
         }
         super.attachBaseContext(MyContextWrapper.wrap(newBase, userLanguage));
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 2298) {
+            if (grantResults.length > 0) {
+                boolean p1 = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                boolean p2 = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                boolean p3 = grantResults[2] == PackageManager.PERMISSION_GRANTED;
+                boolean p4 = grantResults[3] == PackageManager.PERMISSION_GRANTED;
+                boolean p5 = grantResults[4] == PackageManager.PERMISSION_GRANTED;
+
+                if (p1 && p2 && p3 && p4 && p5) {
+                    setupUI();
+                } else {
+                    showPermission(getString(R.string.permission_desc_storage));
+                }
+            }
+        } else if (requestCode == 2299) {
+            if (grantResults.length > 0) {
+                boolean p1 = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                boolean p2 = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                boolean p3 = grantResults[2] == PackageManager.PERMISSION_GRANTED;
+                if (p1 && p2 && p3) {
+                    setupUI();
+                } else {
+                    showPermission(getString(R.string.permission_desc_storage));
+                }
+            }
+        }
+    }
+
+    private boolean checkPermission() {
+
+        int result1 = ContextCompat.checkSelfPermission(SplashActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
+        int result2 = ContextCompat.checkSelfPermission(SplashActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int result3 = ContextCompat.checkSelfPermission(SplashActivity.this, android.Manifest.permission.READ_CONTACTS);
+        int result4 = ContextCompat.checkSelfPermission(SplashActivity.this, android.Manifest.permission.RECORD_AUDIO);
+        int result5 = ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.CAMERA);
+        int result6 = ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.RECEIVE_SMS);
+
+        return result1 == PackageManager.PERMISSION_GRANTED && result2 == PackageManager.PERMISSION_GRANTED
+                && result3 == PackageManager.PERMISSION_GRANTED && result4 == PackageManager.PERMISSION_GRANTED
+                && result5 == PackageManager.PERMISSION_GRANTED && result6 == PackageManager.PERMISSION_GRANTED;
+
+    }
+
+    public void showPermission(String permission_desc) {
+        Snackbar snackbar = Snackbar.make(rLayout, permission_desc, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.settings, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        ActivityCompat.requestPermissions(SplashActivity.this, new String[]{
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_CONTACTS,
+                                Manifest.permission.RECORD_AUDIO,
+                                Manifest.permission.CAMERA
+                                , Manifest.permission.RECEIVE_SMS}, 2298);
+                    }
+                });
+        snackbar.setActionTextColor(Color.RED);
+        View view = snackbar.getView();
+        TextView sbTextView = view.findViewById(com.google.android.material.R.id.snackbar_text);
+        sbTextView.setMaxLines(3);
+        sbTextView.setTextColor(Color.YELLOW);
+        snackbar.show();
+    }
+
+    /*@Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2296) {
+            if (SDK_INT >= Build.VERSION_CODES.R) {
+                if (Environment.isExternalStorageManager()) {
+                    ActivityCompat.requestPermissions(SplashActivity.this, new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA}, 2299);
+                } else {
+                    showPermission(getString(R.string.permission_desc_storage));
+                }
+            }
+        }
+    }*/
+
 }

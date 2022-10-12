@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:visible="false"
+        android:checked="true"
+         android:id="@+id/action_manage"
+        android:icon="@drawable/ic_manage_account"
+        android:title="Manage Account"
+        app:showAsAction="never" />
+
+    <item
+        android:visible="false"
+        android:id="@+id/action_profile"
+        android:checked="true"
+        android:title="Profile"
+        android:icon="@drawable/ic_user_drawable"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_search"
+        android:checked="true"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="All Seller"
+        app:showAsAction="never" />
+    <item
+        android:checked="true"
+        android:title="Payment"
+        android:icon="@drawable/ic_payment"
+        app:showAsAction="never" />
+    <!--<item
+        android:checked="true"
+        android:icon="@drawable/ic_mall"
+        android:title="Mall"
+        app:showAsAction="never" />-->
+    <item
+        android:id="@+id/action_settings"
+        android:checked="true"
+        android:title="Setting"
+        android:icon="@drawable/ic_settings_drawable"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_logout"
+        android:checked="true"
+        android:icon="@drawable/ic_logout_drawable"
+        android:title="Logout"
+        app:showAsAction="never" />
+
+
+</menu>

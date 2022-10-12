@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".commonChat.chat.BasicInfoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+
+            android:src="@drawable/ic_keyboard_arrow_left_white_24dp" />
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="AppOpay Business"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+
+            />
+
+
+        <!--<ImageView
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:src="" />-->
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:padding="@dimen/dp_20"
+                android:src="@drawable/appopay_new_logo2" />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:letterSpacing="0.1"
+                android:lineSpacingExtra="6.7sp"
+
+                android:text="@string/phone_number"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="normal" />
+
+            <com.stuffer.stuffers.views.MyEditText
+                android:id="@+id/userPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@null"
+                android:fontFamily="sans-se
+                rif"
+                android:inputType="none"
+                android:letterSpacing="0.05"
+                android:lineSpacingExtra="3.3sp"
+                android:maxLines="1"
+                android:minHeight="40dp"
+                android:textColor="#727272"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="#2F606060" />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:fontFamily="sans-serif-light"
+                android:letterSpacing="0.1"
+                android:lineSpacingExtra="6.7sp"
+                android:text="@string/fname"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="normal" />
+
+            <com.stuffer.stuffers.views.MyEditText
+                android:id="@+id/userNameEditFirst"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@null"
+                android:fontFamily="sans-serif"
+                android:hint="@string/enter_first_your_name"
+                android:inputType="text"
+                android:letterSpacing="0.05"
+                android:lineSpacingExtra="3.3sp"
+                android:maxLines="1"
+                android:minHeight="40dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="#2F606060" />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:fontFamily="sans-serif-light"
+                android:letterSpacing="0.1"
+                android:lineSpacingExtra="6.7sp"
+                android:text="@string/lname"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+
+                android:textStyle="normal" />
+
+            <com.stuffer.stuffers.views.MyEditText
+                android:id="@+id/userNameEditLast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:fontFamily="sans-serif"
+                android:hint="@string/enter_your_last_name"
+                android:inputType="text"
+                android:letterSpacing="0.05"
+                android:lineSpacingExtra="3.3sp"
+                android:maxLines="1"
+                android:minHeight="40dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="#2F606060" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/tvSave"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/blue_rounded_bg"
+                android:elevation="1.5dp"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="Save"
+                android:textColor="#fff"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
+
+
+    <!--
+    <?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".activity.BasicInfoActivity">
+
+
+    </LinearLayout>
+    -->
+

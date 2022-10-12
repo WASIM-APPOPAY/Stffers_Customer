@@ -14,4 +14,36 @@
     <dimen name="picture_column_width">90dp</dimen>
     <dimen name="focus_view_size">100dp</dimen>
     <dimen name="badge_count_textsize">12sp</dimen>
+    <dimen name="dp_0_5">0.5dp</dimen>
+    <dimen name="dp_1">1dp</dimen>
+    <dimen name="dp_2">2dp</dimen>
+    <dimen name="dp_5">5dp</dimen>
+    <dimen name="dp_7">7dp</dimen>
+    <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_14">14dp</dimen>
+    <dimen name="dp_15">15dp</dimen>
+    <dimen name="dp_16">16dp</dimen>
+    <dimen name="dp_18">18dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_22">22dp</dimen>
+    <dimen name="dp_30">30dp</dimen>
+    <dimen name="dp_40">40dp</dimen>
+    <dimen name="dp_43">43dp</dimen>
+    <dimen name="dp_50">50dp</dimen>
+    <dimen name="dp_53">53dp</dimen>
+    <dimen name="dp_60">60dp</dimen>
+    <dimen name="dp_70">70dp</dimen>
+    <dimen name="dp_75">75dp</dimen>
+    <dimen name="dp_80">80dp</dimen>
+    <dimen name="dp_130">130dp</dimen>
+    <dimen name="dp_155">155dp</dimen>
+    <dimen name="dp_160">160dp</dimen>
+    <dimen name="dp_200">200dp</dimen>
+    <dimen name="dp_310">310dp</dimen>
+    <dimen name="emoji_icon_size">28sp</dimen>
+
+    <!-- font size,you can add if there is no one -->
+    <dimen name="sp_17">17sp</dimen>
+    <dimen name="sp_20">20sp</dimen>
 </resources>

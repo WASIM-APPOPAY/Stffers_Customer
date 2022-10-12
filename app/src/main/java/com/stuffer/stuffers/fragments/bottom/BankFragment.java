@@ -90,26 +90,30 @@ public class BankFragment extends Fragment {
     private PhoneNumberUtil phoneUtil;
     private StartActivityListener mListenerStart;
     private MyTextViewBold tvNameH;
-    private MyTextView tvBalanceH;
+    private MyTextViewBold tvBalanceH;
     private String selectedCountryNameCode;
     private String mDominicaAreaCode = "";
     private MyTextViewBold tvAreaCodeDo;
     private ArrayList<String> mAreaList;
     private AreaCodeDialog mAreaDialog;
     private String selectedCountryCode;
-    private CircleImageView ivSender;
-    private String receiverAvatar="";
+    private int mType = 0;
+    private CircleImageView circularSender;
+    private String receiverAvatar;
 
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         mView = inflater.inflate(R.layout.bank_fragment, container, false);
-        ivSender = mView.findViewById(R.id.ivSender);
+        Bundle arguments = this.getArguments();
+        mType = arguments.getInt(AppoConstants.WHERE, 0);
+        circularSender = (CircleImageView) mView.findViewById(R.id.circularSender);
         tvAreaCodeDo = (MyTextViewBold) mView.findViewById(R.id.tvAreaCodeDo);
+
         btnChange = mView.findViewById(R.id.btnChange);
         tvNameH = (MyTextViewBold) mView.findViewById(R.id.tvNameH);
-        tvBalanceH = (MyTextView) mView.findViewById(R.id.tvBalanceH);
+        tvBalanceH = (MyTextViewBold) mView.findViewById(R.id.tvBalanceH);
 
         edtCustomerCountryCode = mView.findViewById(R.id.edtCustomerCountryCode);
         edtphone_number = mView.findViewById(R.id.edtphone_number);
@@ -120,7 +124,7 @@ public class BankFragment extends Fragment {
         btnSearch = mView.findViewById(R.id.btnSearch);
         mainAPIInterface = ApiUtils.getAPIService();
         String defaultCountryCode = edtCustomerCountryCode.getDefaultCountryCode();
-        //Log.e(TAG, "onCreateView: " + defaultCountryCode);
+
         rvActiveAccounts.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
@@ -173,11 +177,11 @@ public class BankFragment extends Fragment {
                         Helper.hideKeyboard(btnChange, getContext());
                         Helper.showCommonErrorDialog(getContext(), getString(R.string.mobile_no_error), getString(R.string.mobile_no_error_info));
                     } else {
-                        //Log.e(TAG, "onClick: " + edtCustomerCountryCode.getSelectedCountryCode());
+
                         Helper.hideKeyboard(btnChange, getContext());
                         selectedCountryCode = edtCustomerCountryCode.getSelectedCountryCode();
-                        //selectedCountryCode = selectedCountryCode + mDominicaAreaCode;
-                        onSearchRequest(mDominicaAreaCode+edtphone_number.getText().toString().trim(),selectedCountryCode );
+
+                        onSearchRequest(mDominicaAreaCode + edtphone_number.getText().toString().trim(), selectedCountryCode);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -202,7 +206,7 @@ public class BankFragment extends Fragment {
                 selectedCountryNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
                 if (selectedCountryNameCode.equalsIgnoreCase("DO")) {
                     mDominicaAreaCode = "";
-                    tvAreaCodeDo.setVisibility(View.VISIBLE);
+                    tvAreaCodeDo.setVisibility(View.GONE);
                 } else {
                     mDominicaAreaCode = "";
                     tvAreaCodeDo.setVisibility(View.GONE);
@@ -218,8 +222,9 @@ public class BankFragment extends Fragment {
         });
         String senderAvatar = Helper.getSenderAvatar();
         if (!StringUtils.isEmpty(senderAvatar)) {
-            Glide.with(getActivity()).load(senderAvatar).placeholder(R.mipmap.ic_profile).centerCrop().into(ivSender);
+            Glide.with(getActivity()).load(senderAvatar).placeholder(R.drawable.user_chat).centerCrop().into(circularSender);
         }
+
 
         return mView;
     }
@@ -255,23 +260,17 @@ public class BankFragment extends Fragment {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    //String res = new Gson().toJson(response.body());
+
                     JsonObject body = response.body();
                     String res = body.toString();
 
-                    //Log.e(TAG, "onResponse: getprofile :" + res);
+
                     try {
                         indexUser = new JSONObject(res);
                         if (indexUser.isNull("result")) {
-                            //Log.e(TAG, "onResponse: " + true);
+
                             Toast.makeText(getContext(), getString(R.string.error_user_detail_not_found), Toast.LENGTH_SHORT).show();
                         } else {
-                            try {
-                                receiverAvatar = Helper.getReceiverAvatar(new JSONObject(res));
-                            }catch (Exception e){
-                                e.printStackTrace();
-                            }
-
                             getCurrency();
                         }
                     } catch (JSONException e) {
@@ -283,8 +282,9 @@ public class BankFragment extends Fragment {
                         DataVaultManager.getInstance(getContext()).saveUserDetails("");
                         DataVaultManager.getInstance(getContext()).saveUserAccessToken("");
                         Intent intent = new Intent(getContext(), SignInActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
+                        intent.putExtra(AppoConstants.WHERE, mType);
+                        getActivity().startActivity(intent);
+                        getActivity().finish();
                     } else if (response.code() == 400) {
                         Toast.makeText(getContext(), getString(R.string.error_bad_request), Toast.LENGTH_SHORT).show();
                     }
@@ -295,7 +295,7 @@ public class BankFragment extends Fragment {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+
             }
         });
 
@@ -312,7 +312,7 @@ public class BankFragment extends Fragment {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
                     currencyResponse = new Gson().toJson(response.body().getResult());
-                    //Log.e(TAG, "onResponse: =========" + currencyResponse);
+
                     resultCurrency = response.body().getResult();
                     readUserAccounts();
                 }
@@ -321,7 +321,7 @@ public class BankFragment extends Fragment {
             @Override
             public void onFailure(Call<CurrencyResponse> call, Throwable t) {
                 dialog.dismiss();
-                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+
             }
         });
     }
@@ -330,8 +330,9 @@ public class BankFragment extends Fragment {
         mListAccount = new ArrayList<>();
         String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
 
-        //Log.e(TAG, "readUserAccounts: " + vaultValue);
+
         String nameWithMobile = null;
+        receiverAvatar = "";
         try {
             JSONObject root = indexUser;
             JSONObject objResult = root.getJSONObject(AppoConstants.RESULT);
@@ -339,6 +340,7 @@ public class BankFragment extends Fragment {
             recivername = objResult.getString(AppoConstants.FIRSTNAME) + " " + objResult.getString(AppoConstants.LASTNAME);
             reciveruserid = objResult.getString(AppoConstants.ID);
             reciveremail = objResult.getString(AppoConstants.EMIAL);
+            receiverAvatar = objResult.getString(AppoConstants.AVATAR);
 
             JSONObject objCustomerDetails = objResult.getJSONObject(AppoConstants.CUSTOMERDETAILS);
             JSONArray arrCustomerAccount = objCustomerDetails.getJSONArray(AppoConstants.CUSTOMERACCOUNT);
@@ -349,7 +351,7 @@ public class BankFragment extends Fragment {
                 model.setAccountnumber(index.getString(AppoConstants.ACCOUNTNUMBER));
                 model.setAccountEncrypt(null);
                 if (index.has(AppoConstants.ACCOUNTSTATUS)) {
-                    //Log.e(TAG, "readUserAccounts: AccountStatus : " + index.getString(AppoConstants.ACCOUNTSTATUS));
+
                     model.setAccountstatus(index.getString(AppoConstants.ACCOUNTSTATUS));
                     model.setCurrencyid(index.getString(AppoConstants.CURRENCYID));
                     model.setCurrencyCode(getCurrency(index.getString(AppoConstants.CURRENCYID)));
@@ -360,7 +362,8 @@ public class BankFragment extends Fragment {
             }
 
             if (mListAccount.size() > 0) {
-                ActiveAccountAdapter activeAccountAdapter = new ActiveAccountAdapter(getContext(), mListAccount, nameWithMobile,receiverAvatar);
+
+                ActiveAccountAdapter activeAccountAdapter = new ActiveAccountAdapter(getContext(), mListAccount, nameWithMobile, receiverAvatar);
                 rvActiveAccounts.setAdapter(activeAccountAdapter);
 
             }
@@ -399,13 +402,12 @@ public class BankFragment extends Fragment {
 
     private void getConversionBaseRate(int pos) {
         fromPosition = pos;
-        ////https://api.exchangeratesapi.io/latest?base=USD
-        String url = "https://api.exchangeratesapi.io/latest?base=" + mListAccount.get(pos).getCurrencyCode();
-        //Log.e(TAG, "getConversionBaseRate: url :: " + url);
-        sentParam(null);
+
+
+        sentParam();
     }
 
-    private void sentParam(JSONObject response) {
+    private void sentParam() {
         JSONObject objReceiver = new JSONObject();
         try {
             objReceiver.put(AppoConstants.RECIEVERACCOUNTNUMBER, mListAccount.get(fromPosition).getAccountnumber());
@@ -416,9 +418,9 @@ public class BankFragment extends Fragment {
             objReceiver.put(AppoConstants.RECIEVERNAME, recivername);
             objReceiver.put(AppoConstants.RECIEVERUSERID, reciveruserid);
             objReceiver.put(AppoConstants.EMIAL, reciveremail);
-            objReceiver.put(AppoConstants.RECEIVERIMAGE,receiverAvatar);
-            //Log.e(TAG, "sentParam: " + objReceiver.toString());
-            //mListener.onAccountTransfer(objReceiver, resultCurrency, response);
+            objReceiver.put(AppoConstants.AVATAR, receiverAvatar);
+
+
             mListener.onAccountTransfer(objReceiver, resultCurrency, null);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -434,7 +436,7 @@ public class BankFragment extends Fragment {
                 String mMobileNumber = data.getStringExtra(AppoConstants.INFO);
                 edtphone_number.setText(mMobileNumber);
                 try {
-                    // phone must begin with '+'
+
                     if (phoneUtil == null) {
                         phoneUtil = PhoneNumberUtil.createInstance(getActivity());
                     }
@@ -455,7 +457,7 @@ public class BankFragment extends Fragment {
     public void passPhoneNumber(String mMobileNumber) {
         edtphone_number.setText(mMobileNumber);
         try {
-            // phone must begin with '+'
+
             if (phoneUtil == null) {
                 phoneUtil = PhoneNumberUtil.createInstance(getActivity());
             }
@@ -463,6 +465,7 @@ public class BankFragment extends Fragment {
             int countryCode = numberProto.getCountryCode();
             Log.e(TAG, "onActivityResult: " + countryCode);
             edtCustomerCountryCode.setCountryForPhoneCode(countryCode);
+
             long nationalNumber = numberProto.getNationalNumber();
             edtphone_number.setText(String.valueOf(nationalNumber));
         } catch (NumberParseException e) {

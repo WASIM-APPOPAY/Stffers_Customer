@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aap="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     android:layout_marginTop="5dp"
     android:background="@drawable/blue_rounded_dark_bg"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="vertical">
 
     <com.stuffer.stuffers.views.MyTextView
         android:layout_width="wrap_content"
@@ -49,16 +51,17 @@
                 android:layout_height="55dp"
                 android:background="@drawable/bg_circle"
                 android:padding="10dp"
-                android:src="@drawable/ic_add_drawer" />
+                android:src="@drawable/ic_add_drawer"
+                aap:tint="@color/white" />
 
             <com.stuffer.stuffers.views.MyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="3dp"
+                android:gravity="center"
                 android:text="@string/info_deposit"
                 android:textColor="@color/white"
-                android:layout_gravity="center"
-                android:gravity="center"
                 android:textSize="12sp"
 
                 />
@@ -80,16 +83,17 @@
                 android:layout_height="55dp"
                 android:background="@drawable/bg_circle"
                 android:padding="10dp"
-                android:src="@drawable/ic_arrow_down_drawable" />
+                android:src="@drawable/ic_arrow_down_drawable"
+                aap:tint="@color/white" />
 
             <com.stuffer.stuffers.views.MyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="3dp"
+                android:gravity="center"
                 android:text="@string/info_withdraw"
                 android:textColor="@color/white"
-                android:layout_gravity="center"
-                android:gravity="center"
                 android:textSize="12sp"
 
                 />
@@ -107,8 +111,10 @@
 
             <ImageView
 
+
                 android:layout_width="55dp"
                 android:layout_height="55dp"
+
                 android:background="@drawable/bg_circle"
                 android:padding="10dp"
                 android:src="@drawable/ic_arrow_forward_drawable" />
@@ -116,11 +122,11 @@
             <com.stuffer.stuffers.views.MyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="3dp"
+                android:gravity="center"
                 android:text="@string/info_send"
                 android:textColor="@color/white"
-                android:layout_gravity="center"
-                android:gravity="center"
                 android:textSize="12sp"
 
                 />
@@ -139,6 +145,7 @@
 
             <ImageView
 
+
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:background="@drawable/bg_circle"
@@ -148,11 +155,11 @@
             <com.stuffer.stuffers.views.MyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="3dp"
+                android:gravity="center"
                 android:text="@string/info_my_cards"
                 android:textColor="@color/white"
-                android:layout_gravity="center"
-                android:gravity="center"
                 android:textSize="12sp" />
 
 

@@ -55,7 +55,7 @@ public class RetrofitClient {
             OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             //interceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            //interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             okHttpClientBuilder.addInterceptor(interceptor);
             if (Build.VERSION.SDK_INT < 29) {
                 okHttpClientBuilder.sslSocketFactory(sslContext.getSocketFactory());
@@ -82,8 +82,6 @@ public class RetrofitClient {
         //okHttpClientBuilder.sslSocketFactory(CustomSSLSocketFactory.create(AppoPayApplication.getInstance(), R.raw.appopay_com));
         return okHttpClientBuilder.build();
     }*/
-
-    
 
 
     public static Retrofit getClient(String baseUrl) {

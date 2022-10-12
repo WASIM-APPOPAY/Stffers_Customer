@@ -1,5 +1,9 @@
 package com.stuffer.stuffers.activity.wallet;
 
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_ACCESSTOKEN;
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_UNIQUE_NUMBER;
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_LANGUAGE;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -13,21 +17,24 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 
-import com.emv.qrcode.decoder.mpm.DecoderMpm;
-import com.emv.qrcode.model.mpm.MerchantPresentedMode;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.gson.JsonObject;
+import com.hbb20.CountryCodePicker;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.MyContextWrapper;
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.activity.cashSends.CashSend;
 import com.stuffer.stuffers.activity.forgopassword.ForgotPasswordActvivity;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
+import com.stuffer.stuffers.commonChat.chatModel.Chat;
 import com.stuffer.stuffers.communicator.AreaSelectListener;
-import com.stuffer.stuffers.fragments.bottom.chatnotification.Token;
+import com.stuffer.stuffers.commonChat.chat.TransferChatActivity;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomPasswordPolicy;
 import com.stuffer.stuffers.fragments.dialog.AreaCodeDialog;
 import com.stuffer.stuffers.models.output.AuthorizationResponse;
@@ -36,16 +43,6 @@ import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.hbb20.CountryCodePicker;
 import com.stuffer.stuffers.views.MyTextViewBold;
 
 import org.apache.commons.lang3.StringUtils;
@@ -53,21 +50,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Random;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.stuffer.stuffers.utils.DataVaultManager.KEY_ACCESSTOKEN;
-import static com.stuffer.stuffers.utils.DataVaultManager.KEY_FIREBASE_TOKEN;
-import static com.stuffer.stuffers.utils.DataVaultManager.KEY_UNIQUE_NUMBER;
-import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_LANGUAGE;
-import static com.stuffer.stuffers.utils.DataVaultManager.TANDC;
 
 public class SignInActivity extends AppCompatActivity implements AreaSelectListener {
 
@@ -98,12 +84,29 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
     private String mDominicaAreaCode = "";
     private ArrayList<String> mAreaList;
     private AreaCodeDialog mAreaDialog;
-
+    private int mType = 0;
+    private String mAmount;
+    private String mCCode;
+    private String mMNumber;
+    private static String EXTRA_DATA_CHAT = "extradatachat";
+    private Chat chat;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signin);
+        if (getIntent().getExtras() != null) {
+            mType = getIntent().getIntExtra(AppoConstants.WHERE, 0);
+            if (mType == 5) {
+                mAmount = getIntent().getStringExtra(AppoConstants.AMOUNT);
+                mCCode = getIntent().getStringExtra(AppoConstants.AREACODE);
+                mMNumber = getIntent().getStringExtra(AppoConstants.PHWITHCODE);
+                chat = getIntent().getParcelableExtra(EXTRA_DATA_CHAT);
+
+            }
+        } else {
+            mType = 0;
+        }
         tvAreaCodeDo = (MyTextViewBold) findViewById(R.id.tvAreaCodeDo);
         mAuth = FirebaseAuth.getInstance();
         mainAPIInterface = ApiUtils.getAPIService();
@@ -114,7 +117,6 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         signin11 = findViewById(R.id.signin11);
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
         tvPwdPolicy = findViewById(R.id.tvPwdPolicy);
-        getRandomNumberString();
 
 
         edtMobile = (MyEditText) findViewById(R.id.edtMobile);
@@ -162,11 +164,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                 Intent mIntent = new Intent(SignInActivity.this, Registration.class);
                 startActivity(mIntent);
                 finish();
-                /*Intent newIntent = new Intent(SignInActivity.this, MobileNumberRegistrationActivity.class);
-                startActivity(newIntent);
-                finish();*/
-                /*Intent intent = new Intent(SignInActivity.this, ContactDemoActivity.class);
-                startActivity(intent);*/
+
             }
         });
         skip.setOnClickListener(new View.OnClickListener() {
@@ -198,7 +196,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                 } else {
                     Toast.makeText(SignInActivity.this, getString(R.string.no_inteenet_connection), Toast.LENGTH_SHORT).show();
                 }
-                //  getGiftCards();
+
             }
         });
 
@@ -207,15 +205,10 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
             public void onClick(View view) {
                 BottomPasswordPolicy bottomPasswordPolicy = new BottomPasswordPolicy();
                 bottomPasswordPolicy.show(getSupportFragmentManager(), bottomPasswordPolicy.getTag());
-                //create();
+
 
             }
         });
-        //a958b66129babb52
-        //MerchantPresentedMode decode = DecoderMpm.decode("00020101021215312500034400020344100000000000006520459725303344540115802HK5913Test Merchant6002HK626001200000000000000000000005200000000000000000000007080000001063045855", MerchantPresentedMode.class);
-        //MerchantPresentedMode decode = DecoderMpm.decode("00020101021215314701034400020344001584054110306520453995303840540510.005802US5918UPI QRC test K 8406009test city62600120202109142058300020350520202109142058300020350708000100016304E2FB", MerchantPresentedMode.class);
-        //String param = new Gson().toJson(decode);
-        //Log.e(TAG, "onCreate: " + param);
 
 
         edtCustomerCountryCode.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
@@ -259,28 +252,11 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
     }
 
 
-    public void getRandomNumberString() {
-        // It will generate 6 digit random Number.
-        // from 0 to 999999
-        Random rnd = new Random();
-        int number = rnd.nextInt(999999);
-
-        // this will convert any number sequence into 6 character.
-        Log.e("TAG", "getRandomNumberString: " + String.format("%06d", number));
-    }
-
-
-
-
-
     private void userMapping() {
         dialog = new ProgressDialog(SignInActivity.this);
         dialog.setMessage(getString(R.string.info_mapping_user));
         dialog.show();
         selectedCountryCode = edtCustomerCountryCode.getSelectedCountryCode();
-        //selectedCountryCode=selectedCountryCode+mDominicaAreaCode;
-
-        ////Log.e(TAG, "userMapping: " + selectedCountryCode);
         mainAPIInterface.getMapping("+" + selectedCountryCode + mDominicaAreaCode + edtMobile.getText().toString().trim()).enqueue(new Callback<MappingResponse>() {
             @Override
             public void onResponse(Call<MappingResponse> call, Response<MappingResponse> response) {
@@ -327,15 +303,12 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                 dialog.dismiss();
                 if (response.isSuccessful()) {
                     String accessToken = response.body().getAccessToken();
-                    ////Log.e(TAG, "onResponse: token : " + accessToken);
                     DataVaultManager.getInstance(SignInActivity.this).saveUserAccessToken(accessToken);
-                    //////Log.e("Success", new Gson().toJson(response.body()));
-                    //////Log.e(TAG, "onResponse: " + accessToken);
                     //generateOtp();
                     getSignInDetails();
                 } else {
                     Toast.makeText(SignInActivity.this, getString(R.string.error_account_verification), Toast.LENGTH_SHORT).show();
-                    ////Log.e("success", new Gson().toJson(response.body()));
+
                 }
             }
 
@@ -361,8 +334,6 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                 dialog.dismiss();
                 if (response.isSuccessful()) {
                     response.body();
-                    ////Log.e("TAG", "onResponse: " + response.body());
-                    ////Log.e("TAG", "onResponse: " + new Gson().toJson(response));
                     verifyUserOtp();
                 } else {
                     Toast.makeText(SignInActivity.this, getString(R.string.info_otp_failed), Toast.LENGTH_SHORT).show();
@@ -372,7 +343,6 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 dialog.dismiss();
-                ////Log.e("tag", t.getMessage().toString());
             }
         });
     }
@@ -403,11 +373,9 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         String phNumber = edtMobile.getText().toString().trim();
 
         String vaultValue = "bearer " + DataVaultManager.getInstance(SignInActivity.this).getVaultValue(KEY_ACCESSTOKEN);
-        ////Log.e(TAG, "getSignInDetails: " + vaultValue);
         String phWithDominica = mDominicaAreaCode + phNumber;
 
         mainAPIInterface.getLoginDetails(Long.parseLong(phWithDominica), Integer.parseInt(selectedCountryCode), vaultValue).enqueue(new Callback<JsonObject>() {
-            /*mainAPIInterface.getLoginDetails(Long.parseLong(phNumber), selectedCountryCode, vaultValue).enqueue(new Callback<JsonObject>() {*/
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
@@ -415,10 +383,8 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                 if (response.isSuccessful()) {
                     try {
                         JSONObject mPrev = new JSONObject(body.toString());
-                        //Log.e(TAG, "onResponse: " + mPrev.toString());
                         if (mPrev.getString("message").equalsIgnoreCase("success")) {
                             String jsonUserDetails = mPrev.toString();
-                            //Log.e(TAG, "onResponse: 2" + jsonUserDetails);
                             DataVaultManager.getInstance(SignInActivity.this).saveUserDetails(jsonUserDetails);
                             JSONObject jsonObject = null;
                             try {
@@ -430,10 +396,10 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                                     if (jsonObject.getString(AppoConstants.AVATAR).startsWith("http")) {
                                         DataVaultManager.getInstance(AppoPayApplication.getInstance()).saveIdImagePath(jsonObject.getString(AppoConstants.AVATAR));
                                     }
-                                }catch (Exception e){
+                                } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                createAccountInFirebase(jsonObject.getString(AppoConstants.EMIAL), selectedCountryCode + edtMobile.getText().toString().trim());
+                                goToScreen(mType);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                                 Toast.makeText(SignInActivity.this, "Details Not Found", Toast.LENGTH_SHORT).show();
@@ -458,76 +424,66 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         });
     }
 
+    public void goToScreen(int param) {
+        if (mType == 0) {
+            finish();
+            return;
+        }
+        Intent mIntent = null;
+        switch (mType) {
+            case 1:
+                mIntent = new Intent(SignInActivity.this, AddMoneyToWallet.class);
 
-    private void createAccountInFirebase(String email, String password) {
-        ////Log.e(TAG, "createAccountInFirebase: " + email);
-        ////Log.e(TAG, "createAccountInFirebase: " + password);
-        dialog = new ProgressDialog(SignInActivity.this);
-        dialog.setMessage(getString(R.string.info_please_wait));
-        dialog.show();
-        //String uid = Objects.requireNonNull(mAuth.getCurrentUser()).getEmail();
+                break;
+            case 2:
+                mIntent = new Intent(SignInActivity.this, MobileRechargeActivity.class);
+                break;
+            case 3:
+                mIntent = new Intent(SignInActivity.this, P2PTransferActivity.class);
+                break;
+            case 4:
+                mIntent = new Intent(SignInActivity.this, ScanPayActivity.class);
+                break;
+            case 5:
+                mIntent = new Intent(SignInActivity.this, TransferChatActivity.class);
+                mIntent.putExtra(AppoConstants.AMOUNT, mAmount);
+                mIntent.putExtra(AppoConstants.AREACODE, mCCode);
+                mIntent.putExtra(EXTRA_DATA_CHAT, chat);
+                mIntent.putExtra(AppoConstants.PHWITHCODE, mMNumber);
+                break;
+            case 6:
+                mIntent = new Intent(SignInActivity.this, MyQrCodeActivity.class);
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), getString(R.string.info_login_successfull), Toast.LENGTH_LONG).show();
-                            dialog.dismiss();
-                            try {
+                break;
+            case 7:
+                mIntent = new Intent(SignInActivity.this, AccountActivity.class);
+                break;
+            case 8:
+                mIntent = new Intent(SignInActivity.this, SettingActvity.class);
+                break;
+            case 9:
+                mIntent = new Intent(SignInActivity.this, CustomerProfileActivity.class);
+                break;
+            case 10:
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
+                break;
+            case 11:
+                mIntent = new Intent(SignInActivity.this, CashSend.class);
+                break;
 
-                                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
-
-                                String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_FIREBASE_TOKEN);
-                                DataVaultManager.getInstance(AppoPayApplication.getInstance()).saveUserId1(mUserId);
-
-                                Token token = new Token(vaultValue);
-                                reference.child(firebaseUser.getUid()).setValue(token);
-                                /*JSONObject mJSON = new JSONObject();
-                                mJSON.put("user_id", mUserId);
-                                mJSON.put("fcm_token", vaultValue);
-                                mJSON.put("device_id", TimeUtils.getDeviceId());
-
-
-                                RegisterDevice mRegister = new RegisterDevice("https://labapi.appopay.com/api/users/registerdevice", mJSON);
-                                mRegister.execute();*/
-
-                                /*Intent mIntent = new Intent(SignInActivity.this, MyJobIntentService.class);
-                                mIntent.putExtra(AppoConstants.USERID,mUserId);
-                                mIntent.putExtra(AppoConstants.FCM_TOKEN,vaultValue);
-                                mIntent.putExtra(AppoConstants.DEVICE_ID, TimeUtils.getDeviceId());
-                                MyJobIntentService.enqueueWork(SignInActivity.this, mIntent);*/
-
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            } finally {
-                                Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                            /*Wasim509@*/
-                        } else {
-                            Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
-                            startActivity(intent);
-                            finish();
-                            //Toast.makeText(getApplicationContext(), R.string.info_login_failed, Toast.LENGTH_LONG).show();
-                            dialog.dismiss();
-                        }
-                    }
-                });
-
-
+        }
+        mIntent.putExtra(AppoConstants.WHERE, mType);
+        startActivity(mIntent);
+        finish();
     }
+
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        //fetch from shared preference also save to the same when applying. default is English
-        //String language = MyPreferenceUtil.getInstance().getString(MyConstants.PARAM_LANGUAGE, "en");
         String userLanguage = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_LANGUAGE);
         if (StringUtils.isEmpty(userLanguage)) {
-            ////Log.e(TAG, "attachBaseContext: english called");
             userLanguage = "en";
         }
         super.attachBaseContext(MyContextWrapper.wrap(newBase, userLanguage));

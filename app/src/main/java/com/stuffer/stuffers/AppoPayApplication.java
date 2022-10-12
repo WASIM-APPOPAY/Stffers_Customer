@@ -9,10 +9,15 @@ import android.net.NetworkInfo;
 
 import androidx.multidex.MultiDex;
 
+import com.onesignal.OneSignal;
 import com.stuffer.stuffers.api.MainAPIInterface;
+import com.stuffer.stuffers.commonChat.chatUtils.ToastApp;
 import com.stuffer.stuffers.communicator.ScreenTimeoutListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.stuffer.stuffers.myService.MyOnesignalNotificationOpenedHandler;
+import com.vanniktech.emoji.EmojiManager;
+import com.vanniktech.emoji.google.GoogleEmojiProvider;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,6 +45,8 @@ public class AppoPayApplication extends Application {
     private Timer timer;
     private FirebaseAnalytics mFirebaseAnalytics;
 
+    private static final String ONESIGNAL_APP_ID = "57708791-f9a1-4d04-bbca-cafe1b6588ef";
+
     public AppoPayApplication() {
         mInstance = this;
     }
@@ -57,7 +64,11 @@ public class AppoPayApplication extends Application {
         mInstance = this;
         prefName = getResources().getString(R.string.app_name);
         preferences = getSharedPreferences(prefName, MODE_PRIVATE);
-
+        OneSignal.initWithContext(this);
+        OneSignal.setNotificationOpenedHandler(new MyOnesignalNotificationOpenedHandler(this));
+        OneSignal.setAppId(ONESIGNAL_APP_ID);
+        EmojiManager.install(new GoogleEmojiProvider());
+        ToastApp.initToastUtils(this);
 
 /*
 HceApiService.initialize(

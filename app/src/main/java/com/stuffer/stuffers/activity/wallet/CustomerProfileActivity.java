@@ -129,6 +129,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
     private ImageView customerQrCodeQrCode;
     private FrameLayout frameLayout;
     private ProgressDialog mProgressDialog;
+    private int mType=0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -143,9 +144,16 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         AndroidNetworking.initialize(getApplicationContext(),okHttpClient);*/
 
         if (getIntent().getExtras() != null) {
-            Intent intent = new Intent(CustomerProfileActivity.this, NotificationReceiver.class);
-            intent.putExtra("discount", getIntent().getStringExtra("discount"));
-            sendBroadcast(intent);
+            if (getIntent().hasExtra("discount")) {
+                Intent intent = new Intent(CustomerProfileActivity.this, NotificationReceiver.class);
+                intent.putExtra("discount", getIntent().getStringExtra("discount"));
+                sendBroadcast(intent);
+
+            } else if (getIntent().hasExtra(AppoConstants.WHERE)) {
+                mType = getIntent().getIntExtra(AppoConstants.WHERE, 0);
+            }
+
+
         }
 
         registerReceiver(broadcastReceiver, new IntentFilter(AppoConstants.NOTIFY_ACTION));

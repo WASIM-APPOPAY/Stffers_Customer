@@ -38,6 +38,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
@@ -52,8 +54,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
+
         <activity
-            android:name=".UrlsActivity"
+            android:name=".activity.wallet.UrlsActivity"
             android:exported="false" />
         <activity
             android:name=".activity.cashSends.CashSend"
@@ -500,11 +503,35 @@
         <activity
             android:name=".activity.wallet.MovieTicketDetailActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".activity.wallet.UrlsActivity"
-            android:screenOrientation="portrait"
-            />
-
-        <service
+        <activity
+            android:name=".commonChat.chat.NumberActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".commonChat.chat.VerificationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.wallet.HomeActivity2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".commonChat.chat.ChatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".commonChat.chat.InviteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.wallet.ScanPayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.wallet.P2PTransferActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.wallet.MyQrCodeActivity"
+            android:screenOrientation="portrait" />
+        <!--
+<activity android:name=".activity.wallet.UrlsActivity"
+            android:screenOrientation="portrait"/>
+        -->
+        <!--<service
             android:name=".fragments.bottom.chatnotification.AppopayFirebaseMessaging"
             android:enabled="true"
             android:exported="true"
@@ -512,16 +539,19 @@
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </service>
+        </service>-->
 
         <receiver
             android:name=".myService.NotificationReceiver"
             android:enabled="true"
             android:exported="true" />
 
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_appopay_notification2" />
+
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />

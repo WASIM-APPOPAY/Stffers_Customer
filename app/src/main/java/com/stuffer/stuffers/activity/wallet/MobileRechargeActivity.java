@@ -86,15 +86,8 @@ import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_DETIALS;
 
 public class MobileRechargeActivity extends AppCompatActivity implements CustomCountryListener, CarrierSelectListener, ReceiverListener, TransactionPinListener {
 
-
-    Switch rechargeSwitch;
     MyTextView tvCarrier, payButton, btnSeePlans;
     MyEditText edtAmount, edtphone_number;
-
-
-    String strPhone, strOperatorCode, strAmount, strPlan, recharge_type = "1";
-
-
     MainAPIInterface mainAPIInterface;
     MainAPIInterface mainAPIInterfaceNode;
     private MyTextView tvAreaCode;
@@ -123,21 +116,21 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
 
     private int mRechargePosition;
     private PhoneNumberUtil phoneUtil;
-    ArrayList<AccountModel> mListAccount;
-    List<CurrencyResult> result;
-    private String mResultReceiver;
-    private String receiverEmail;
-    private ArrayList<ChatUser> mList;
-    private MainAPIInterface mainAPIInterface2;
+
+
     private float newAmount;
     private BottotmPinFragment fragmentBottomSheet;
     private String mDominicaCode = "";
+    private int mType = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.recharge_activity);
+        if (getIntent().getExtras() != null) {
+            mType = getIntent().getIntExtra(AppoConstants.WHERE, 0);
+        }
         setupActionBar();
         setListOfAreas();
 
@@ -147,7 +140,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
         rvAmountsRecharge = findViewById(R.id.rvAmountsRecharge);
         tvAreaCode = (MyTextView) findViewById(R.id.tvAreaCode);
         payButton = (MyTextView) findViewById(R.id.payButton);
-        rechargeSwitch = (Switch) findViewById(R.id.rechargeSwitch);
+
 
         edtphone_number = (MyEditText) findViewById(R.id.edtphone_number);
         tvCarrier = (MyTextView) findViewById(R.id.tvCarrier);
@@ -155,23 +148,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
 
         btnSeePlans = (MyTextView) findViewById(R.id.btnSeePlans);
         ivContactList = (ImageView) findViewById(R.id.ivContactList);
-        rechargeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
 
-                Log.v("Switch State=", "" + isChecked);
-                if (isChecked) {
-                    recharge_type = "2";
-                } else {
-                    recharge_type = "1";
-                }
-
-            }
-        });
-
-       /*mAraaCode = "507";
-        edtphone_number.setText("63516303");
-        showSuccessDialog();*/
 
         tvAreaCode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -276,8 +253,6 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
 
     @Override
     public void onCustomCountryCodeSelect(String code) {
-
-
         if (code.equalsIgnoreCase("1809")) {
             tvAreaCode.setText("+" + "1");
             mAraaCode = "1";
@@ -287,6 +262,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
             mAraaCode = code;
             mDominicaCode = "";
         }
+
         /*if (code.equalsIgnoreCase("1809")) {
             mDominicaCode = "809";
         } else if (code.equalsIgnoreCase("1829")) {
@@ -296,9 +272,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
         } else {
             mDominicaCode = "";
         }*/
-
         getCarriers();
-
     }
 
     private void getCarriers() {
@@ -312,15 +286,12 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
             param.addProperty(AppoConstants.COUNTRYCODE, "1809");
         }
 
-        ////Log.e(TAG, "getCarriers: " + param.toString());
-//        mainAPIInterface.getProductResponse(param).enqueue(new Callback<ProductResponse>() {
         mainAPIInterfaceNode.getProductResponse(param).enqueue(new Callback<ProductResponse>() {
             @Override
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                 dialog.dismiss();
                 mListProduct = new ArrayList<Product>();
                 if (response.isSuccessful()) {
-                    //Log.i(TAG, "onResponse: ======"+response.body().getProducts() );
                     mListProduct = response.body().getProducts();
                     if (mListProduct != null) {
                         if (mListProduct.size() > 0) {
@@ -333,14 +304,12 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
                             mListCarrier = null;
                             rvAmountsRecharge.setVisibility(View.GONE);
                             if (response.code() == 500) {
-                                ////Log.e(TAG, "onResponse: " + response.toString());
                             }
                         }
                     } else {
                         String data = new Gson().toJson(response.body());
                         try {
                             JSONObject jsonObject = new JSONObject(data);
-                            //  Log.e(TAG, "onResponse: error :: " + jsonObject);
                             Toast.makeText(MobileRechargeActivity.this, "" + jsonObject.getString("Message"), Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -387,7 +356,6 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
 
     @Override
     public void onCarrierSelect(int pos) {
-        ////Log.e(TAG, "onCarrierSelect: carrier position is : " + pos);
         mCarrierPosition = pos;
         tvCarrier.setText(mListProduct.get(pos).getCarrier());
         carrierDialogFragment.dismiss();
@@ -432,14 +400,6 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
         }
     }
 
-    private void hideKeyboard(View view) {
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (imm != null) {
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            }
-        }
-    }
 
     private void showPaymentTypeDialog() {
         closeKeyboard();
@@ -499,12 +459,8 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
                 senderId = data.getStringExtra(AppoConstants.ID);
                 senderReserveamount = data.getStringExtra(AppoConstants.RESERVEAMOUNT);
                 senderCurrencyCode = data.getStringExtra(AppoConstants.CURRENCYCODE);
-                ////Log.e(TAG, "onActivityResult: code will add here");
-                /*if (senderCurrencyCode.equals("USD")) {
-                    getCurrencyConversion();
-                }*/
                 getCurrencyConversion();
-                //getCurrencyConversion();
+
             }
         } else if (requestCode == AppoConstants.PICK_CONTACT) {
             if (resultCode == Activity.RESULT_OK) {
@@ -536,7 +492,6 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
         dialog.setMessage(getString(R.string.info_conversion_rate));
         dialog.show();
         String accesstoken = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_ACCESSTOKEN);
-        //String mtype = mListProduct.get(mCarrierPosition).getAmounts().get(mRechargePosition).getDestCurr();
         String bearer_ = Helper.getAppendAccessToken("bearer ", accesstoken);
         mainAPIInterface.getCurrencyConversions(mDesCurrency, bearer_).enqueue(new Callback<JsonObject>() {
             @Override
@@ -561,8 +516,9 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
                         DataVaultManager.getInstance(MobileRechargeActivity.this).saveUserDetails("");
                         DataVaultManager.getInstance(MobileRechargeActivity.this).saveUserAccessToken("");
                         Intent intent = new Intent(MobileRechargeActivity.this, SignInActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra(AppoConstants.WHERE, mType);
                         startActivity(intent);
+                        finish();
                     }
                 }
             }
@@ -570,7 +526,6 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-                ////Log.e(TAG, "onFailure: " + t.getMessage().toString());
             }
         });
 
@@ -629,7 +584,6 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
 
     private void getCommissions(String transaction, final float newAmount) {
         userTransactionPin = transaction;
-        ////Log.e(TAG, "getCommissions: pin : " + transaction);
         dialog = new ProgressDialog(this);
         dialog.setMessage(getString(R.string.info_conversion_rate));
         dialog.show();
@@ -640,7 +594,6 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    ////Log.e(TAG, "onResponse: commissions : " + new Gson().toJson(response.body()));
                     if (dialogPayment != null) {
                         dialogPayment.dismiss();
                     }
@@ -659,8 +612,9 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
                         DataVaultManager.getInstance(MobileRechargeActivity.this).saveUserDetails("");
                         DataVaultManager.getInstance(MobileRechargeActivity.this).saveUserAccessToken("");
                         Intent intent = new Intent(MobileRechargeActivity.this, SignInActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra(AppoConstants.WHERE, mType);
                         startActivity(intent);
+                        finish();
                     }
                 }
 
@@ -673,7 +627,6 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
                     dialogPayment.dismiss();
                 }
                 dialog.dismiss();
-                ////Log.e(TAG, "onFailure: " + t.getMessage().toString());
             }
         });
 
@@ -759,9 +712,6 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
             dialogPayment = null;
         }
         JsonObject sentParams = new JsonObject();
-        //sentParams.addProperty(AppoConstants.AMOUNT, Float.parseFloat(edtAmount.getText().toString().trim()));
-
-        //sentParams.addProperty(AppoConstants.AMOUNT, getTwoDecimal(newAmountParam));
         sentParams.addProperty(AppoConstants.AMOUNT, String.valueOf(mRechargeAmount));
         sentParams.addProperty(AppoConstants.CARRIER, mListProduct.get(mCarrierPosition).getProductName());
         sentParams.addProperty(AppoConstants.CCEXP, (String) null);
@@ -841,8 +791,9 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
                         DataVaultManager.getInstance(MobileRechargeActivity.this).saveUserDetails("");
                         DataVaultManager.getInstance(MobileRechargeActivity.this).saveUserAccessToken("");
                         Intent intent = new Intent(MobileRechargeActivity.this, SignInActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra(AppoConstants.WHERE, mType);
                         startActivity(intent);
+                        finish();
                     }
                 }
             }
@@ -866,7 +817,6 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //invalidateDetails();
                 updateWallet();
             }
         });
@@ -880,320 +830,10 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
         dialogPayment.show();
     }
 
-    private void invalidateDetails() {
-
-        if (dialogPayment != null) {
-            dialogPayment.dismiss();
-        }
-        getProfileDetails();
-    }
-
-    private void getProfileDetails() {
-        dialog = new ProgressDialog(MobileRechargeActivity.this);
-        dialog.setMessage(getString(R.string.info_read_user_details));
-        dialog.show();
-        String accesstoken = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_ACCESSTOKEN);
-
-        String bearer_ = Helper.getAppendAccessToken("bearer ", accesstoken);
-        mainAPIInterface.getProfileDetails(Long.parseLong(edtphone_number.getText().toString().trim()), Integer.parseInt(mAraaCode), bearer_).enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                dialog.dismiss();
-                if (response.isSuccessful()) {
-                    String res = new Gson().toJson(response.body());
-                    //  Log.e(TAG, "onResponse: getprofile :" + res);
-                    //DataVaultManager.getInstance(MobileRechargeActivity.this).saveUserDetails(res);
-                    try {
-                        JSONObject param = new JSONObject(res);
-                        if (param.isNull(AppoConstants.RESULT)) {
-                            ////Log.e(TAG, "onResponse: yes result is null");
-                            updateWallet();
-                        } else {
-                            //  Log.e(TAG, "onResponse: get currency");
-                            mResultReceiver = res;
-                            getCurrencyCode();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        updateWallet();
-                    }
-
-                } else {
-                    if (response.code() == 401) {
-                        DataVaultManager.getInstance(MobileRechargeActivity.this).saveUserDetails("");
-                        DataVaultManager.getInstance(MobileRechargeActivity.this).saveUserAccessToken("");
-                        Intent intent = new Intent(MobileRechargeActivity.this, SignInActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    }
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                updateWallet();
-                dialog.dismiss();
-                //  Log.e(TAG, "onFailure: " + t.getMessage().toString());
-            }
-        });
-    }
-
-    private void getCurrencyCode() {
-        dialog = new ProgressDialog(MobileRechargeActivity.this);
-        dialog.setMessage(getString(R.string.info_get_curreny_code));
-        dialog.show();
-
-        mainAPIInterface.getCurrencyResponse().enqueue(new Callback<CurrencyResponse>() {
-            @Override
-            public void onResponse(Call<CurrencyResponse> call, Response<CurrencyResponse> response) {
-                dialog.dismiss();
-                if (response.isSuccessful()) {
-                    result = response.body().getResult();
-                    readUserAccounts();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CurrencyResponse> call, Throwable t) {
-                dialog.dismiss();
-                //  Log.e(TAG, "onFailure: " + t.getMessage().toString());
-            }
-        });
-
-    }
-
-    private void readUserAccounts() {
-        mListAccount = new ArrayList<>();
-        ArrayList<String> mListWalletNumber = new ArrayList<String>();
-        String vaultValue = mResultReceiver;
-        try {
-            JSONObject root = new JSONObject(vaultValue);
-            JSONObject objResult = root.getJSONObject(AppoConstants.RESULT);
-            JSONObject objCustomerDetails = objResult.getJSONObject(AppoConstants.CUSTOMERDETAILS);
-            JSONArray arrCustomerAccount = objCustomerDetails.getJSONArray(AppoConstants.CUSTOMERACCOUNT);
-            receiverEmail = objResult.getString(AppoConstants.EMIAL);
-
-            for (int i = 0; i < arrCustomerAccount.length(); i++) {
-                JSONObject index = arrCustomerAccount.getJSONObject(i);
-                AccountModel model = new AccountModel();
-                model.setAccountnumber(index.getString(AppoConstants.ACCOUNTNUMBER));
-                String mIncryptAccount = getAccountNumber(index.getString(AppoConstants.ACCOUNTNUMBER));
-                model.setAccountEncrypt(mIncryptAccount);
-                //  Log.e(TAG, "readUserAccounts: encrypt ::  " + mIncryptAccount);
-                if (index.has(AppoConstants.ACCOUNTSTATUS)) {
-                    ////Log.e(TAG, "readUserAccounts: AccountStatus : " + index.getString(AppoConstants.ACCOUNTSTATUS));
-                    model.setAccountstatus(index.getString(AppoConstants.ACCOUNTSTATUS));
-                } else {
-                    ////Log.e(TAG, "readUserAccounts: AccountStatus : " + "null");
-                    model.setAccountstatus("");
-                }
-                model.setCurrencyid(index.getString(AppoConstants.CURRENCYID));
-                model.setCurrencyCode(getCurrency(index.getString(AppoConstants.CURRENCYID)));
-                String balance = index.getString(AppoConstants.CURRENTBALANCE);
-                DecimalFormat df2 = new DecimalFormat("#.00");
-                Double doubleV = Double.parseDouble(balance);
-                String format = df2.format(doubleV);
-                model.setCurrentbalance(format);
-                mListWalletNumber.add(getNumberInStyle(index.getString(AppoConstants.ACCOUNTNUMBER)));
-                mListAccount.add(model);
-            }
-            //  Log.e(TAG, "readUserAccounts: send notification user exists");
-            getReceiverToken();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private String getCurrency(String param) {
-        return Helper.getCurrency(param, result);
-    }
-
-    public String getNumberInStyle(String param) {
-        String accountEncrypt = param;
-        char[] charsEncrypt = accountEncrypt.toCharArray();
-        int count = -1;
-        int count1 = 0;
-        String temp = "";
-        String finalString = "";
-        for (int i = 0; i < charsEncrypt.length; i++) {
-            count = count + 1;
-
-            temp = temp + String.valueOf(charsEncrypt[i]);
-            if (count == 4) {
-                finalString = finalString + temp + "    ";
-                temp = "";
-                count = -1;
-            }
-            count1 = count1 + 1;
-            if (count1 >= charsEncrypt.length) {
-                finalString = finalString + temp;
-            }
-
-        }
-        return finalString;
-    }
-
-    private String getAccountNumber(String param) {
-        return Helper.getAccountNumber(param);
-    }
-
-    private void getReceiverToken() {
-        Query mDatabaseQuery = FirebaseDatabase.getInstance().getReference(AppoConstants.FIREBASE_USERS_NODE)
-                .orderByChild(AppoConstants.EMIAL_ID)
-                .equalTo(receiverEmail);
-        mList = new ArrayList<ChatUser>();
-        mDatabaseQuery.addListenerForSingleValueEvent(valueEventListener);
-    }
-
-    ValueEventListener valueEventListener = new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot snapshot) {
-            mList.clear();
-            if (snapshot.exists()) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    ChatUser chatUser = dataSnapshot.getValue(ChatUser.class);
-                    mList.add(chatUser);
-                }
-                if (mList.size() > 0) {
-                    sendNotification();
-
-
-                }
-            }
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError error) {
-
-        }
-    };
-
-    private void sendNotification() {
-        dialog = new ProgressDialog(MobileRechargeActivity.this);
-        dialog.setMessage("Please wait...");
-        dialog.show();
-        mainAPIInterface2 = ApiUtils.getApiServiceForNotification("https://fcm.googleapis.com/");
-        Query mDatabaseQuery = FirebaseDatabase.getInstance().getReference(AppoConstants.FIREBASE_USER_TOKENS)
-                .orderByKey()
-                .equalTo(mList.get(0).getId());
-        mDatabaseQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                dialog.dismiss();
-                if (snapshot.exists()) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Token token = dataSnapshot.getValue(Token.class);
-                        String message = "An recharge of amount  (" + mDesCurrency + " " + mRechargeAmount + ")" + " has been credit to your phone number";
-                        //  Log.e(TAG, "onDataChange: message :: " + message);
-                        JsonObject jsonParam = new JsonObject();
-                        jsonParam.addProperty(AppoConstants.MESSAGE, message);
-                        String sentParam = jsonParam.toString();
-                        Data data = new Data(AppoConstants.TOPUP, 1, "Topup Airtime", sentParam,
-                                mList.get(0).getId());
-                        Sender sender = new Sender(data, token.getToken());
-                        mainAPIInterface2.sendNotification(sender).enqueue(new Callback<MyResponse>() {
-                            @Override
-                            public void onResponse(@NotNull Call<MyResponse> call, @NotNull Response<MyResponse> response) {
-                                if (response.code() == 200) {
-                                    if (response.body().success == 1) {
-                                        //Toast.makeText(MobileRechargeActivity.this, "Recharge Notification Success", Toast.LENGTH_SHORT).show();
-                                        updateWallet();
-                                    } else {
-                                        updateWallet();
-                                    }
-                                } else {
-                                    updateWallet();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<MyResponse> call, Throwable t) {
-                                //  Log.e(TAG, "onFailure: " + t.getMessage().toString());
-                                dialog.dismiss();
-                                updateWallet();
-                            }
-                        });
-
-                    }
-                } else {
-                    //Toast.makeText(getContext(), "User token not exists", Toast.LENGTH_SHORT).show();
-                    updateWallet();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                ////Log.e(TAG, "onCancelled: called");
-                updateWallet();
-            }
-        });
-    }
-
-    /*private void sendNotification() {
-        dialog = new ProgressDialog(MobileRechargeActivity.this);
-        dialog.setMessage("Please wait...");
-        dialog.show();
-        mainAPIInterface2 = ApiUtils.getApiServiceForNotification("https://fcm.googleapis.com/");
-        Query mDatabaseQuery = FirebaseDatabase.getInstance().getReference(AppoConstants.FIREBASE_USER_TOKENS)
-                .orderByKey()
-                .equalTo(mList.get(0).getId());
-        mDatabaseQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                dialog.dismiss();
-                if (snapshot.exists()) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Token token = dataSnapshot.getValue(Token.class);
-                        String message = "An amount of ("+tvAmountCredit.getText().toString().trim() +" "+fomrcurrencycode+")"+ " has been credit to your wallet account during the e-wallet transfer";
-                        JsonObject jsonParam = new JsonObject();
-                        jsonParam.addProperty(AppoConstants.MESSAGE, message);
-                        String sentParam = jsonParam.toString();
-                        Data data = new Data(AppoConstants.WALLET_TRANSFER, 1, "Wallet Transfer", sentParam,
-                                mList.get(0).getId());
-                        Sender sender = new Sender(data, token.getToken());
-
-                        mainAPIInterface2.sendNotification(sender).enqueue(new Callback<MyResponse>() {
-                            @Override
-                            public void onResponse(@NotNull Call<MyResponse> call, @NotNull Response<MyResponse> response) {
-                                if (response.code() == 200) {
-                                    if (response.body().success == 1) {
-                                        //Toast.makeText(getContext(), "Gift Card Sent", Toast.LENGTH_SHORT).show();
-                                        mMoneyTransfer.OnMoneyTransferSuccess();
-                                    }else {
-                                        mMoneyTransfer.OnMoneyTransferSuccess();
-                                    }
-                                }else {
-                                    mMoneyTransfer.OnMoneyTransferSuccess();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<MyResponse> call, Throwable t) {
-                             //  Log.e(TAG, "onFailure: " + t.getMessage().toString());
-                                dialog.dismiss();
-                                mMoneyTransfer.OnMoneyTransferSuccess();
-                            }
-                        });
-
-                    }
-                } else {
-                    //Toast.makeText(getContext(), "User token not exists", Toast.LENGTH_SHORT).show();
-                    mMoneyTransfer.OnMoneyTransferSuccess();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-               ////Log.e(TAG, "onCancelled: called");
-                mMoneyTransfer.OnMoneyTransferSuccess();
-            }
-        });
-    }*/
 
     public void updateWallet() {
-        Intent intent = new Intent();
-        setResult(Activity.RESULT_OK, intent);
+        /*Intent intent = new Intent();
+        setResult(Activity.RESULT_OK, intent);*/
         finish();
     }
 
@@ -1232,15 +872,10 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
             edtphone_number.requestFocus();
             return;
         }
-        ////Log.e(TAG, "onReceiverClick: position :: " + pos);
-        ////Log.e(TAG, "onReceiverClick: desAmount :: " + desAmount);
-        ////Log.e(TAG, "onReceiverClick: desCurrency ::" + desCurrency);
+
         mRechargePosition = pos;
         mRechargeAmount = (float) desAmount;
         mDesCurrency = desCurrency;
-
-        //  Log.e(TAG, "onReceiverClick: mRechargeAmount :: " + mRechargeAmount);
-        //  Log.e(TAG, "onReceiverClick: mDesCurrency :: " + mDesCurrency);
         showPaymentTypeDialog();
 
     }
@@ -1253,62 +888,4 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
     }
 
 
-    /**
-     * {
-     *         amount: "5.00"
-     *         carrier: "CoopRed Panama Claro"
-     *         ccexp: null
-     *         ccnumber: null
-     *         charges: "0.50"
-     *         cvv: null
-     *         fees: "0.03"
-     *         fromcurrency: 1
-     *         fromcurrencycode: "USD"
-     *         fullName: null
-     *         originalAmount: 5.53
-     *         payamount: 5.53
-     *         productcode: "101209001"
-     *         recieverareacode: "507"
-     *         recievermobilernumber: "9836683269"
-     *         senderaccountnumber: "CS1000000000061"
-     *         senderareacode: 91
-     *         sendermobilenumber: 9836683269
-     *         sendername: "MD WASIM"
-     *         transactionpin: "653214"
-     *         userid: 82
-     *         50763516303
-     *     }
-     */
-
-    /**
-     * amount: "7.00"
-     * carrier: "CoopRed Panama Claro"
-     * ccexp: null
-     * ccnumber: null
-     * charges: "0.00"
-     * cvv: null
-     * fees: "0.00"
-     * fromcurrency: 1
-     * fromcurrencycode: "USD"
-     * fullName: null
-     * originalAmount: 7.49
-     * payamount: 7.49
-     * productcode: "101699002"
-     * recieverareacode: "507"
-     * recievermobilernumber: "63516303"
-     * senderaccountnumber: "6367820001585611774"
-     * senderareacode: 507
-     * sendermobilenumber: 63516303
-     * sendername: "MOE ALHARAZI"
-     * taxes: 0.49
-     * transactionpin: "777777"
-     * userid: 108
-     */
-
-
 }
-
-
-/**
- * You are about to pay 5.53 USD for purchase of topup . Please confirm ?
- */

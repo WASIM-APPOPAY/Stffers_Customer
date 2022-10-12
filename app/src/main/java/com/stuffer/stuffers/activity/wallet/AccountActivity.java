@@ -115,12 +115,17 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
     private String cardFaceID;
     private MyTextView tvCvvU;
     private MyTextViewBold tvTopTap;
+    private int mType=0;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+        if (getIntent().getExtras()!=null){
+
+            mType=getIntent().getIntExtra(AppoConstants.WHERE,0);
+        }
         mainAPIInterface = ApiUtils.getAPIService();
         apiServiceUNIONPay = ApiUtils.getApiServiceUNIONPay();
         btnCreate = (MyButton) findViewById(R.id.btnCreate);
@@ -666,8 +671,9 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
                         DataVaultManager.getInstance(AccountActivity.this).saveUserDetails("");
                         DataVaultManager.getInstance(AccountActivity.this).saveUserAccessToken("");
                         Intent intent = new Intent(AccountActivity.this, SignInActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra(AppoConstants.WHERE,mType);
                         startActivity(intent);
+                        finish();
                     } else if (response.code() == 400) {
                         ////Log.e(TAG, "onResponse: bad request");
                     }
@@ -707,8 +713,9 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
                         DataVaultManager.getInstance(AccountActivity.this).saveUserDetails("");
                         DataVaultManager.getInstance(AccountActivity.this).saveUserAccessToken("");
                         Intent intent = new Intent(AccountActivity.this, SignInActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra(AppoConstants.WHERE,mType);
                         startActivity(intent);
+                        finish();
                     }
 
                 }

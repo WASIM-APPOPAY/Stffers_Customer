@@ -156,10 +156,10 @@
         </LinearLayout>
 
         <View
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/grey_light_secondary" />
+            android:background="@color/grey_light_secondary"
+            android:visibility="gone" />
 
         <!--<LinearLayout
             android:id="@+id/layoutQuick"
@@ -195,12 +195,12 @@
 
         <!--02.for terminal-->
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/layoutTerminal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="40dp"
@@ -223,17 +223,17 @@
         </LinearLayout>
 
         <View
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/grey_light_secondary" />
+            android:background="@color/grey_light_secondary"
+            android:visibility="gone" />
 
         <net.cachapa.expandablelayout.ExpandableLayout
-            android:visibility="gone"
             android:id="@+id/layoutExpand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
+            android:visibility="gone"
             app:el_duration="1000"
             app:el_expanded="false"
 
@@ -341,18 +341,18 @@
         </net.cachapa.expandablelayout.ExpandableLayout>
 
         <View
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/grey_light_secondary" />
+            android:background="@color/grey_light_secondary"
+            android:visibility="gone" />
         <!--03.layout kyc-->
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/layoutKyc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="40dp"
@@ -380,12 +380,12 @@
             android:background="@color/grey_light_secondary" />
         <!--04.layout card-->
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/layoutLinkBank"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:visibility="gone">
 
             <ImageView
 
@@ -412,12 +412,12 @@
             android:background="@color/grey_light_secondary" />
         <!--05.layout overview-->
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/layoutOverview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:visibility="gone">
 
             <ImageView
 
@@ -441,10 +441,10 @@
         </LinearLayout>
 
         <View
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/grey_light_secondary" />
+            android:background="@color/grey_light_secondary"
+            android:visibility="gone" />
 
         <!--06.layout payment-->
         <LinearLayout
@@ -476,18 +476,18 @@
         </LinearLayout>
 
         <View
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/grey_light_secondary" />
+            android:background="@color/grey_light_secondary"
+            android:visibility="gone" />
         <!--07.layout mall-->
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/layoutMall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:visibility="gone">
 
             <ImageView
 
@@ -590,20 +590,20 @@
             android:padding="10dp">
 
             <ImageView
-                android:visibility="invisible"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/bg_circle"
                 android:padding="10dp"
-                android:src="@drawable/ic_logout_drawable" />
+                android:src="@drawable/ic_logout_drawable"
+                android:visibility="invisible" />
 
             <com.stuffer.stuffers.views.MyTextView
                 android:id="@+id/tvVersion"
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="3dp"
+                android:layout_weight="1"
                 android:padding="8dp"
 
                 android:text="App Version : 1.0.11"

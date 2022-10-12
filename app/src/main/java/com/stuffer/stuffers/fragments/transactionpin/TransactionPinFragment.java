@@ -62,14 +62,14 @@ public class TransactionPinFragment extends Fragment {
     private AreaCodeDialog mAreaDialog;
 
     public TransactionPinFragment() {
-        // Required empty public constructor
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_transaction_pin, container, false);
         send_customer_otp = view.findViewById(R.id.send_customer_otp);
         confirm_otp = view.findViewById(R.id.confirm_otp);
@@ -112,7 +112,7 @@ public class TransactionPinFragment extends Fragment {
                     edtCustomerMobileNumber.setError(getString(R.string.info_enter_valid_phone_number));
                     return;
                 }
-                //reSendCustomerOtpRequest();
+
                 btnResendOtp.setVisibility(View.GONE);
                 reGenerateOtp();
 
@@ -127,7 +127,7 @@ public class TransactionPinFragment extends Fragment {
                     edtOtpNumber.setFocusable(true);
                     edtOtpNumber.setError(getString(R.string.info_enter_otp));
                 } else {
-                    //confirmOtpRequest();
+
                     getConfirmation();
                 }
             }
@@ -191,8 +191,6 @@ public class TransactionPinFragment extends Fragment {
         dialog.show();
         JsonObject param = new JsonObject();
 
-        //param.addProperty("phone_number", "+" + strCustomerCountryCode + mDominicaAreaCode + edtCustomerMobileNumber.getText().toString().trim());
-
         if (BuildConfig.DEBUG) {
             param.addProperty("hashKey", "Ovjaes9qCGm");
         } else {
@@ -201,7 +199,6 @@ public class TransactionPinFragment extends Fragment {
         param.addProperty("mobileNumber", edtCustomerMobileNumber.getText().toString().trim());
         param.addProperty("phoneCode", strCustomerCountryCode);
 
-        //Log.e("TAG", "requestForOtp: " + param.toString());
 
         mainAPIInterface.getOtpforUser(param).enqueue(new Callback<JsonObject>() {
             @Override
@@ -220,9 +217,6 @@ public class TransactionPinFragment extends Fragment {
                     }
 
 
-
-
-
                 } else {
                     Toast.makeText(getActivity(), getString(R.string.info_request_otp_failed), Toast.LENGTH_LONG).show();
                 }
@@ -231,7 +225,7 @@ public class TransactionPinFragment extends Fragment {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-                //Log.e("tag", t.getMessage().toString());
+
             }
         });
 
@@ -251,11 +245,11 @@ public class TransactionPinFragment extends Fragment {
                         txtTimer.setText(String.valueOf(minutes) + ":" + String.valueOf(seconds));
                         seconds -= 1;
                         if (seconds == 0) {
-                            //btnResendOtp.setVisibility(View.VISIBLE);
+
                             txtTimer.setText(String.valueOf(minutes) + ":" + String.valueOf(seconds));
                             seconds = 59;
                             txtTimer.setVisibility(View.GONE);
-                            //minutes = minutes - 1;
+
                             newTimer.cancel();
                             newTimer = null;
                             btnResendOtp.setVisibility(View.VISIBLE);
@@ -286,19 +280,17 @@ public class TransactionPinFragment extends Fragment {
                             txtTimer.setVisibility(View.VISIBLE);
                             seconds -= 1;
                             if (seconds == 0 && minutes == 0) {
-                                //btnResendOtp.setVisibility(View.VISIBLE);
+
                                 txtTimer.setText(String.valueOf(minutes) + ":" + String.valueOf(seconds));
                                 seconds = 59;
                                 minutes = 4;
                                 txtTimer.setVisibility(View.GONE);
-                                //minutes = minutes - 1;
+
                                 newTimer.cancel();
                                 newTimer = null;
                                 btnResendOtp.setVisibility(View.VISIBLE);
                                 llVerification.setVisibility(View.VISIBLE);
                                 llVerification2.setVisibility(View.GONE);
-//                                llReOtp.setVisibility(View.VISIBLE);
-//                                llVerificationOtp.setVisibility(View.GONE);
 
 
                             } else if (seconds == 0 && minutes > 0) {
@@ -331,7 +323,7 @@ public class TransactionPinFragment extends Fragment {
         dialog.show();
 
         JsonObject param = new JsonObject();
-        //param.addProperty("phone_number", "+" + strCustomerCountryCode + mDominicaAreaCode + edtCustomerMobileNumber.getText().toString().trim());
+
         if (BuildConfig.DEBUG) {
             param.addProperty("hashKey", "Ovjaes9qCGm");
         } else {
@@ -357,9 +349,6 @@ public class TransactionPinFragment extends Fragment {
                     }
 
 
-
-
-
                 } else {
                     Toast.makeText(getActivity(), getString(R.string.info_request_otp_failed), Toast.LENGTH_LONG).show();
                 }
@@ -380,12 +369,10 @@ public class TransactionPinFragment extends Fragment {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-                //Log.e("tag", t.getMessage().toString());
+
             }
         });
     }
-
-
 
 
     @Override
@@ -412,6 +399,7 @@ public class TransactionPinFragment extends Fragment {
         edtOtpNumber.setText(group);
         getConfirmation();
     }
+
     public void getConfirmation() {
         strCustomerPhone = edtCustomerMobileNumber.getText().toString();
         strCustomerCountryCode = edtCustomerCountryCode.getSelectedCountryCode();
@@ -472,7 +460,7 @@ public class TransactionPinFragment extends Fragment {
                     if (response.body().equalsIgnoreCase("false")) {
                         Toast.makeText(getActivity(), getString(R.string.info_verification_failed_given_otp), Toast.LENGTH_SHORT).show();
                     } else {
-                        //Log.e("TAG", "onResponse: " + response.body());
+
                         String phWithCode = strCustomerCountryCode + mDominicaAreaCode + strCustomerPhone;
                         Bundle bundle = new Bundle();
                         bundle.putString(AppoConstants.PHONECODE, strCustomerCountryCode);
@@ -490,14 +478,14 @@ public class TransactionPinFragment extends Fragment {
                         txtTimer.setVisibility(View.GONE);
                     }
                     Toast.makeText(getActivity(), getString(R.string.info_verification_failed_given_otp), Toast.LENGTH_SHORT).show();
-                    //btnResendOtp.setVisibility(View.VISIBLE);
+
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 dialog.dismiss();
-                //Log.e("tag", t.getMessage().toString());
+
             }
         });
 

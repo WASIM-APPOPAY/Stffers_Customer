@@ -3,12 +3,12 @@ apply plugin: 'com.google.firebase.crashlytics'
 
 
 android {
-    compileSdk 31
+    compileSdk 32
     buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "com.stuffer.stuffers"
         minSdk 21
-        targetSdk 31
+        targetSdk 32
         multiDexEnabled true
         versionCode 13
         versionName "1.0.13"
@@ -49,6 +49,10 @@ android {
         /*debug {
             mini fyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }*/
+
+        /*lint {
+            baseline = file("lint-baseline.xml")
         }*/
 
     }
@@ -203,6 +207,24 @@ dependencies {
 
     // Note: If you have migrated your code to AndroidX than add this for LocalBroadCastManager
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+
+
+    implementation 'com.iceteck.silicompressorr:silicompressor:2.2.4'
+    implementation 'id.zelory:compressor:3.0.1'
+
+    implementation 'com.google.firebase:firebase-messaging:20.0.0'
+    implementation 'com.eyalbira.loadingdots:loading-dots:1.0.2'
+    implementation 'com.vanniktech:emoji-google:0.6.0'
+
+    implementation('com.googlecode.ez-vcard:ez-vcard:0.10.4') {
+        exclude group: 'org.freemarker'
+    }
+    implementation 'com.kbeanie:multipicker:1.6@aar'
+    implementation 'com.skyfishjy.ripplebackground:library:1.0.1'
+    implementation 'io.michaelrocks:libphonenumber-android:8.12.28'
+    implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+    implementation 'com.google.android.gms:play-services-safetynet:18.0.1'
 
 }
 apply plugin: 'com.google.gms.google-services'

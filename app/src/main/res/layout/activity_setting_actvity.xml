@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activity.wallet.SettingActvity">
+    android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
 
@@ -19,8 +18,9 @@
         android:textStyle="bold" />
 
     <ScrollView
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:fillViewport="true"
         android:scrollbars="none">
 
@@ -91,6 +91,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
+                        app:boxBackgroundMode="none"
                         android:textColor="@color/colortext"
                         android:textColorHint="@color/colorhint"
                         app:passwordToggleEnabled="true">
@@ -235,6 +236,7 @@
         </LinearLayout>
 
     </ScrollView>
+    <include layout="@layout/common_bottom_layout"/>
 
 
 </LinearLayout>

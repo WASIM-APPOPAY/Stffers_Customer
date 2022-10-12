@@ -3,29 +3,135 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable-anydpi-v24/ic_waiting_blue.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/bg_border_round.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/bg_circle.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/bg_circle_appopay.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/bg_circle_business.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/bg_circle_express.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/bg_circle_link.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/bg_circle_profile.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/bg_circle_recharge.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/bg_circle_transfer.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/bg_circle_union.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/blue_rounded_dark_bg.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/circle_unread.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_account_circle_drawer.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_arrow_forward_drawable.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_audiotrack_blue_36dp.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_call_white_24dp.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_camera.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_contact_perm.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_copy_24dp.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_credit_card_drawable.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_delete_24dp.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_file_download_40dp.xml" value="0.1" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_forward_24dp.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_headset.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_image.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_insert_file_blue_64dp.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_keyboard_voice_24dp.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_manage_account.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_message_24dp.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_payment.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_person_add.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_phone.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_qr_code_scanner.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_remove_circle_outline_dark_24dp.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_stop_blue_36dp.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_user_drawable.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/ic_video_24dp.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/icmenu_new.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/no_round_bg2.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/otp_edittext.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/round_blue.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/round_blue_confirm_button.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/round_dark_confirm_button.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/rounder_top_corner.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/drawable/view_normal_blue_dark.xml" value="0.191" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout-sw320dp/splash.xml" value="0.15217391304347827" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout-sw480dp/splash.xml" value="0.35119047619047616" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout-sw600dp/splash.xml" value="0.28365384615384615" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout-sw720dp/splash.xml" value="0.2384428223844282" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout-sw800dp/splash.xml" value="0.11475409836065574" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_account.xml" value="0.11475409836065574" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_agent_map.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_basic_info.xml" value="0.35119047619047616" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_card_details.xml" value="0.25" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_cash_send.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_chats.xml" value="0.1" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_contact_demo.xml" value="0.16032608695652173" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_finance.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_home2.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_image_viewer.xml" value="0.16032608695652173" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_insurance_type.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_invite.xml" value="0.35119047619047616" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_main.xml" value="0.16032608695652173" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_my_cards.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_my_qr_code.xml" value="0.12090163934426229" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_number.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_p2_ptransfer2.xml" value="0.1" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_remove_card.xml" value="0.15217391304347827" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_scan_pay.xml" value="0.12090163934426229" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_setting_actvity.xml" value="0.11475409836065574" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_transaction_details.xml" value="0.11475409836065574" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_transaction_list.xml" value="0.12090163934426229" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_transaction_pin.xml" value="0.12090163934426229" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_transfer_chat2.xml" value="0.12090163934426229" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_urls.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_verification.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/adapter_item_user.xml" value="0.16032608695652173" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/add_money_to_wallet.xml" value="0.22" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/app_bar_drawer.xml" value="0.15217391304347827" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/bank_fragment.xml" value="0.11475409836065574" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/bottom_home_layout.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/common_bottom_layout.xml" value="0.1" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/custom_drawable_layout.xml" value="0.22" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/customlayout.xml" value="0.18" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/dialog_balance_error.xml" value="0.25" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/dialog_success_cashdend.xml" value="0.15217391304347827" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/dialog_v_card_detail.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/empty_view.xml" value="0.16032608695652173" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_beneficiary_details.xml" value="0.22" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_bottom_chat.xml" value="0.12090163934426229" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_confirmation.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_customer_details.xml" value="0.15217391304347827" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_finance.xml" value="0.15217391304347827" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_num_email.xml" value="0.25" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_scan_appopay.xml" value="0.12090163934426229" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_send_money_to_bank.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_transaction_pin.xml" value="0.11475409836065574" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_transaction_pin_update.xml" value="0.11475409836065574" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_verify_mobile.xml" value="0.15217391304347827" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_wallet_transfer2.xml" value="0.12090163934426229" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/home_fragment.xml" value="0.18" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/home_topbar_layout.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/item_contact_number.xml" value="0.12090163934426229" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/item_menu_user.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/item_menu_user_invite.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/item_message_typing.xml" value="0.16032608695652173" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/layout_below_profile.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/layout_county_dialog.xml" value="0.16032608695652173" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/layout_deafult_card.xml" value="0.16032608695652173" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/layout_dialog_carrier.xml" value="0.15217391304347827" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/layout_dialog_insurance.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/layout_risk.xml" value="0.15217391304347827" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/layout_source_income.xml" value="0.16032608695652173" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/my_toolbar.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/partial_message_status_view.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/profile_activity.xml" value="0.11475409836065574" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/recharge_activity.xml" value="0.11475409836065574" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/row_common.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/row_destination.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/row_more_option.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/service_dialog.xml" value="0.11475409836065574" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/splash.xml" value="0.3514644351464435" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/top_home_layout.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/verify_layout.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/menu/bottom_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/menu/home_bottom_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/menu/home_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/menu/menu_chat_cab.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

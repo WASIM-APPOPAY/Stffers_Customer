@@ -1,5 +1,8 @@
 package com.stuffer.stuffers.fragments.quick_pay;
 
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_ACCESSTOKEN;
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_DETIALS;
+
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -12,13 +15,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -30,23 +26,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.R;
-import com.stuffer.stuffers.activity.wallet.InnerPayActivity;
 import com.stuffer.stuffers.activity.wallet.SignInActivity;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.communicator.MoneyTransferListener;
-import com.stuffer.stuffers.fragments.bottom.chatmodel.ChatUser;
-import com.stuffer.stuffers.fragments.bottom.chatnotification.Data;
-import com.stuffer.stuffers.fragments.bottom.chatnotification.MyResponse;
-import com.stuffer.stuffers.fragments.bottom.chatnotification.Sender;
-import com.stuffer.stuffers.fragments.bottom.chatnotification.Token;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottotmPinFragment;
 import com.stuffer.stuffers.models.output.AccountModel;
 import com.stuffer.stuffers.models.output.CurrencyResult;
@@ -57,13 +51,6 @@ import com.stuffer.stuffers.views.MyButton;
 import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
 import com.stuffer.stuffers.views.MyTextViewBold;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -86,9 +73,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.stuffer.stuffers.utils.DataVaultManager.KEY_ACCESSTOKEN;
-import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_DETIALS;
-
 
 public class WalletTransferFragment2 extends Fragment {
     private static final String TAG = "WalletTransferFragment2";
@@ -99,7 +83,7 @@ public class WalletTransferFragment2 extends Fragment {
     private ArrayList<String> mListTemp;
     private List<CurrencyResult> resultCurrency;
     private MyEditText edAmount;
-    private MyButton btnTransfer;
+    private MyTextView btnTransfer;
     private int mFromPosition;
     private String reciveraccountnumber;
     private Dialog dialogTransfer;
@@ -111,37 +95,36 @@ public class WalletTransferFragment2 extends Fragment {
     MoneyTransferListener mMoneyTransfer;
     private String mTransferAmount;
     private String receiverEmail;
-    private ArrayList<ChatUser> mList;
+
     private MainAPIInterface mainAPIInterface2;
     private BottotmPinFragment bottotmPinFragment;
     private MyTextViewBold tvName, tvName1;
     private MyTextView tvBalance, tvBalance1;
     private Dialog mDialog;
     private File mFileSSort;
+    private int mType = 0;
     private CircleImageView ivSender, ivReceiver;
 
 
     public WalletTransferFragment2() {
-        // Required empty public constructor
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        Bundle arguments = this.getArguments();
 
+        Bundle arguments = this.getArguments();
+        mType = arguments.getInt(AppoConstants.WHERE, 0);
         receiveruser = arguments.getString(AppoConstants.SENTUSER);
         resultCurrency = arguments.getParcelableArrayList(AppoConstants.SENTCURRENCY);
         mTransferAmount = arguments.getString("amount");
 
-        //sentBaseConversion = arguments.getString(AppoConstants.SENTBASECONVERSION);
         View view = inflater.inflate(R.layout.fragment_wallet_transfer2, container, false);
         mainAPIInterface = ApiUtils.getAPIService();
         ivSender = view.findViewById(R.id.ivSender);
         ivReceiver = view.findViewById(R.id.ivReceiver);
-
         tvFromAccount = (MyTextView) view.findViewById(R.id.tvFromAccount);
         tvName = (MyTextViewBold) view.findViewById(R.id.tvName);
         tvName1 = (MyTextViewBold) view.findViewById(R.id.tvName1);
@@ -151,7 +134,7 @@ public class WalletTransferFragment2 extends Fragment {
         edAmount = (MyEditText) view.findViewById(R.id.edAmount);
         tvAmountCredit = (MyTextView) view.findViewById(R.id.tvAmountCredit);
         tvConversionRates = (MyTextView) view.findViewById(R.id.tvConversionRates);
-        btnTransfer = (MyButton) view.findViewById(R.id.btnTransfer);
+        btnTransfer = (MyTextView) view.findViewById(R.id.btnTransfer);
         String senderName = Helper.getSenderName();
         tvName.setText(senderName);
         String currantBalance = Helper.getCurrantBalance();
@@ -159,7 +142,6 @@ public class WalletTransferFragment2 extends Fragment {
         Double doubleV = Double.parseDouble(currantBalance);
         String format = df2.format(doubleV);
         tvBalance.setText("$" + format);
-        //mSideWalletListener.onSideBalanceRequestUpdate(balance);
 
         tvRequiredFilled = (MyTextView) view.findViewById(R.id.tvRequiredFilled);
         String required = getString(R.string.required_filled) + "<font color='#00baf2'>" + "*" + "</font>";
@@ -185,7 +167,6 @@ public class WalletTransferFragment2 extends Fragment {
                     }
 
                 } catch (Exception e) {
-
                     e.printStackTrace();
                     if (edAmount.getText().toString().trim().isEmpty()) {
 
@@ -213,13 +194,14 @@ public class WalletTransferFragment2 extends Fragment {
         });
         String senderAvatar = Helper.getSenderAvatar();
         if (!StringUtils.isEmpty(senderAvatar)) {
-            Glide.with(getActivity()).load(senderAvatar).placeholder(R.mipmap.ic_profile).centerCrop().into(ivSender);
+            Glide.with(getActivity()).load(senderAvatar).placeholder(R.drawable.user_chat).centerCrop().into(ivSender);
         }
+
 
         setReceiverDetails();
         getCurrentUserDetails();
 
-        //showSuccessDialog("507");
+
 
         return view;
     }
@@ -236,18 +218,12 @@ public class WalletTransferFragment2 extends Fragment {
             recmobilenumber = obj.getString(AppoConstants.RECEIVERMOBILENUMBER);
             recareacode = obj.getString(AppoConstants.RECEIVERAREACODE);
             recname = obj.getString(AppoConstants.RECIEVERNAME);
-
             recuserid = obj.getString(AppoConstants.RECIEVERUSERID);
             receiverEmail = obj.getString(AppoConstants.EMIAL);
-            try {
-                String avatar = obj.getString(AppoConstants.RECEIVERIMAGE);
-                if (!StringUtils.isEmpty(avatar)) {
-                    Glide.with(getActivity()).load(avatar).placeholder(R.mipmap.ic_profile).centerCrop().into(ivReceiver);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            String avatar = obj.getString(AppoConstants.AVATAR);
+            if (!StringUtils.isEmpty(avatar)) {
+                Glide.with(getActivity()).load(avatar).placeholder(R.drawable.user_chat).centerCrop().into(ivReceiver);
             }
-
             tvName1.setText(recname);
             tvBalance1.setText("+" + recareacode + "" + recmobilenumber);
         } catch (JSONException e) {
@@ -274,8 +250,8 @@ public class WalletTransferFragment2 extends Fragment {
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     dialog.dismiss();
                     if (response.isSuccessful()) {
-                        //String res = new Gson().toJson(response.body());
-                        ////Log.e(TAG, "onResponse: getprofile :" + res);
+
+
                         JsonObject body = response.body();
                         String res = body.toString();
                         DataVaultManager.getInstance(getContext()).saveUserDetails(res);
@@ -286,8 +262,9 @@ public class WalletTransferFragment2 extends Fragment {
                             DataVaultManager.getInstance(getContext()).saveUserDetails("");
                             DataVaultManager.getInstance(getContext()).saveUserAccessToken("");
                             Intent intent = new Intent(getContext(), SignInActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
+                            intent.putExtra(AppoConstants.WHERE, mType);
+                            getActivity().startActivity(intent);
+                            getActivity().finish();
                         }
 
                     }
@@ -296,7 +273,7 @@ public class WalletTransferFragment2 extends Fragment {
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable t) {
                     dialog.dismiss();
-                    //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+
                 }
             });
 
@@ -343,14 +320,14 @@ public class WalletTransferFragment2 extends Fragment {
                     conversionRates = 1;
                     tvConversionRates.setText(String.valueOf(conversionRates));
                     if (mTransferAmount.equalsIgnoreCase("no")) {
-                        //no need to add
+
                     } else {
                         edAmount.setText(mTransferAmount);
                     }
                 } else {
                     conversionRates = 1;
                     tvConversionRates.setText(String.valueOf(conversionRates));
-                    //getConversionBaseRate(mFromPosition);
+
                 }
             }
 
@@ -375,49 +352,14 @@ public class WalletTransferFragment2 extends Fragment {
     }
 
 
-    private void getConversionBaseRate(final int fromAccountPosition) {
-        String url = "https://api.exchangeratesapi.io/latest?base=" + mListAccount.get(fromAccountPosition).getCurrencyCode();
-        //Log.e(TAG, "getConversionBaseRate: url :: " + url);
-        dialog = new ProgressDialog(getContext());
-        dialog.setMessage(getString(R.string.info_please_wait));
-        dialog.show();
-        AndroidNetworking.get(url)
-                .setOkHttpClient(AppoPayApplication.getOkHttpClient2(10))
-                .setPriority(Priority.IMMEDIATE)
-                .setTag("base conversion")
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        dialog.dismiss();
-                        Log.e(TAG, "onResponse: base :: " + response);
-                        if (response.has("base")) {
-                            //Log.e(TAG, "onResponse: true");
-                            sentParam(response, fromAccountPosition);
-
-                        } else {
-                            //Log.e(TAG, "onResponse: false");
-                        }
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        dialog.dismiss();
-                    }
-                });
-    }
-
     private void sentParam(JSONObject response, int fromAccountPosition) {
         mFromPosition = fromAccountPosition;
         try {
             JSONObject jsonRates = response.getJSONObject(AppoConstants.RATES);
             conversionRates = (float) Float.parseFloat(jsonRates.getString(fomrcurrencycode.toUpperCase()));
-            //Log.e(TAG, "sentParam: 1 : " + conversionRates);
-            //Log.e(TAG, "sentParam: " + jsonRates.getString(fomrcurrencycode.toUpperCase()));
-
             tvConversionRates.setText(String.valueOf(conversionRates));
             if (mTransferAmount.equalsIgnoreCase("no")) {
-                //no need to add
+
             } else {
                 edAmount.setText(mTransferAmount);
             }
@@ -437,7 +379,7 @@ public class WalletTransferFragment2 extends Fragment {
         }
 
         if (edAmount.getText().toString().trim().isEmpty()) {
-            //showToast("please enter transfer amount");
+
             showToast(getString(R.string.info_enter_transer_amount));
             return;
         }
@@ -526,7 +468,7 @@ public class WalletTransferFragment2 extends Fragment {
 
     private void getCommissions(String transaction) {
         userTransactionPin = transaction;
-        //Log.e(TAG, "getCommissions: pin : " + transaction);
+
         dialog = new ProgressDialog(getContext());
         dialog.setMessage(getString(R.string.info_conversion_rate));
         dialog.show();
@@ -537,7 +479,7 @@ public class WalletTransferFragment2 extends Fragment {
             public void onResponse(@NotNull Call<JsonObject> call, @NotNull Response<JsonObject> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    //Log.e(TAG, "onResponse: commissions : " + new Gson().toJson(response.body()));
+
                     if (dialogTransfer != null) {
                         dialogTransfer.dismiss();
                     }
@@ -556,8 +498,9 @@ public class WalletTransferFragment2 extends Fragment {
                         DataVaultManager.getInstance(getContext()).saveUserDetails("");
                         DataVaultManager.getInstance(getContext()).saveUserAccessToken("");
                         Intent intent = new Intent(getContext(), SignInActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
+                        intent.putExtra(AppoConstants.WHERE, mType);
+                        getActivity().startActivity(intent);
+                        getActivity().finish();
                     }
 
                 }
@@ -571,7 +514,7 @@ public class WalletTransferFragment2 extends Fragment {
                     dialogTransfer.dismiss();
                 }
                 dialog.dismiss();
-                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+
             }
         });
 
@@ -646,7 +589,7 @@ public class WalletTransferFragment2 extends Fragment {
 
 
     private void makePayment() {
-        //Log.e(TAG, "makePayment: called");
+
         if (dialogTransfer != null) {
             dialogTransfer.dismiss();
         }
@@ -661,7 +604,7 @@ public class WalletTransferFragment2 extends Fragment {
         params.addProperty(AppoConstants.FROMCURRENCYCODE, fomrcurrencycode);
         params.addProperty(AppoConstants.ORIGINALAMOUNT, amountaftertax_fees);
         params.addProperty(AppoConstants.TAXES, taxes);
-        //params.addProperty(AppoConstants.USERTYPE, "CUSTOMER");
+
         params.addProperty(AppoConstants.RECIEVERACCOUNTNUMBER, recaccountnumber);
         params.addProperty(AppoConstants.RECEIVERAREACODE, Integer.parseInt(recareacode));
         params.addProperty(AppoConstants.RECIEVERNAME, recname);
@@ -679,7 +622,7 @@ public class WalletTransferFragment2 extends Fragment {
             params.addProperty(AppoConstants.TOCURRENCYCODE, mListAccount.get(mFromPosition).getCurrencyCode());
             params.addProperty(AppoConstants.TRANSACTIONPIN, userTransactionPin);
             params.addProperty(AppoConstants.USERID, Long.parseLong(objResult.getString(AppoConstants.ID)));
-            //Log.e(TAG, "makePayment: 1" + params.toString());
+
             makeTransferMoney(params);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -693,27 +636,27 @@ public class WalletTransferFragment2 extends Fragment {
         dialog.setMessage("Please wait, Sending your request");
         dialog.show();
         String accessToken = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_ACCESSTOKEN);
-        ////Log.e(TAG, "makeTransferMoney: " + accessToken);
 
-        //Log.e(TAG, "makeTransferMoney: ======================");
+
+
         String bearer_ = Helper.getAppendAccessToken("bearer ", accessToken);
         mainAPIInterface.postTransferFund(sentParams, bearer_).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    //Log.e(TAG, "onResponse: " + new Gson().toJson(response.body()));
+
                     String res = new Gson().toJson(response.body());
                     try {
                         JSONObject responsePayment = new JSONObject(res);
                         if (responsePayment.getString(AppoConstants.RESULT).equalsIgnoreCase("-1")) {
                             showCommonError(getString(R.string.error_invalid_transaction_pin));
-                            //showPayDialogLikeUnion("#1245454");
+
                         } else if (responsePayment.getString(AppoConstants.RESULT).equalsIgnoreCase("-2")) {
                             showCommonError(getString(R.string.error_account_balance));
-                            //showPayDialogLikeUnion("#1245454");
+
                         } else {
-                            //showSuccessDialog(responsePayment.getString(AppoConstants.RESULT));
+
                             showPayDialogLikeUnion(responsePayment.getString(AppoConstants.RESULT));
                         }
 
@@ -722,27 +665,19 @@ public class WalletTransferFragment2 extends Fragment {
                     }
 
                 } else {
-                    //showCommonError(getString(R.string.error_invalid_transaction_pin));
-                    //showPayDialogLikeUnion("#1245454");
+
+
                     if (response.code() == 401) {
                         Toast.makeText(getActivity(), "Session Expired!!!", Toast.LENGTH_SHORT).show();
                         DataVaultManager.getInstance(getContext()).saveUserDetails("");
                         DataVaultManager.getInstance(getContext()).saveUserAccessToken("");
                         Intent intent = new Intent(getContext(), SignInActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
+                        intent.putExtra(AppoConstants.WHERE, mType);
+                        getActivity().startActivity(intent);
+                        getActivity().finish();
                     } else if (response.code() == 500) {
                         Toast.makeText(getActivity(), "Error Code 500", Toast.LENGTH_SHORT).show();
-                        /*JSONObject jsonObj = null;
-                        try {
-                            assert response.errorBody() != null;
-                            jsonObj = new JSONObject(String.valueOf(response.errorBody().charStream().read()));
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }*/
 
                     } else if (response.code() == 400) {
                         Toast.makeText(getActivity(), "Error Code 400", Toast.LENGTH_SHORT).show();
@@ -754,40 +689,9 @@ public class WalletTransferFragment2 extends Fragment {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+
             }
         });
-
-        /*String url = "https://appopay.com/api/wallet/transferfund?access_token=" + accessToken;
-        String src = sentParams.toString();
-        JSONObject objSent = null;
-        try {
-
-            objSent = new JSONObject(src);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        AndroidNetworking.post(url)
-                .setPriority(Priority.IMMEDIATE)
-                .addJSONObjectBody(objSent)
-                .setTag("Client Code")
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        //Log.e(TAG, "onResponse: transfer  param ::  " + response.toString());
-                    }
-
-                    @Override
-                    public void onError(ANError error) {
-                        if (error.getErrorCode() != 0) {
-                            Log.d(TAG, "onError errorCode : " + error.getErrorCode());
-                            Log.d(TAG, "onError errorBody : " + error.getErrorBody());
-                            Log.d(TAG, "onError errorDetail : " + error.getErrorDetail());
-                        }
-
-                    }
-                });*/
 
 
     }
@@ -826,7 +730,7 @@ public class WalletTransferFragment2 extends Fragment {
         LinearLayout layoutRoot = mCustomLayout.findViewById(R.id.layoutRoot);
         MyTextView tvInfo = mCustomLayout.findViewById(R.id.tvInfo);
         MyTextView tvHeader = mCustomLayout.findViewById(R.id.tvHeader);
-        MyTextViewBold tvAmountPay = mCustomLayout.findViewById(R.id.tvAmountPay);//edAmount
+        MyTextViewBold tvAmountPay = mCustomLayout.findViewById(R.id.tvAmountPay);
         MyTextView tvCurrencyPay = mCustomLayout.findViewById(R.id.tvCurrencyPay);
         MyTextView tvTransactionTime = mCustomLayout.findViewById(R.id.tvTransactionTime);
         MyTextView tvVoucherPay = mCustomLayout.findViewById(R.id.tvVoucherPay);
@@ -867,7 +771,7 @@ public class WalletTransferFragment2 extends Fragment {
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(AddMoneyToWallet.this, "Show Receipt", Toast.LENGTH_SHORT).show();
+
                 takeScreenShort(layoutRoot);
             }
         });
@@ -883,7 +787,7 @@ public class WalletTransferFragment2 extends Fragment {
         SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat(mDateFormat);
         Date mDate = new Date();
         String format = mSimpleDateFormat.format(mDate);
-        //Log.e(TAG, "getDate: " + format);
+
         return format;
     }
 
@@ -902,7 +806,7 @@ public class WalletTransferFragment2 extends Fragment {
 
     private void takeScreenShort(LinearLayout rootLayout) {
         mDialog.dismiss();
-        //Bitmap bitmap = screenShot(rootLayout);
+
         Bitmap bitmap = getScreenShot(rootLayout);
         Date now = new Date();
         android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
@@ -914,7 +818,7 @@ public class WalletTransferFragment2 extends Fragment {
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
                 byte[] bitmapdata = bos.toByteArray();
-                //write the bytes in file
+
                 FileOutputStream fos = null;
                 try {
                     fos = new FileOutputStream(mFileSSort);
@@ -936,7 +840,8 @@ public class WalletTransferFragment2 extends Fragment {
     private void openScreenshot(File imageFile) {
         Intent intentShareFile = new Intent();
         intentShareFile.setAction(Intent.ACTION_SEND);
-        Uri uriForFile = FileProvider.getUriForFile(getActivity().getApplicationContext(), "com.stuffer.stuffers.fileprovider", imageFile);
+
+        Uri uriForFile = FileProvider.getUriForFile(getActivity().getApplicationContext(), "com.stuffrs.newappopay.fileprovider", imageFile);
         intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intentShareFile.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         intentShareFile.setType("image/jpeg");
@@ -959,57 +864,20 @@ public class WalletTransferFragment2 extends Fragment {
         }
     }
 
-    /**
-     * show success dialog
-     *
-     * @param param
-     */
-
-    private void showSuccessDialog(String param) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        LayoutInflater inflater = getLayoutInflater();
-
-        View dialogLayout = inflater.inflate(R.layout.dialog_success_merchant, null);
-        MyTextView tvInfo = dialogLayout.findViewById(R.id.tvInfo);
-        MyTextView tvHeader = dialogLayout.findViewById(R.id.tvHeader);
-        MyTextView tvSuccess = dialogLayout.findViewById(R.id.tvSuccess);
-
-        tvHeader.setText(getString(R.string.wallet_header));
-        MyTextView tvTransactionId = dialogLayout.findViewById(R.id.tvTransactionId);
-        MyButton btnClose = dialogLayout.findViewById(R.id.btnClose);
-        tvTransactionId.setText("Please save this " + param + " Transaction ID for reference");
-        tvTransactionId.setVisibility(View.GONE);
-        tvSuccess.setText(R.string.info_success_with_tankyou);
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                redirectHome();
-            }
-        });
-
-        builder.setView(dialogLayout);
-
-        dialogTransfer = builder.create();
-
-        dialogTransfer.setCanceledOnTouchOutside(false);
-        dialogTransfer.setCancelable(false);
-
-        dialogTransfer.show();
-    }
 
     private void redirectHome() {
         if (mDialog.isShowing() && mDialog != null) {
             mDialog.dismiss();
         }
         mMoneyTransfer.OnMoneyTransferSuccess();
-        //getActivity().onBackPressed();
-        //Intent intent = new Intent();
-        //getReceiverToken();
+
+
+
 
 
     }
 
-    private void getReceiverToken() {
+    /*private void getReceiverToken() {
         Query mDatabaseQuery = FirebaseDatabase.getInstance().getReference(AppoConstants.FIREBASE_USERS_NODE)
                 .orderByChild(AppoConstants.EMIAL_ID)
                 .equalTo(receiverEmail);
@@ -1043,7 +911,7 @@ public class WalletTransferFragment2 extends Fragment {
         dialog = new ProgressDialog(getContext());
         dialog.setMessage("Please wait...");
         dialog.show();
-        mainAPIInterface2 = ApiUtils.getApiServiceForNotification("https://fcm.googleapis.com/");
+        mainAPIInterface2 = ApiUtils.getApiServiceForNotification("https:
         Query mDatabaseQuery = FirebaseDatabase.getInstance().getReference(AppoConstants.FIREBASE_USER_TOKENS)
                 .orderByKey()
                 .equalTo(mList.get(0).getId());
@@ -1067,7 +935,7 @@ public class WalletTransferFragment2 extends Fragment {
                             public void onResponse(@NotNull Call<MyResponse> call, @NotNull Response<MyResponse> response) {
                                 if (response.code() == 200) {
                                     if (response.body().success == 1) {
-                                        //Toast.makeText(getContext(), "Gift Card Sent", Toast.LENGTH_SHORT).show();
+
                                         mMoneyTransfer.OnMoneyTransferSuccess();
                                     } else {
                                         mMoneyTransfer.OnMoneyTransferSuccess();
@@ -1079,7 +947,7 @@ public class WalletTransferFragment2 extends Fragment {
 
                             @Override
                             public void onFailure(Call<MyResponse> call, Throwable t) {
-                                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+
                                 dialog.dismiss();
                                 mMoneyTransfer.OnMoneyTransferSuccess();
                             }
@@ -1087,18 +955,18 @@ public class WalletTransferFragment2 extends Fragment {
 
                     }
                 } else {
-                    //Toast.makeText(getContext(), "User token not exists", Toast.LENGTH_SHORT).show();
+
                     mMoneyTransfer.OnMoneyTransferSuccess();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                ////Log.e(TAG, "onCancelled: called");
+
                 mMoneyTransfer.OnMoneyTransferSuccess();
             }
         });
-    }
+    }*/
 
     public void showToast(String msg) {
         Toast.makeText(getContext(), "" + msg, Toast.LENGTH_SHORT).show();

@@ -1,50 +1,79 @@
 {
   "project_info": {
-    "project_number": "496137498192",
-    "firebase_url": "https://stuffersappopay-default-rtdb.firebaseio.com",
-    "project_id": "stuffersappopay",
-    "storage_bucket": "stuffersappopay.appspot.com"
+    "project_number": "98595867706",
+    "firebase_url": "https://appopaybusiness-default-rtdb.firebaseio.com",
+    "project_id": "appopaybusiness",
+    "storage_bucket": "appopaybusiness.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:496137498192:android:86eae70f8dd45f6e082b55",
+        "mobilesdk_app_id": "1:98595867706:android:ff970662f58fa6c64af903",
         "android_client_info": {
           "package_name": "com.stuffer.stuffers"
         }
       },
       "oauth_client": [
         {
-          "client_id": "496137498192-8028r8v0lkoanj84l94vmm93lq4j7f7e.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.stuffer.stuffers",
-            "certificate_hash": "af4cde64c0f4b1820f71c2acb31119eeb12df22d"
-          }
-        },
-        {
-          "client_id": "496137498192-ps46qat78h4eqnf112faoiifppb6hl5c.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.stuffer.stuffers",
-            "certificate_hash": "7403a124b191a90bf975bcaf73d959508a0ae45e"
-          }
-        },
-        {
-          "client_id": "496137498192-mcil0f2tqg2j36hh4on0dqcujdq2c0g1.apps.googleusercontent.com",
+          "client_id": "98595867706-t7efcenmb0tttbpbf5jat0v1efpla3pi.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC6XELC9kOYkN9l56evPo-1M30mf1qFnOg"
+          "current_key": "AIzaSyDd4H1Lu3dkMkSPMl8FqYoB7pfGT9JCPLA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "496137498192-mcil0f2tqg2j36hh4on0dqcujdq2c0g1.apps.googleusercontent.com",
+              "client_id": "98595867706-t7efcenmb0tttbpbf5jat0v1efpla3pi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:98595867706:android:c0eec20c1a7d09854af903",
+        "android_client_info": {
+          "package_name": "com.stuffrs.newappopay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "98595867706-2n9kkl5kg32l53c2mi5q4s3fe31pp2oj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stuffrs.newappopay",
+            "certificate_hash": "77193b34a2cf0402bb7b0814fdb088abd5aa154a"
+          }
+        },
+        {
+          "client_id": "98595867706-hvpuhkc6113c3sduid32rfjslc3m7036.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stuffrs.newappopay",
+            "certificate_hash": "7403a124b191a90bf975bcaf73d959508a0ae45e"
+          }
+        },
+        {
+          "client_id": "98595867706-t7efcenmb0tttbpbf5jat0v1efpla3pi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDd4H1Lu3dkMkSPMl8FqYoB7pfGT9JCPLA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "98595867706-t7efcenmb0tttbpbf5jat0v1efpla3pi.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

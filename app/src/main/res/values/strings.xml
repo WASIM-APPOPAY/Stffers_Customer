@@ -29,7 +29,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="type_your_message">Type a message</string>
+
 
     <string name="trans_note">Note</string>
     <string name="trans_info">Length of transaction pin should be  six digits.</string>
@@ -666,6 +666,65 @@ data.</string>
 
 
     //Pulse Aceptar y Continuar para aceptar las condiciones de servicio
+
+    <string name="audio">Audio</string>
+    <string name="video">Video</string>
+    <string name="contact">Contact</string>
+    <string name="document">Document</string>
+    <string name="image">Image</string>
+    <string name="location">Location</string>
+    <string name="none_text">Text</string>
+    <string name="none_typing">Typing</string>
+    <string name="recording">Recording</string>
+    <string name="notification">Notification</string>
+    <string name="none">None</string>
+    <string name="invite_short">invite</string>
+    <string name="invite_to">Invite to</string>
+    <string name="error_create_user">Something went wrong, unable to create user.</string>
+    <string name="resend">Resend Otp</string>
+    <string name="otp_sending">Sending OTP</string>
+    <string name="otp_verifying">Verifying OTP</string>
+    <string name="otp_verifying_msg">Verifying OTP…</string>
+    <string name="otp_sending_msg">To your phone number</string>
+    <string name="logging_in">Logging you in!</string>
+    <string name="error_detail">Something went wrong</string>
+
+    <string name="empty_text_chat_list">Your chats appear here. Start chatting by selecting a user.</string>
+    <string name="empty_group_chat_list">Your group chats appear here. Start chatting by selecting a group.</string>
+
+    <string name="get_image_camera">Camera</string>
+    <string name="get_image_gallery">Gallery</string>
+    <string name="type_your_message">Type your message</string>
+
+    <string name="just_moment">Just a moment..</string>
+    <string name="slide_cancel">(Slide left to cancel)</string>
+    <string name="hold_record">Hold down to record.</string>
+    <string name="file_na">File unavailable</string>
+    <string name="downloading">Downloading</string>
+    <string name="recording_cancelled">Recording cancelled</string>
+    <string name="message_copied">Messages copied</string>
+    <string name="delete_msg_title">Delete messages</string>
+    <string name="delete_msg_message">Continue deleting selected messages?</string>
+    <string name="removed_from_group">You no longer belong to this group.</string>
+
+    <string name="no">NO</string>
+    <string name="yes">YES</string>
+
+    <string name="phone_number">Mobile Number</string>
+    <string name="fname">First Name</string>
+    <string name="enter_first_your_name">Enter Your First Name</string>
+    <string name="lname">Last Name</string>
+    <string name="enter_your_last_name">Enter Your Last Name</string>
+    <string name="you">You</string>
+    <string name="voice_message">Voice Message</string>
+    <string name="uploading">Uploading</string>
+    <string name="upload_fail">Uploading Failed</string>
+    <string name="up_and_send">Upload and Send</string>
+    <string name="close">Close</string>
+    <string name="add_to_contact">Add to contact</string>
+    <string name="settings">ALLOW</string>
+    <string name="permission_desc_storage">AppOPay Need Storage,Camera,Audio and Contact Access Permission to work properly.</string>
+    <string name="info_shop_our_mall">Shop Our Mall</string>
 
 
 </resources>

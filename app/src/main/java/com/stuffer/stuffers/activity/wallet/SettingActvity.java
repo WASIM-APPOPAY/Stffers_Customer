@@ -72,7 +72,6 @@ public class SettingActvity extends AppCompatActivity {
     }
 
     private void initViews() {
-        edtOldPassword = findViewById(R.id.edtOldPassword);
         edtNewPassword = findViewById(R.id.edtNewPassword);
         edtConfirmPassword = findViewById(R.id.edtConfirmPassword);
 
