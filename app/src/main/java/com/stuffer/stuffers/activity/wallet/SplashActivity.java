@@ -95,6 +95,7 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
         if (!StringUtils.isEmpty(mTandc)) {
             tvCheck.setChecked(true);
         }
+        DataVaultManager.getInstance(SplashActivity.this).saveTerm("true");
         tvAgree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

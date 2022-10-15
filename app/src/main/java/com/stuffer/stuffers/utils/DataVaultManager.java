@@ -33,6 +33,7 @@ public class DataVaultManager {
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_USER_ID = "userId";
     public static final String KEY_ACCESSTOKEN = "accessToken";
+    public static final String KEY_BASE_64 = "base_64";
     public static final String KEY_USER_LOGO = "logo";
     public static final String KEY_WALLET_ID = "wallet_id";
     public static final String KEY_UNIQUE_NUMBER = "uniquenumber";

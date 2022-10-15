@@ -92,6 +92,8 @@ import com.skyfishjy.library.RippleBackground;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.BuildConfig;
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.activity.wallet.HomeActivity2;
+import com.stuffer.stuffers.activity.wallet.SignInActivity;
 import com.stuffer.stuffers.commonChat.chatAdapters.ContactsAdapter;
 import com.stuffer.stuffers.commonChat.chatAdapters.MessageAdapter;
 import com.stuffer.stuffers.commonChat.chatModel.Attachment;
@@ -114,6 +116,7 @@ import com.stuffer.stuffers.commonChat.interfaces.ProceedRequest;
 import com.stuffer.stuffers.commonChat.viewHolders.BaseMessageViewHolder;
 import com.stuffer.stuffers.commonChat.viewHolders.MessageAttachmentRecordingViewHolder;
 import com.stuffer.stuffers.myService.UploadAndSendService;
+import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
 
 import com.vanniktech.emoji.EmojiEditText;
@@ -366,14 +369,6 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
     private PhoneNumberUtil phoneUtil;
     private String mCCode, mMNumber;
     private String msg;
-
-
-
-
-
-
-
-
 
 
     public void passPhoneNumber(String mMobileNumber) {
@@ -1042,7 +1037,6 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
                 }*/
                 plusMinus();
 
-
                 break;
             case R.id.send:
                 if (ignoreSendClick) return;
@@ -1059,16 +1053,11 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
                         sendMessage(newMessage.getText().toString(), AttachmentTypes.NONE_TEXT, null);
                         newMessage.setText("");
                     }
-                    /*if (msg.matches(Regex)) {
+                    if (msg.matches(Regex)) {
                         newMessage.setText("");
-                        String userData = DataVaultManager.getInstance(MerchantApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+                        String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
                         if (TextUtils.isEmpty(userData)) {
-                            mBottomNotAccount = new BottomNotAccount();
-                            Bundle mBundle = new Bundle();
-                            mBundle.putInt(AppoConstants.WHERE, 5);
-                            mBottomNotAccount.setArguments(mBundle);
-                            mBottomNotAccount.show(getSupportFragmentManager(), mBottomNotAccount.getTag());
-                            mBottomNotAccount.setCancelable(false);
+                            goToLoginScreen(5);
                         } else {
                             Intent intent = new Intent(ChatActivity.this, TransferChatActivity.class);
                             intent.putExtra(AppoConstants.AMOUNT, msg);
@@ -1086,7 +1075,7 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
                             sendMessage(newMessage.getText().toString(), AttachmentTypes.NONE_TEXT, null);
                             newMessage.setText("");
                         }
-                    }*/
+                    }
 
                 }
                 break;
@@ -1150,6 +1139,12 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
         }
     }
 
+    private void goToLoginScreen(int i) {
+        Intent intent = new Intent(ChatActivity.this, SignInActivity.class);
+        intent.putExtra(AppoConstants.WHERE, i);
+        startActivity(intent);
+    }
+
     private void plusMinus() {
         if (rvBottomChat.getVisibility() == VISIBLE) {
 
@@ -1162,7 +1157,6 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
             emojIcon.dismiss();
         }
     }
-
 
 
     private void sendMessage(String messageBody, @AttachmentTypes.AttachmentType int attachmentType, Attachment attachment) {
@@ -1230,7 +1224,6 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
             }
         }
     }
-
 
 
     void openContactPicker() {

@@ -39,7 +39,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
@@ -74,7 +74,7 @@
             android:name=".activity.wallet.GenerateQrDynamicActivity"
             android:exported="false" />
         <activity
-            android:name=".fragments.bottom.chat.TransferChatActivity"
+            android:name=".fragments.bottom.chat.TransferChatActivityOld"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -296,10 +296,6 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".activity.wallet.ScreenLockActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
             android:name=".activity.wallet.ProfileDetailsActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
@@ -392,9 +388,6 @@
             android:name=".activity.wallet.MovieTicketSeatViewActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".activity.wallet.MyOrdersActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
             android:name=".activity.wallet.PaymentsActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
@@ -409,69 +402,6 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activity.wallet.TravelActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.AllBrandsActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.AllChildCategoriesActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.BookAppointmentActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.CartActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.CategoryDetailActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.CategoryListActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.HelplineActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.NewServiceListActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.NotificationActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.OrderTrackActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.ProductDetailActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.ProductReviewActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.ProductsActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.SearchActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.SellerDetailActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.SellersofServiceList"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.ServiceCategoriesActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.ThankYouActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.ThankYouAppointmentActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.ViewTopProductActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.mall.YourOrderActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activity.wallet.PayNowActivity"
@@ -521,17 +451,28 @@
         <activity
             android:name=".activity.wallet.ScanPayActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.wallet.P2PTransferActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.wallet.MyQrCodeActivity"
             android:screenOrientation="portrait" />
-        <!--
-<activity android:name=".activity.wallet.UrlsActivity"
+
+        <activity
+            android:name=".commonChat.chat.TransferChatActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.wallet.TabsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".commonChat.chat.ImageViewerActivity"
             android:screenOrientation="portrait"/>
-        -->
-        <!--<service
+
+        <!--
+<service
             android:name=".fragments.bottom.chatnotification.AppopayFirebaseMessaging"
             android:enabled="true"
             android:exported="true"
@@ -539,19 +480,21 @@
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </service>-->
+        </service>
+        -->
 
         <receiver
             android:name=".myService.NotificationReceiver"
             android:enabled="true"
             android:exported="true" />
 
+        <service
+            android:name=".myService.UploadAndSendService"
+            android:enabled="true" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_appopay_notification2" />
-
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />

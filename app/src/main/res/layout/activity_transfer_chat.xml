@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
 
     android:orientation="vertical"
-    tools:context=".fragments.bottom.chat.TransferChatActivity">
+    tools:context=".fragments.bottom.chat.TransferChatActivityOld">
     <include layout="@layout/toolbar" />
     <ScrollView
         android:padding="8dp"

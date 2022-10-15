@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_100"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/dp_10">
+
+    <ImageView
+        android:id="@+id/item_business_avator"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:src="@drawable/create_profile_plus" />
+
+    <LinearLayout
+        android:id="@+id/item_business_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_70"
+        android:layout_marginLeft="@dimen/dp_80"
+        android:layout_marginRight="@dimen/dp_40"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/item_business_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textColor="@color/black"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/item_business_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_3"
+            android:textColor="#282C50"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/item_business_position"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_3"
+            android:ellipsize="end"
+            android:lines="2"
+            android:textColor="#282C50"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/item_business_address"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right|center_vertical"
+        android:padding="@dimen/dp_10"
+        android:src="@drawable/ic_locations"
+        tools:ignore="RtlHardcoded" />
+
+</FrameLayout>

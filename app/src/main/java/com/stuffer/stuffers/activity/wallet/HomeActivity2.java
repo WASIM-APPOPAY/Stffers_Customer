@@ -5,9 +5,11 @@ import static android.view.View.VISIBLE;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -22,8 +24,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.os.BuildCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -38,6 +42,8 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.fasterxml.jackson.core.Version;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,6 +52,7 @@ import com.google.gson.JsonObject;
 import com.onesignal.OSDeviceState;
 import com.onesignal.OneSignal;
 import com.stuffer.stuffers.AppoPayApplication;
+import com.stuffer.stuffers.BuildConfig;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.cashSends.CashSend;
 import com.stuffer.stuffers.activity.shop_mall.ShopAdapter;
@@ -96,7 +103,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
     private ChatHelper helper;
     User userMe;
     private MyTextViewBold tvUserName;
-    private MyTextView tvMobileNumber, tvDrawername, tvDrawerNo;
+    private MyTextView tvMobileNumber, tvDrawername, tvDrawerNo, tvVersion;
     private DatabaseReference myInboxRef;
     private ArrayList<Message> messageForwardList = new ArrayList<>();
     private DrawerLayout drawer_layout;
@@ -113,7 +120,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
     private FrameLayout frameLayout;
     private MainAPIInterface apiService;
     private ProgressDialog mProgress;
-    private LinearLayout layoutAccount, layoutProfile, layoutSetting;
+    private LinearLayout layoutAccount, layoutProfile, layoutSetting, layoutLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,9 +140,11 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         tvDrawername = (MyTextView) findViewById(R.id.tvDrawername);
         tvDrawerNo = (MyTextView) findViewById(R.id.tvDrawerNo);
         llMyQr = (LinearLayout) findViewById(R.id.llMyQr);
+        layoutLogout = (LinearLayout) findViewById(R.id.layoutLogout);
 
         tvUserName = (MyTextViewBold) findViewById(R.id.tvUserName);
         tvMobileNumber = (MyTextView) findViewById(R.id.tvMobileNumber);
+        tvVersion = (MyTextView) findViewById(R.id.tvVersion);
         ivMenu = (ImageView) findViewById(R.id.ivMenu);
         llChat = (LinearLayout) findViewById(R.id.layoutChat);
         llService = (LinearLayout) findViewById(R.id.layoutService);
@@ -195,8 +204,8 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
                             /*Intent intent = new Intent(HomeActivity2.this, BusinessInfoActivity.class);
                             startActivity(intent);*/
                         } else if (item.getItemId() == R.id.action_search) {
-                            /*Intent intent = new Intent(HomeActivity2.this, TabsActivity.class);
-                            startActivity(intent);*/
+                            Intent intent = new Intent(HomeActivity2.this, TabsActivity.class);
+                            startActivity(intent);
                         } else if (item.getItemId() == R.id.action_manage) {
 
                         } else if (item.getItemId() == R.id.action_settings) {
@@ -233,25 +242,20 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         moreItems = ChatHelper.getMoreItems();
         registerChatUpdates();
         updateFcmToken();
-        //https://s3.us-east-2.amazonaws.com/appopayimages/4e8c5169-a054-45b3-9016-1c4ab8cc27c8.jpeg
         frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 drawer_layout.closeDrawer(GravityCompat.START);
-                //String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
-                /*if (TextUtils.isEmpty(userData)) {
-                    mBottomNotAccount = new BottomNotAccount();
-                    Bundle mBundle = new Bundle();
-                    mBundle.putInt(AppoConstants.WHERE, 10);
-                    mBottomNotAccount.setArguments(mBundle);
-                    mBottomNotAccount.show(getSupportFragmentManager(), mBottomNotAccount.getTag());
-                    mBottomNotAccount.setCancelable(false);
+                String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+                if (TextUtils.isEmpty(userData)) {
+                    goToLoginScreen(10);
+
                 } else {
                     Intent mIntentQrCode = new Intent(HomeActivity2.this, CameraActivity.class);
                     mIntentQrCode.putExtra(AppoConstants.WHERE, 10);
                     mIntentQrCode.putExtra("front", true);
                     startActivityForResult(mIntentQrCode, 201);
-                }*/
+                }
             }
         });
         String idPath = DataVaultManager.getInstance(HomeActivity2.this).getVaultValue(DataVaultManager.KEY_IDPATH);
@@ -261,6 +265,17 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
             else
                 Glide.with(HomeActivity2.this).load(new File(idPath)).fitCenter().into(ivUser);
         }
+        layoutLogout.setOnClickListener(view -> {
+            drawer_layout.closeDrawer(GravityCompat.START);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    logoutCalled();
+                }
+            }, 200);
+        });
+        tvVersion.setText(" App Version : " + BuildConfig.VERSION_NAME);
+
     }
 
     public static void showProfileAvatar(String avatar) {
@@ -300,12 +315,18 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
     }*/
 
     public static void showProfileAvatarLogin(String avatar) {
-        //Glide.with(AppoPayApplication.getInstance()).load(avatar).fitCenter().into(ivUser);
-        Log.e(TAG, "showProfileAvatarLogin: called");
-        Glide.with(AppoPayApplication.getInstance()).load(avatar).fitCenter().placeholder(R.drawable.user_chat).listener(new RequestListener<Drawable>() {
+
+        String idPath = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_IDPATH);
+        if (!StringUtils.isEmpty(idPath)) {
+            if (idPath.startsWith("http"))
+                Glide.with(AppoPayApplication.getInstance()).load(idPath).fitCenter().into(ivUser);
+            else
+                Glide.with(AppoPayApplication.getInstance()).load(new File(idPath)).fitCenter().into(ivUser);
+        }
+        /*Glide.with(AppoPayApplication.getInstance()).load(avatar).fitCenter().placeholder(R.drawable.user_chat).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                Log.e(TAG, "onLoadFailed: called");
+
                 return false;
             }
 
@@ -313,10 +334,10 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                 DataVaultManager.getInstance(AppoPayApplication.getInstance()).saveIdImagePath(avatar);
                 Log.e(TAG, "onResourceReady:called ");
-                //Glide.with(AppoPayApplication.getInstance()).load(avatar).fitCenter().into(ivUser);
+
                 return false;
             }
-        }).into(ivUser);
+        }).into(ivUser);*/
     }
 
     private void updateFcmToken() {
@@ -472,32 +493,51 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
             /*Intent mIntentQrCode = new Intent(HomeActivity2.this, CreateProfileActivity.class);
             startActivity(mIntentQrCode);*/
         } else if (view.getId() == R.id.layoutSetting) {
-            String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
-            if (TextUtils.isEmpty(userData)) {
-                goToLoginScreen(8);
-            } else {
-                Intent mIntentQrCode = new Intent(HomeActivity2.this, SettingActvity.class);
-                mIntentQrCode.putExtra(AppoConstants.WHERE, 8);
-                startActivity(mIntentQrCode);
-            }
+            drawer_layout.closeDrawer(GravityCompat.START);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+                    if (TextUtils.isEmpty(userData)) {
+                        goToLoginScreen(8);
+                    } else {
+                        Intent mIntentQrCode = new Intent(HomeActivity2.this, SettingActvity.class);
+                        mIntentQrCode.putExtra(AppoConstants.WHERE, 8);
+                        startActivity(mIntentQrCode);
+                    }
+                }
+            }, 200);
         } else if (view.getId() == R.id.layoutProfile) {
-            String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
-            if (TextUtils.isEmpty(userData)) {
-                goToLoginScreen(9);
-            } else {
-                Intent mIntent = new Intent(HomeActivity2.this, CustomerProfileActivity.class);
-                mIntent.putExtra(AppoConstants.WHERE, 9);
-                startActivity(mIntent);
-            }
+            drawer_layout.closeDrawer(GravityCompat.START);
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+                    if (TextUtils.isEmpty(userData)) {
+                        goToLoginScreen(9);
+                    } else {
+                        Intent mIntent = new Intent(HomeActivity2.this, CustomerProfileActivity.class);
+                        mIntent.putExtra(AppoConstants.WHERE, 9);
+                        startActivity(mIntent);
+                    }
+                }
+            }, 200);
         } else if (view.getId() == R.id.layoutAccount) {
-            String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
-            if (TextUtils.isEmpty(userData)) {
-                goToLoginScreen(7);
-            } else {
-                Intent mIntentQrCode = new Intent(HomeActivity2.this, AccountActivity.class);
-                mIntentQrCode.putExtra(AppoConstants.WHERE, 7);
-                startActivity(mIntentQrCode);
-            }
+            drawer_layout.closeDrawer(GravityCompat.START);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+                    if (TextUtils.isEmpty(userData)) {
+                        goToLoginScreen(7);
+                    } else {
+                        Intent mIntentQrCode = new Intent(HomeActivity2.this, AccountActivity.class);
+                        mIntentQrCode.putExtra(AppoConstants.WHERE, 7);
+                        startActivity(mIntentQrCode);
+                    }
+                }
+            }, 200);
         }
     }
 
@@ -770,10 +810,56 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         dialog.show();
     }
 
-    private void goToLoginScreen(int i) {
-        Intent intent = new Intent(HomeActivity2.this, SignInActivity.class);
-        intent.putExtra(AppoConstants.WHERE, i);
-        startActivity(intent);
+    private void goToLoginScreen(int where) {
+
+        if (where == 10) {
+            Intent mIntentQrCode = new Intent(HomeActivity2.this, SignInActivity.class);
+            startActivityForResult(mIntentQrCode, 200);
+        } else {
+            Intent intent = new Intent(HomeActivity2.this, SignInActivity.class);
+            intent.putExtra(AppoConstants.WHERE, where);
+            startActivity(intent);
+        }
+
+
+    }
+
+    private void logoutCalled() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity2.this, R.style.MyAlertDialogStyle);
+        builder.setTitle(getString(R.string.app_name));
+        builder.setMessage(getString(R.string.info_want_to_logout));
+        builder.setIcon(R.drawable.appopay_gift_card);
+        builder.setPositiveButton(getString(R.string.info_yes),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        logoutUserRequest();
+                    }
+                });
+        builder.setNegativeButton(getString(R.string.info_no),
+
+                new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.cancel();
+                    }
+                });
+
+        builder.show();
+    }
+
+    private void logoutUserRequest() {
+        DataVaultManager.getInstance(HomeActivity2.this).saveUserAccessToken("");
+        DataVaultManager.getInstance(HomeActivity2.this).saveUserDetails("");
+        DataVaultManager.getInstance(HomeActivity2.this).saveCardToken("");
+
+        /*Intent i = new Intent(HomeActivity2.this, SignInActivity.class);
+        startActivity(i);
+        finish();*/
+
+
     }
 
     @Override

@@ -599,7 +599,8 @@ public interface MainAPIInterface<R extends Retrofit> {
 
 
     );
-
+//+919999591757:iConnect@123!
+    //KzkxOTk5OTU5MTc1NzppQ29ubmVjdEAxMjMh
 
     @Multipart
     @POST(com.stuffer.stuffers.api.Constants.GET_CATEGORY_DETAIL)
@@ -888,6 +889,9 @@ public interface MainAPIInterface<R extends Retrofit> {
 
     @PUT(Constants.USERAVATAR)
     Call<JsonObject> putUserAvatar(@Body JsonObject body);
+
+    @GET(Constants.GET_MERCHANT_SHOPTYPE)
+    Call<JsonObject> getMerchantShopType(@Path("shopType") String shopType);
 }
 
 

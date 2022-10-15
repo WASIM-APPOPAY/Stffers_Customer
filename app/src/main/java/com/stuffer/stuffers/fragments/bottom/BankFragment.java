@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.activity.wallet.P2PTransferActivity;
 import com.stuffer.stuffers.activity.wallet.SignInActivity;
 import com.stuffer.stuffers.adapter.recyclerview.ActiveAccountAdapter;
 import com.stuffer.stuffers.api.ApiUtils;
@@ -224,10 +225,90 @@ public class BankFragment extends Fragment {
         if (!StringUtils.isEmpty(senderAvatar)) {
             Glide.with(getActivity()).load(senderAvatar).placeholder(R.drawable.user_chat).centerCrop().into(circularSender);
         }
+        onLoadCurrentDetails();
 
 
         return mView;
     }
+
+
+    public void showDialog() {
+        dialog = new ProgressDialog(getActivity());
+        dialog.setMessage(getString(R.string.info_getting_user_account));
+        dialog.show();
+    }
+
+    public void dismissDialog() {
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+    }
+
+    private void onLoadCurrentDetails() {
+
+        showDialog();
+        String phoneCode = Helper.getPhoneCode();
+        Long senderMobileNumber = Helper.getSenderMobileNumber();
+
+
+        String accessToken = DataVaultManager.getInstance(getActivity()).getVaultValue(KEY_ACCESSTOKEN);
+        String bearer_ = Helper.getAppendAccessToken("bearer ", accessToken);
+
+        mainAPIInterface.getProfileDetails(Long.parseLong(String.valueOf(senderMobileNumber)), Integer.parseInt(phoneCode), bearer_).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                dismissDialog();
+                JsonObject body = response.body();
+
+                String res;
+                if (response.isSuccessful()) {
+                    res = new Gson().toJson(response.body());
+
+                    try {
+                        JSONObject mPrev = new JSONObject(body.toString());
+                        String jsonUserDetails = mPrev.toString();
+                        //Log.e(TAG, "onResponse: "+jsonUserDetails );
+                        DataVaultManager.getInstance(getActivity()).saveUserDetails(jsonUserDetails);
+                        indexUser = new JSONObject(res);
+                        if (indexUser.isNull("result")) {
+                            //Log.e(TAG, "onResponse: " + true);
+                            Toast.makeText(getActivity(), getString(R.string.error_user_details_not_exists), Toast.LENGTH_SHORT).show();
+                        } else {
+                            String receiverAvatar = Helper.getReceiverAvatar(new JSONObject(res));
+                            if (!StringUtils.isEmpty(receiverAvatar)) {
+                                if (!StringUtils.isEmpty(receiverAvatar)) {
+                                    Glide.with(getActivity()).load(receiverAvatar).placeholder(R.drawable.user_chat).centerCrop().into(circularSender);
+                                }
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    if (response.code() == 401) {
+                        DataVaultManager.getInstance(getActivity()).saveUserDetails("");
+                        DataVaultManager.getInstance(getActivity()).saveUserAccessToken("");
+                        Intent intent = new Intent(getActivity(), SignInActivity.class);
+                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        getActivity().finish();
+                    } else if (response.code() == 400) {
+                        Toast.makeText(getActivity(), getString(R.string.error_bad_request), Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                dismissDialog();
+                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+            }
+        });
+
+    }
+
 
     private void getAreaCodes() {
         mAreaList = new ArrayList<String>();

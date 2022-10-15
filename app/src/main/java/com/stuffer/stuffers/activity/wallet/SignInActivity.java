@@ -1,5 +1,5 @@
 package com.stuffer.stuffers.activity.wallet;
-
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_BASE_64;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_ACCESSTOKEN;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_UNIQUE_NUMBER;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_LANGUAGE;
@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -35,12 +36,16 @@ import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.commonChat.chatModel.Chat;
 import com.stuffer.stuffers.communicator.AreaSelectListener;
 import com.stuffer.stuffers.commonChat.chat.TransferChatActivity;
+import com.stuffer.stuffers.communicator.OnTransactionPinSuccess;
+import com.stuffer.stuffers.communicator.TransactionPinListener;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomPasswordPolicy;
+import com.stuffer.stuffers.fragments.bottom_fragment.BottomTransactionPin;
 import com.stuffer.stuffers.fragments.dialog.AreaCodeDialog;
 import com.stuffer.stuffers.models.output.AuthorizationResponse;
 import com.stuffer.stuffers.models.output.MappingResponse;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
+import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
 import com.stuffer.stuffers.views.MyTextViewBold;
@@ -55,8 +60,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SignInActivity extends AppCompatActivity implements AreaSelectListener {
-
+public class SignInActivity extends AppCompatActivity implements AreaSelectListener , OnTransactionPinSuccess,TransactionPinListener {
+    String mPinTag = "TransactionTag";
     MyTextView signup;
     MyTextView signin1, signin11;
 
@@ -90,6 +95,8 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
     private String mMNumber;
     private static String EXTRA_DATA_CHAT = "extradatachat";
     private Chat chat;
+    private BottomTransactionPin mBottomTransDialog;
+    private ProgressDialog mProgress;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -385,33 +392,41 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                         JSONObject mPrev = new JSONObject(body.toString());
                         if (mPrev.getString("message").equalsIgnoreCase("success")) {
                             String jsonUserDetails = mPrev.toString();
+                            Log.e(TAG, "onResponse: "+jsonUserDetails );
                             DataVaultManager.getInstance(SignInActivity.this).saveUserDetails(jsonUserDetails);
-                            JSONObject jsonObject = null;
+                            JSONObject result;
                             try {
                                 JSONObject obj = new JSONObject(jsonUserDetails);
-
-                                jsonObject = obj.getJSONObject(AppoConstants.RESULT);
+                                JSONObject jsonObject = obj.getJSONObject(AppoConstants.RESULT);
                                 mUserId = jsonObject.getString(AppoConstants.ID);
-                                try {
-                                    if (jsonObject.getString(AppoConstants.AVATAR).startsWith("http")) {
-                                        DataVaultManager.getInstance(AppoPayApplication.getInstance()).saveIdImagePath(jsonObject.getString(AppoConstants.AVATAR));
+                                result = obj.getJSONObject(AppoConstants.RESULT);
+                                if (result.getString(AppoConstants.TRANSACTIONPIN).isEmpty() || result.getString(AppoConstants.TRANSACTIONPIN).equalsIgnoreCase("null")) {
+                                    mBottomTransDialog = new BottomTransactionPin();
+                                    mBottomTransDialog.show(getSupportFragmentManager(), mPinTag);
+                                    mBottomTransDialog.setCancelable(false);
+                                } else {
+                                    try {
+                                        if (result.getString(AppoConstants.AVATAR).startsWith("http")) {
+                                            HomeActivity2.showProfileAvatarLogin(result.getString(AppoConstants.AVATAR));
+                                        }
+                                        goToScreen(mType);
+                                    } catch (Exception e) {
+                                        goToScreen(mType);
                                     }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+
                                 }
-                                goToScreen(mType);
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(SignInActivity.this, "Details Not Found", Toast.LENGTH_SHORT).show();
-                                DataVaultManager.getInstance(SignInActivity.this).saveUserDetails("");
                             }
+
 
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(SignInActivity.this, "login failed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignInActivity.this, "login failed", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -496,5 +511,91 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         }
         mDominicaAreaCode = mAreaList.get(pos);
         tvAreaCodeDo.setText("Area Code : " + mDominicaAreaCode);
+    }
+
+    @Override
+    public void onPinCreated() {
+        if (mBottomTransDialog != null)
+            mBottomTransDialog.dismiss();
+        String base64 = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_BASE_64);
+        if (!StringUtils.isEmpty(base64)) {
+            //Log.e(TAG, "onPinCreated: not empty" );
+            uploadUserAvatar(base64);
+        } else {
+            //Log.e(TAG, "onPinCreated: empty" );
+            goToScreen(mType);
+        }
+
+
+    }
+
+    public void showLoading() {
+        mProgress = new ProgressDialog(SignInActivity.this);
+        mProgress.setMessage("Please wait....");
+        mProgress.show();
+    }
+
+    public void hideLoading() {
+        mProgress.dismiss();
+        mProgress = null;
+    }
+
+    public void uploadUserAvatar(String avatar) {
+        showLoading();
+        int userId = Helper.getUserId();
+        JsonObject mReqPayload = new JsonObject();
+        mReqPayload.addProperty("userId", userId);
+        mReqPayload.addProperty("avatar", "data:image/jpeg;base64," + avatar);
+
+        mainAPIInterface.putUserAvatar(mReqPayload).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                hideLoading();
+                JsonObject body = response.body();
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject mPrev = new JSONObject(body.toString());
+                        if (mPrev.getString("message").equalsIgnoreCase("success")) {
+                            String jsonUserDetails = mPrev.toString();
+                            DataVaultManager.getInstance(SignInActivity.this).saveUserDetails(jsonUserDetails);
+                            JSONObject jsonObject = mPrev.getJSONObject(AppoConstants.RESULT);
+                            String avatar = jsonObject.getString("avatar");
+                            DataVaultManager.getInstance(SignInActivity.this).saveIdImagePath(avatar);
+                            //DataVaultManager.getInstance(SignInActivity.this).saveIdImageSignup("");
+                            HomeActivity2.showProfileAvatar(avatar);
+                            //Toast.makeText(SignInActivity.this, "avatar updated successfully", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                goToScreen(mType);
+
+                /*if (response.code() == 200) {
+                    Log.e(TAG, "onResponse: " + response);
+                    String res = new Gson().toJson(response.body());
+                    JSONObject
+
+                } else {
+                    Toast.makeText(SignInActivity.this, "Error : " + response.code(), Toast.LENGTH_SHORT).show();
+                }*/
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                hideLoading();
+                Toast.makeText(SignInActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                goToScreen(mType);
+            }
+        });
+    }
+
+    @Override
+    public void onPinConfirm(String pin) {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(mPinTag);
+        if (currentFragment instanceof BottomTransactionPin) {
+            ((BottomTransactionPin) currentFragment).updatePin(pin);
+        }
     }
 }

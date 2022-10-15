@@ -136,7 +136,9 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
     private ArrayList<String> userPlayerIds = new ArrayList<>();
     protected DatabaseReference usersRef;
     private Chat chat;
-    private CircleImageView circularSender,circularReceiver;
+    private CircleImageView circularSender, circularReceiver;
+    private String substring;
+    private String mAreaCode;
 
     private void setupActionBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -198,7 +200,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         usersRef.child(chat.getUserId()).child("userPlayerId").addListenerForSingleValueEvent(singleValueEventListener);
         mainAPIInterface = ApiUtils.getAPIService();
         String mAmount = intent.getStringExtra(AppoConstants.AMOUNT);
-        String mAreaCode = intent.getStringExtra(AppoConstants.AREACODE);
+        mAreaCode = intent.getStringExtra(AppoConstants.AREACODE);
         Log.e(TAG, "onCreate: " + mAreaCode);
         String mPhWithCode = intent.getStringExtra(AppoConstants.PHWITHCODE);
         tvFromAccount = (MyTextView) findViewById(R.id.tvFromAccount);
@@ -249,9 +251,9 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
 
             mFromCCode = "DOP";
         }
-        String substring = mPhWithCode.substring(mAreaCode.length());
-        Log.e(TAG, "onCreate: phone number : " + substring);
-        onSearchRequest(substring, mAreaCode);
+         substring = mPhWithCode.substring(mAreaCode.length());
+        //Log.e(TAG, "onCreate: phone number : " + substring);
+
 
 
         edAmount.addTextChangedListener(new TextWatcher() {
@@ -298,6 +300,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
                 verifyDetails();
             }
         });
+        onLoadCurrentDetails();
 
     }
 
@@ -338,7 +341,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
                             Toast.makeText(TransferChatActivity.this, getString(R.string.error_user_details_not_exists), Toast.LENGTH_SHORT).show();
                         } else {
                             String receiverAvatar = Helper.getReceiverAvatar(new JSONObject(res));
-                            if (!StringUtils.isEmpty(receiverAvatar)){
+                            if (!StringUtils.isEmpty(receiverAvatar)) {
                                 if (!StringUtils.isEmpty(receiverAvatar)) {
                                     Glide.with(TransferChatActivity.this).load(receiverAvatar).placeholder(R.drawable.user_chat).centerCrop().into(circularReceiver);
                                 }
@@ -374,6 +377,74 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         });
 
     }
+
+    private void onLoadCurrentDetails() {
+
+        showDialog();
+        String phoneCode = Helper.getPhoneCode();
+        Long senderMobileNumber = Helper.getSenderMobileNumber();
+        recieverareacode = phoneCode;
+        recivermobilenumber = String.valueOf(senderMobileNumber);
+
+        String accessToken = DataVaultManager.getInstance(TransferChatActivity.this).getVaultValue(KEY_ACCESSTOKEN);
+        String bearer_ = Helper.getAppendAccessToken("bearer ", accessToken);
+        mainAPIInterface.getProfileDetails(Long.parseLong(recivermobilenumber), Integer.parseInt(recieverareacode), bearer_).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                dismissDialog();
+                JsonObject body = response.body();
+
+                String res;
+                if (response.isSuccessful()) {
+                    res = new Gson().toJson(response.body());
+
+                    try {
+                        JSONObject mPrev = new JSONObject(body.toString());
+                        String jsonUserDetails = mPrev.toString();
+                        //Log.e(TAG, "onResponse: "+jsonUserDetails );
+                        DataVaultManager.getInstance(TransferChatActivity.this).saveUserDetails(jsonUserDetails);
+                        indexUser = new JSONObject(res);
+                        if (indexUser.isNull("result")) {
+                            //Log.e(TAG, "onResponse: " + true);
+                            Toast.makeText(TransferChatActivity.this, getString(R.string.error_user_details_not_exists), Toast.LENGTH_SHORT).show();
+                        } else {
+                            String receiverAvatar = Helper.getReceiverAvatar(new JSONObject(res));
+                            if (!StringUtils.isEmpty(receiverAvatar)) {
+                                if (!StringUtils.isEmpty(receiverAvatar)) {
+                                    Glide.with(TransferChatActivity.this).load(receiverAvatar).placeholder(R.drawable.user_chat).centerCrop().into(circularSender);
+                                }
+                            }
+                            onSearchRequest(substring, mAreaCode);
+                            //getCurrency();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    if (response.code() == 401) {
+                        DataVaultManager.getInstance(TransferChatActivity.this).saveUserDetails("");
+                        DataVaultManager.getInstance(TransferChatActivity.this).saveUserAccessToken("");
+                        Intent intent = new Intent(TransferChatActivity.this, SignInActivity.class);
+                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    } else if (response.code() == 400) {
+                        Toast.makeText(TransferChatActivity.this, getString(R.string.error_bad_request), Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                dismissDialog();
+                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+            }
+        });
+
+    }
+
 
     private void getCurrency() {
         dialog = new ProgressDialog(TransferChatActivity.this);
@@ -938,7 +1009,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         Intent intentShareFile = new Intent();
         intentShareFile.setAction(Intent.ACTION_SEND);
         //Uri uriForFile = FileProvider.getUriForFile(getApplicationContext(), "com.stuffer.stuffers.fileprovider", imageFile);
-        Uri uriForFile = FileProvider.getUriForFile(getApplicationContext(), "com.stuffrs.newappopay.fileprovider", imageFile);
+        Uri uriForFile = FileProvider.getUriForFile(getApplicationContext(), "com.stuffer.stuffers.fileprovider", imageFile);
         intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intentShareFile.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         intentShareFile.setType("image/jpeg");
@@ -984,7 +1055,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.e(TAG, "onActivityResult: called 197 ");
-        Log.e(TAG, "onActivityResult: " + mFileSSort.getPath());
+        //Log.e(TAG, "onActivityResult: " + mFileSSort.getPath());
         // uploadImage(mFileSSort.getPath());
         redirectHome();
         /*if (resultCode == 198) {

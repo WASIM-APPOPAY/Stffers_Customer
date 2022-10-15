@@ -34,6 +34,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.androidnetworking.AndroidNetworking;
 import com.bumptech.glide.Glide;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.MyContextWrapper;
@@ -71,7 +72,7 @@ import com.stuffer.stuffers.communicator.UpdateProfileRequest;
 import com.stuffer.stuffers.communicator.UserAccountTransferListener;
 import com.stuffer.stuffers.fragments.bottom.BankFragment;
 import com.stuffer.stuffers.fragments.bottom.HomeFragment;
-import com.stuffer.stuffers.fragments.bottom.MallFragment;
+
 import com.stuffer.stuffers.fragments.bottom.ScanAppopayFragment;
 import com.stuffer.stuffers.fragments.bottom.ScanFragment;
 import com.stuffer.stuffers.fragments.bottom.chat.ChatFragment;
@@ -253,7 +254,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
             }
         });
 
-        layoutMall.setOnClickListener(new View.OnClickListener() {
+        /*layoutMall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawer_layout.closeDrawer(GravityCompat.START);
@@ -272,7 +273,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
                 }, 250);
 
             }
-        });
+        });*/
 
         layoutSetting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -288,6 +289,8 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
                 }, 250);
             }
         });
+
+
 
         layoutOverview.setVisibility(View.GONE);
         layoutOverview.setOnClickListener(new View.OnClickListener() {
@@ -498,6 +501,23 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
 
         builder.show();
     }
+    private void logoutUserRequest() {
+        try {
+            FirebaseAuth.getInstance().signOut();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        DataVaultManager.getInstance(HomeActivity.this).saveUserAccessToken("");
+        DataVaultManager.getInstance(HomeActivity.this).saveUserDetails("");
+        DataVaultManager.getInstance(HomeActivity.this).saveCardToken("");
+
+        Intent i = new Intent(HomeActivity.this, SignInActivity.class);
+        startActivity(i);
+        finish();
+
+
+    }
 
 
     @Override
@@ -537,23 +557,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
     }
 
 
-    private void logoutUserRequest() {
-        try {
-            FirebaseAuth.getInstance().signOut();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        DataVaultManager.getInstance(HomeActivity.this).saveUserAccessToken("");
-        DataVaultManager.getInstance(HomeActivity.this).saveUserDetails("");
-        DataVaultManager.getInstance(HomeActivity.this).saveCardToken("");
-
-        Intent i = new Intent(HomeActivity.this, SignInActivity.class);
-        startActivity(i);
-        finish();
-
-
-    }
 
     @Override
     public void onNavigationItemChanged(@NotNull BottomifyNavigationView.NavigationItem navigationItem) {

@@ -310,7 +310,11 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
                     try {
                         JSONObject jsonObject = new JSONObject(str);
                         if (jsonObject.getString("message").equalsIgnoreCase(AppoConstants.SUCCESS) && jsonObject.getInt("result") == 1) {
-                            createAccountInFirebase();
+                            //createAccountInFirebase();
+                            Toast.makeText(getActivity(), "Successfully Created!!!!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getActivity(), SignInActivity.class);
+                            startActivity(intent);
+                            getActivity().finish();
                         } else {
                             if (response.code() == 500) {
                                 Toast.makeText(getActivity(), "Error Code : 500", Toast.LENGTH_SHORT).show();
@@ -422,7 +426,7 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
             boolean readPermission = grantResults[0] == PackageManager.PERMISSION_GRANTED;
             boolean writePermission = grantResults[1] == PackageManager.PERMISSION_GRANTED;
             boolean cameraPermission = grantResults[2] == PackageManager.PERMISSION_GRANTED;
-            Log.e("TAG", "onRequestPermissionsResult:Manage ::  " + writePermission + "==" + cameraPermission + "==" + readPermission);
+           // Log.e("TAG", "onRequestPermissionsResult:Manage ::  " + writePermission + "==" + cameraPermission + "==" + readPermission);
             if (readPermission && writePermission && cameraPermission) {
                 openCameraActivity();
             } else {

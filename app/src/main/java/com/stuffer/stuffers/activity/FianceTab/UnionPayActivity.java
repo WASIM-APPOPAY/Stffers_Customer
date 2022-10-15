@@ -50,6 +50,7 @@ public class UnionPayActivity extends AppCompatActivity implements UnionPayListe
     private JSONObject mIndex;
     private AlertDialog alertDialog;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

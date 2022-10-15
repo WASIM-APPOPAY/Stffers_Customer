@@ -1,11 +1,16 @@
-package com.stuffer.stuffers.fragments.quick_pay;
+package com.stuffer.stuffers.fragments.bottom.chat;
 
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_ACCESSTOKEN;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_DETIALS;
 
-import android.app.Dialog;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.FileProvider;
+
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -20,17 +25,12 @@ import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -40,9 +40,10 @@ import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.wallet.SignInActivity;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
-import com.stuffer.stuffers.communicator.MoneyTransferListener;
+import com.stuffer.stuffers.communicator.TransactionPinListener;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottotmPinFragment;
 import com.stuffer.stuffers.models.output.AccountModel;
+import com.stuffer.stuffers.models.output.CurrencyResponse;
 import com.stuffer.stuffers.models.output.CurrencyResult;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
@@ -73,79 +74,156 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
-public class WalletTransferFragment2 extends Fragment {
-    private static final String TAG = "WalletTransferFragment2";
-    private MyTextView tvRequiredFilled, tvFromAccount, tvToAccount, tvAmountCredit, tvConversionRates;
-    private MainAPIInterface mainAPIInterface;
+public class TransferChatActivityOld extends AppCompatActivity implements TransactionPinListener {
+    private static final String TAG = "TransferChatActivity";
     private ProgressDialog dialog;
-    private ArrayList<AccountModel> mListAccount;
-    private ArrayList<String> mListTemp;
+    private String recieverareacode, recivermobilenumber, recivername, reciveruserid, reciveremail;
+    private MainAPIInterface mainAPIInterface;
+    private JSONObject indexUser;
+    private String currencyResponse;
     private List<CurrencyResult> resultCurrency;
+    private ArrayList<AccountModel> mListAccount;
+    private MyTextView tvFromAccount;
+    private MyTextView tvBalance1;
+    private MyTextViewBold tvName;
+    private MyTextViewBold tvName1;
+    private MyTextView tvBalance;
+    private MyTextView tvToAccount;
     private MyEditText edAmount;
-    private MyTextView btnTransfer;
-    private int mFromPosition;
+    private MyTextView tvAmountCredit;
+    private MyTextView tvConversionRates;
+    private MyButton btnTransfer;
+    private String fomrcurrencycode, recaccountnumber, recmobilenumber, recareacode, recname, recuserid, fromcurrency, receiveruser;
     private String reciveraccountnumber;
-    private Dialog dialogTransfer;
+    private String receiverEmail;
+    private TextView toolbarTitle;
+    private String currantBalance;
+    private BottotmPinFragment bottotmPinFragment;
     private String userTransactionPin;
     private JSONObject jsonCommission;
-    private float bankfees, processingfees, finaamount, amountaftertax_fees, taxes;
-    float conversionRates;
-    private String fomrcurrencycode, recaccountnumber, recmobilenumber, recareacode, recname, recuserid, fromcurrency, receiveruser;
-    MoneyTransferListener mMoneyTransfer;
-    private String mTransferAmount;
-    private String receiverEmail;
-
-    private MainAPIInterface mainAPIInterface2;
-    private BottotmPinFragment bottotmPinFragment;
-    private MyTextViewBold tvName, tvName1;
-    private MyTextView tvBalance, tvBalance1;
-    private Dialog mDialog;
+    private float bankfees;
+    private float processingfees;
+    private float finaamount;
+    private float amountaftertax_fees;
+    private float taxes;
+    private AlertDialog dialogTransfer;
+    private AlertDialog mDialog;
     private File mFileSSort;
-    private int mType = 0;
+    private String mFromCId, mFromCCode;
     private CircleImageView ivSender, ivReceiver;
+    private String receiverAvatar;
+
+    private void setupActionBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ImageView menu_icon = toolbar.findViewById(R.id.menu_icon);
+        menu_icon.setVisibility(View.GONE);
 
 
-    public WalletTransferFragment2() {
+        toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbarTitle);
+        toolbarTitle.setVisibility(View.VISIBLE);
 
+        toolbarTitle.setText("P-2-P Transfer");
+
+        ActionBar bar = getSupportActionBar();
+        bar.setDisplayUseLogoEnabled(false);
+        bar.setDisplayShowTitleEnabled(true);
+        bar.setDisplayShowHomeEnabled(true);
+        bar.setDisplayHomeAsUpEnabled(true);
+        bar.setHomeButtonEnabled(true);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // action bar menu behaviour
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onBackPressed() {
 
-        Bundle arguments = this.getArguments();
-        mType = arguments.getInt(AppoConstants.WHERE, 0);
-        receiveruser = arguments.getString(AppoConstants.SENTUSER);
-        resultCurrency = arguments.getParcelableArrayList(AppoConstants.SENTCURRENCY);
-        mTransferAmount = arguments.getString("amount");
+        finish();
+        /*int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+        if (backStackEntryCount == 1) {
+            super.onBackPressed();
+            finish();
+        } else if (backStackEntryCount == 2) {
+            String toolbarTitle = "e-TimePayTrack" + "<br>" + "<small><i>" + " OD History" + "</i></small>";
+            // tvHeader.setText(Html.fromHtml(toolbarTitle));
+            getSupportFragmentManager().popBackStackImmediate();
+        }*/
 
-        View view = inflater.inflate(R.layout.fragment_wallet_transfer2, container, false);
+        /*Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT);
+        if (fragment.allowBackPressed()) { // and then you define a method allowBackPressed with the logic to allow back pressed or not
+            super.onBackPressed();
+        }*/
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_transfer_chat);
+        setupActionBar();
         mainAPIInterface = ApiUtils.getAPIService();
-        ivSender = view.findViewById(R.id.ivSender);
-        ivReceiver = view.findViewById(R.id.ivReceiver);
-        tvFromAccount = (MyTextView) view.findViewById(R.id.tvFromAccount);
-        tvName = (MyTextViewBold) view.findViewById(R.id.tvName);
-        tvName1 = (MyTextViewBold) view.findViewById(R.id.tvName1);
-        tvBalance = (MyTextView) view.findViewById(R.id.tvBalance);
-        tvBalance1 = (MyTextView) view.findViewById(R.id.tvBalance1);
-        tvToAccount = (MyTextView) view.findViewById(R.id.tvToAccount);
-        edAmount = (MyEditText) view.findViewById(R.id.edAmount);
-        tvAmountCredit = (MyTextView) view.findViewById(R.id.tvAmountCredit);
-        tvConversionRates = (MyTextView) view.findViewById(R.id.tvConversionRates);
-        btnTransfer = (MyTextView) view.findViewById(R.id.btnTransfer);
+        String mAmount = getIntent().getStringExtra(AppoConstants.AMOUNT);
+        String mAreaCode = getIntent().getStringExtra(AppoConstants.AREACODE);
+        String mPhWithCode = getIntent().getStringExtra(AppoConstants.PHWITHCODE);
+        ivSender = (CircleImageView) findViewById(R.id.ivSender);
+        ivReceiver = (CircleImageView) findViewById(R.id.ivReceiver);
+
+        tvFromAccount = (MyTextView) findViewById(R.id.tvFromAccount);
+        tvName = (MyTextViewBold) findViewById(R.id.tvName);
+        tvName1 = (MyTextViewBold) findViewById(R.id.tvName1);
+        tvBalance = (MyTextView) findViewById(R.id.tvBalance);
+        tvBalance1 = (MyTextView) findViewById(R.id.tvBalance1);
+        tvToAccount = (MyTextView) findViewById(R.id.tvToAccount);
+        edAmount = (MyEditText) findViewById(R.id.edAmount);
+        tvAmountCredit = (MyTextView) findViewById(R.id.tvAmountCredit);
+        tvConversionRates = (MyTextView) findViewById(R.id.tvConversionRates);
+        btnTransfer = (MyButton) findViewById(R.id.btnTransfer);
+        try {
+            edAmount.setText(mAmount);
+            Helper.hideKeyboard(edAmount, TransferChatActivityOld.this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        tvFromAccount.setText(Helper.getWalletAccountNumber());
         String senderName = Helper.getSenderName();
         tvName.setText(senderName);
-        String currantBalance = Helper.getCurrantBalance();
+        currantBalance = Helper.getCurrantBalance();
         DecimalFormat df2 = new DecimalFormat("#.00");
         Double doubleV = Double.parseDouble(currantBalance);
         String format = df2.format(doubleV);
         tvBalance.setText("$" + format);
+        mFromCId = Helper.getCurrencyId();
+        if (mFromCId.equalsIgnoreCase("1")) {
+            mFromCCode = "USD";
+        } else if (mFromCId.equalsIgnoreCase("2")) {
 
-        tvRequiredFilled = (MyTextView) view.findViewById(R.id.tvRequiredFilled);
-        String required = getString(R.string.required_filled) + "<font color='#00baf2'>" + "*" + "</font>";
-        tvRequiredFilled.setText(Html.fromHtml(required));
+            mFromCCode = "INR";
+        } else if (mFromCId.equalsIgnoreCase("3")) {
+
+            mFromCCode = "CAD";
+        } else if (mFromCId.equalsIgnoreCase("4")) {
+
+            mFromCCode = "ERU";
+        } else if (mFromCId.equalsIgnoreCase("5")) {
+
+            mFromCCode = "DOP";
+        }
+        String substring = mPhWithCode.substring(mAreaCode.length());
+        Log.e(TAG, "onCreate: phone number : " + substring);
+        onSearchRequest(substring, mAreaCode);
+
         edAmount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -159,7 +237,7 @@ public class WalletTransferFragment2 extends Fragment {
                     String inputAmount = edAmount.getText().toString().trim();
                     if (inputAmount.length() > 0) {
                         float tranaferAmount = Float.parseFloat(inputAmount);
-                        float transfer = (float) (tranaferAmount * conversionRates);
+                        float transfer = (float) (tranaferAmount * 1);
                         float twoDecimal = (float) Helper.getTwoDecimal(transfer);
                         tvAmountCredit.setText(String.valueOf(twoDecimal));
                         btnTransfer.setEnabled(true);
@@ -169,15 +247,13 @@ public class WalletTransferFragment2 extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                     if (edAmount.getText().toString().trim().isEmpty()) {
-
+                        //no need to show invalid format
                     } else {
-                        Toast.makeText(getContext(), getString(R.string.info_invalid_format), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TransferChatActivityOld.this, getString(R.string.info_invalid_format), Toast.LENGTH_SHORT).show();
                         btnTransfer.setEnabled(false);
                         btnTransfer.setClickable(false);
                     }
                 }
-
-
             }
 
             @Override
@@ -192,24 +268,157 @@ public class WalletTransferFragment2 extends Fragment {
                 verifyDetails();
             }
         });
+
         String senderAvatar = Helper.getSenderAvatar();
         if (!StringUtils.isEmpty(senderAvatar)) {
-            Glide.with(getActivity()).load(senderAvatar).placeholder(R.drawable.user_chat).centerCrop().into(ivSender);
+            Glide.with(TransferChatActivityOld.this).load(senderAvatar).placeholder(R.mipmap.ic_profile).centerCrop().into(ivSender);
+        }
+
+    }
+
+    public void showDialog() {
+        dialog = new ProgressDialog(TransferChatActivityOld.this);
+        dialog.setMessage(getString(R.string.info_getting_user_account));
+        dialog.show();
+    }
+
+    public void dismissDialog() {
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+    }
+
+    private void onSearchRequest(String ph, String area) {
+
+        showDialog();
+        recieverareacode = area;
+        recivermobilenumber = ph;
+
+        String accessToken = DataVaultManager.getInstance(TransferChatActivityOld.this).getVaultValue(KEY_ACCESSTOKEN);
+        String bearer_ = Helper.getAppendAccessToken("bearer ", accessToken);
+        mainAPIInterface.getProfileDetails(Long.parseLong(ph), Integer.parseInt(area), bearer_).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                dismissDialog();
+                if (response.isSuccessful()) {
+                    String res = new Gson().toJson(response.body());
+                    //Log.e(TAG, "onResponse: getprofile :" + res);
+                    try {
+                        indexUser = new JSONObject(res);
+                        if (indexUser.isNull("result")) {
+                            //Log.e(TAG, "onResponse: " + true);
+                            Toast.makeText(TransferChatActivityOld.this, getString(R.string.error_user_details_not_exists), Toast.LENGTH_SHORT).show();
+                        } else {
+                            try {
+                                receiverAvatar = Helper.getReceiverAvatar(new JSONObject(res));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            getCurrency();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    if (response.code() == 401) {
+                        DataVaultManager.getInstance(TransferChatActivityOld.this).saveUserDetails("");
+                        DataVaultManager.getInstance(TransferChatActivityOld.this).saveUserAccessToken("");
+                        Intent intent = new Intent(TransferChatActivityOld.this, SignInActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    } else if (response.code() == 400) {
+                        Toast.makeText(TransferChatActivityOld.this, getString(R.string.error_bad_request), Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                dismissDialog();
+                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+            }
+        });
+
+    }
+
+    private void getCurrency() {
+        dialog = new ProgressDialog(TransferChatActivityOld.this);
+        dialog.setMessage(getString(R.string.info_getting_currency_code));
+        dialog.show();
+
+        mainAPIInterface.getCurrencyResponse().enqueue(new Callback<CurrencyResponse>() {
+            @Override
+            public void onResponse(Call<CurrencyResponse> call, Response<CurrencyResponse> response) {
+                dialog.dismiss();
+                if (response.isSuccessful()) {
+                    currencyResponse = new Gson().toJson(response.body().getResult());
+                    resultCurrency = response.body().getResult();
+                    readUserAccounts();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CurrencyResponse> call, Throwable t) {
+                dialog.dismiss();
+                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+            }
+        });
+    }
+
+    private void readUserAccounts() {
+        mListAccount = new ArrayList<>();
+        String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
+
+        try {
+            JSONObject root = indexUser;
+            JSONObject objResult = root.getJSONObject(AppoConstants.RESULT);
+            recivername = objResult.getString(AppoConstants.FIRSTNAME) + " " + objResult.getString(AppoConstants.LASTNAME);
+            reciveruserid = objResult.getString(AppoConstants.ID);
+            reciveremail = objResult.getString(AppoConstants.EMIAL);
+
+            JSONObject objCustomerDetails = objResult.getJSONObject(AppoConstants.CUSTOMERDETAILS);
+            JSONArray arrCustomerAccount = objCustomerDetails.getJSONArray(AppoConstants.CUSTOMERACCOUNT);
+            for (int i = 0; i < 1; i++) {
+                JSONObject index = arrCustomerAccount.getJSONObject(i);
+                AccountModel model = new AccountModel();
+                model.setAccountnumber(index.getString(AppoConstants.ACCOUNTNUMBER));
+                model.setAccountEncrypt(null);
+                if (index.has(AppoConstants.ACCOUNTSTATUS)) {
+                    model.setAccountstatus(index.getString(AppoConstants.ACCOUNTSTATUS));
+                    model.setCurrencyid(index.getString(AppoConstants.CURRENCYID));
+                    model.setCurrencyCode(getCurrency(index.getString(AppoConstants.CURRENCYID)));
+                    model.setCurrentbalance(index.getString(AppoConstants.CURRENTBALANCE));
+                    mListAccount.add(model);
+                }
+
+            }
+
+            if (mListAccount.size() > 0) {
+                Log.e(TAG, "readUserAccounts: ");
+                JSONObject objReceiver = new JSONObject();
+                objReceiver.put(AppoConstants.RECIEVERACCOUNTNUMBER, mListAccount.get(0).getAccountnumber());
+                objReceiver.put(AppoConstants.FROMCURRENCY, mListAccount.get(0).getCurrencyid());
+                objReceiver.put(AppoConstants.FROMCURRENCYCODE, mListAccount.get(0).getCurrencyCode());
+                objReceiver.put(AppoConstants.RECEIVERMOBILENUMBER, recivermobilenumber);
+                objReceiver.put(AppoConstants.RECEIVERAREACODE, recieverareacode);
+                objReceiver.put(AppoConstants.RECIEVERNAME, recivername);
+                objReceiver.put(AppoConstants.RECIEVERUSERID, reciveruserid);
+                objReceiver.put(AppoConstants.EMIAL, reciveremail);
+                setReceiverDetails(objReceiver.toString());
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
 
-        setReceiverDetails();
-        getCurrentUserDetails();
-
-
-
-        return view;
     }
 
-
-    private void setReceiverDetails() {
+    private void setReceiverDetails(String objReceiver) {
         try {
-            JSONObject obj = new JSONObject(receiveruser);
+            JSONObject obj = new JSONObject(objReceiver);
             reciveraccountnumber = obj.getString(AppoConstants.RECIEVERACCOUNTNUMBER);
             tvToAccount.setText(obj.getString(AppoConstants.RECIEVERACCOUNTNUMBER) + "-" + obj.getString(AppoConstants.FROMCURRENCYCODE));
             recaccountnumber = obj.getString(AppoConstants.RECIEVERACCOUNTNUMBER);
@@ -220,123 +429,15 @@ public class WalletTransferFragment2 extends Fragment {
             recname = obj.getString(AppoConstants.RECIEVERNAME);
             recuserid = obj.getString(AppoConstants.RECIEVERUSERID);
             receiverEmail = obj.getString(AppoConstants.EMIAL);
-            String avatar = obj.getString(AppoConstants.AVATAR);
-            if (!StringUtils.isEmpty(avatar)) {
-                Glide.with(getActivity()).load(avatar).placeholder(R.drawable.user_chat).centerCrop().into(ivReceiver);
-            }
             tvName1.setText(recname);
             tvBalance1.setText("+" + recareacode + "" + recmobilenumber);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 
-
-    private void getCurrentUserDetails() {
-        dialog = new ProgressDialog(getContext());
-        dialog.setMessage(getString(R.string.info_getting_profile));
-        dialog.show();
-
-        try {
-            String userDetails = DataVaultManager.getInstance(getContext()).getVaultValue(KEY_USER_DETIALS);
-            JSONObject mIndex = new JSONObject(userDetails);
-            String accessToken = DataVaultManager.getInstance(getContext()).getVaultValue(KEY_ACCESSTOKEN);
-            JSONObject mResult = mIndex.getJSONObject(AppoConstants.RESULT);
-            String ph = mResult.getString(AppoConstants.MOBILENUMBER);
-            String area = mResult.getString(AppoConstants.PHONECODE);
-            String bearer_ = Helper.getAppendAccessToken("bearer ", accessToken);
-            mainAPIInterface.getProfileDetails(Long.parseLong(ph), Integer.parseInt(area), bearer_).enqueue(new Callback<JsonObject>() {
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                    dialog.dismiss();
-                    if (response.isSuccessful()) {
-
-
-                        JsonObject body = response.body();
-                        String res = body.toString();
-                        DataVaultManager.getInstance(getContext()).saveUserDetails(res);
-
-                        readUserAccounts();
-                    } else {
-                        if (response.code() == 401) {
-                            DataVaultManager.getInstance(getContext()).saveUserDetails("");
-                            DataVaultManager.getInstance(getContext()).saveUserAccessToken("");
-                            Intent intent = new Intent(getContext(), SignInActivity.class);
-                            intent.putExtra(AppoConstants.WHERE, mType);
-                            getActivity().startActivity(intent);
-                            getActivity().finish();
-                        }
-
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable t) {
-                    dialog.dismiss();
-
-                }
-            });
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-    private void readUserAccounts() {
-        mListAccount = new ArrayList<>();
-        String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
-        try {
-            JSONObject root = new JSONObject(vaultValue);
-            JSONObject objResult = root.getJSONObject(AppoConstants.RESULT);
-            JSONObject objCustomerDetails = objResult.getJSONObject(AppoConstants.CUSTOMERDETAILS);
-            JSONArray arrCustomerAccount = objCustomerDetails.getJSONArray(AppoConstants.CUSTOMERACCOUNT);
-            for (int i = 0; i < arrCustomerAccount.length(); i++) {
-                JSONObject index = arrCustomerAccount.getJSONObject(i);
-                AccountModel model = new AccountModel();
-                model.setAccountnumber(index.getString(AppoConstants.ACCOUNTNUMBER));
-                if (index.has(AppoConstants.ACCOUNTSTATUS)) {
-                    model.setAccountstatus(index.getString(AppoConstants.ACCOUNTSTATUS));
-                    model.setCurrencyid(index.getString(AppoConstants.CURRENCYID));
-                    model.setCurrencyCode(getCurrency(index.getString(AppoConstants.CURRENCYID)));
-                    model.setCurrentbalance(index.getString(AppoConstants.CURRENTBALANCE));
-                    mListAccount.add(model);
-                }
-
+            if (!StringUtils.isEmpty(receiverAvatar)) {
+                Glide.with(TransferChatActivityOld.this).load(receiverAvatar).placeholder(R.mipmap.ic_profile).centerCrop().into(ivReceiver);
             }
-            mListTemp = new ArrayList<String>();
-
-            if (mListAccount.size() > 0) {
-
-                for (int i = 0; i < mListAccount.size(); i++) {
-                    mListTemp.add(mListAccount.get(i).getAccountnumber() + "-" + mListAccount.get(i).getCurrencyCode());
-                }
-
-                tvFromAccount.setText(mListTemp.get(0));
-                mFromPosition = 0;
-
-                if (fomrcurrencycode.equalsIgnoreCase(mListAccount.get(0).getCurrencyCode())) {
-                    conversionRates = 1;
-                    tvConversionRates.setText(String.valueOf(conversionRates));
-                    if (mTransferAmount.equalsIgnoreCase("no")) {
-
-                    } else {
-                        edAmount.setText(mTransferAmount);
-                    }
-                } else {
-                    conversionRates = 1;
-                    tvConversionRates.setText(String.valueOf(conversionRates));
-
-                }
-            }
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
     }
 
     private String getCurrency(String param) {
@@ -344,6 +445,7 @@ public class WalletTransferFragment2 extends Fragment {
         for (int i = 0; i < resultCurrency.size(); i++) {
             String sid = resultCurrency.get(i).getId().toString();
             if (sid.equals(param)) {
+
                 res = resultCurrency.get(i).getCurrencyCode();
                 break;
             }
@@ -351,27 +453,12 @@ public class WalletTransferFragment2 extends Fragment {
         return res;
     }
 
-
-    private void sentParam(JSONObject response, int fromAccountPosition) {
-        mFromPosition = fromAccountPosition;
-        try {
-            JSONObject jsonRates = response.getJSONObject(AppoConstants.RATES);
-            conversionRates = (float) Float.parseFloat(jsonRates.getString(fomrcurrencycode.toUpperCase()));
-            tvConversionRates.setText(String.valueOf(conversionRates));
-            if (mTransferAmount.equalsIgnoreCase("no")) {
-
-            } else {
-                edAmount.setText(mTransferAmount);
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
+    public void showToast(String msg) {
+        Toast.makeText(this, "" + msg, Toast.LENGTH_SHORT).show();
     }
 
     private void verifyDetails() {
-        Helper.hideKeyboard(edAmount, getContext());
+        Helper.hideKeyboard(edAmount, TransferChatActivityOld.this);
 
         if (tvFromAccount.getText().toString().trim().isEmpty()) {
             showToast(getString(R.string.info_selecr_from_account_first));
@@ -379,7 +466,7 @@ public class WalletTransferFragment2 extends Fragment {
         }
 
         if (edAmount.getText().toString().trim().isEmpty()) {
-
+            //showToast("please enter transfer amount");
             showToast(getString(R.string.info_enter_transer_amount));
             return;
         }
@@ -389,18 +476,18 @@ public class WalletTransferFragment2 extends Fragment {
 
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getContext(), getString(R.string.info_invalid_format), Toast.LENGTH_SHORT).show();
+            Toast.makeText(TransferChatActivityOld.this, getString(R.string.info_invalid_format), Toast.LENGTH_SHORT).show();
             return;
         }
-        if (reciveraccountnumber.equalsIgnoreCase(mListAccount.get(mFromPosition).getAccountnumber())) {
+        /*if (reciveraccountnumber.equalsIgnoreCase(mListAccount.get(0).getAccountnumber())) {
             showSameAccountErrors();
             return;
-        }
+        }*/
 
-        if (Float.parseFloat(mListAccount.get(mFromPosition).getCurrentbalance()) >= Float.parseFloat(edAmount.getText().toString().trim())) {
-            showBottomPinDialog();
-        } else {
+        if (Float.parseFloat(edAmount.getText().toString().trim()) >= Float.parseFloat(currantBalance)) {
             showBalanceErrorDailog();
+        } else {
+            showBottomPinDialog();
         }
 
 
@@ -408,68 +495,25 @@ public class WalletTransferFragment2 extends Fragment {
 
     private void showBottomPinDialog() {
         bottotmPinFragment = new BottotmPinFragment();
-        bottotmPinFragment.show(getChildFragmentManager(), bottotmPinFragment.getTag());
+        bottotmPinFragment.show(getSupportFragmentManager(), bottotmPinFragment.getTag());
         bottotmPinFragment.setCancelable(false);
 
     }
 
-    private void showSameAccountErrors() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogLayout = inflater.inflate(R.layout.dialog_common_merchant_error, null);
-        MyTextView tvHeader = dialogLayout.findViewById(R.id.tvHeader);
-        MyTextView tvInfo = dialogLayout.findViewById(R.id.tvInfo);
-        tvHeader.setText(getString(R.string.wallet_header));
-        tvInfo.setText(getString(R.string.merchant_same_account));
-        MyButton btnClose = dialogLayout.findViewById(R.id.btnClose);
 
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogTransfer.dismiss();
-            }
-        });
+    @Override
+    public void onPinConfirm(String pin) {
+        if (bottotmPinFragment != null)
+            bottotmPinFragment.dismiss();
+        getCommissions(pin);
 
-        builder.setView(dialogLayout);
-        dialogTransfer = builder.create();
-        dialogTransfer.setCanceledOnTouchOutside(false);
-
-        dialogTransfer.show();
-
-
-    }
-
-    private void showBalanceErrorDailog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogLayout = inflater.inflate(R.layout.dialog_common_merchant_error, null);
-        MyTextView tvHeader = dialogLayout.findViewById(R.id.tvHeader);
-        MyTextView tvInfo = dialogLayout.findViewById(R.id.tvInfo);
-        tvHeader.setText(getString(R.string.wallet_header));
-        tvInfo.setText(getString(R.string.merchant_balance_error));
-        MyButton btnClose = dialogLayout.findViewById(R.id.btnClose);
-
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogTransfer.dismiss();
-            }
-        });
-
-        builder.setView(dialogLayout);
-
-        dialogTransfer = builder.create();
-
-        dialogTransfer.setCanceledOnTouchOutside(false);
-
-        dialogTransfer.show();
     }
 
 
     private void getCommissions(String transaction) {
         userTransactionPin = transaction;
-
-        dialog = new ProgressDialog(getContext());
+        //Log.e(TAG, "getCommissions: pin : " + transaction);
+        dialog = new ProgressDialog(TransferChatActivityOld.this);
         dialog.setMessage(getString(R.string.info_conversion_rate));
         dialog.show();
         String accesstoken = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_ACCESSTOKEN);
@@ -479,10 +523,6 @@ public class WalletTransferFragment2 extends Fragment {
             public void onResponse(@NotNull Call<JsonObject> call, @NotNull Response<JsonObject> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-
-                    if (dialogTransfer != null) {
-                        dialogTransfer.dismiss();
-                    }
                     String res = new Gson().toJson(response.body());
                     try {
                         jsonCommission = new JSONObject(res);
@@ -491,16 +531,13 @@ public class WalletTransferFragment2 extends Fragment {
                         e.printStackTrace();
                     }
                 } else {
-                    if (dialogTransfer != null) {
-                        dialogTransfer.dismiss();
-                    }
+
                     if (response.code() == 401) {
-                        DataVaultManager.getInstance(getContext()).saveUserDetails("");
-                        DataVaultManager.getInstance(getContext()).saveUserAccessToken("");
-                        Intent intent = new Intent(getContext(), SignInActivity.class);
-                        intent.putExtra(AppoConstants.WHERE, mType);
-                        getActivity().startActivity(intent);
-                        getActivity().finish();
+                        DataVaultManager.getInstance(TransferChatActivityOld.this).saveUserDetails("");
+                        DataVaultManager.getInstance(TransferChatActivityOld.this).saveUserAccessToken("");
+                        Intent intent = new Intent(TransferChatActivityOld.this, SignInActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                     }
 
                 }
@@ -510,11 +547,9 @@ public class WalletTransferFragment2 extends Fragment {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                if (dialogTransfer != null) {
-                    dialogTransfer.dismiss();
-                }
-                dialog.dismiss();
 
+                dialog.dismiss();
+                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
             }
         });
 
@@ -558,7 +593,7 @@ public class WalletTransferFragment2 extends Fragment {
     }
 
     private void showYouAboutToPay() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(TransferChatActivityOld.this);
         LayoutInflater inflater = getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.dialog_about_topay_common, null);
         MyTextView tvHeader = dialogLayout.findViewById(R.id.tvHeader);
@@ -566,7 +601,7 @@ public class WalletTransferFragment2 extends Fragment {
         MyButton btnYes = dialogLayout.findViewById(R.id.btnYes);
         MyButton btnNo = dialogLayout.findViewById(R.id.btnNo);
         tvHeader.setText(getString(R.string.wallet_header));
-        String boldText = "<font color=''><b>" + amountaftertax_fees + "</b></font>" + " " + "<font color=''><b>" + mListAccount.get(mFromPosition).getCurrencyCode() + "</b></font>";
+        String boldText = "<font color=''><b>" + amountaftertax_fees + "</b></font>" + " " + "<font color=''><b>" + mFromCCode.toUpperCase() + "</b></font>";
         String paymentAmount = getString(R.string.merchant_partial_pay1) + " " + boldText + " " + getString(R.string.merchant_partial_pay2);
         tvInfo.setText(Html.fromHtml(paymentAmount));
         btnYes.setOnClickListener(new View.OnClickListener() {
@@ -587,30 +622,29 @@ public class WalletTransferFragment2 extends Fragment {
         dialogTransfer.show();
     }
 
-
     private void makePayment() {
-
+        //Log.e(TAG, "makePayment: called");
         if (dialogTransfer != null) {
             dialogTransfer.dismiss();
         }
         String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
         JsonObject params = new JsonObject();
-        params.addProperty(AppoConstants.AMOUNT, tvAmountCredit.getText().toString().trim());
+        params.addProperty(AppoConstants.AMOUNT, edAmount.getText().toString().trim());//need to add here
         params.addProperty(AppoConstants.CHARGES, String.valueOf(bankfees));
-        params.addProperty(AppoConstants.CONVERSIONRATE, conversionRates);
+        params.addProperty(AppoConstants.CONVERSIONRATE, 1);
         params.addProperty(AppoConstants.ENTEREDAMOUNT, edAmount.getText().toString().trim());
         params.addProperty(AppoConstants.FEES, String.valueOf(processingfees));
         params.addProperty(AppoConstants.FROMCURRENCY, Integer.parseInt(fromcurrency));
         params.addProperty(AppoConstants.FROMCURRENCYCODE, fomrcurrencycode);
         params.addProperty(AppoConstants.ORIGINALAMOUNT, amountaftertax_fees);
         params.addProperty(AppoConstants.TAXES, taxes);
-
+        //params.addProperty(AppoConstants.USERTYPE, "CUSTOMER");
         params.addProperty(AppoConstants.RECIEVERACCOUNTNUMBER, recaccountnumber);
         params.addProperty(AppoConstants.RECEIVERAREACODE, Integer.parseInt(recareacode));
         params.addProperty(AppoConstants.RECIEVERNAME, recname);
         params.addProperty(AppoConstants.RECIEVERUSERID, Integer.parseInt(recuserid));
         params.addProperty("recivermobilenumber", Long.parseLong(recmobilenumber));
-        params.addProperty(AppoConstants.SENDERACCOUNTNUMBER, mListAccount.get(mFromPosition).getAccountnumber());
+        params.addProperty(AppoConstants.SENDERACCOUNTNUMBER, Helper.getWalletAccountNumber());
         try {
             JSONObject jsonUser = new JSONObject(vaultValue);
             JSONObject objResult = jsonUser.getJSONObject(AppoConstants.RESULT);
@@ -618,11 +652,11 @@ public class WalletTransferFragment2 extends Fragment {
             params.addProperty(AppoConstants.SENDERMOBILENUMBER, Long.parseLong(objResult.getString(AppoConstants.MOBILENUMBER)));
             String senderName = objResult.getString(AppoConstants.FIRSTNAME) + " " + objResult.getString(AppoConstants.LASTNAME);
             params.addProperty(AppoConstants.SENDERNAME, senderName);
-            params.addProperty(AppoConstants.TOCURRENCY, Integer.parseInt(mListAccount.get(mFromPosition).getCurrencyid()));
-            params.addProperty(AppoConstants.TOCURRENCYCODE, mListAccount.get(mFromPosition).getCurrencyCode());
+            params.addProperty(AppoConstants.TOCURRENCY, Integer.parseInt(mFromCId));
+            params.addProperty(AppoConstants.TOCURRENCYCODE, mFromCCode);
             params.addProperty(AppoConstants.TRANSACTIONPIN, userTransactionPin);
             params.addProperty(AppoConstants.USERID, Long.parseLong(objResult.getString(AppoConstants.ID)));
-
+            //Log.e(TAG, "makePayment: 1" + params.toString());
             makeTransferMoney(params);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -630,33 +664,32 @@ public class WalletTransferFragment2 extends Fragment {
 
     }
 
-
     public void makeTransferMoney(JsonObject sentParams) {
-        dialog = new ProgressDialog(getContext());
+        dialog = new ProgressDialog(TransferChatActivityOld.this);
         dialog.setMessage("Please wait, Sending your request");
         dialog.show();
         String accessToken = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_ACCESSTOKEN);
+        ////Log.e(TAG, "makeTransferMoney: " + accessToken);
 
-
-
+        //Log.e(TAG, "makeTransferMoney: ======================");
         String bearer_ = Helper.getAppendAccessToken("bearer ", accessToken);
         mainAPIInterface.postTransferFund(sentParams, bearer_).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-
+                    //Log.e(TAG, "onResponse: " + new Gson().toJson(response.body()));
                     String res = new Gson().toJson(response.body());
                     try {
                         JSONObject responsePayment = new JSONObject(res);
                         if (responsePayment.getString(AppoConstants.RESULT).equalsIgnoreCase("-1")) {
                             showCommonError(getString(R.string.error_invalid_transaction_pin));
-
+                            //showPayDialogLikeUnion("#1245454");
                         } else if (responsePayment.getString(AppoConstants.RESULT).equalsIgnoreCase("-2")) {
                             showCommonError(getString(R.string.error_account_balance));
-
+                            //showPayDialogLikeUnion("#1245454");
                         } else {
-
+                            //showSuccessDialog(responsePayment.getString(AppoConstants.RESULT));
                             showPayDialogLikeUnion(responsePayment.getString(AppoConstants.RESULT));
                         }
 
@@ -665,22 +698,19 @@ public class WalletTransferFragment2 extends Fragment {
                     }
 
                 } else {
-
-
+                    //showCommonError(getString(R.string.error_invalid_transaction_pin));
+                    //showPayDialogLikeUnion("#1245454");
                     if (response.code() == 401) {
-                        Toast.makeText(getActivity(), "Session Expired!!!", Toast.LENGTH_SHORT).show();
-                        DataVaultManager.getInstance(getContext()).saveUserDetails("");
-                        DataVaultManager.getInstance(getContext()).saveUserAccessToken("");
-                        Intent intent = new Intent(getContext(), SignInActivity.class);
-                        intent.putExtra(AppoConstants.WHERE, mType);
-                        getActivity().startActivity(intent);
-                        getActivity().finish();
+                        Toast.makeText(TransferChatActivityOld.this, "Session Expired!!!", Toast.LENGTH_SHORT).show();
+                        DataVaultManager.getInstance(TransferChatActivityOld.this).saveUserDetails("");
+                        DataVaultManager.getInstance(TransferChatActivityOld.this).saveUserAccessToken("");
+                        Intent intent = new Intent(TransferChatActivityOld.this, SignInActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                     } else if (response.code() == 500) {
-                        Toast.makeText(getActivity(), "Error Code 500", Toast.LENGTH_SHORT).show();
-
-
+                        Toast.makeText(TransferChatActivityOld.this, "Error Code 500", Toast.LENGTH_SHORT).show();
                     } else if (response.code() == 400) {
-                        Toast.makeText(getActivity(), "Error Code 400", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TransferChatActivityOld.this, "Error Code 400", Toast.LENGTH_SHORT).show();
 
                     }
                 }
@@ -689,7 +719,7 @@ public class WalletTransferFragment2 extends Fragment {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-
+                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
             }
         });
 
@@ -697,7 +727,7 @@ public class WalletTransferFragment2 extends Fragment {
     }
 
     public void showCommonError(String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(TransferChatActivityOld.this);
         LayoutInflater inflater = getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.dialog_common_merchant_error, null);
         ImageView ivCancel = dialogLayout.findViewById(R.id.ivCancel);
@@ -725,12 +755,12 @@ public class WalletTransferFragment2 extends Fragment {
     }
 
     private void showPayDialogLikeUnion(String param) {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
-        View mCustomLayout = LayoutInflater.from(getActivity()).inflate(R.layout.success_dialog_inner_appopay, null);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TransferChatActivityOld.this);
+        View mCustomLayout = LayoutInflater.from(TransferChatActivityOld.this).inflate(R.layout.success_dialog_inner_appopay, null);
         LinearLayout layoutRoot = mCustomLayout.findViewById(R.id.layoutRoot);
         MyTextView tvInfo = mCustomLayout.findViewById(R.id.tvInfo);
         MyTextView tvHeader = mCustomLayout.findViewById(R.id.tvHeader);
-        MyTextViewBold tvAmountPay = mCustomLayout.findViewById(R.id.tvAmountPay);
+        MyTextViewBold tvAmountPay = mCustomLayout.findViewById(R.id.tvAmountPay);//edAmount
         MyTextView tvCurrencyPay = mCustomLayout.findViewById(R.id.tvCurrencyPay);
         MyTextView tvTransactionTime = mCustomLayout.findViewById(R.id.tvTransactionTime);
         MyTextView tvVoucherPay = mCustomLayout.findViewById(R.id.tvVoucherPay);
@@ -763,15 +793,14 @@ public class WalletTransferFragment2 extends Fragment {
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*mDialog.dismiss();
-                getActivity().onBackPressed();*/
+
                 redirectHome();
             }
         });
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //Toast.makeText(AddMoneyToWallet.this, "Show Receipt", Toast.LENGTH_SHORT).show();
                 takeScreenShort(layoutRoot);
             }
         });
@@ -787,38 +816,38 @@ public class WalletTransferFragment2 extends Fragment {
         SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat(mDateFormat);
         Date mDate = new Date();
         String format = mSimpleDateFormat.format(mDate);
-
+        //Log.e(TAG, "getDate: " + format);
         return format;
     }
 
-    private Bitmap getScreenShot(View view) {
-        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(returnedBitmap);
-        Drawable bgDrawable = view.getBackground();
-        if (bgDrawable != null)
-            bgDrawable.draw(canvas);
-        else
-            canvas.drawColor(Color.WHITE);
-        view.draw(canvas);
-        return returnedBitmap;
+    private void redirectHome() {
+        if (mDialog.isShowing() && mDialog != null) {
+            mDialog.dismiss();
+        }
+        //mMoneyTransfer.OnMoneyTransferSuccess();
+        //getActivity().onBackPressed();
+        //Intent intent = new Intent();
+        //getReceiverToken();
+        super.onBackPressed();
+        finish();
+
 
     }
 
     private void takeScreenShort(LinearLayout rootLayout) {
         mDialog.dismiss();
-
+        //Bitmap bitmap = screenShot(rootLayout);
         Bitmap bitmap = getScreenShot(rootLayout);
         Date now = new Date();
         android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
 
-        mFileSSort = new File(getActivity().getCacheDir(), "screen_short_" + now + ".jpeg");
+        mFileSSort = new File(getCacheDir(), "screen_short_" + now + ".jpeg");
         try {
             boolean newFile = mFileSSort.createNewFile();
             if (newFile) {
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
                 byte[] bitmapdata = bos.toByteArray();
-
                 FileOutputStream fos = null;
                 try {
                     fos = new FileOutputStream(mFileSSort);
@@ -837,157 +866,78 @@ public class WalletTransferFragment2 extends Fragment {
 
     }
 
+    private Bitmap getScreenShot(View view) {
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(returnedBitmap);
+        Drawable bgDrawable = view.getBackground();
+        if (bgDrawable != null)
+            bgDrawable.draw(canvas);
+        else
+            canvas.drawColor(Color.WHITE);
+        view.draw(canvas);
+        return returnedBitmap;
+
+    }
+
     private void openScreenshot(File imageFile) {
         Intent intentShareFile = new Intent();
         intentShareFile.setAction(Intent.ACTION_SEND);
-
-        Uri uriForFile = FileProvider.getUriForFile(getActivity().getApplicationContext(), "com.stuffer.stuffers.fileprovider", imageFile);
+        Uri uriForFile = FileProvider.getUriForFile(getApplicationContext(), "com.stuffer.stuffers.fileprovider", imageFile);
         intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intentShareFile.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         intentShareFile.setType("image/jpeg");
         intentShareFile.putExtra(Intent.EXTRA_STREAM, uriForFile);
         Intent chooser = Intent.createChooser(intentShareFile, "Share File");
-        List<ResolveInfo> resInfoList = getActivity().getPackageManager().queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY);
+        List<ResolveInfo> resInfoList = getPackageManager().queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY);
         for (ResolveInfo resolveInfo : resInfoList) {
             String packageName = resolveInfo.activityInfo.packageName;
-            getActivity().grantUriPermission(packageName, uriForFile, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            grantUriPermission(packageName, uriForFile, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
         startActivityForResult(chooser, 198);
 
     }
 
+    private void showBalanceErrorDailog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(TransferChatActivityOld.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogLayout = inflater.inflate(R.layout.dialog_common_merchant_error, null);
+        MyTextView tvHeader = dialogLayout.findViewById(R.id.tvHeader);
+        MyTextView tvInfo = dialogLayout.findViewById(R.id.tvInfo);
+        tvHeader.setText(getString(R.string.wallet_header));
+        tvInfo.setText(getString(R.string.merchant_balance_error));
+        MyButton btnClose = dialogLayout.findViewById(R.id.btnClose);
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogTransfer.dismiss();
+            }
+        });
+
+        builder.setView(dialogLayout);
+
+        dialogTransfer = builder.create();
+
+        dialogTransfer.setCanceledOnTouchOutside(false);
+
+        dialogTransfer.show();
+    }
+
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e(TAG, "onActivityResult: called 197 ");
+        redirectHome();
+        /*if (resultCode == 198) {
+            Log.e(TAG, "onActivityResult: called 198 ");
+*/
+    }
+}
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 198) {
             Log.e(TAG, "onActivityResult: called 198 ");
+            redirectHome();
         }
-    }
-
-
-    private void redirectHome() {
-        if (mDialog.isShowing() && mDialog != null) {
-            mDialog.dismiss();
-        }
-        mMoneyTransfer.OnMoneyTransferSuccess();
-
-
-
-
-
-    }
-
-    /*private void getReceiverToken() {
-        Query mDatabaseQuery = FirebaseDatabase.getInstance().getReference(AppoConstants.FIREBASE_USERS_NODE)
-                .orderByChild(AppoConstants.EMIAL_ID)
-                .equalTo(receiverEmail);
-        mList = new ArrayList<ChatUser>();
-        mDatabaseQuery.addListenerForSingleValueEvent(valueEventListener);
-    }
-
-    ValueEventListener valueEventListener = new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot snapshot) {
-            mList.clear();
-            if (snapshot.exists()) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    ChatUser chatUser = dataSnapshot.getValue(ChatUser.class);
-                    mList.add(chatUser);
-                }
-                if (mList.size() > 0) {
-                    sendNotification();
-
-                }
-            }
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError error) {
-
-        }
-    };
-
-    private void sendNotification() {
-        dialog = new ProgressDialog(getContext());
-        dialog.setMessage("Please wait...");
-        dialog.show();
-        mainAPIInterface2 = ApiUtils.getApiServiceForNotification("https:
-        Query mDatabaseQuery = FirebaseDatabase.getInstance().getReference(AppoConstants.FIREBASE_USER_TOKENS)
-                .orderByKey()
-                .equalTo(mList.get(0).getId());
-        mDatabaseQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                dialog.dismiss();
-                if (snapshot.exists()) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Token token = dataSnapshot.getValue(Token.class);
-                        String message = "An amount of (" + tvAmountCredit.getText().toString().trim() + " " + fomrcurrencycode + ")" + " has been credit to your wallet account during the e-wallet transfer";
-                        JsonObject jsonParam = new JsonObject();
-                        jsonParam.addProperty(AppoConstants.MESSAGE, message);
-                        String sentParam = jsonParam.toString();
-                        Data data = new Data(AppoConstants.WALLET_TRANSFER, 1, "Wallet Transfer", sentParam,
-                                mList.get(0).getId());
-                        Sender sender = new Sender(data, token.getToken());
-
-                        mainAPIInterface2.sendNotification(sender).enqueue(new Callback<MyResponse>() {
-                            @Override
-                            public void onResponse(@NotNull Call<MyResponse> call, @NotNull Response<MyResponse> response) {
-                                if (response.code() == 200) {
-                                    if (response.body().success == 1) {
-
-                                        mMoneyTransfer.OnMoneyTransferSuccess();
-                                    } else {
-                                        mMoneyTransfer.OnMoneyTransferSuccess();
-                                    }
-                                } else {
-                                    mMoneyTransfer.OnMoneyTransferSuccess();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<MyResponse> call, Throwable t) {
-
-                                dialog.dismiss();
-                                mMoneyTransfer.OnMoneyTransferSuccess();
-                            }
-                        });
-
-                    }
-                } else {
-
-                    mMoneyTransfer.OnMoneyTransferSuccess();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-                mMoneyTransfer.OnMoneyTransferSuccess();
-            }
-        });
     }*/
-
-    public void showToast(String msg) {
-        Toast.makeText(getContext(), "" + msg, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        try {
-            mMoneyTransfer = (MoneyTransferListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException("parent must implement MoneyTransferListener");
-        }
-
-    }
-
-    public void getCommission(String pin) {
-        if (bottotmPinFragment != null)
-            bottotmPinFragment.dismiss();
-        getCommissions(pin);
-    }
-
-
-}

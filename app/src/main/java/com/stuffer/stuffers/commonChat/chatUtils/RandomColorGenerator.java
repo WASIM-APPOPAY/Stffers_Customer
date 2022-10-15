@@ -20,7 +20,8 @@ public class RandomColorGenerator {
             R.color.darkPurple,
             R.color.darkGreen,
             R.color.darkOrange,
-            R.color.darkRed};
+            R.color.darkRed
+    };
 
     private static final Random RANDOM = new Random();
 

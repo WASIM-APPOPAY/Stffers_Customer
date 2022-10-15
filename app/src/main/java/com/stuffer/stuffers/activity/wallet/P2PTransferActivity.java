@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -21,12 +22,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.contact.ContactDemoActivity;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
+import com.stuffer.stuffers.commonChat.chat.TransferChatActivity;
 import com.stuffer.stuffers.communicator.MoneyTransferListener;
 import com.stuffer.stuffers.communicator.RecyclerViewRowItemClickListener2;
 import com.stuffer.stuffers.communicator.StartActivityListener;
@@ -39,6 +43,7 @@ import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.utils.DataVaultManager;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -58,6 +63,7 @@ public class P2PTransferActivity extends AppCompatActivity implements UserAccoun
     private String amount = "no", mBaseConversion;
     private ProgressDialog dialog;
     private MainAPIInterface mainAPIInterface;
+    private JSONObject indexUser;
 
 
     @Override
@@ -193,8 +199,6 @@ public class P2PTransferActivity extends AppCompatActivity implements UserAccoun
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     dialog.dismiss();
                     if (response.isSuccessful()) {
-                        //String res = new Gson().toJson(response.body());
-                        ////Log.e(TAG, "onResponse: getprofile :" + res);
                         JsonObject body = response.body();
                         String res = body.toString();
                         DataVaultManager.getInstance(P2PTransferActivity.this).saveUserDetails(res);
@@ -237,5 +241,8 @@ public class P2PTransferActivity extends AppCompatActivity implements UserAccoun
             ((WalletTransferFragment2) currentFragment).getCommission(pin);
         }
     }
+
+
+
     //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
 }

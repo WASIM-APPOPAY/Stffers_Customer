@@ -10,6 +10,7 @@
     <dimen name="item_margin_half">1dp</dimen>
 
     <dimen name="folder_column_width">120dp</dimen>
+    <dimen name="dp_3">3dp</dimen>
 
     <dimen name="picture_column_width">90dp</dimen>
     <dimen name="focus_view_size">100dp</dimen>
@@ -46,4 +47,6 @@
     <!-- font size,you can add if there is no one -->
     <dimen name="sp_17">17sp</dimen>
     <dimen name="sp_20">20sp</dimen>
+    <dimen name="dp_100">100dp</dimen>
+    <dimen name="dp_12">12dp</dimen>
 </resources>

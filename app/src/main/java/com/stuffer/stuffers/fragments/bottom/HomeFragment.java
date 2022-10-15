@@ -62,7 +62,7 @@ import com.stuffer.stuffers.activity.wallet.MovieTicketsActivity;
 import com.stuffer.stuffers.activity.wallet.RequestMoney;
 import com.stuffer.stuffers.activity.wallet.SignInActivity;
 import com.stuffer.stuffers.activity.wallet.TravelActivity;
-import com.stuffer.stuffers.adapter.mall.TopShoppingOfferAdapter;
+//import com.stuffer.stuffers.adapter.mall.TopShoppingOfferAdapter;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.communicator.SideWalletListener;
@@ -112,7 +112,7 @@ public class HomeFragment extends Fragment implements ShopListener {
 
     ExpandableHeightGridView topShoppingOffersGridView;
 
-    TopShoppingOfferAdapter topShoppingOfferAdapter;
+    //TopShoppingOfferAdapter topShoppingOfferAdapter;
     ProgressBar topOfferProgressBar;
 
     MainAPIInterface mainAPIInterface;

@@ -9,16 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.stuffer.stuffers.R;
-import com.stuffer.stuffers.activity.wallet.QuickPaymentActivity;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.fragments.bottom.chatadapter.MessageAdapter;
@@ -41,7 +38,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -143,7 +139,7 @@ public class MessageActivity extends AppCompatActivity {
                 if (msg.matches(Regex)) {
                     notify = false;
                     messageEditText.setText("");
-                    Intent intent = new Intent(MessageActivity.this, TransferChatActivity.class);
+                    Intent intent = new Intent(MessageActivity.this, TransferChatActivityOld.class);
                     intent.putExtra(AppoConstants.AMOUNT, msg);
                     intent.putExtra(AppoConstants.AREACODE,mArea_code);
                     intent.putExtra(AppoConstants.PHWITHCODE,mPhone_number);

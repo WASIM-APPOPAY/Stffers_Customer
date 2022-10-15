@@ -244,4 +244,5 @@ public class Constants {
 
     public static final String USERAVATAR = "api/users/avatar/update";
     public static final String TERM_AND_CONDITIONS = "api/term-condition";
+    public static final String GET_MERCHANT_SHOPTYPE = "api/seller/{shopType}";
 }
