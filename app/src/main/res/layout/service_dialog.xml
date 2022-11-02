@@ -40,7 +40,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="3dp"
                 android:gravity="center"
-                android:text="Link Card"
+                android:text="@string/info_link_card"
                 android:textColor="@color/black"
                 android:textSize="12sp"
 
@@ -75,7 +75,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="3dp"
                 android:gravity="center"
-                android:text="Recharge"
+                android:text="@string/info_recharge"
                 android:textColor="@color/black"
                 android:textSize="12sp"
 
@@ -110,7 +110,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="3dp"
                 android:gravity="center"
-                android:text="P-2-P Transfer"
+                android:text="@string/info_p_2_p_transfer"
                 android:textColor="@color/black"
                 android:textSize="12sp"
 
@@ -120,7 +120,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/llBProfile"
             style="@style/LayoutFundLinearStyle"
             android:layout_width="0dp"
@@ -129,7 +128,8 @@
             android:background="@drawable/no_round_bg2"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:visibility="gone">
 
             <ImageView
 
@@ -157,7 +157,6 @@
 
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/llProfile"
             style="@style/LayoutFundLinearStyle"
             android:layout_width="0dp"
@@ -166,7 +165,8 @@
             android:background="@drawable/no_round_bg2"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="55dp"
@@ -217,7 +217,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="3dp"
                 android:gravity="center"
-                android:text="UnionPay\nMoney Express"
+                android:text="@string/info_unionpay_nmoney_express"
                 android:textColor="@color/black"
                 android:textSize="12sp"
 
@@ -233,8 +233,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="4">
+
         <LinearLayout
-            android:visibility="invisible"
             style="@style/LayoutFundLinearStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -242,7 +242,8 @@
             android:background="@drawable/no_round_bg2"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:visibility="invisible">
 
             <ImageView
                 android:layout_width="55dp"
@@ -269,7 +270,6 @@
         </LinearLayout>
 
         <LinearLayout
-
             style="@style/LayoutFundLinearStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -277,8 +277,8 @@
             android:background="@drawable/no_round_bg2"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="8dp">
-
+            android:padding="8dp"
+            android:visibility="invisible">
 
             <ImageView
 
@@ -294,7 +294,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="3dp"
                 android:gravity="center"
-                android:text="PracktiPago"
+                android:text="@string/info_pracktipago"
                 android:textColor="@color/black"
                 android:textSize="12sp"
 
@@ -331,7 +331,7 @@
                 android:layout_marginTop="3dp"
                 android:gravity="center"
                 android:lines="2"
-                android:text="Cash Sends"
+                android:text="@string/info_cash_sends"
                 android:textColor="@color/black"
                 android:textSize="12sp"
 
@@ -368,7 +368,7 @@
                 android:layout_marginTop="3dp"
                 android:gravity="center"
                 android:lines="2"
-                android:text="Scan QR Code &amp; Pay"
+                android:text="@string/info_scan_qr_code_amp_pay"
                 android:textColor="@color/black"
                 android:textSize="12sp"
 

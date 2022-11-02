@@ -159,6 +159,8 @@ public class GenerateQrDynamicActivity extends AppCompatActivity implements View
     @Override
     public void onPinConfirm(String transactionPin) {
         String mTransactionPin = Helper.getTransactionPin();
+        Log.e(TAG, "onPinConfirm: Store :: "+mTransactionPin );
+        Log.e(TAG, "onPinConfirm: Input :: "+transactionPin );
         if (mTransactionPin.equalsIgnoreCase(transactionPin)) {
             if (mBottomPinFragment != null) {
                 mBottomPinFragment.dismiss();

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.activity.wallet.OtherBusinessActivity;
 import com.stuffer.stuffers.commonChat.chatUtils.GlideUtils;
 import com.stuffer.stuffers.commonChat.chatUtils.ToastUtil;
 import com.stuffer.stuffers.utils.DataManager;
@@ -97,9 +98,9 @@ public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.Busine
     }
 
     private void jumpOtherBusinessPage(MerchantInfoBean bean) {
-        /*Intent intent = new Intent(context, OtherBusinessActivity.class);
+        Intent intent = new Intent(context, OtherBusinessActivity.class);
         intent.putExtra("otherMerchant", bean);
-        context.startActivity(intent);*/
+        context.startActivity(intent);
     }
 
     @Override

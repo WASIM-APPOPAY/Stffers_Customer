@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20sp"
             android:gravity="center"
-            android:text="Enter OTP "
+            android:text="@string/info_enter_otp2"
             android:textColor="@color/colorPrimary"
             android:textSize="25sp"
             android:textStyle="italic" />
@@ -37,7 +37,7 @@
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:textSize="@dimen/dp_16"
-            android:text="We have Send an OTP on your Number "
+            android:text="@string/info_we_send"
             android:textAppearance="?attr/textAppearanceBody1" />
 
 
@@ -144,7 +144,7 @@
             android:layout_marginTop="30dp"
 
             android:gravity="center"
-            android:text="OTP Resend in 13 sec"
+            android:text="@string/otp_resend_in_13_sec"
             android:textColor="@color/colorPrimary"
             android:textSize="25sp"
             android:textStyle="italic" />
@@ -161,7 +161,7 @@
             android:elevation="1.5dp"
             android:gravity="center"
             android:padding="12dp"
-            android:text="VERIFY"
+            android:text="@string/info_verify"
             android:textColor="#fff"
             android:textSize="16sp" />
 

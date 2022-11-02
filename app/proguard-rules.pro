@@ -286,6 +286,7 @@
 
 -keep class com.onesignal.OneSignalUnityProxy.* {*;}
 -keep class com.stuffer.stuffers.commonChat.chatModel.** { *; }
+-keep class com.stuffer.stuffers.widget.** { *; }
 
 
 

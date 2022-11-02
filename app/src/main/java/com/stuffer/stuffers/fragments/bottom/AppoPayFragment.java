@@ -108,6 +108,7 @@ public class AppoPayFragment extends Fragment {
     private String valuePhone;
     private String valueCountry;
     private MerchantPresentedMode mDecode;
+    private int mWhere = 0;
 
     public AppoPayFragment() {
         // Required empty public constructor
@@ -140,13 +141,15 @@ public class AppoPayFragment extends Fragment {
         btnPayNow = (MyButton) mView.findViewById(R.id.btnPayNow);
         Bundle arguments = this.getArguments();
         String scanText = arguments.getString(AppoConstants.MERCHANTSCANCODE);
-        Log.e("TAG", "onCreateView: scanText "+scanText );
-       // resultScan = arguments.getString(AppoConstants.MERCHANTSCANCODE);
+
+        mWhere = arguments.getInt(AppoConstants.WHERE, 0);
+        Log.e("TAG", "onCreateView: scanText " + scanText);
+        // resultScan = arguments.getString(AppoConstants.MERCHANTSCANCODE);
         mDecode = DecoderMpm.decode(scanText, MerchantPresentedMode.class);
         //String s = new Gson().toJson(decode);
-
         resultScan = new Gson().toJson(mDecode);
-        Log.e("TAG", "onCreateView: onGson : "+resultScan );
+
+        Log.e("TAG", "onCreateView: onGson : " + resultScan);
 
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,7 +197,6 @@ public class AppoPayFragment extends Fragment {
         showMerchantDetails();
 
 
-
         return mView;
     }
 
@@ -204,8 +206,8 @@ public class AppoPayFragment extends Fragment {
         dialog.show();
         TagLengthString countryCode1 = mDecode.getCountryCode();
         String value = countryCode1.getValue();
-        String area=value;
-        String ph="";
+        String area = value;
+        String ph = "";
 
 
         String accessToken = DataVaultManager.getInstance(getActivity()).getVaultValue(KEY_ACCESSTOKEN);
@@ -217,7 +219,7 @@ public class AppoPayFragment extends Fragment {
             JSONObject contextSpecificData = unreservedvalue.getJSONObject("contextSpecificData");
             JSONObject contextSpecificData03 = contextSpecificData.getJSONObject("03");
             String phoneNumber = contextSpecificData03.getString("value");
-            ph=phoneNumber;
+            ph = phoneNumber;
         } catch (JSONException e) {
             Log.e("TAG", "getMerchantProfile: " + resultScan);
             e.printStackTrace();
@@ -260,8 +262,10 @@ public class AppoPayFragment extends Fragment {
                         DataVaultManager.getInstance(getActivity()).saveUserDetails("");
                         DataVaultManager.getInstance(getActivity()).saveUserAccessToken("");
                         Intent intent = new Intent(getActivity(), SignInActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra(AppoConstants.WHERE, mWhere);
+
                         startActivity(intent);
+                        getActivity().finish();
                     } else if (response.code() == 400) {
                         //Log.e(TAG, "onResponse: " + response.toString());
                     }
@@ -353,17 +357,16 @@ public class AppoPayFragment extends Fragment {
             String valueTID = terminalLabel.getString("value");
 
 
-
             tvEmialId.setText("TID : " + valueTID);
             tvIndex5.setText("MID : " + valueMID);
             tvIndex5.setVisibility(View.VISIBLE);
-            if (mRoot.has("transactionAmount")){
+            if (mRoot.has("transactionAmount")) {
                 JSONObject transactionAmount = mRoot.getJSONObject("transactionAmount");
                 String value = transactionAmount.getString("value");
                 edAmount.setText(value);
                 edAmount.setEnabled(false);
                 edAmount.setClickable(false);
-            }else {
+            } else {
                 edAmount.setEnabled(true);
                 edAmount.setClickable(true);
             }
@@ -420,8 +423,10 @@ public class AppoPayFragment extends Fragment {
                         DataVaultManager.getInstance(getActivity()).saveUserDetails("");
                         DataVaultManager.getInstance(getActivity()).saveUserAccessToken("");
                         Intent intent = new Intent(getActivity(), SignInActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra(AppoConstants.WHERE, mWhere);
+
                         startActivity(intent);
+                        getActivity().finish();
                     } else if (response.code() == 400) {
                         Toast.makeText(getActivity(), "Bad Request", Toast.LENGTH_SHORT).show();
                     }
@@ -609,8 +614,10 @@ public class AppoPayFragment extends Fragment {
                         DataVaultManager.getInstance(getActivity()).saveUserDetails("");
                         DataVaultManager.getInstance(getActivity()).saveUserAccessToken("");
                         Intent intent = new Intent(getActivity(), SignInActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra(AppoConstants.WHERE, mWhere);
+
                         startActivity(intent);
+                        getActivity().finish();
                     }
                 }
 
@@ -792,8 +799,10 @@ public class AppoPayFragment extends Fragment {
                         DataVaultManager.getInstance(getActivity()).saveUserDetails("");
                         DataVaultManager.getInstance(getActivity()).saveUserAccessToken("");
                         Intent intent = new Intent(getActivity(), SignInActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra(AppoConstants.WHERE, mWhere);
+
                         startActivity(intent);
+                        getActivity().finish();
                     }
                 }
             }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="40dp"
+
+    android:paddingTop="5dp"
+    android:paddingEnd="30dp"
+    android:paddingBottom="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/schedule_date_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="Sunday"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/schedule_date_switch"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:src="@drawable/schedule_container_btn_off" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/schedule_container_timers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/schedule_date_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="+ADD A SET OF HOURS"
+        android:visibility="gone"
+        android:textColor="@android:color/holo_blue_bright" />
+
+
+</LinearLayout>

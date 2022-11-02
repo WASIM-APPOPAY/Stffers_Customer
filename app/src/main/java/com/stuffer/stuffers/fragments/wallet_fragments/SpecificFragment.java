@@ -25,7 +25,7 @@ public class SpecificFragment extends Fragment {
     private String mParam2;
     private View mView;
     private MyTextViewBold tvTitle;
-    private LinearLayout linearPanama, linearDominica;
+    private LinearLayout linearPanama, linearDominica,linearPara;
 
     public SpecificFragment() {
         // Required empty public constructor
@@ -50,13 +50,22 @@ public class SpecificFragment extends Fragment {
         tvTitle.setText(Html.fromHtml(getString(R.string.info_payments_methods)));
         linearPanama = mView.findViewById(R.id.linearPanama);
         linearDominica = mView.findViewById(R.id.linearDominica);
+        linearPara = mView.findViewById(R.id.linearPara);
         if (!StringUtils.isEmpty(mParam1)) {
             if (mParam1.equalsIgnoreCase("1")) {
                 linearPanama.setVisibility(View.VISIBLE);
                 linearDominica.setVisibility(View.GONE);
-            } else {
+                linearPara.setVisibility(View.GONE);
+            } else if (mParam1.equalsIgnoreCase("2")){
                 linearDominica.setVisibility(View.VISIBLE);
                 linearPanama.setVisibility(View.GONE);
+                linearPara.setVisibility(View.GONE);
+
+            } else{
+                linearDominica.setVisibility(View.GONE);
+                linearPanama.setVisibility(View.GONE);
+                linearPara.setVisibility(View.VISIBLE);
+
             }
         }
 

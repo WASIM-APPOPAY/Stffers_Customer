@@ -38,6 +38,7 @@ import com.stuffer.stuffers.models.output.GetTopShoppingOffersModel;
 import com.stuffer.stuffers.models.output.GetWalletTransactionsOutput;
 import com.stuffer.stuffers.models.output.IsSellerExist;
 import com.stuffer.stuffers.models.output.MappingResponse;
+import com.stuffer.stuffers.models.output.MappingResponse2;
 import com.stuffer.stuffers.models.output.NewServiceListModel;
 import com.stuffer.stuffers.models.output.NewServiceListOutputModel;
 import com.stuffer.stuffers.models.output.NormalResponseBody;
@@ -201,7 +202,7 @@ public interface MainAPIInterface<R extends Retrofit> {
             "Content-Type: application/json",
             "Access-Control-Allow-Origin: appopay.com"
     })
-    @POST(com.stuffer.stuffers.api.Constants.POST_TRANSACTION_DETAILS)
+    @POST(Constants.POST_TRANSACTION_DETAILS)
     Call<TransactionListResponse> postUserTransactionList(@Body JsonObject body,
                                                           @Header("Authorization") String xAccessToken);
 
@@ -382,7 +383,6 @@ public interface MainAPIInterface<R extends Retrofit> {
     Call<JsonObject> verifiedGivenOtp(@Path("givenOtp") String otp);
 
 
-
     @Headers({
             "Accept: application/json",
             "Content-Type: application/json"
@@ -398,14 +398,17 @@ public interface MainAPIInterface<R extends Retrofit> {
     Call<JsonObject> getOtpforUser(@Body JsonObject body);
 
 
-
-
     @GET(com.stuffer.stuffers.api.Constants.GET_COUNTRY_CODE)
     Call<CountryCodeResponse> getCountryCode();
 
     @GET(com.stuffer.stuffers.api.Constants.GET_MAPPING)
     Call<MappingResponse> getMapping(
             @Path("newnumber") String newnumber
+    );
+
+    @POST(Constants.GET_MAPPING2)
+    Call<MappingResponse2> getMapping(
+            @Body JsonObject param
     );
 
     @Headers({
@@ -892,6 +895,9 @@ public interface MainAPIInterface<R extends Retrofit> {
 
     @GET(Constants.GET_MERCHANT_SHOPTYPE)
     Call<JsonObject> getMerchantShopType(@Path("shopType") String shopType);
+
+    @GET(Constants.GET_TRANSACTION_PIN)
+    Call<JsonObject> getSetTransactionPin(@Path("userId") String userId, @Path("pin") String trans, @Header("Authorization") String xAccessToken);
 }
 
 

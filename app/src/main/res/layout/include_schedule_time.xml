@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp">
+
+    <LinearLayout
+        android:id="@+id/schedule_start_time_container"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/schedule_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="09:00"
+            android:textSize="14dp" />
+
+        <View
+            android:id="@+id/schedule_start_time_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#888" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="15dp"
+        android:layout_height="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/bg_border_gray" />
+
+    <LinearLayout
+        android:id="@+id/schedule_end_time_container"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/schedule_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:00"
+            android:textSize="14dp" />
+
+        <View
+            android:id="@+id/schedule_end_time_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#888" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/schedule_time_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_delete"
+        android:visibility="gone" />
+
+
+</LinearLayout>

@@ -110,7 +110,7 @@ public class FindFriendActivity extends AppCompatActivity {
         dialog = new ProgressDialog(this);
         dialog.setMessage("please wait..");
         dialog.show();
-    ////Log.e(TAG, "refreshMyContactsCache: Name : " + contact.getName() + "  Ph : " + contact.getPhoneNumber());
+        ////Log.e(TAG, "refreshMyContactsCache: Name : " + contact.getName() + "  Ph : " + contact.getPhoneNumber());
         contactList.addAll(contactsToSet.values());
         Collections.sort(contactList, new Comparator<UserObject>() {
             @Override
@@ -122,9 +122,8 @@ public class FindFriendActivity extends AppCompatActivity {
         });
 
 
-
         for (int i = 0; i < contactList.size(); i++) {
-           //counter = counter + 1;
+            //counter = counter + 1;
             if (i + 1 >= contactList.size())
                 allow = true;
 
@@ -179,7 +178,7 @@ public class FindFriendActivity extends AppCompatActivity {
                         //Log.e(TAG, "onDataChange: else called");
                         updateRecyclerView();
                     }*/
-                    if (allow){
+                    if (allow) {
                         updateRecyclerView2();
                     }
                 }
@@ -259,7 +258,7 @@ public class FindFriendActivity extends AppCompatActivity {
         }
 
         public class MyContactHolder extends RecyclerView.ViewHolder {
-            MyTextView tvFirstLetter, tvFullName, tvMobileNumber,tvInvite;
+            MyTextView tvFirstLetter, tvFullName, tvMobileNumber, tvInvite;
 
             public MyContactHolder(@NonNull View itemView) {
                 super(itemView);

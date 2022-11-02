@@ -140,7 +140,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="20dp"
                 android:padding="8dp"
-                android:text="My Qr-Code"
+                android:text="@string/info_my_qr_code"
                 android:textSize="16sp" />
 
 
@@ -345,7 +345,7 @@
                 android:layout_weight="1"
                 android:padding="8dp"
 
-                android:text="App Version : 1.0.11"
+                android:text="@string/info_version"
                 android:textColor="@color/icon_color"
                 android:textSize="16sp" />
 

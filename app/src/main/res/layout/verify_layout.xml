@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:text="You enter a phone number"
+        android:text="@string/info_you_enter_a_phone_number"
         android:textAppearance="?textAppearanceBody1"
         android:textSize="18sp"
         />
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:text="Is this number ok, or doy you want\n to edit."
+        android:text="@string/info_is_this_ok_or"
         android:textAppearance="?textAppearanceBody1"
         android:textSize="18sp" />
 

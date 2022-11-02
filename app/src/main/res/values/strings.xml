@@ -711,6 +711,7 @@ data.</string>
     <string name="yes">YES</string>
 
     <string name="phone_number">Mobile Number</string>
+
     <string name="fname">First Name</string>
     <string name="enter_first_your_name">Enter Your First Name</string>
     <string name="lname">Last Name</string>
@@ -725,6 +726,64 @@ data.</string>
     <string name="settings">ALLOW</string>
     <string name="permission_desc_storage">AppOPay Need Storage,Camera,Audio and Contact Access Permission to work properly.</string>
     <string name="info_shop_our_mall">Shop Our Mall</string>
+    <string name="info_tab_agree">Tap Agree and Continue to accept the Term of Service.</string>
+    <string name="info_phone_number_verification">Phone Number Verification</string>
+    <string name="info_we_will_send_you_a_otp">We will Send you a OTP</string>
+    <string name="info_next">Next</string>
+    <string name="info_you_enter_a_phone_number">You enter a phone number</string>
+
+    <string name="info_is_this_ok_or">Is this number ok, or do you want\n to edit.</string>
+    <string name="info_enter_otp2">Enter OTP</string>
+    <string name="info_we_send">We have Send an OTP on your Number</string>
+
+    <string name="otp_resend_in_13_sec">OTP Resend in 4:59 secs</string>
+    <string name="info_verify">VERIFY</string>
+
+    <string name="info_save">Save</string>
+
+    <string name="info_my_qr_code">My Qr-Code</string>
+    <string name="info_link_card">Link Card</string>
+    <string name="info_recharge">Recharge</string>
+    <string name="info_p_2_p_transfer">P-2-P Transfer</string>
+    <string name="info_pracktipago">PracktiPago</string>
+    <string name="info_unionpay_nmoney_express">UnionPay\nMoney Express</string>
+    <string name="info_cash_sends">Cash Sends</string>
+    <string name="info_scan_qr_code_amp_pay"><![CDATA[Scan QR Code & Pay]]></string>
+    <string name="info_version">"App Version : "</string>
+    <string name="position_fail">Failed to obtain positioning,please re-point</string>
+    <string name="catalogue_manager_title">Catalogue Manager</string>
+    <string name="business_info_title"></string>
+    <string name="create_catalogue_manager_title">Create a Catalogue</string>
+    <string name="schedule_business_hours_title">Edit Business Hours</string>
+    <string name="schedule_business_address_title">Business Address</string>
+    <string name="schedule_business_add_item_title">Add Item</string>
+    <string name="schedule_business_product_detail_title">Product Detail</string>
+    <string name="schedule_business_type_title">Business Type</string>
+    <string name="schedule_business_search_title">Search Business</string>
+    <string name="schedule_business_search_et_hit">Please enter business name</string>
+    <!--选择图片相关-->
+    <string name="select_picture_photograph">Photograph</string>
+    <string name="select_picture_select_from_album">Choose from album</string>
+    <string name="select_picture_cancel">Cancel</string>
+
+    <!--  选择时间相关  -->
+    <string name="schedule_op_time_up">Choose your hours of operation</string>
+    <string name="schedule_select_time_up">Open at selected hours</string>
+    <string name="schedule_all_time_up">Open all day</string>
+    <string name="schedule_reserve_time_up">By appointment only</string>
+
+    <string name="enable_required_permissions">Please manually enable the required permissions</string>
+
+    <string name="business_info_name">Name</string>
+    <string name="business_info_desc">Description</string>
+    <string name="business_info_other">Other Business</string>
+    <string name="business_info_address">Address</string>
+    <string name="business_info_hours">Business Hours</string>
+    <string name="business_info_email">Emaiil</string>
+    <string name="business_info_website">Website</string>
+    <string name="business_info_using">Hey There! I am using AppOpay</string>
+    <string name="business_info_phone"></string>
+
 
 
 </resources>

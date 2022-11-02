@@ -562,6 +562,11 @@
     <color name="color_orange">#FF9800</color>
     <color name="colorBg">#e0e0e0</color>
     <color name="color_circle">#35A4D6</color>
+    <color name="color_white">#FFFFFFFF</color>
+    <color name="color_f8f8f8">#f8f8f8</color>
+    <color name="color_transparent2e">#2E000000</color>
+    <color name="color_transparent00">#00000000</color>
+    <color name="color_333333">#333333</color>
 
 </resources>
 <!--<resources>

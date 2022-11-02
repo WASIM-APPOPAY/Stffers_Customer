@@ -274,7 +274,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
                 }
             }, 200);
         });
-        tvVersion.setText(" App Version : " + BuildConfig.VERSION_NAME);
+        tvVersion.setText(getString(R.string.info_version)+ BuildConfig.VERSION_NAME);
 
     }
 
@@ -893,7 +893,8 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onShopItemClick(int pos, String title) {
-        Log.e(TAG, "onShopItemClick: pos : " + pos);
-        Log.e(TAG, "onShopItemClick: title : " + title);
+        Intent intent=new Intent(HomeActivity2.this,TabsActivity.class);
+        intent.putExtra(AppoConstants.WHERE,pos);
+        startActivity(intent);
     }
 }

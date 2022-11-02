@@ -646,7 +646,7 @@ public class MyCameraFragment extends Fragment implements ActivityCompat.OnReque
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         mTextureView = view.findViewById(R.id.texture);
         mFocusView = (FocusView) view.findViewById(R.id.focusView);
-        border_camera=(View)view.findViewById(R.id.border_camera);
+        //border_camera=(View)view.findViewById(R.id.border_camera);
         camera_root=(FrameLayout)view.findViewById(R.id.camera_root);
         /*mTextureView.setGestureListener(new GestureDetector.SimpleOnGestureListener() {
             @Override

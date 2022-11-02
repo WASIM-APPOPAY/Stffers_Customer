@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.wallet.StatusActivity">
+
+    <ImageView
+        android:id="@+id/status_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_20"
+        android:padding="@dimen/dp_10"
+        android:src="@drawable/cross" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_120"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:src="@mipmap/ic_new_launcher_app_round" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="About Appopay"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp_23"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="@dimen/dp_350"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="This Seller is using the appopay app and can add its hours of operation, address, web address and a catalog of goods or services."
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp_18" />
+
+
+    </LinearLayout>
+
+</FrameLayout>

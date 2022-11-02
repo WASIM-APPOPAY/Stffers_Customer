@@ -38,6 +38,7 @@ import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.commonChat.chatUtils.DimenUtils;
 import com.stuffer.stuffers.commonChat.chatUtils.ToastUtil;
 import com.stuffer.stuffers.models.shop_model.ShopModel;
+import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataManager;
 import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.utils.MerchantInfoBean;
@@ -63,28 +64,32 @@ public class TabsActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tabsPosition;
     private ViewGroup tabsPositionLayout;
     private View tabsPositionLine;
+    private int mExtra = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs);
-
+        if (getIntent().hasExtra(AppoConstants.WHERE)) {
+            mExtra = getIntent().getIntExtra(AppoConstants.WHERE, 0);
+        }
         rvShop = findViewById(R.id.rvAllShop);
         tabsPosition = findViewById(R.id.tabs_location);
         tabsPositionLayout = findViewById(R.id.tabs_location_layout);
         tabsPositionLine = findViewById(R.id.tabs_position_line);
         LinearLayoutManager lm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvShop.setLayoutManager(lm);
-        rvShop.addItemDecoration(new MaterialDividerItemDecoration(this, MaterialDividerItemDecoration.VERTICAL));
+        //rvShop.addItemDecoration(new MaterialDividerItemDecoration(this, MaterialDividerItemDecoration.VERTICAL));
         tabsContainers = findViewById(R.id.tabs_containers);
         tvTitle = findViewById(R.id.tabs_title);
         findViewById(R.id.search_back).setOnClickListener(view -> TabsActivity.this.finish());
-        /*tabsPositionLayout.setOnClickListener(view -> {
+        tabsPositionLayout.setOnClickListener(view -> {
             Intent intent = new Intent(TabsActivity.this, CurMapActivity.class);
             startActivity(intent);
-        });*/
+        });
         mainAPIInterface = ApiUtils.getAPIService();
         initView();
+
 
         // 判断当前是否拥有使用GPS的权限
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -121,8 +126,9 @@ public class TabsActivity extends AppCompatActivity implements View.OnClickListe
             view.setBackground(null);
             view.setOnClickListener(this);
         }
+
         if (tabsContainers.getChildCount() > 0) {
-            tabsContainers.getChildAt(0).performClick();
+            tabsContainers.getChildAt(mExtra).performClick();
         }
     }
 
@@ -167,7 +173,7 @@ public class TabsActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private List<MerchantInfoBean> getFilterArrayList(List<MerchantInfoBean> data) {
-        for (int i = 0; i < data.size(); i ++) {
+        for (int i = 0; i < data.size(); i++) {
             MerchantInfoBean infoBean = data.get(i);
             if (!TextUtils.isEmpty(infoBean.businessAddress)) {
                 String[] splitAdd = infoBean.businessAddress.split("@#");

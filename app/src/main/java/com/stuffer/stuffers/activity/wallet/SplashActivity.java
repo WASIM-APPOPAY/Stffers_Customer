@@ -164,46 +164,9 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
     }
 
 
-    /*private void setupUI() {
-        String keyUserDetails = DataVaultManager.getInstance(this).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
-        if (!StringUtils.isEmpty(keyUserDetails)) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    DataVaultManager.getInstance(SplashActivity.this).saveTerm("check");
-                    DataVaultManager.getInstance(SplashActivity.this).saveComingFromSplash("no");
-                    Intent i = new Intent(SplashActivity.this, HomeActivity2.class);
-                    startActivity(i);
-                    finish();
-
-                }
-            }, SPLASH_TIMEOUT);
-        } else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    DataVaultManager.getInstance(SplashActivity.this).saveTerm("check");
-                    Intent i = new Intent(SplashActivity.this, SignInActivity.class);
-                    startActivity(i);
-                    finish();
-                }
-            }, SPLASH_TIMEOUT);
-        }
-
-    }*/
-
     private void setupUI() {
-        //startActivity(new Intent(SplashActivity.this, chatHelper.getLoggedInUser() != null ? HomeActivity2.class : NumberActivity.class));
-        String keyUserDetails = DataVaultManager.getInstance(this).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+
         if (chatHelper.getLoggedInUser() != null) {
-            /*if (!StringUtils.isEmpty(keyUserDetails)) {
-                Intent i = new Intent(SplashActivity.this, HomeActivity2.class);
-                startActivity(i);
-                finish();
-            } else {
-                startActivity(new Intent(SplashActivity.this, SignInActivity.class));
-                finish();
-            }*/
             Intent i = new Intent(SplashActivity.this, HomeActivity2.class);
             startActivity(i);
             finish();
@@ -274,11 +237,11 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
         int result3 = ContextCompat.checkSelfPermission(SplashActivity.this, android.Manifest.permission.READ_CONTACTS);
         int result4 = ContextCompat.checkSelfPermission(SplashActivity.this, android.Manifest.permission.RECORD_AUDIO);
         int result5 = ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.CAMERA);
-        int result6 = ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.RECEIVE_SMS);
+        /*int result6 = ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.RECEIVE_SMS);*/
 
         return result1 == PackageManager.PERMISSION_GRANTED && result2 == PackageManager.PERMISSION_GRANTED
                 && result3 == PackageManager.PERMISSION_GRANTED && result4 == PackageManager.PERMISSION_GRANTED
-                && result5 == PackageManager.PERMISSION_GRANTED && result6 == PackageManager.PERMISSION_GRANTED;
+                && result5 == PackageManager.PERMISSION_GRANTED; /*&& result6 == PackageManager.PERMISSION_GRANTED;*/
 
     }
 

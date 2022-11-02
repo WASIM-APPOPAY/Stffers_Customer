@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -104,6 +108,7 @@ public class WalletTransferFragment2 extends Fragment {
     private File mFileSSort;
     private int mType = 0;
     private CircleImageView ivSender, ivReceiver;
+    private ProgressDialog mProgressDialog;
 
 
     public WalletTransferFragment2() {
@@ -190,6 +195,7 @@ public class WalletTransferFragment2 extends Fragment {
             @Override
             public void onClick(View v) {
                 verifyDetails();
+                //getConversion();
             }
         });
         String senderAvatar = Helper.getSenderAvatar();
@@ -200,10 +206,58 @@ public class WalletTransferFragment2 extends Fragment {
 
         setReceiverDetails();
         getCurrentUserDetails();
-
+        //getConversion();
 
 
         return view;
+    }
+
+    private void getConversion() {
+        showLoading(getString(R.string.info_please_wait_dots));
+        String mFrom = "INR";
+        String mTo = "USD";
+        String url = "https://admin.corecoop.net/api/iConnectMasters/CurrencyForexRateBuying?" + "FromCurrency=" + mFrom + "&" + "ToCurrency=" + mTo;
+
+        String userName = "+919999591757";
+        String password = "iConnect@123!";
+        String base = userName + ":" + password;
+        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+        AndroidNetworking.get(url)
+                .addHeaders("Authorization", authHeader)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        hideLoading();
+                        Log.e(TAG, "onResponse: " + response.toString());
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e(TAG, "onError: " + anError.getErrorDetail());
+                    }
+                });
+    /*FromCurrency=USD To ToCurrency=INR
+        "CurrencyForexRate": [
+        {
+            "Column1": "0.0130000000"
+    }
+
+    ]*/
+    /*=====================
+        FromCurrency=USD To ToCurrency=INR*/
+
+
+    }
+
+    private void showLoading(String message) {
+        mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setMessage(message);
+        mProgressDialog.show();
+    }
+
+    private void hideLoading() {
+        mProgressDialog.dismiss();
     }
 
 
@@ -638,7 +692,6 @@ public class WalletTransferFragment2 extends Fragment {
         String accessToken = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_ACCESSTOKEN);
 
 
-
         String bearer_ = Helper.getAppendAccessToken("bearer ", accessToken);
         mainAPIInterface.postTransferFund(sentParams, bearer_).enqueue(new Callback<JsonObject>() {
             @Override
@@ -870,9 +923,6 @@ public class WalletTransferFragment2 extends Fragment {
             mDialog.dismiss();
         }
         mMoneyTransfer.OnMoneyTransferSuccess();
-
-
-
 
 
     }

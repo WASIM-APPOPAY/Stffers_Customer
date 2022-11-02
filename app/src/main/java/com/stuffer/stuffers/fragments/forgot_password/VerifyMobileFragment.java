@@ -182,7 +182,6 @@ public class VerifyMobileFragment extends Fragment {
         dialog.show();
         JsonObject param = new JsonObject();
 
-        //param.addProperty("phone_number", "+" + strCustomerCountryCode + mDominicaAreaCode + edtCustomerMobileNumber.getText().toString().trim());
 
         if (BuildConfig.DEBUG) {
             param.addProperty("hashKey", "Ovjaes9qCGm");

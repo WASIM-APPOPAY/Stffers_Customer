@@ -80,7 +80,6 @@ public class P2PTransferActivity extends AppCompatActivity implements UserAccoun
             Bundle mBundle = new Bundle();
             mBundle.putInt(AppoConstants.WHERE, mType);
             mFragment.setArguments(mBundle);
-            ;
             initFragment(mFragment);
         }
     }

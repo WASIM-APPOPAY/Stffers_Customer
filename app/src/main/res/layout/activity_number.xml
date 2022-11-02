@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:gravity="center"
-            android:text="Phone Number Verification"
+            android:text="@string/info_phone_number_verification"
             android:textColor="@color/black"
             android:textSize="25sp" />
 
@@ -35,7 +35,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:textSize="@dimen/dp_16"
-            android:text="We will Send you a OTP"
+            android:text="@string/info_we_will_send_you_a_otp"
             android:textAppearance="?attr/textAppearanceBody1"
             android:textColor="@color/colorPrimary" />
 
@@ -103,7 +103,7 @@
                         android:background="#0000"
                         android:drawablePadding="12dp"
                         android:gravity="left"
-                        android:hint="Enter Mobile Number"
+                        android:hint="@string/info_enter_mobile_number"
                         android:inputType="phone"
                         android:lines="1"
                         android:padding="10dp"
@@ -184,7 +184,7 @@
             android:elevation="1.5dp"
             android:gravity="center"
             android:padding="12dp"
-            android:text="Next"
+            android:text="@string/info_next"
             android:textColor="#fff"
             android:textSize="16sp" />
 

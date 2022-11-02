@@ -28,6 +28,7 @@
         android:normalScreens="true"
         android:resizeable="false"
         android:smallScreens="true" />
+    <!--<uses-permission android:name="android.permission.RECEIVE_SMS"/>-->
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -39,7 +40,6 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
@@ -54,6 +54,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
+
 
         <activity
             android:name=".activity.wallet.UrlsActivity"
@@ -468,7 +469,34 @@
             android:name=".activity.wallet.TabsActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".commonChat.chat.ImageViewerActivity"
+        <activity
+            android:name=".commonChat.chat.ImageViewerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".commonChat.chat.BasicInfoActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".activity.wallet.CurMapActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.wallet.ProductItemDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.wallet.OtherBusinessActivity"
+            android:screenOrientation="portrait"
+            android:exported="false"/>
+
+        <activity android:name=".activity.wallet.StatusActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.wallet.OtherProductActivity"
             android:screenOrientation="portrait"/>
 
         <!--

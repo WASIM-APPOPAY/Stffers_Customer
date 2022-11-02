@@ -135,6 +135,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/edit_text_no_round_bg"
                 android:drawablePadding="10dp"
+
                 android:hint="@string/info_enter_phone_number"
                 android:imeOptions="flagNoExtractUi|actionDone"
                 android:inputType="number"

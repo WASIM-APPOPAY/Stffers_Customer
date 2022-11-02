@@ -582,10 +582,40 @@
     <string name="info_split3"> para aceptar las</string>
     <string name="info_split4"> Término y Condición </string>
     <string name="info_accept_intro">
-<![CDATA[ ACEPTAR T&C ]]>
+<![CDATA[ Aceptar T&C ]]>
 </string>
     <string name="info_select_language">SELECCIONAR IDIOMA</string>
     <string name="info_select_your_app_language">Seleccione el idioma de su aplicación</string>
     <string name="info_apply">Aplicar</string>
     <string name="info_term_condition">Acepte los términos y condiciones.</string>
+    <string name="info_phone_number_verification">Verificación del número de teléfono</string>
+    <string name="info_we_will_send_you_a_otp">Te enviaremos unOTP por mensaje de text</string>
+    <string name="info_next">Siguiente</string>
+    <string name="info_enter_otp2">Ingresar OTP</string>
+    <string name="info_you_enter_a_phone_number">Introduce un número de teléfono</string>
+    <string name="info_is_this_ok_or">¿Está bien este número o quieres editarlo?</string>
+    <string name="info_we_send">Hemos enviado un OTP en su número</string>
+    <string name="otp_resend_in_13_sec">Renvío OTP en </string>
+    <string name="info_verify">VERIFICAR</string>
+    <string name="phone_number">Número Celular</string>
+
+    <string name="fname">Primer Nombre</string>
+    <string name="enter_first_your_name">Pongasu primer nombre</string>
+    <string name="lname">Apellido</string>
+    <string name="enter_your_last_name">Ingrese su apellido</string>
+
+    <string name="info_save">Guardar</string>
+
+    <string name="info_my_qr_code">Mi código QR</string>
+    <string name="info_link_card">Tarjeta de enlace</string>
+    <string name="info_recharge">Recarga</string>
+    <string name="info_p_2_p_transfer">Transferencia P-2-P</string>
+    <string name="info_pracktipago">PracktiPago</string>
+    <string name="info_unionpay_nmoney_express">UnionPay\nMoney Express</string>
+    <string name="info_cash_sends">Envíos de efectivo</string>
+    <string name="info_scan_qr_code_amp_pay"><![CDATA[Escanear código QR y pagar]]></string>
+    <string name="info_version">"Version de aplicación : "</string>
+
+
+
 </resources>

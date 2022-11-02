@@ -129,7 +129,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
     private ImageView customerQrCodeQrCode;
     private FrameLayout frameLayout;
     private ProgressDialog mProgressDialog;
-    private int mType=0;
+    private int mType = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -187,7 +187,6 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         }
 
 
-
         tvProfileDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -216,8 +215,6 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
 
             }
         });
-
-
 
 
         /*String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_TOKEN);
@@ -249,6 +246,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         //getSavedCard();
         //showNoCardDialog();
     }
+
     CountryCodePicker.DialogEventsListener mLis = new CountryCodePicker.DialogEventsListener() {
         @Override
         public void onCcpDialogOpen(Dialog dialog) {
@@ -558,7 +556,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 hideDialog();
 
-                if (response.code()==200){
+                if (response.code() == 200) {
                     String s = new Gson().toJson(response.body());
                     try {
                         JSONObject mResult = new JSONObject(s);
@@ -574,8 +572,8 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }else {
-                    Toast.makeText(CustomerProfileActivity.this, "Error : "+response.code(), Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(CustomerProfileActivity.this, "Error : " + response.code(), Toast.LENGTH_LONG).show();
                 }
 
 
@@ -777,8 +775,9 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
                             DataVaultManager.getInstance(CustomerProfileActivity.this).saveUserDetails("");
                             DataVaultManager.getInstance(CustomerProfileActivity.this).saveUserAccessToken("");
                             Intent intent = new Intent(CustomerProfileActivity.this, SignInActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra(AppoConstants.WHERE, mType);
                             startActivity(intent);
+                            finish();
                         }
                     }
                 }
@@ -985,7 +984,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         }
         //for login here
         Intent intent = new Intent(CustomerProfileActivity.this, SignInActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(AppoConstants.WHERE, mType);
         startActivity(intent);
     }
 

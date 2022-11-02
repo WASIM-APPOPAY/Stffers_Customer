@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="Tap Agree and Continue to accept the Term of Service. "
+                android:text="@string/info_tab_agree"
                 android:textAppearance="?attr/textAppearanceBody1" />
 
 

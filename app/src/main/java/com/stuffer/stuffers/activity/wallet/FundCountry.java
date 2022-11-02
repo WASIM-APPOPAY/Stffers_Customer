@@ -119,6 +119,15 @@ public class FundCountry extends AppCompatActivity implements RecyclerViewRowIte
             mSpecificFragment.setArguments(mBundle);
             initFragment(mSpecificFragment);
 
+        } else if (pos == 13) {
+            Glide.with(FundCountry.this).load(flag).into(ivScanCard);
+            ivScanCard.setVisibility(View.VISIBLE);
+            toolbarTitle.setText(name);
+            SpecificFragment mSpecificFragment = new SpecificFragment();
+            Bundle mBundle = new Bundle();
+            mBundle.putString(SpecificFragment.ARG_PARAM1, "3");
+            mSpecificFragment.setArguments(mBundle);
+            initFragment(mSpecificFragment);
         }
     }
 }
