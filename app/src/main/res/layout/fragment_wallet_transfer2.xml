@@ -9,11 +9,11 @@
     android:orientation="vertical">
 
     <ScrollView
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp"
         android:layout_weight="1"
         android:fillViewport="true">
 
@@ -28,8 +28,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:textAllCaps="true"
                 android:text="Sender Details"
+                android:textAllCaps="true"
                 android:textAppearance="?attr/textAppearanceBody1"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
@@ -284,6 +284,80 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/edit_text_rounded2"
+                    android:gravity="end"
+                    android:orientation="horizontal">
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="Exchange Rate : "
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/tvExchange"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_marginEnd="5dp"
+                        android:gravity="center_vertical"
+                        android:hint="0.00"
+                        android:minHeight="45dp"
+                        android:paddingLeft="8dp"
+                        android:textColor="@color/redcolor"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/edit_text_rounded2"
+                    android:gravity="end"
+                    android:orientation="horizontal">
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+
+                        android:hint="@string/info_hint_amount_to_be_credited"
+
+                        android:padding="@dimen/dp_10"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/tvAmountCredit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_marginEnd="5dp"
+                        android:gravity="center_vertical"
+                        android:hint="credited amount"
+                        android:minHeight="45dp"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/redcolor"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -291,14 +365,14 @@
                 android:background="@color/grey_light_secondary" />
 
             <LinearLayout
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:minHeight="45dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/blue_rounded_bg"
                 android:gravity="center"
                 android:minWidth="200dp"
+                android:minHeight="45dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -318,6 +392,7 @@
                     android:textSize="20sp" />
 
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -350,6 +425,8 @@
 
             </LinearLayout>
 
+
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -358,36 +435,7 @@
                 android:visibility="gone" />
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/edit_text_rounded2"
-                android:orientation="horizontal"
-                android:visibility="gone">
 
-                <com.stuffer.stuffers.views.MyTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/info_hint_amount_to_be_credited"
-                    android:padding="8dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <com.stuffer.stuffers.views.MyTextView
-                    android:id="@+id/tvAmountCredit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_marginEnd="5dp"
-                    android:gravity="center_vertical"
-                    android:hint="credited amount"
-                    android:minHeight="45dp"
-                    android:paddingLeft="8dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
@@ -400,11 +448,11 @@
 
 
         <LinearLayout
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
             android:layout_width="match_parent"
-
             android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+
+            android:layout_gravity="bottom"
             android:layout_marginBottom="2dp"
             android:orientation="horizontal"
             android:weightSum="4">

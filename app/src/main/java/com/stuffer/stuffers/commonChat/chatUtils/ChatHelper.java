@@ -55,6 +55,15 @@ public class ChatHelper {
     private static final String SELLER = "SELLER";
     public static final String GROUP_PREFIX = "group";
     public static final String CONTACTS_MY_CACHE = "contactsmycache";
+    public static final String BROADCAST_MY_USERS = "com.stuffer.stuffers.MY_USERS";
+    public static final String BROADCAST_MY_CONTACTS = "com.stuffer.stuffers.MY_CONTACTS";
+    public static final String BROADCAST_USER_ME = "com.stuffer.stuffers.USER_ME";
+    //public static final String BROADCAST_LOGOUT = "com.opuslabs.yoohoo.services.LOGOUT";
+    private static final String TAG = "Helper";
+    public static final String USER_MY_CACHE = "usersmycache";
+
+
+
     private SharedPreferenceHelper sharedPreferenceHelper;
     private Gson gson;
     public static boolean CHAT_CAB = false;
@@ -440,5 +449,18 @@ public class ChatHelper {
     }
 
 
+    public void setMyUsers(ArrayList<User> myUsers) {
+        sharedPreferenceHelper.setStringPreference(USER_MY_CACHE, gson.toJson(myUsers, new TypeToken<ArrayList<User>>() {
+        }.getType()));
+    }
 
+    public ArrayList<User> getMyUsers() {
+        String savedUserPref = sharedPreferenceHelper.getStringPreference(USER_MY_CACHE);
+        if (savedUserPref != null) {
+            return gson.fromJson(savedUserPref, new TypeToken<ArrayList<User>>() {
+            }.getType());
+        } else {
+            return new ArrayList<User>();
+        }
+    }
 }

@@ -79,12 +79,6 @@ public class TransactionPinUpdateFragment extends Fragment {
         String infoTransaction = "<font color='#00baf2'>" + getString(R.string.trans_note) + "</font>" + " : " + getString(R.string.trans_info);
         tvHintsTransaction.setText(Html.fromHtml(infoTransaction));
         edtOldTransactionPin.setText(info);
-
-        //Log.e(TAG, "onCreateView: phonecode :: " + phonecode);
-        //Log.e(TAG, "onCreateView: mobilenumber :: " + mobilenumber);
-        //Log.e(TAG, "onCreateView: phwithcode :: " + phwithcode);
-        //Log.e(TAG, "onCreateView: info old screen lock : " + info);
-
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,12 +112,12 @@ public class TransactionPinUpdateFragment extends Fragment {
                 }
                 Helper.hideKeyboard(edtOldTransactionPin, getContext());
                 if (AppoPayApplication.isNetworkAvailable(getContext())) {
-                    updateUserRequest();
+
+                    setTransactionPin();
 
                 } else {
                     Toast.makeText(getContext(), "" + getString(R.string.no_inteenet_connection), Toast.LENGTH_SHORT).show();
                 }
-
 
 
             }
@@ -134,143 +128,66 @@ public class TransactionPinUpdateFragment extends Fragment {
 
     }
 
-    private void updateUserRequest() {
-        String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
-        try {
-            JSONObject index = new JSONObject(vaultValue);
-            JSONObject jsonResult = index.getJSONObject(AppoConstants.RESULT);
 
-            JsonObject sentIndex = new JsonObject();
-            sentIndex.addProperty(AppoConstants.ID, jsonResult.getString(AppoConstants.ID));
-            sentIndex.addProperty(AppoConstants.FIRSTNAME, jsonResult.getString(AppoConstants.FIRSTNAME));
-            sentIndex.addProperty(AppoConstants.LASTNAME, jsonResult.getString(AppoConstants.LASTNAME));
-            sentIndex.addProperty(AppoConstants.USERNAME, jsonResult.getString(AppoConstants.USERNAME));
-            sentIndex.addProperty(AppoConstants.PASSWORD, jsonResult.getString(AppoConstants.PASSWORD));
-            sentIndex.addProperty(AppoConstants.EMIAL, jsonResult.getString(AppoConstants.EMIAL));
-            sentIndex.addProperty(AppoConstants.ACCOUNTEXPIRED, jsonResult.getString(AppoConstants.ACCOUNTEXPIRED));
-            sentIndex.addProperty(AppoConstants.ACCOUNTLOCKED, jsonResult.getString(AppoConstants.ACCOUNTLOCKED));
-            sentIndex.addProperty(AppoConstants.CREDENTIALSEXPIRED, jsonResult.getString(AppoConstants.CREDENTIALSEXPIRED));
-            sentIndex.addProperty(AppoConstants.ENABLE, jsonResult.getString(AppoConstants.ENABLE));
-            sentIndex.addProperty(AppoConstants.MOBILENUMBER, jsonResult.getString(AppoConstants.MOBILENUMBER));
-            //sentIndex.addProperty(AppoConstants.TRANSACTIONPIN, jsonResult.getString(AppoConstants.TRANSACTIONPIN));
-            sentIndex.addProperty(AppoConstants.TRANSACTIONPIN, edtNewTransactionPin.getText().toString().trim());
-            sentIndex.addProperty(AppoConstants.PHONECODE, jsonResult.getString(AppoConstants.PHONECODE));
-
-            sentIndex.addProperty(AppoConstants.USERTYPE, "CUSTOMER");
-            sentIndex.addProperty(AppoConstants.STORENAME, (String) null);
-            sentIndex.addProperty(AppoConstants.LATITUDE, 0);
-            sentIndex.addProperty(AppoConstants.LONGITUDE, 0);
-            sentIndex.addProperty(AppoConstants.SECURITYANSWER, "dollar_sent");
-            //sentIndex.addProperty(AppoConstants.SCREENLOCKPIN, edtNewScreenPin.getText().toString().trim());
-            sentIndex.addProperty(AppoConstants.SCREENLOCKPIN, (String) null);
-            JsonArray jsonArrayRole = new JsonArray();
-            jsonArrayRole.add("USER");
-
-            sentIndex.add(AppoConstants.ROLE, jsonArrayRole);
-
-            JSONObject jsonCustomerDetails = jsonResult.getJSONObject(AppoConstants.CUSTOMERDETAILS);
-
-            JsonObject sentJsonCustomerDetails = new JsonObject();
-            sentJsonCustomerDetails.addProperty(AppoConstants.ID, jsonCustomerDetails.getString(AppoConstants.ID));
-            sentJsonCustomerDetails.addProperty(AppoConstants.FIRSTNAME, jsonCustomerDetails.getString(AppoConstants.FIRSTNAME));
-            sentJsonCustomerDetails.addProperty(AppoConstants.LASTNAME, jsonCustomerDetails.getString(AppoConstants.LASTNAME));
-            sentJsonCustomerDetails.addProperty(AppoConstants.MIDDLENAME, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.CARDTOKEN, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.COUNTRYID, jsonCustomerDetails.getString(AppoConstants.COUNTRYID));
-            sentJsonCustomerDetails.addProperty(AppoConstants.STATEID, jsonCustomerDetails.getString(AppoConstants.STATEID));
-            sentJsonCustomerDetails.addProperty(AppoConstants.ADDRESS, jsonCustomerDetails.getString(AppoConstants.ADDRESS));
-            sentJsonCustomerDetails.addProperty(AppoConstants.CITYNAME, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.ZIPCODE2, (String) null);
-
-            sentJsonCustomerDetails.addProperty(AppoConstants.DOB, jsonCustomerDetails.getString(AppoConstants.DOB));
-            sentJsonCustomerDetails.addProperty(AppoConstants.CURRENCYID, Helper.getCurrencyId());
-            sentJsonCustomerDetails.addProperty(AppoConstants.MONTHLYINCOME, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.PASSPORTNUMBER, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.EXPIRYDATE, jsonCustomerDetails.getString(AppoConstants.EXPIRYDATE));
-            sentJsonCustomerDetails.addProperty(AppoConstants.IDTYPE, jsonCustomerDetails.getString(AppoConstants.IDTYPE));
-            sentJsonCustomerDetails.addProperty(AppoConstants.IDNUMBER, jsonCustomerDetails.getString(AppoConstants.IDNUMBER));
-
-            sentJsonCustomerDetails.addProperty(AppoConstants.BANKACCOUNT, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.IMAGEURL, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.BANKUSERNAME, (String) null);
-
-            sentJsonCustomerDetails.addProperty(AppoConstants.BANKUSERNAME, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.MERCHANTQRCODE, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.ISDEAL, (String) null);
-            if (Helper.getCurrencyId().equalsIgnoreCase("1")) {
-                sentJsonCustomerDetails.addProperty(AppoConstants.CURRENCYSYMBOL, "USD");
-            } else if (Helper.getCurrencyId().equalsIgnoreCase("2")) {
-                sentJsonCustomerDetails.addProperty(AppoConstants.CURRENCYSYMBOL, "INR");
-            } else if (Helper.getCurrencyId().equalsIgnoreCase("3")) {
-                sentJsonCustomerDetails.addProperty(AppoConstants.CURRENCYSYMBOL, "CAD");
-            } else if (Helper.getCurrencyId().equalsIgnoreCase("4")) {
-                sentJsonCustomerDetails.addProperty(AppoConstants.CURRENCYSYMBOL, "ERU");
-            } else if (Helper.getCurrencyId().equalsIgnoreCase("5")){
-                sentJsonCustomerDetails.addProperty(AppoConstants.CURRENCYSYMBOL, "DOP");
-            }
-            sentJsonCustomerDetails.addProperty(AppoConstants.IDCUENTA, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.IDASOCIADO, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.ISPLASTICO, (String) null);
-            sentJsonCustomerDetails.addProperty(AppoConstants.SOURCEOFINCOME, (String) null);
-
-
-
-            JsonArray sentJsonArrayCustomerAccounts = new JsonArray();
-            JSONArray jsonArrayCustomerAccount = jsonCustomerDetails.getJSONArray(AppoConstants.CUSTOMERACCOUNT);
-
-
-            for (int i = 0; i < jsonArrayCustomerAccount.length(); i++) {
-                JSONObject jsonObjectIndex = jsonArrayCustomerAccount.getJSONObject(i);
-                JsonObject jsonObjectAccount = new JsonParser().parse(jsonObjectIndex.toString()).getAsJsonObject();
-                sentJsonArrayCustomerAccounts.add(jsonObjectAccount);
-            }
-            sentJsonCustomerDetails.add(AppoConstants.CUSTOMERACCOUNTS, sentJsonArrayCustomerAccounts);
-            sentIndex.add(AppoConstants.CUSTOMERDETAILS, sentJsonCustomerDetails);
-            //Log.e(TAG, "updateUserProfile: " + sentIndex);
-            processUpdateRequest(sentIndex);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-
-        }
-
-
-    }
-
-    private void processUpdateRequest(JsonObject sentIndex) {
-        String accessToken = DataVaultManager.getInstance(getContext()).getVaultValue(KEY_ACCESSTOKEN);
-        dialog = new ProgressDialog(getContext());
-        dialog.setMessage("Please wait, Sending your request.");
-        dialog.show();
-        String bearer_ = Helper.getAppendAccessToken("bearer ", accessToken);
-
-        mainAPIInterface.postUpdateUserProfile(sentIndex, bearer_).enqueue(new Callback<JsonObject>() {
+    private void setTransactionPin() {
+        String accesstoken = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_ACCESSTOKEN);
+        String bearer_ = Helper.getAppendAccessToken("bearer ", accesstoken);
+        int userId = Helper.getUserId();
+        showLoading();
+        mainAPIInterface.getSetTransactionPin(String.valueOf(userId), edtNewTransactionPin.getText().toString().trim(), bearer_).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                dialog.dismiss();
+                hideLoading();
+
+                JsonObject body = response.body();
                 if (response.isSuccessful()) {
-                    Toast.makeText(getContext(), "Request Successfully updated", Toast.LENGTH_SHORT).show();
-                    onUpdateProfile();
-                } else {
-                    if (response.code() == 401) {
-                        DataVaultManager.getInstance(getContext()).saveUserDetails("");
-                        DataVaultManager.getInstance(getContext()).saveUserAccessToken("");
-                        Intent intent = new Intent(getContext(), SignInActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    } else if (response.code() == 400) {
-                        //Log.e(TAG, "onResponse: bad request");
+                    try {
+                        JSONObject mPrev = new JSONObject(body.toString());
+                        if (mPrev.getString("message").equalsIgnoreCase("success")) {
+                            String jsonUserDetails = mPrev.toString();
+                            Helper.setUserDetailsNull();
+                            DataVaultManager.getInstance(getActivity()).saveUserDetails(jsonUserDetails);
+                            Toast.makeText(getContext(), "Request Successfully updated", Toast.LENGTH_SHORT).show();
+                            onUpdateProfile();
+
+                        } else {
+                            if (response.code() == 401) {
+                                DataVaultManager.getInstance(getContext()).saveUserDetails("");
+                                DataVaultManager.getInstance(getContext()).saveUserAccessToken("");
+                                Intent intent = new Intent(getContext(), SignInActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            } else if (response.code() == 400) {
+                                Helper.showErrorMessage(getActivity(), "Error Code : " + response.code());
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
+                } else {
+                    Toast.makeText(getActivity(), getString(R.string.required_filled), Toast.LENGTH_SHORT).show();
                 }
+
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                dialog.dismiss();
-                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+                Helper.showErrorMessage(getActivity(), t.getMessage());
+                hideLoading();
             }
         });
+    }
 
+
+    private void showLoading() {
+        dialog = new ProgressDialog(getContext());
+        dialog.setMessage("Please wait, Sending your request.");
+        dialog.show();
+    }
+
+    private void hideLoading() {
+        dialog.dismiss();
     }
 
     private void onUpdateProfile() {
@@ -302,12 +219,13 @@ public class TransactionPinUpdateFragment extends Fragment {
     public void onOkPress() {
         if (dialogPayment != null)
             dialogPayment.dismiss();
-        DataVaultManager.getInstance(getContext()).saveUserDetails("");
+        getActivity().finish();
+        /*DataVaultManager.getInstance(getContext()).saveUserDetails("");
         DataVaultManager.getInstance(getContext()).saveUserAccessToken("");
         DataVaultManager.getInstance(getContext()).saveCardToken("");
         Intent intent = new Intent(getContext(), SignInActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     @Override

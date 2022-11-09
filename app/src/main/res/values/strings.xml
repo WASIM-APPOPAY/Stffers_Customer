@@ -783,7 +783,11 @@ data.</string>
     <string name="business_info_website">Website</string>
     <string name="business_info_using">Hey There! I am using AppOpay</string>
     <string name="business_info_phone"></string>
-
+    <string name="forward_message">Forward Message</string>
+    <string name="forward_to">Forward to:</string>
+    <string name="permission_contact_message">Please allow permission to work properlly Note, we do not save or share your contact list with anyone.</string>
+    <string name="permission_contact_title">Permission to read contacts</string>
+    <string name="okay">OK</string>
 
 
 </resources>

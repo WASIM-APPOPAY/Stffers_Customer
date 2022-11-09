@@ -39,7 +39,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_DETIALS;
 
 public class Helper {
-    private static final String TAG = "Helper";
+
     public static String mUserDetails = null;
     public static final String FILE_NAME_FORMAT = "dd_MM_yyyy_HH_mm_ss";
     public static final String AREA_CODE_JSON = "[\n" +
@@ -228,6 +228,11 @@ public class Helper {
      */
 
     public static float getTwoDecimal(float params) {
+        float roundedFloat = (float) ((float) Math.round(params * 100.0) / 100.0);
+        //Log.e(TAG, "getTwoDecimal: ::: " + roundedFloat);
+        return roundedFloat;
+    }
+   public static float getTwoDecimalTransfer(float params) {
         float roundedFloat = (float) ((float) Math.round(params * 100.0) / 100.0);
         //Log.e(TAG, "getTwoDecimal: ::: " + roundedFloat);
         return roundedFloat;
@@ -2395,6 +2400,21 @@ public class Helper {
         }
         return null;
     }
+public static String getCurrencyId(JSONObject object) {
+        try {
+
+            JSONObject result = object.getJSONObject(AppoConstants.RESULT);
+            JSONObject customerDetails = result.getJSONObject(AppoConstants.CUSTOMERDETAILS);
+            JSONArray customerAccounts = customerDetails.getJSONArray(AppoConstants.CUSTOMERACCOUNT);
+            JSONObject indexAccounts = customerAccounts.getJSONObject(0);
+            String currencyid = indexAccounts.getString(AppoConstants.CURRENCYID);
+            return currencyid;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 
     public static String getTransactionPin() {
@@ -3029,10 +3049,27 @@ public class Helper {
         }
         return "";
     }
+    public static String getCurrencySymble(JSONObject object) {
+        try {
+            JSONObject result = object.getJSONObject(AppoConstants.RESULT);
+            JSONObject customerDetails = result.getJSONObject(AppoConstants.CUSTOMERDETAILS);
+
+            if (customerDetails.getString(AppoConstants.CURRENCYSYMBOL).equalsIgnoreCase("null")) {
+                return "";
+            } else {
+                return customerDetails.getString(AppoConstants.CURRENCYSYMBOL);
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
     public static String getDateOfBirth(String dob) {
         //milliseconds
-        Log.e(TAG, "getDateOfBirth: " + dob);
+        //Log.e(TAG, "getDateOfBirth: " + dob);
         long milliSec = Long.parseLong(dob);
 
         // Creating date format
@@ -3046,7 +3083,7 @@ public class Helper {
         // Formatting Date according to the
         // given format
         //System.out.println(simple.format(result));
-        Log.e(TAG, "getTimeDateOther: " + simple.format(result));
+        //Log.e(TAG, "getTimeDateOther: " + simple.format(result));
 
         return simple.format(result);
     }

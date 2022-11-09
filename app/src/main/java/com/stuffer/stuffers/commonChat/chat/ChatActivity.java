@@ -987,7 +987,18 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
                 intent.removeExtra(EXTRA_DATA_LIST);
                 for (Message msg : toForward)
                     sendMessage(msg.getBody(), msg.getAttachmentType(), msg.getAttachment());
+            }else {
+                if (intent.hasExtra("share")) {
+                    String share = intent.getStringExtra("share");
+                    uploadImage(share);
+                }
             }
+
+        } else {
+            /*if (intent.hasExtra("share")) {
+                String share = intent.getStringExtra("share");
+                uploadImage(share);
+            }*/
         }
     }
 
@@ -1832,10 +1843,15 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
         ChatHelper.CHAT_CAB = false;
     }
 
-    public static Intent newIntent(Context context, ArrayList<Message> forwardMessages, Chat chat) {
+    public static Intent newIntent(Context context, ArrayList<Message> forwardMessages, Chat chat, String share) {
         //intent contains user to chat with and message forward list if any.
         Intent intent = new Intent(context, ChatActivity.class);
         intent.putExtra(MOBILE_NUMBER, chat.getUserId());
+        if (share.isEmpty()) {
+            Log.e("TAG", "newIntent: nothing to share" );
+        } else {
+            intent.putExtra("share", share);
+        }
         intent.putExtra(EXTRA_DATA_CHAT, chat);
         if (forwardMessages == null)
             forwardMessages = new ArrayList<>();

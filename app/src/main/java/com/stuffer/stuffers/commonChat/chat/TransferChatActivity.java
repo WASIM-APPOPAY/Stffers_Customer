@@ -25,9 +25,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -37,6 +39,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,6 +57,7 @@ import com.stuffer.stuffers.commonChat.chatModel.Chat;
 import com.stuffer.stuffers.commonChat.chatModel.Message;
 import com.stuffer.stuffers.commonChat.chatModel.User;
 import com.stuffer.stuffers.commonChat.chatUtils.ChatHelper;
+import com.stuffer.stuffers.fragments.quick_pay.WalletTransferFragment2;
 import com.stuffer.stuffers.myService.UploadAndSendService;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.R;
@@ -108,7 +114,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
     private MyTextView tvBalance;
     private MyTextView tvToAccount;
     private MyEditText edAmount;
-    private MyTextView tvAmountCredit;
+    private MyTextView tvAmountCredit, tvExchange;
     private MyTextView tvConversionRates;
     private MyTextView btnTransfer;
     private String fomrcurrencycode, recaccountnumber, recmobilenumber, recareacode, recname, recuserid, fromcurrency, receiveruser;
@@ -128,7 +134,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
     private AlertDialog mDialog;
     private File mFileSSort;
     private static String EXTRA_DATA_CHAT = "extradatachat";
-    private String mFromCId, mFromCCode;
+    private String mToCId, mFromCCode;
 
     protected User userMe;
     private ChatHelper helper;
@@ -139,6 +145,9 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
     private CircleImageView circularSender, circularReceiver;
     private String substring;
     private String mAreaCode;
+    private float mCreditAmount = 0.0F;
+    private String toCurrency = "";
+    private double exchange;
 
     private void setupActionBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -164,7 +173,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // action bar menu behaviour
+
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
@@ -188,13 +197,13 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         setupActionBar();
         helper = new ChatHelper(TransferChatActivity.this);
         userMe = helper.getLoggedInUser();
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();//get firebase instance
-        usersRef = firebaseDatabase.getReference(ChatHelper.REF_USERS);//instantiate user's firebase reference
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        usersRef = firebaseDatabase.getReference(ChatHelper.REF_USERS);
         Intent intent = getIntent();
         if (intent.hasExtra(EXTRA_DATA_CHAT)) {
             chat = intent.getParcelableExtra(EXTRA_DATA_CHAT);
             ChatHelper.CURRENT_CHAT_ID = chat.getUserId();
-//
+
         }
         usersRef.child(chat.getUserId()).addValueEventListener(userValueChangeListener);
         usersRef.child(chat.getUserId()).child("userPlayerId").addListenerForSingleValueEvent(singleValueEventListener);
@@ -213,10 +222,13 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         tvAmountCredit = (MyTextView) findViewById(R.id.tvAmountCredit);
         tvConversionRates = (MyTextView) findViewById(R.id.tvConversionRates);
         btnTransfer = (MyTextView) findViewById(R.id.btnTransfer);
+        tvAmountCredit = (MyTextView) findViewById(R.id.tvAmountCredit);
+        tvExchange = (MyTextView) findViewById(R.id.tvExchange);
         circularSender = (CircleImageView) findViewById(R.id.circularSender);
         circularReceiver = (CircleImageView) findViewById(R.id.circularReceiver);
         String senderAvatar = Helper.getSenderAvatar();
-        if (!StringUtils.isEmpty(senderAvatar)) {
+        Log.e(TAG, "onCreate: " + senderAvatar);
+        if (!StringUtils.isEmpty(senderAvatar) && senderAvatar != "null") {
             Glide.with(TransferChatActivity.this).load(senderAvatar).placeholder(R.drawable.user_chat).centerCrop().into(circularSender);
         }
         try {
@@ -235,27 +247,11 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         Double doubleV = Double.parseDouble(currantBalance);
         String format = df2.format(doubleV);
         tvBalance.setText("$" + format);
-        mFromCId = Helper.getCurrencyId();
-        if (mFromCId.equalsIgnoreCase("1")) {
-            mFromCCode = "USD";
-        } else if (mFromCId.equalsIgnoreCase("2")) {
-
-            mFromCCode = "INR";
-        } else if (mFromCId.equalsIgnoreCase("3")) {
-
-            mFromCCode = "CAD";
-        } else if (mFromCId.equalsIgnoreCase("4")) {
-
-            mFromCCode = "ERU";
-        } else if (mFromCId.equalsIgnoreCase("5")) {
-
-            mFromCCode = "DOP";
-        }
-         substring = mPhWithCode.substring(mAreaCode.length());
-        //Log.e(TAG, "onCreate: phone number : " + substring);
-
-
-
+        //mFromCId = Helper.getCurrencyId();
+        mFromCCode = Helper.getCurrencySymble();
+        substring = mPhWithCode.substring(mAreaCode.length());
+        btnTransfer.setEnabled(false);
+        btnTransfer.setClickable(false);
         edAmount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -269,17 +265,22 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
                     String inputAmount = edAmount.getText().toString().trim();
                     if (inputAmount.length() > 0) {
                         float tranaferAmount = Float.parseFloat(inputAmount);
-                        float transfer = (float) (tranaferAmount * 1);
+                        //float transfer = (float) (tranaferAmount * conversionRates);
+                        float transfer = (float) (tranaferAmount / exchange);
                         float twoDecimal = (float) Helper.getTwoDecimal(transfer);
-                        tvAmountCredit.setText(String.valueOf(twoDecimal));
+                        mCreditAmount = twoDecimal;
+                        tvAmountCredit.setText(String.valueOf(twoDecimal) + " " + toCurrency.toUpperCase());
                         btnTransfer.setEnabled(true);
                         btnTransfer.setClickable(true);
+                    } else {
+                        float twoDecimal = (float) Helper.getTwoDecimal(0);
+                        tvAmountCredit.setText(String.valueOf(twoDecimal));
                     }
 
                 } catch (Exception e) {
                     e.printStackTrace();
                     if (edAmount.getText().toString().trim().isEmpty()) {
-                        //no need to show invalid format
+
                     } else {
                         Toast.makeText(TransferChatActivity.this, getString(R.string.info_invalid_format), Toast.LENGTH_SHORT).show();
                         btnTransfer.setEnabled(false);
@@ -333,19 +334,22 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
                 String res;
                 if (response.isSuccessful()) {
                     res = new Gson().toJson(response.body());
-                    //Log.e(TAG, "onResponse: getprofile :" + res);
                     try {
                         indexUser = new JSONObject(res);
                         if (indexUser.isNull("result")) {
-                            //Log.e(TAG, "onResponse: " + true);
                             Toast.makeText(TransferChatActivity.this, getString(R.string.error_user_details_not_exists), Toast.LENGTH_SHORT).show();
                         } else {
                             String receiverAvatar = Helper.getReceiverAvatar(new JSONObject(res));
+                            toCurrency = Helper.getCurrencySymble(indexUser);
+                            mToCId = Helper.getCurrencyId(indexUser);
+
                             if (!StringUtils.isEmpty(receiverAvatar)) {
                                 if (!StringUtils.isEmpty(receiverAvatar)) {
                                     Glide.with(TransferChatActivity.this).load(receiverAvatar).placeholder(R.drawable.user_chat).centerCrop().into(circularReceiver);
                                 }
                             }
+                            btnTransfer.setEnabled(true);
+                            btnTransfer.setClickable(true);
                             getCurrency();
                         }
                     } catch (JSONException e) {
@@ -357,7 +361,6 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
                         DataVaultManager.getInstance(TransferChatActivity.this).saveUserDetails("");
                         DataVaultManager.getInstance(TransferChatActivity.this).saveUserAccessToken("");
                         Intent intent = new Intent(TransferChatActivity.this, SignInActivity.class);
-                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         finish();
                     } else if (response.code() == 400) {
@@ -372,7 +375,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
                 dismissDialog();
                 btnTransfer.setEnabled(false);
                 btnTransfer.setClickable(false);
-                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+
             }
         });
 
@@ -401,11 +404,11 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
                     try {
                         JSONObject mPrev = new JSONObject(body.toString());
                         String jsonUserDetails = mPrev.toString();
-                        //Log.e(TAG, "onResponse: "+jsonUserDetails );
+
                         DataVaultManager.getInstance(TransferChatActivity.this).saveUserDetails(jsonUserDetails);
                         indexUser = new JSONObject(res);
                         if (indexUser.isNull("result")) {
-                            //Log.e(TAG, "onResponse: " + true);
+
                             Toast.makeText(TransferChatActivity.this, getString(R.string.error_user_details_not_exists), Toast.LENGTH_SHORT).show();
                         } else {
                             String receiverAvatar = Helper.getReceiverAvatar(new JSONObject(res));
@@ -415,7 +418,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
                                 }
                             }
                             onSearchRequest(substring, mAreaCode);
-                            //getCurrency();
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -426,7 +429,6 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
                         DataVaultManager.getInstance(TransferChatActivity.this).saveUserDetails("");
                         DataVaultManager.getInstance(TransferChatActivity.this).saveUserAccessToken("");
                         Intent intent = new Intent(TransferChatActivity.this, SignInActivity.class);
-                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         finish();
                     } else if (response.code() == 400) {
@@ -439,7 +441,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dismissDialog();
-                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+
             }
         });
 
@@ -467,7 +469,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
             @Override
             public void onFailure(Call<CurrencyResponse> call, Throwable t) {
                 dialog.dismiss();
-                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+
                 btnTransfer.setEnabled(false);
                 btnTransfer.setClickable(false);
             }
@@ -538,9 +540,67 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
             receiverEmail = obj.getString(AppoConstants.EMIAL);
             tvName1.setText(recname);
             tvBalance1.setText("+" + recareacode + "" + recmobilenumber);
+            getConversion(mFromCCode, toCurrency);
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+
+    private void getConversion(String mFrom, String mTo) {
+        showDialog();
+
+        String url = "https://admin.corecoop.net/api/iConnectMasters/CurrencyForexRateBuying?" + "FromCurrency=" + mFrom + "&" + "ToCurrency=" + mTo;
+
+        String userName = "+919999591757";
+        String password = "iConnect@123!";
+        String base = userName + ":" + password;
+        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+        AndroidNetworking.get(url)
+                .addHeaders("Authorization", authHeader)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        dismissDialog();
+
+                        try {
+                            if (response.getString(AppoConstants.MESSAGE).equalsIgnoreCase(AppoConstants.SUCCESS)) {
+                                if (!response.getBoolean(AppoConstants.ERROR)) {
+                                    JSONArray currencyForexRate = response.getJSONArray("CurrencyForexRate");
+                                    JSONObject jsonObject = currencyForexRate.getJSONObject(0);
+                                    String column1 = jsonObject.getString("Column1");
+                                    exchange = Double.parseDouble(column1);
+                                    tvExchange.setText("" + exchange);
+                                    float tranaferAmount = Float.parseFloat(edAmount.getText().toString().trim());
+                                    //float transfer = (float) (tranaferAmount * conversionRates);
+                                    float transfer = (float) (tranaferAmount / exchange);
+                                    float twoDecimal = (float) Helper.getTwoDecimal(transfer);
+                                    mCreditAmount = twoDecimal;
+                                    tvAmountCredit.setText(String.valueOf(twoDecimal) + " " + toCurrency.toUpperCase());
+                                    btnTransfer.setEnabled(true);
+                                    btnTransfer.setClickable(true);
+
+
+                                }
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        //Log.e(TAG, "onResponse: " + response.toString());
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        dismissDialog();
+                        //Log.e(TAG, "onError: " + anError.getErrorDetail());
+                        Helper.showErrorMessage(TransferChatActivity.this, anError.getErrorDetail());
+                    }
+                });
+
     }
 
     private String getCurrency(String param) {
@@ -569,7 +629,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         }
 
         if (edAmount.getText().toString().trim().isEmpty()) {
-            //showToast("please enter transfer amount");
+
             showToast(getString(R.string.info_enter_transer_amount));
             return;
         }
@@ -615,7 +675,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
 
     private void getCommissions(String transaction) {
         userTransactionPin = transaction;
-        //Log.e(TAG, "getCommissions: pin : " + transaction);
+
         dialog = new ProgressDialog(TransferChatActivity.this);
         dialog.setMessage(getString(R.string.info_conversion_rate));
         dialog.show();
@@ -641,7 +701,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
                         DataVaultManager.getInstance(TransferChatActivity.this).saveUserDetails("");
                         DataVaultManager.getInstance(TransferChatActivity.this).saveUserAccessToken("");
                         Intent intent = new Intent(TransferChatActivity.this, SignInActivity.class);
-                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
                         startActivity(intent);
                         finish();
                     }
@@ -657,7 +717,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
                 dialog.dismiss();
                 btnTransfer.setEnabled(false);
                 btnTransfer.setClickable(false);
-                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+
             }
         });
 
@@ -731,13 +791,13 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
     }
 
     private void makePayment() {
-        //Log.e(TAG, "makePayment: called");
+
         if (dialogTransfer != null) {
             dialogTransfer.dismiss();
         }
         String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
         JsonObject params = new JsonObject();
-        params.addProperty(AppoConstants.AMOUNT, edAmount.getText().toString().trim());//need to add here
+        params.addProperty(AppoConstants.AMOUNT, edAmount.getText().toString().trim());
         params.addProperty(AppoConstants.CHARGES, String.valueOf(bankfees));
         params.addProperty(AppoConstants.CONVERSIONRATE, 1);
         params.addProperty(AppoConstants.ENTEREDAMOUNT, edAmount.getText().toString().trim());
@@ -746,7 +806,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         params.addProperty(AppoConstants.FROMCURRENCYCODE, fomrcurrencycode);
         params.addProperty(AppoConstants.ORIGINALAMOUNT, amountaftertax_fees);
         params.addProperty(AppoConstants.TAXES, taxes);
-        //params.addProperty(AppoConstants.USERTYPE, "CUSTOMER");
+
         params.addProperty(AppoConstants.RECIEVERACCOUNTNUMBER, recaccountnumber);
         params.addProperty(AppoConstants.RECEIVERAREACODE, Integer.parseInt(recareacode));
         params.addProperty(AppoConstants.RECIEVERNAME, recname);
@@ -760,11 +820,11 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
             params.addProperty(AppoConstants.SENDERMOBILENUMBER, Long.parseLong(objResult.getString(AppoConstants.MOBILENUMBER)));
             String senderName = objResult.getString(AppoConstants.FIRSTNAME) + " " + objResult.getString(AppoConstants.LASTNAME);
             params.addProperty(AppoConstants.SENDERNAME, senderName);
-            params.addProperty(AppoConstants.TOCURRENCY, Integer.parseInt(mFromCId));
-            params.addProperty(AppoConstants.TOCURRENCYCODE, mFromCCode);
+            params.addProperty(AppoConstants.TOCURRENCY, mToCId);
+            params.addProperty(AppoConstants.TOCURRENCYCODE, toCurrency.toUpperCase());
             params.addProperty(AppoConstants.TRANSACTIONPIN, userTransactionPin);
             params.addProperty(AppoConstants.USERID, Long.parseLong(objResult.getString(AppoConstants.ID)));
-            //Log.e(TAG, "makePayment: 1" + params.toString());
+
             makeTransferMoney(params);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -777,27 +837,26 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         dialog.setMessage("Please wait, Sending your request");
         dialog.show();
         String accessToken = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_ACCESSTOKEN);
-        ////Log.e(TAG, "makeTransferMoney: " + accessToken);
 
-        //Log.e(TAG, "makeTransferMoney: ======================");
+
         String bearer_ = Helper.getAppendAccessToken("bearer ", accessToken);
         mainAPIInterface.postTransferFund(sentParams, bearer_).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    //Log.e(TAG, "onResponse: " + new Gson().toJson(response.body()));
+
                     String res = new Gson().toJson(response.body());
                     try {
                         JSONObject responsePayment = new JSONObject(res);
                         if (responsePayment.getString(AppoConstants.RESULT).equalsIgnoreCase("-1")) {
                             showCommonError(getString(R.string.error_invalid_transaction_pin));
-                            //showPayDialogLikeUnion("#1245454");
+
                         } else if (responsePayment.getString(AppoConstants.RESULT).equalsIgnoreCase("-2")) {
                             showCommonError(getString(R.string.error_account_balance));
-                            //showPayDialogLikeUnion("#1245454");
+
                         } else {
-                            //showSuccessDialog(responsePayment.getString(AppoConstants.RESULT));
+
                             showPayDialogLikeUnion(responsePayment.getString(AppoConstants.RESULT));
                         }
 
@@ -806,14 +865,14 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
                     }
 
                 } else {
-                    //showCommonError(getString(R.string.error_invalid_transaction_pin));
-                    //showPayDialogLikeUnion("#1245454");
+
+
                     if (response.code() == 401) {
                         Toast.makeText(TransferChatActivity.this, "Session Expired!!!", Toast.LENGTH_SHORT).show();
                         DataVaultManager.getInstance(TransferChatActivity.this).saveUserDetails("");
                         DataVaultManager.getInstance(TransferChatActivity.this).saveUserAccessToken("");
                         Intent intent = new Intent(TransferChatActivity.this, SignInActivity.class);
-                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
                         startActivity(intent);
                         finish();
                     } else if (response.code() == 500) {
@@ -828,7 +887,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+
             }
         });
 
@@ -863,13 +922,13 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         dialogTransfer.show();
     }
 
-    private void showPayDialogLikeUnion(String param) {
+    /*private void showPayDialogLikeUnion(String param) {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(TransferChatActivity.this);
         View mCustomLayout = LayoutInflater.from(TransferChatActivity.this).inflate(R.layout.success_dialog_inner_appopay, null);
         LinearLayout layoutRoot = mCustomLayout.findViewById(R.id.layoutRoot);
         MyTextView tvInfo = mCustomLayout.findViewById(R.id.tvInfo);
         MyTextView tvHeader = mCustomLayout.findViewById(R.id.tvHeader);
-        MyTextViewBold tvAmountPay = mCustomLayout.findViewById(R.id.tvAmountPay);//edAmount
+        MyTextViewBold tvAmountPay = mCustomLayout.findViewById(R.id.tvAmountPay);
         MyTextView tvCurrencyPay = mCustomLayout.findViewById(R.id.tvCurrencyPay);
         MyTextView tvTransactionTime = mCustomLayout.findViewById(R.id.tvTransactionTime);
         MyTextView tvVoucherPay = mCustomLayout.findViewById(R.id.tvVoucherPay);
@@ -909,7 +968,68 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(AddMoneyToWallet.this, "Show Receipt", Toast.LENGTH_SHORT).show();
+
+                takeScreenShort(layoutRoot);
+            }
+        });
+        mBuilder.setView(mCustomLayout);
+        mDialog = mBuilder.create();
+        mDialog.setCanceledOnTouchOutside(false);
+        mDialog.show();
+
+    }*/
+    private void showPayDialogLikeUnion(String param) {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TransferChatActivity.this);
+        View mCustomLayout = LayoutInflater.from(TransferChatActivity.this).inflate(R.layout.success_dialog_inner_appopay_transfer, null);
+        LinearLayout layoutRoot = mCustomLayout.findViewById(R.id.layoutRoot);
+        MyTextView tvInfo = mCustomLayout.findViewById(R.id.tvInfo);
+        MyTextView tvHeader = mCustomLayout.findViewById(R.id.tvHeader);
+        MyTextViewBold tvAmountPay = mCustomLayout.findViewById(R.id.tvAmountPay);
+        MyTextViewBold tvCost = mCustomLayout.findViewById(R.id.tvCost);
+        MyTextViewBold tvReceiverAmt = mCustomLayout.findViewById(R.id.tvReceiverAmt);
+        MyTextView tvCurrencyPay = mCustomLayout.findViewById(R.id.tvCurrencyPay);
+        MyTextView tvTransactionTime = mCustomLayout.findViewById(R.id.tvTransactionTime);
+        MyTextView tvVoucherPay = mCustomLayout.findViewById(R.id.tvVoucherPay);
+        MyButton btnShare = mCustomLayout.findViewById(R.id.btnShare);
+        MyButton btnClose = mCustomLayout.findViewById(R.id.btnClose);
+        tvHeader.setText("Transfer Money");
+        tvAmountPay.setText(" Amount : " + edAmount.getText().toString().trim());
+        tvReceiverAmt.setText("Receiver Amount : " + tvAmountCredit.getText().toString().trim());
+        tvReceiverAmt.setTextColor(Color.parseColor("#334CFF"));
+        float cost = amountaftertax_fees - Float.parseFloat(edAmount.getText().toString().trim());
+        float twoDecimal = Helper.getTwoDecimal(cost);
+        tvCost.setText("Transaction Cost : " + twoDecimal);
+        tvCost.setTextColor(Color.parseColor("#FE3156"));
+
+        String currencyId = Helper.getCurrencyId();
+        String mCurrencyId = "";
+
+        for (int i = 0; i < resultCurrency.size(); i++) {
+            if (currencyId.equals(String.valueOf(resultCurrency.get(i).getId()))) {
+                mCurrencyId = resultCurrency.get(i).getCurrencyCode();
+                //Log.e(TAG, "showPayDialogLikeUnion: "+mCurrencyId );
+                break;
+            }
+        }
+
+
+        tvCurrencyPay.setText("Currency : " + mCurrencyId);
+        tvTransactionTime.setText("Transaction Time : " + getDateTime());
+        tvVoucherPay.setText("Transaction No : " + param);
+        tvInfo.setText("Paid to " + recname + "" + "\nSUCCESS");
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*mDialog.dismiss();
+                TransferChatActivity.this.onBackPressed();*/
+                redirectHome();
+            }
+        });
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
                 takeScreenShort(layoutRoot);
             }
         });
@@ -925,7 +1045,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat(mDateFormat);
         Date mDate = new Date();
         String format = mSimpleDateFormat.format(mDate);
-        //Log.e(TAG, "getDate: " + format);
+
         return format;
     }
 
@@ -933,10 +1053,8 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         if (mDialog.isShowing() && mDialog != null) {
             mDialog.dismiss();
         }
-        //mMoneyTransfer.OnMoneyTransferSuccess();
-        //getActivity().onBackPressed();
-        //Intent intent = new Intent();
-        //getReceiverToken();
+
+
         super.onBackPressed();
         finish();
 
@@ -945,7 +1063,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
 
     private void takeScreenShort(LinearLayout rootLayout) {
         mDialog.dismiss();
-        //Bitmap bitmap = screenShot(rootLayout);
+
         Bitmap bitmap = getScreenShot(rootLayout);
         Date now = new Date();
         android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
@@ -963,15 +1081,15 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         String uniqueFileName = Helper.getUniqueFileName();
         mFileSSort = new File(dir, uniqueFileName);
 
-        //mFileSSort = new File(mFile, "screen_short_" + now + ".jpeg");
-        boolean newFile = true;//mFileSSort.createNewFile();
+
+        boolean newFile = true;
         if (newFile) {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
             byte[] bitmapdata = bos.toByteArray();
             FileOutputStream fos = null;
             try {
-                //mFileSSort.createNewFile();
+
                 fos = new FileOutputStream(mFileSSort);
                 fos.write(bitmapdata);
                 fos.flush();
@@ -979,11 +1097,11 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        //uploadImage(mFileSSort.getPath());
+
                         uploadImage(mFileSSort.getPath());
                     }
                 }, 1000);
-                openScreenshot(mFileSSort);
+                //openScreenshot(mFileSSort);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -1008,7 +1126,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
     private void openScreenshot(File imageFile) {
         Intent intentShareFile = new Intent();
         intentShareFile.setAction(Intent.ACTION_SEND);
-        //Uri uriForFile = FileProvider.getUriForFile(getApplicationContext(), "com.stuffer.stuffers.fileprovider", imageFile);
+
         Uri uriForFile = FileProvider.getUriForFile(getApplicationContext(), "com.stuffer.stuffers.fileprovider", imageFile);
         intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intentShareFile.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -1055,8 +1173,8 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.e(TAG, "onActivityResult: called 197 ");
-        //Log.e(TAG, "onActivityResult: " + mFileSSort.getPath());
-        // uploadImage(mFileSSort.getPath());
+
+
         redirectHome();
         /*if (resultCode == 198) {
             Log.e(TAG, "onActivityResult: called 198 ");
@@ -1105,7 +1223,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
     }
 
     private void checkAndCopy(String directory, File source) {
-        //Create and copy file content
+
         File file = new File(directory);
         boolean dirExists = file.exists();
         if (!dirExists)
@@ -1132,22 +1250,21 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         final File fileToUpload = new File(filePath);
 
 
-        checkAndCopy(ChatHelper.getFileBase(this) + "/" + AttachmentTypes.getTypeName(attachmentType) + "/.sent/", fileToUpload);//Make a copy
+        checkAndCopy(ChatHelper.getFileBase(this) + "/" + AttachmentTypes.getTypeName(attachmentType) + "/.sent/", fileToUpload);
 
 
         Message message = new Message();
         message.setChatId(chat.getChatChild());
         message.setSenderId(userMe.getId());
         message.setSenderName(userMe.getName());
-        //message.setSenderStatus(userMe.getStatus());
+
         message.setSenderImage(userMe.getImage());
         message.setSent(false);
         message.setDelivered(false);
         message.setRecipientId(user != null ? user.getId() : chat.getUserId());
         message.setRecipientName(user != null ? user.getName() : chat.getChatName());
         message.setRecipientImage(user != null ? user.getImage() : chat.getChatImage());
-        //message.setRecipientStatus(user != null ? user.getStatus() : chat.getChatStatus());
-        //message.setId(chatRef.child(chat.getChatChild()).push().getKey());
+
 
         Intent intent = new Intent(this, UploadAndSendService.class);
         intent.putExtra("attachment", attachment);
@@ -1156,6 +1273,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         intent.putExtra("attachment_message", message);
         intent.putExtra("attachment_player_ids", userPlayerIds);
         ContextCompat.startForegroundService(this, intent);
+        redirectHome();
 
     }
 

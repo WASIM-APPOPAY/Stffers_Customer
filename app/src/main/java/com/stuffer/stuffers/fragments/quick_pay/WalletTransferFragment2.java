@@ -3,6 +3,7 @@ package com.stuffer.stuffers.fragments.quick_pay;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_ACCESSTOKEN;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_DETIALS;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,7 +15,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -71,6 +74,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -80,7 +84,7 @@ import retrofit2.Response;
 
 public class WalletTransferFragment2 extends Fragment {
     private static final String TAG = "WalletTransferFragment2";
-    private MyTextView tvRequiredFilled, tvFromAccount, tvToAccount, tvAmountCredit, tvConversionRates;
+    private MyTextView tvRequiredFilled, tvFromAccount, tvToAccount, tvAmountCredit, tvConversionRates, tvExchange;
     private MainAPIInterface mainAPIInterface;
     private ProgressDialog dialog;
     private ArrayList<AccountModel> mListAccount;
@@ -109,6 +113,9 @@ public class WalletTransferFragment2 extends Fragment {
     private int mType = 0;
     private CircleImageView ivSender, ivReceiver;
     private ProgressDialog mProgressDialog;
+    private double exchange;
+    private String toCurrency;
+    private float mCreditAmount = (float) 0.00;
 
 
     public WalletTransferFragment2() {
@@ -125,6 +132,7 @@ public class WalletTransferFragment2 extends Fragment {
         receiveruser = arguments.getString(AppoConstants.SENTUSER);
         resultCurrency = arguments.getParcelableArrayList(AppoConstants.SENTCURRENCY);
         mTransferAmount = arguments.getString("amount");
+        exchange = Double.parseDouble(arguments.getString("exchange"));
 
         View view = inflater.inflate(R.layout.fragment_wallet_transfer2, container, false);
         mainAPIInterface = ApiUtils.getAPIService();
@@ -138,6 +146,7 @@ public class WalletTransferFragment2 extends Fragment {
         tvToAccount = (MyTextView) view.findViewById(R.id.tvToAccount);
         edAmount = (MyEditText) view.findViewById(R.id.edAmount);
         tvAmountCredit = (MyTextView) view.findViewById(R.id.tvAmountCredit);
+        tvExchange = (MyTextView) view.findViewById(R.id.tvExchange);
         tvConversionRates = (MyTextView) view.findViewById(R.id.tvConversionRates);
         btnTransfer = (MyTextView) view.findViewById(R.id.btnTransfer);
         String senderName = Helper.getSenderName();
@@ -147,6 +156,7 @@ public class WalletTransferFragment2 extends Fragment {
         Double doubleV = Double.parseDouble(currantBalance);
         String format = df2.format(doubleV);
         tvBalance.setText("$" + format);
+        tvExchange.setText(String.valueOf(exchange));
 
         tvRequiredFilled = (MyTextView) view.findViewById(R.id.tvRequiredFilled);
         String required = getString(R.string.required_filled) + "<font color='#00baf2'>" + "*" + "</font>";
@@ -164,11 +174,16 @@ public class WalletTransferFragment2 extends Fragment {
                     String inputAmount = edAmount.getText().toString().trim();
                     if (inputAmount.length() > 0) {
                         float tranaferAmount = Float.parseFloat(inputAmount);
-                        float transfer = (float) (tranaferAmount * conversionRates);
+                        //float transfer = (float) (tranaferAmount * conversionRates);
+                        float transfer = (float) (tranaferAmount / exchange);
                         float twoDecimal = (float) Helper.getTwoDecimal(transfer);
-                        tvAmountCredit.setText(String.valueOf(twoDecimal));
+                        mCreditAmount = twoDecimal;
+                        tvAmountCredit.setText(String.valueOf(twoDecimal) + " " + toCurrency.toUpperCase());
                         btnTransfer.setEnabled(true);
                         btnTransfer.setClickable(true);
+                    } else {
+                        float twoDecimal = (float) Helper.getTwoDecimal(0);
+                        tvAmountCredit.setText(String.valueOf(twoDecimal));
                     }
 
                 } catch (Exception e) {
@@ -212,43 +227,6 @@ public class WalletTransferFragment2 extends Fragment {
         return view;
     }
 
-    private void getConversion() {
-        showLoading(getString(R.string.info_please_wait_dots));
-        String mFrom = "INR";
-        String mTo = "USD";
-        String url = "https://admin.corecoop.net/api/iConnectMasters/CurrencyForexRateBuying?" + "FromCurrency=" + mFrom + "&" + "ToCurrency=" + mTo;
-
-        String userName = "+919999591757";
-        String password = "iConnect@123!";
-        String base = userName + ":" + password;
-        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
-        AndroidNetworking.get(url)
-                .addHeaders("Authorization", authHeader)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        hideLoading();
-                        Log.e(TAG, "onResponse: " + response.toString());
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        Log.e(TAG, "onError: " + anError.getErrorDetail());
-                    }
-                });
-    /*FromCurrency=USD To ToCurrency=INR
-        "CurrencyForexRate": [
-        {
-            "Column1": "0.0130000000"
-    }
-
-    ]*/
-    /*=====================
-        FromCurrency=USD To ToCurrency=INR*/
-
-
-    }
 
     private void showLoading(String message) {
         mProgressDialog = new ProgressDialog(getActivity());
@@ -262,6 +240,7 @@ public class WalletTransferFragment2 extends Fragment {
 
 
     private void setReceiverDetails() {
+
         try {
             JSONObject obj = new JSONObject(receiveruser);
             reciveraccountnumber = obj.getString(AppoConstants.RECIEVERACCOUNTNUMBER);
@@ -275,6 +254,8 @@ public class WalletTransferFragment2 extends Fragment {
             recuserid = obj.getString(AppoConstants.RECIEVERUSERID);
             receiverEmail = obj.getString(AppoConstants.EMIAL);
             String avatar = obj.getString(AppoConstants.AVATAR);
+            toCurrency = obj.getString(AppoConstants.TOCURRENCY);
+
             if (!StringUtils.isEmpty(avatar)) {
                 Glide.with(getActivity()).load(avatar).placeholder(R.drawable.user_chat).centerCrop().into(ivReceiver);
             }
@@ -649,13 +630,15 @@ public class WalletTransferFragment2 extends Fragment {
         }
         String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
         JsonObject params = new JsonObject();
-        params.addProperty(AppoConstants.AMOUNT, tvAmountCredit.getText().toString().trim());
+        params.addProperty(AppoConstants.AMOUNT, mCreditAmount);
         params.addProperty(AppoConstants.CHARGES, String.valueOf(bankfees));
-        params.addProperty(AppoConstants.CONVERSIONRATE, conversionRates);
+        params.addProperty(AppoConstants.CONVERSIONRATE, exchange);
         params.addProperty(AppoConstants.ENTEREDAMOUNT, edAmount.getText().toString().trim());
         params.addProperty(AppoConstants.FEES, String.valueOf(processingfees));
-        params.addProperty(AppoConstants.FROMCURRENCY, Integer.parseInt(fromcurrency));
-        params.addProperty(AppoConstants.FROMCURRENCYCODE, fomrcurrencycode);
+        params.addProperty(AppoConstants.FROMCURRENCY, Integer.parseInt(mListAccount.get(mFromPosition).getCurrencyid()));
+        params.addProperty(AppoConstants.FROMCURRENCYCODE, mListAccount.get(mFromPosition).getCurrencyCode());
+
+
         params.addProperty(AppoConstants.ORIGINALAMOUNT, amountaftertax_fees);
         params.addProperty(AppoConstants.TAXES, taxes);
 
@@ -672,8 +655,8 @@ public class WalletTransferFragment2 extends Fragment {
             params.addProperty(AppoConstants.SENDERMOBILENUMBER, Long.parseLong(objResult.getString(AppoConstants.MOBILENUMBER)));
             String senderName = objResult.getString(AppoConstants.FIRSTNAME) + " " + objResult.getString(AppoConstants.LASTNAME);
             params.addProperty(AppoConstants.SENDERNAME, senderName);
-            params.addProperty(AppoConstants.TOCURRENCY, Integer.parseInt(mListAccount.get(mFromPosition).getCurrencyid()));
-            params.addProperty(AppoConstants.TOCURRENCYCODE, mListAccount.get(mFromPosition).getCurrencyCode());
+            params.addProperty(AppoConstants.TOCURRENCY, Integer.parseInt(fromcurrency));
+            params.addProperty(AppoConstants.TOCURRENCYCODE, fomrcurrencycode);
             params.addProperty(AppoConstants.TRANSACTIONPIN, userTransactionPin);
             params.addProperty(AppoConstants.USERID, Long.parseLong(objResult.getString(AppoConstants.ID)));
 
@@ -779,35 +762,40 @@ public class WalletTransferFragment2 extends Fragment {
 
     private void showPayDialogLikeUnion(String param) {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
-        View mCustomLayout = LayoutInflater.from(getActivity()).inflate(R.layout.success_dialog_inner_appopay, null);
+        View mCustomLayout = LayoutInflater.from(getActivity()).inflate(R.layout.success_dialog_inner_appopay_transfer, null);
         LinearLayout layoutRoot = mCustomLayout.findViewById(R.id.layoutRoot);
         MyTextView tvInfo = mCustomLayout.findViewById(R.id.tvInfo);
         MyTextView tvHeader = mCustomLayout.findViewById(R.id.tvHeader);
         MyTextViewBold tvAmountPay = mCustomLayout.findViewById(R.id.tvAmountPay);
+        MyTextViewBold tvCost = mCustomLayout.findViewById(R.id.tvCost);
+        MyTextViewBold tvReceiverAmt = mCustomLayout.findViewById(R.id.tvReceiverAmt);
         MyTextView tvCurrencyPay = mCustomLayout.findViewById(R.id.tvCurrencyPay);
         MyTextView tvTransactionTime = mCustomLayout.findViewById(R.id.tvTransactionTime);
         MyTextView tvVoucherPay = mCustomLayout.findViewById(R.id.tvVoucherPay);
         MyButton btnShare = mCustomLayout.findViewById(R.id.btnShare);
         MyButton btnClose = mCustomLayout.findViewById(R.id.btnClose);
         tvHeader.setText("Transfer Money");
-        tvAmountPay.setText("Amount : " + edAmount.getText().toString().trim());
+        tvAmountPay.setText(" Amount : " + edAmount.getText().toString().trim());
+        tvReceiverAmt.setText("Receiver Amount : " + tvAmountCredit.getText().toString().trim());
+        tvReceiverAmt.setTextColor(Color.parseColor("#334CFF"));
+        float cost = amountaftertax_fees - Float.parseFloat(edAmount.getText().toString().trim());
+        float twoDecimal = Helper.getTwoDecimal(cost);
+        tvCost.setText("Transaction Cost : " + twoDecimal);
+        tvCost.setTextColor(Color.parseColor("#FE3156"));
+
         String currencyId = Helper.getCurrencyId();
         String mCurrencyId = "";
-        if (Helper.getCurrencyId().equalsIgnoreCase("1")) {
-            mCurrencyId = "USD";
-        } else if (Helper.getCurrencyId().equalsIgnoreCase("2")) {
 
-            mCurrencyId = "INR";
-        } else if (Helper.getCurrencyId().equalsIgnoreCase("3")) {
-
-            mCurrencyId = "CAD";
-        } else if (Helper.getCurrencyId().equalsIgnoreCase("4")) {
-
-            mCurrencyId = "ERU";
-        } else if (Helper.getCurrencyId().equalsIgnoreCase("5")) {
-
-            mCurrencyId = "DOP";
+        for (int i = 0; i < resultCurrency.size(); i++) {
+            if (currencyId.equals(String.valueOf(resultCurrency.get(i).getId()))) {
+                mCurrencyId = resultCurrency.get(i).getCurrencyCode();
+                //Log.e(TAG, "showPayDialogLikeUnion: "+mCurrencyId );
+                break;
+            }
         }
+
+
+
         tvCurrencyPay.setText("Currency : " + mCurrencyId);
         tvTransactionTime.setText("Transaction Time : " + getDateTime());
         tvVoucherPay.setText("Transaction No : " + param);
@@ -863,15 +851,26 @@ public class WalletTransferFragment2 extends Fragment {
         Bitmap bitmap = getScreenShot(rootLayout);
         Date now = new Date();
         android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+        String path;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 
-        mFileSSort = new File(getActivity().getCacheDir(), "screen_short_" + now + ".jpeg");
+            path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator + "/YourDirName";
+        } else {
+            path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/YourDirName";
+        }
+
+        File dir = new File(path);
+        if (!dir.exists())
+            dir.mkdirs();
+        String uniqueFileName = Helper.getUniqueFileName();
+        mFileSSort = new File(dir, uniqueFileName);
+
         try {
             boolean newFile = mFileSSort.createNewFile();
             if (newFile) {
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
                 byte[] bitmapdata = bos.toByteArray();
-
                 FileOutputStream fos = null;
                 try {
                     fos = new FileOutputStream(mFileSSort);
@@ -891,9 +890,13 @@ public class WalletTransferFragment2 extends Fragment {
     }
 
     private void openScreenshot(File imageFile) {
-        Intent intentShareFile = new Intent();
+        Intent intent = new Intent();
+        String absolutePath = imageFile.getAbsolutePath();
+        intent.putExtra("link", absolutePath);
+        getActivity().setResult(Activity.RESULT_OK, intent);
+        getActivity().finish();
+        /*Intent intentShareFile = new Intent();
         intentShareFile.setAction(Intent.ACTION_SEND);
-
         Uri uriForFile = FileProvider.getUriForFile(getActivity().getApplicationContext(), "com.stuffer.stuffers.fileprovider", imageFile);
         intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intentShareFile.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -905,15 +908,17 @@ public class WalletTransferFragment2 extends Fragment {
             String packageName = resolveInfo.activityInfo.packageName;
             getActivity().grantUriPermission(packageName, uriForFile, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
-        startActivityForResult(chooser, 198);
+        startActivityForResult(chooser, 198);*/
 
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 198) {
+        if (requestCode == 198) {
+
             Log.e(TAG, "onActivityResult: called 198 ");
+
         }
     }
 

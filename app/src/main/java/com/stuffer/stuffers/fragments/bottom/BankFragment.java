@@ -500,6 +500,9 @@ public class BankFragment extends Fragment {
             objReceiver.put(AppoConstants.RECIEVERUSERID, reciveruserid);
             objReceiver.put(AppoConstants.EMIAL, reciveremail);
             objReceiver.put(AppoConstants.AVATAR, receiverAvatar);
+            String currencySymble = Helper.getCurrencySymble(indexUser);
+            //Log.e(TAG, "sentParam: To Currency" + currencySymble);
+            objReceiver.put(AppoConstants.TOCURRENCY, currencySymble);
 
 
             mListener.onAccountTransfer(objReceiver, resultCurrency, null);

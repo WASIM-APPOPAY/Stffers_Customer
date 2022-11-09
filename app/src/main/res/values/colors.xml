@@ -567,6 +567,7 @@
     <color name="color_transparent2e">#2E000000</color>
     <color name="color_transparent00">#00000000</color>
     <color name="color_333333">#333333</color>
+    <color name="colorBgDrawer">#ffffffff</color>
 
 </resources>
 <!--<resources>

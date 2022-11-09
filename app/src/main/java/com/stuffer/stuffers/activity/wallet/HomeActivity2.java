@@ -2,11 +2,16 @@ package com.stuffer.stuffers.activity.wallet;
 
 import static android.view.View.VISIBLE;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,13 +31,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.os.BuildCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,15 +52,18 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.fasterxml.jackson.core.Version;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.onesignal.OSDeviceState;
 import com.onesignal.OneSignal;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.BuildConfig;
+import com.stuffer.stuffers.MainActivity;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.cashSends.CashSend;
 import com.stuffer.stuffers.activity.shop_mall.ShopAdapter;
@@ -61,18 +72,23 @@ import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.commonChat.chat.BaseActivity;
 import com.stuffer.stuffers.commonChat.chat.BottomChatFragment;
 import com.stuffer.stuffers.commonChat.chat.ChatActivity;
+import com.stuffer.stuffers.commonChat.chat.UserSelectDialogFragment;
 import com.stuffer.stuffers.commonChat.chatAdapters.MoreAdapter;
 import com.stuffer.stuffers.commonChat.chatModel.AttachmentTypes;
 import com.stuffer.stuffers.commonChat.chatModel.Chat;
 import com.stuffer.stuffers.commonChat.chatModel.ChatMore;
+import com.stuffer.stuffers.commonChat.chatModel.Contact;
 import com.stuffer.stuffers.commonChat.chatModel.Message;
 import com.stuffer.stuffers.commonChat.chatModel.User;
 import com.stuffer.stuffers.commonChat.chatUtils.ChatHelper;
+import com.stuffer.stuffers.commonChat.chatUtils.ConfirmationDialogFragment;
 import com.stuffer.stuffers.commonChat.interfaces.ChatItemClickListener;
 import com.stuffer.stuffers.commonChat.interfaces.MoreListener;
 import com.stuffer.stuffers.commonChat.interfaces.ProceedRequest;
+import com.stuffer.stuffers.commonChat.interfaces.UserGroupSelectionDismissListener;
 import com.stuffer.stuffers.communicator.ShopListener;
 import com.stuffer.stuffers.models.shop_model.ShopModel;
+import com.stuffer.stuffers.myService.FetchMyUsersService;
 import com.stuffer.stuffers.my_camera.CameraActivity;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
@@ -89,15 +105,19 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeActivity2 extends BaseActivity implements View.OnClickListener, ChatItemClickListener, ProceedRequest, MoreListener, ShopListener {
+public class HomeActivity2 extends BaseActivity implements View.OnClickListener, ChatItemClickListener, ProceedRequest, MoreListener, ShopListener, UserGroupSelectionDismissListener {
     private static final String TAG = "HomeActivity";
     private static final int REQUEST_CODE_CHAT_FORWARD = 99;
+    private static String CONFIRM_TAG = "confirmtag";
+    private static String USER_SELECT_TAG = "userselectdialog";
+    private final int CONTACTS_REQUEST_CODE = 321;
     private ImageView ivMenu, menu_icon;
     private LinearLayout llChat, llService, llCall;
     private ChatHelper helper;
@@ -105,10 +125,11 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
     private MyTextViewBold tvUserName;
     private MyTextView tvMobileNumber, tvDrawername, tvDrawerNo, tvVersion;
     private DatabaseReference myInboxRef;
+    private ArrayList<User> myUsers = new ArrayList<>();
     private ArrayList<Message> messageForwardList = new ArrayList<>();
     private DrawerLayout drawer_layout;
     private LinearLayout llMyQr;
-
+    private UserSelectDialogFragment userSelectDialogFragment;
     private ImageView ivMenuBottom;
     private static CircleImageView ivUser;
     private RecyclerView rvBottomChat;
@@ -121,6 +142,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
     private MainAPIInterface apiService;
     private ProgressDialog mProgress;
     private LinearLayout layoutAccount, layoutProfile, layoutSetting, layoutLogout;
+    private String mShare = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -274,7 +296,8 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
                 }
             }, 200);
         });
-        tvVersion.setText(getString(R.string.info_version)+ BuildConfig.VERSION_NAME);
+        tvVersion.setText(getString(R.string.info_version) + BuildConfig.VERSION_NAME);
+        refreshMyContacts();
 
     }
 
@@ -561,12 +584,18 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onChatItemClick(Chat chat, int position, View userImage) {
-        openChat(ChatActivity.newIntent(HomeActivity2.this, messageForwardList, chat), userImage);
+        openChat(ChatActivity.newIntent(HomeActivity2.this, messageForwardList, chat, mShare), userImage);
     }
 
     private void openChat(Intent intent, View userImage) {
         ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(HomeActivity2.this, userImage, "userImage");
         startActivityForResult(intent, REQUEST_CODE_CHAT_FORWARD, activityOptionsCompat.toBundle());
+        if (userSelectDialogFragment != null) {
+            userSelectDialogFragment.dismiss();
+            messageForwardList.clear();
+            //mShare = "";
+        }
+
     }
 
     @Override
@@ -583,14 +612,16 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
                     //show forward dialog to choose users
                     messageForwardList.clear();
                     ArrayList<Message> temp = data.getParcelableArrayListExtra("FORWARD_LIST");
+                    String s = new Gson().toJson(temp);
+                    //Log.e(TAG, "onActivityResult: "+s );
                     messageForwardList.addAll(temp);
-                    /*userSelectDialogFragment = UserSelectDialogFragment.newUserSelectInstance(myUsers);
+                    userSelectDialogFragment = UserSelectDialogFragment.newUserSelectInstance(myUsers);
                     FragmentManager manager = getSupportFragmentManager();
                     Fragment frag = manager.findFragmentByTag(USER_SELECT_TAG);
                     if (frag != null) {
                         manager.beginTransaction().remove(frag).commit();
                     }
-                    userSelectDialogFragment.show(manager, USER_SELECT_TAG);*/
+                    userSelectDialogFragment.show(manager, USER_SELECT_TAG);
                 }
                 break;
             case 200:
@@ -620,6 +651,19 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
                         e.printStackTrace();
                     }
                 }
+            case 100:
+                if (resultCode == Activity.RESULT_OK) {
+                    mShare = data.getStringExtra("link");
+                    Log.e(TAG, "onActivityResult: "+mShare );
+                    userSelectDialogFragment = UserSelectDialogFragment.newUserSelectInstance(myUsers);
+                    FragmentManager manager = getSupportFragmentManager();
+                    Fragment frag = manager.findFragmentByTag(USER_SELECT_TAG);
+                    if (frag != null) {
+                        manager.beginTransaction().remove(frag).commit();
+                    }
+                    userSelectDialogFragment.show(manager, USER_SELECT_TAG);
+                }
+
 
                 break;
         }
@@ -641,9 +685,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         int userId = Helper.getUserId();
         JsonObject mReqPayload = new JsonObject();
         mReqPayload.addProperty("userId", userId);
-        //mReqPayload.addProperty("userId", "userId");
         mReqPayload.addProperty("avatar", "data:image/jpeg;base64," + avatar);
-
         apiService.putUserAvatar(mReqPayload).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -657,7 +699,6 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
                             DataVaultManager.getInstance(HomeActivity2.this).saveUserDetails(jsonUserDetails);
                             JSONObject jsonObject = mPrev.getJSONObject(AppoConstants.RESULT);
                             String avatar = jsonObject.getString("avatar");
-                            //Log.e(TAG, "onResponse: avatar::" + avatar);
                             drawer_layout.openDrawer(GravityCompat.START);
                             DataVaultManager.getInstance(HomeActivity2.this).saveIdImagePath(avatar);
                             Toast.makeText(HomeActivity2.this, "avatar updated successfully", Toast.LENGTH_SHORT).show();
@@ -666,15 +707,6 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
                         e.printStackTrace();
                     }
                 }
-
-                /*if (response.code() == 200) {
-                    Log.e(TAG, "onResponse: " + response);
-                    String res = new Gson().toJson(response.body());
-                    JSONObject
-
-                } else {
-                    Toast.makeText(HomeActivity2.this, "Error : " + response.code(), Toast.LENGTH_SHORT).show();
-                }*/
 
             }
 
@@ -802,11 +834,8 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
                 }
             }
         });
-
         dialog.setCancelable(true);
-
         dialog.setCanceledOnTouchOutside(true);
-
         dialog.show();
     }
 
@@ -893,8 +922,121 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onShopItemClick(int pos, String title) {
-        Intent intent=new Intent(HomeActivity2.this,TabsActivity.class);
-        intent.putExtra(AppoConstants.WHERE,pos);
+        Intent intent = new Intent(HomeActivity2.this, TabsActivity.class);
+        intent.putExtra(AppoConstants.WHERE, pos);
         startActivity(intent);
+    }
+
+
+    private void refreshMyContacts() {
+        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+            if (!FetchMyUsersService.STARTED) {
+
+                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                if (firebaseUser != null) {
+                    firebaseUser.getIdToken(false).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            String idToken = task.getResult().getToken();
+                            FetchMyUsersService.startMyUsersService(HomeActivity2.this, userMe.getId(), idToken);
+                        }
+                    });
+                }
+            }
+        } else {
+            FragmentManager manager = getSupportFragmentManager();
+            ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newConfirmInstance(getString(R.string.permission_contact_title),
+                    getString(R.string.permission_contact_message), getString(R.string.okay), getString(R.string.no),
+                    view -> {
+                        ActivityCompat.requestPermissions(HomeActivity2.this, new String[]{android.Manifest.permission.READ_CONTACTS}, CONTACTS_REQUEST_CODE);
+                    },
+                    view -> {
+                        finish();
+                    });
+            confirmationDialogFragment.show(manager, CONFIRM_TAG);
+        }
+    }
+
+
+    private BroadcastReceiver userReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction() != null && intent.getAction().equals(ChatHelper.BROADCAST_USER_ME)) {
+                //userUpdated();
+            }
+        }
+    };
+    private BroadcastReceiver myUsersReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ArrayList<User> myUsers = intent.getParcelableArrayListExtra("data");
+            if (myUsers != null) {
+                //myusers includes inviteAble users with separator tag
+                chatHelper.setMyUsers(myUsers);
+                myUsersResult(myUsers);
+            }
+        }
+    };
+
+    private BroadcastReceiver myContactsReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            refreshMyContactsCache((HashMap<String, Contact>) intent.getSerializableExtra("data"));
+            /*refreshMyContactsCache((HashMap<String, Contact>) intent.getSerializableExtra("data"));
+            MyChatsFragment userChatsFragment = null, groupChatsFragment = null;
+            if (adapter != null && adapter.getCount() > 1)
+                userChatsFragment = ((MyChatsFragment) adapter.getItem(0));
+            if (adapter != null && adapter.getCount() >= 2)
+                groupChatsFragment = ((MyChatsFragment) adapter.getItem(1));
+            if (userChatsFragment != null) userChatsFragment.resetChatNames(getSavedContacts());
+            if (groupChatsFragment != null) groupChatsFragment.resetChatNames(getSavedContacts());*/
+        }
+    };
+
+    private void myUsersResult(ArrayList<User> myUsers) {
+        this.myUsers.clear();
+        this.myUsers.addAll(myUsers);
+        //refreshUsers(-1);
+        //menuUsersRecyclerAdapter.notifyDataSetChanged();
+        //swipeMenuRecyclerView.setRefreshing(false);
+
+        registerChatUpdates();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case CONTACTS_REQUEST_CODE:
+                refreshMyContacts();
+                break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(mContext);
+        localBroadcastManager.registerReceiver(myContactsReceiver, new IntentFilter(ChatHelper.BROADCAST_MY_CONTACTS));
+        localBroadcastManager.registerReceiver(myUsersReceiver, new IntentFilter(ChatHelper.BROADCAST_MY_USERS));
+        localBroadcastManager.registerReceiver(userReceiver, new IntentFilter(ChatHelper.BROADCAST_USER_ME));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(mContext);
+        localBroadcastManager.unregisterReceiver(myContactsReceiver);
+        localBroadcastManager.unregisterReceiver(myUsersReceiver);
+        localBroadcastManager.unregisterReceiver(userReceiver);
+    }
+
+    @Override
+    public void onUserGroupSelectDialogDismiss(ArrayList<User> selectedUsers) {
+        messageForwardList.clear();
+    }
+
+    @Override
+    public void selectionDismissed() {
+
     }
 }

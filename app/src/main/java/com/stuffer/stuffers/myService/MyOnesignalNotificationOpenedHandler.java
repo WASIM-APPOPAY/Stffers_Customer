@@ -128,7 +128,7 @@ public class MyOnesignalNotificationOpenedHandler implements OneSignal.OSNotific
             }
 
             if (newChat != null) {
-                Intent intent = ChatActivity.newIntent(context, new ArrayList<>(), newChat);
+                Intent intent = ChatActivity.newIntent(context, new ArrayList<>(), newChat,"");
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             } else {

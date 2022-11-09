@@ -6,22 +6,39 @@ import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_DETIALS;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Base64;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -30,7 +47,15 @@ import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.contact.ContactDemoActivity;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
+import com.stuffer.stuffers.commonChat.chat.ChatActivity;
 import com.stuffer.stuffers.commonChat.chat.TransferChatActivity;
+import com.stuffer.stuffers.commonChat.chat.UserSelectDialogFragment;
+import com.stuffer.stuffers.commonChat.chatModel.Chat;
+import com.stuffer.stuffers.commonChat.chatModel.Message;
+import com.stuffer.stuffers.commonChat.chatModel.User;
+import com.stuffer.stuffers.commonChat.chatUtils.ChatHelper;
+import com.stuffer.stuffers.commonChat.interfaces.ChatItemClickListener;
+import com.stuffer.stuffers.commonChat.interfaces.UserGroupSelectionDismissListener;
 import com.stuffer.stuffers.communicator.MoneyTransferListener;
 import com.stuffer.stuffers.communicator.RecyclerViewRowItemClickListener2;
 import com.stuffer.stuffers.communicator.StartActivityListener;
@@ -42,12 +67,22 @@ import com.stuffer.stuffers.models.output.CurrencyResult;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.utils.DataVaultManager;
+import com.stuffer.stuffers.views.MyButton;
+import com.stuffer.stuffers.views.MyTextView;
+import com.stuffer.stuffers.views.MyTextViewBold;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -56,6 +91,7 @@ import retrofit2.Response;
 
 public class P2PTransferActivity extends AppCompatActivity implements UserAccountTransferListener, StartActivityListener, RecyclerViewRowItemClickListener2, MoneyTransferListener, TransactionPinListener {
 
+    private static final int REQUEST_CODE_CHAT_FORWARD = 99;
     private int mType = 0;
     private String mIndexUser;
     private List<CurrencyResult> mCurrencyResponse;
@@ -64,6 +100,15 @@ public class P2PTransferActivity extends AppCompatActivity implements UserAccoun
     private ProgressDialog dialog;
     private MainAPIInterface mainAPIInterface;
     private JSONObject indexUser;
+    private AlertDialog mDialog;
+    private File mFileSSort;
+    private static String CONFIRM_TAG = "confirmtag";
+    private static String USER_SELECT_TAG = "userselectdialog";
+    private ArrayList<User> myUsers = new ArrayList<>();
+    private UserSelectDialogFragment userSelectDialogFragment;
+    private ArrayList<Message> messageForwardList = new ArrayList<>();
+    private ProgressDialog mProgressDialog;
+    private static final String TAG = "P2PTransferActivity";
 
 
     @Override
@@ -74,7 +119,9 @@ public class P2PTransferActivity extends AppCompatActivity implements UserAccoun
         if (getIntent().getExtras() != null) {
             mType = getIntent().getIntExtra(AppoConstants.WHERE, 0);
         }
+
         setupActionBar();
+
         if (savedInstanceState == null) {
             BankFragment mFragment = new BankFragment();
             Bundle mBundle = new Bundle();
@@ -82,6 +129,7 @@ public class P2PTransferActivity extends AppCompatActivity implements UserAccoun
             mFragment.setArguments(mBundle);
             initFragment(mFragment);
         }
+
     }
 
     private void initFragment(Fragment mFragment) {
@@ -120,8 +168,6 @@ public class P2PTransferActivity extends AppCompatActivity implements UserAccoun
             case android.R.id.home:
                 finish();
                 return true;
-
-
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -132,16 +178,14 @@ public class P2PTransferActivity extends AppCompatActivity implements UserAccoun
         mIndexUser = String.valueOf(reciveruser);
         mCurrencyResponse = currencyResponse;
         mBaseConversion = String.valueOf(baseConversion);
-        WalletTransferFragment2 walletTransferFragment = new WalletTransferFragment2();
-        Bundle bundle = new Bundle();
-        bundle.putInt(AppoConstants.WHERE, mType);
-        bundle.putString(AppoConstants.SENTUSER, mIndexUser);
-        bundle.putBoolean("hasAmount", hasAmount);
-        bundle.putString("amount", amount);
-        bundle.putParcelableArrayList(AppoConstants.SENTCURRENCY, (ArrayList<? extends Parcelable>) mCurrencyResponse);
-        bundle.putString(AppoConstants.SENTBASECONVERSION, mBaseConversion);
-        walletTransferFragment.setArguments(bundle);
-        initFragment(walletTransferFragment);
+        String fromSymble = Helper.getCurrencySymble();
+        try {
+            String toCurrency = reciveruser.getString(AppoConstants.TOCURRENCY);
+            getConversion(fromSymble, toCurrency);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -241,7 +285,79 @@ public class P2PTransferActivity extends AppCompatActivity implements UserAccoun
         }
     }
 
+    private void getConversion(String mFrom, String mTo) {
+        showLoading(getString(R.string.info_please_wait_dots));
 
+        String url = "https://admin.corecoop.net/api/iConnectMasters/CurrencyForexRateBuying?" + "FromCurrency=" + mFrom + "&" + "ToCurrency=" + mTo;
+
+        String userName = "+919999591757";
+        String password = "iConnect@123!";
+        String base = userName + ":" + password;
+        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+        AndroidNetworking.get(url)
+                .addHeaders("Authorization", authHeader)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        hideLoading();
+                        /*
+            WalletTransferFragment2 walletTransferFragment = new WalletTransferFragment2();
+            Bundle bundle = new Bundle();
+            bundle.putInt(AppoConstants.WHERE, mType);
+            bundle.putString(AppoConstants.SENTUSER, mIndexUser);
+            bundle.putBoolean("hasAmount", hasAmount);
+            bundle.putString("amount", amount);
+            bundle.putParcelableArrayList(AppoConstants.SENTCURRENCY, (ArrayList<? extends Parcelable>) mCurrencyResponse);
+            bundle.putString(AppoConstants.SENTBASECONVERSION, mBaseConversion);
+            walletTransferFragment.setArguments(bundle);
+            initFragment(walletTransferFragment);
+                         */
+                        try {
+                            if (response.getString(AppoConstants.MESSAGE).equalsIgnoreCase(AppoConstants.SUCCESS)) {
+                                if (!response.getBoolean(AppoConstants.ERROR)) {
+                                    JSONArray currencyForexRate = response.getJSONArray("CurrencyForexRate");
+                                    JSONObject jsonObject = currencyForexRate.getJSONObject(0);
+                                    String column1 = jsonObject.getString("Column1");
+                                    WalletTransferFragment2 walletTransferFragment = new WalletTransferFragment2();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putInt(AppoConstants.WHERE, mType);
+                                    bundle.putString(AppoConstants.SENTUSER, mIndexUser);
+                                    bundle.putBoolean("hasAmount", hasAmount);
+                                    bundle.putString("amount", amount);
+                                    bundle.putString("exchange", column1);
+                                    bundle.putParcelableArrayList(AppoConstants.SENTCURRENCY, (ArrayList<? extends Parcelable>) mCurrencyResponse);
+                                    bundle.putString(AppoConstants.SENTBASECONVERSION, mBaseConversion);
+                                    walletTransferFragment.setArguments(bundle);
+                                    initFragment(walletTransferFragment);
+
+
+                                }
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Log.e(TAG, "onResponse: " + response.toString());
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e(TAG, "onError: " + anError.getErrorDetail());
+                    }
+                });
+
+    }
+
+    private void showLoading(String message) {
+        mProgressDialog = new ProgressDialog(P2PTransferActivity.this);
+        mProgressDialog.setMessage(message);
+        mProgressDialog.show();
+    }
+
+    private void hideLoading() {
+        mProgressDialog.dismiss();
+    }
 
     //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
 }

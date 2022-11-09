@@ -254,7 +254,7 @@ public class InviteActivity extends AppCompatActivity implements ChatItemClickLi
     @Override
     public void onChatItemClick(Chat chat, int position, View userImage) {
 
-        openChat(ChatActivity.newIntent(mContext, messageForwardList, chat), userImage);
+        openChat(ChatActivity.newIntent(mContext, messageForwardList, chat,""), userImage);
 
     }
 
