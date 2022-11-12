@@ -70,10 +70,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -177,8 +179,12 @@ public class WalletTransferFragment2 extends Fragment {
                         //float transfer = (float) (tranaferAmount * conversionRates);
                         float transfer = (float) (tranaferAmount / exchange);
                         float twoDecimal = (float) Helper.getTwoDecimal(transfer);
-                        mCreditAmount = twoDecimal;
-                        tvAmountCredit.setText(String.valueOf(twoDecimal) + " " + toCurrency.toUpperCase());
+                        mCreditAmount = (float) (twoDecimal + 0.00);
+
+                        DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+                        formatter.applyPattern("#,###,###,###.00");
+                        String formattedString = formatter.format(twoDecimal);
+                        tvAmountCredit.setText(String.valueOf(formattedString) + " " + toCurrency.toUpperCase());
                         btnTransfer.setEnabled(true);
                         btnTransfer.setClickable(true);
                     } else {
@@ -289,7 +295,13 @@ public class WalletTransferFragment2 extends Fragment {
 
                         JsonObject body = response.body();
                         String res = body.toString();
+                        Helper.setUserDetailsNull();
                         DataVaultManager.getInstance(getContext()).saveUserDetails(res);
+                        String currantBalance = Helper.getCurrantBalance();
+                        DecimalFormat df2 = new DecimalFormat("#.00");
+                        Double doubleV = Double.parseDouble(currantBalance);
+                        String format = df2.format(doubleV);
+                        tvBalance.setText("$" + format);
 
                         readUserAccounts();
                     } else {
@@ -775,12 +787,13 @@ public class WalletTransferFragment2 extends Fragment {
         MyButton btnShare = mCustomLayout.findViewById(R.id.btnShare);
         MyButton btnClose = mCustomLayout.findViewById(R.id.btnClose);
         tvHeader.setText("Transfer Money");
-        tvAmountPay.setText(" Amount : " + edAmount.getText().toString().trim());
+        //tvAmountPay.setText(" Amount : " + edAmount.getText().toString().trim());
         tvReceiverAmt.setText("Receiver Amount : " + tvAmountCredit.getText().toString().trim());
         tvReceiverAmt.setTextColor(Color.parseColor("#334CFF"));
         float cost = amountaftertax_fees - Float.parseFloat(edAmount.getText().toString().trim());
         float twoDecimal = Helper.getTwoDecimal(cost);
-        tvCost.setText("Transaction Cost : " + twoDecimal);
+        String param1 = "Processing Fees : " + processingfees + "\n" + " Taxes : " + taxes + "\n" + "Transaction Cost : " + twoDecimal;
+        tvCost.setText(param1);
         tvCost.setTextColor(Color.parseColor("#FE3156"));
 
         String currencyId = Helper.getCurrencyId();
@@ -793,13 +806,13 @@ public class WalletTransferFragment2 extends Fragment {
                 break;
             }
         }
-
-
-
+        String format = String.format("%.2f", Float.parseFloat(edAmount.getText().toString()));
+        //float twoDecimal1 = Helper.getTwoDecimal(Float.parseFloat(edAmount.getText().toString()));
+        tvAmountPay.setText(" Amount : " + format + " " + mCurrencyId.toUpperCase());
         tvCurrencyPay.setText("Currency : " + mCurrencyId);
         tvTransactionTime.setText("Transaction Time : " + getDateTime());
         tvVoucherPay.setText("Transaction No : " + param);
-        tvInfo.setText("Paid to " + recname + "" + "\nSUCCESS");
+        tvInfo.setText("Transfer to " + recname + "" + "\nSUCCESS");
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override

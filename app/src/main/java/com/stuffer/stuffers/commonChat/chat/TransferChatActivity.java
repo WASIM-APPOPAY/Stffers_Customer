@@ -88,10 +88,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -270,6 +272,10 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
                         float twoDecimal = (float) Helper.getTwoDecimal(transfer);
                         mCreditAmount = twoDecimal;
                         tvAmountCredit.setText(String.valueOf(twoDecimal) + " " + toCurrency.toUpperCase());
+                        DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+                        formatter.applyPattern("#,###,###,###.00");
+                        String formattedString = formatter.format(twoDecimal);
+                        tvAmountCredit.setText(String.valueOf(formattedString) + " " + toCurrency.toUpperCase());
                         btnTransfer.setEnabled(true);
                         btnTransfer.setClickable(true);
                     } else {
@@ -411,10 +417,10 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
 
                             Toast.makeText(TransferChatActivity.this, getString(R.string.error_user_details_not_exists), Toast.LENGTH_SHORT).show();
                         } else {
-                            String receiverAvatar = Helper.getReceiverAvatar(new JSONObject(res));
-                            if (!StringUtils.isEmpty(receiverAvatar)) {
-                                if (!StringUtils.isEmpty(receiverAvatar)) {
-                                    Glide.with(TransferChatActivity.this).load(receiverAvatar).placeholder(R.drawable.user_chat).centerCrop().into(circularSender);
+                            String senderAvatar = Helper.getSenderAvatar();
+                            if (!StringUtils.isEmpty(senderAvatar) && senderAvatar != "null") {
+                                if (!StringUtils.isEmpty(senderAvatar)) {
+                                    Glide.with(TransferChatActivity.this).load(senderAvatar).placeholder(R.drawable.user_chat).centerCrop().into(circularSender);
                                 }
                             }
                             onSearchRequest(substring, mAreaCode);
@@ -579,7 +585,11 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
                                     float transfer = (float) (tranaferAmount / exchange);
                                     float twoDecimal = (float) Helper.getTwoDecimal(transfer);
                                     mCreditAmount = twoDecimal;
-                                    tvAmountCredit.setText(String.valueOf(twoDecimal) + " " + toCurrency.toUpperCase());
+                                    DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+                                    formatter.applyPattern("#,###,###,###.00");
+                                    String formattedString = formatter.format(twoDecimal);
+                                    tvAmountCredit.setText(String.valueOf(formattedString) + " " + toCurrency.toUpperCase());
+                                    //tvAmountCredit.setText(String.valueOf(twoDecimal) + " " + toCurrency.toUpperCase());
                                     btnTransfer.setEnabled(true);
                                     btnTransfer.setClickable(true);
 
@@ -922,63 +932,8 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         dialogTransfer.show();
     }
 
+
     /*private void showPayDialogLikeUnion(String param) {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TransferChatActivity.this);
-        View mCustomLayout = LayoutInflater.from(TransferChatActivity.this).inflate(R.layout.success_dialog_inner_appopay, null);
-        LinearLayout layoutRoot = mCustomLayout.findViewById(R.id.layoutRoot);
-        MyTextView tvInfo = mCustomLayout.findViewById(R.id.tvInfo);
-        MyTextView tvHeader = mCustomLayout.findViewById(R.id.tvHeader);
-        MyTextViewBold tvAmountPay = mCustomLayout.findViewById(R.id.tvAmountPay);
-        MyTextView tvCurrencyPay = mCustomLayout.findViewById(R.id.tvCurrencyPay);
-        MyTextView tvTransactionTime = mCustomLayout.findViewById(R.id.tvTransactionTime);
-        MyTextView tvVoucherPay = mCustomLayout.findViewById(R.id.tvVoucherPay);
-        MyButton btnShare = mCustomLayout.findViewById(R.id.btnShare);
-        MyButton btnClose = mCustomLayout.findViewById(R.id.btnClose);
-        tvHeader.setText("Transfer Money");
-        tvAmountPay.setText("Amount : " + edAmount.getText().toString().trim());
-        String currencyId = Helper.getCurrencyId();
-        String mCurrencyId = "";
-        if (Helper.getCurrencyId().equalsIgnoreCase("1")) {
-            mCurrencyId = "USD";
-        } else if (Helper.getCurrencyId().equalsIgnoreCase("2")) {
-
-            mCurrencyId = "INR";
-        } else if (Helper.getCurrencyId().equalsIgnoreCase("3")) {
-
-            mCurrencyId = "CAD";
-        } else if (Helper.getCurrencyId().equalsIgnoreCase("4")) {
-
-            mCurrencyId = "ERU";
-        } else if (Helper.getCurrencyId().equalsIgnoreCase("5")) {
-
-            mCurrencyId = "DOP";
-        }
-        tvCurrencyPay.setText("Currency : " + mCurrencyId);
-        tvTransactionTime.setText("Transaction Time : " + getDateTime());
-        tvVoucherPay.setText("Transaction No : " + param);
-        tvInfo.setText("Paid to " + recname + "" + "\nSUCCESS");
-
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                redirectHome();
-            }
-        });
-        btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                takeScreenShort(layoutRoot);
-            }
-        });
-        mBuilder.setView(mCustomLayout);
-        mDialog = mBuilder.create();
-        mDialog.setCanceledOnTouchOutside(false);
-        mDialog.show();
-
-    }*/
-    private void showPayDialogLikeUnion(String param) {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(TransferChatActivity.this);
         View mCustomLayout = LayoutInflater.from(TransferChatActivity.this).inflate(R.layout.success_dialog_inner_appopay_transfer, null);
         LinearLayout layoutRoot = mCustomLayout.findViewById(R.id.layoutRoot);
@@ -1012,17 +967,81 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
             }
         }
 
-
+        tvAmountPay.setText(" Amount : " + edAmount.getText().toString().trim() + " " + mCurrencyId.toUpperCase());
         tvCurrencyPay.setText("Currency : " + mCurrencyId);
         tvTransactionTime.setText("Transaction Time : " + getDateTime());
         tvVoucherPay.setText("Transaction No : " + param);
-        tvInfo.setText("Paid to " + recname + "" + "\nSUCCESS");
+        tvInfo.setText("Transfer to " + recname + "" + "\nSUCCESS");
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                *//*mDialog.dismiss();
+                TransferChatActivity.this.onBackPressed();*//*
+                redirectHome();
+            }
+        });
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                takeScreenShort(layoutRoot);
+            }
+        });
+        mBuilder.setView(mCustomLayout);
+        mDialog = mBuilder.create();
+        mDialog.setCanceledOnTouchOutside(false);
+        mDialog.show();
+
+    }*/
+
+    private void showPayDialogLikeUnion(String param) {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TransferChatActivity.this);
+        View mCustomLayout = LayoutInflater.from(TransferChatActivity.this).inflate(R.layout.success_dialog_inner_appopay_transfer, null);
+        LinearLayout layoutRoot = mCustomLayout.findViewById(R.id.layoutRoot);
+        MyTextView tvInfo = mCustomLayout.findViewById(R.id.tvInfo);
+        MyTextView tvHeader = mCustomLayout.findViewById(R.id.tvHeader);
+        MyTextViewBold tvAmountPay = mCustomLayout.findViewById(R.id.tvAmountPay);
+        MyTextViewBold tvCost = mCustomLayout.findViewById(R.id.tvCost);
+        MyTextViewBold tvReceiverAmt = mCustomLayout.findViewById(R.id.tvReceiverAmt);
+        MyTextView tvCurrencyPay = mCustomLayout.findViewById(R.id.tvCurrencyPay);
+        MyTextView tvTransactionTime = mCustomLayout.findViewById(R.id.tvTransactionTime);
+        MyTextView tvVoucherPay = mCustomLayout.findViewById(R.id.tvVoucherPay);
+        MyButton btnShare = mCustomLayout.findViewById(R.id.btnShare);
+        MyButton btnClose = mCustomLayout.findViewById(R.id.btnClose);
+        tvHeader.setText("Transfer Money");
+        //tvAmountPay.setText(" Amount : " + edAmount.getText().toString().trim());
+        tvReceiverAmt.setText("Receiver Amount : " + tvAmountCredit.getText().toString().trim());
+        tvReceiverAmt.setTextColor(Color.parseColor("#334CFF"));
+        float cost = amountaftertax_fees - Float.parseFloat(edAmount.getText().toString().trim());
+        float twoDecimal = Helper.getTwoDecimal(cost);
+        String param1 = "Processing Fees : " + processingfees + "\n" + " Taxes : " + taxes + "\n" + "Transaction Cost : " + twoDecimal;
+        tvCost.setText(param1);
+        tvCost.setTextColor(Color.parseColor("#FE3156"));
+
+        String currencyId = Helper.getCurrencyId();
+        String mCurrencyId = "";
+
+        for (int i = 0; i < resultCurrency.size(); i++) {
+            if (currencyId.equals(String.valueOf(resultCurrency.get(i).getId()))) {
+                mCurrencyId = resultCurrency.get(i).getCurrencyCode();
+                //Log.e(TAG, "showPayDialogLikeUnion: "+mCurrencyId );
+                break;
+            }
+        }
+        String format = String.format("%.2f", Float.parseFloat(edAmount.getText().toString()));
+        //float twoDecimal1 = Helper.getTwoDecimal(Float.parseFloat(edAmount.getText().toString()));
+        tvAmountPay.setText(" Amount : " + format + " " + mCurrencyId.toUpperCase());
+        tvCurrencyPay.setText("Currency : " + mCurrencyId);
+        tvTransactionTime.setText("Transaction Time : " + getDateTime());
+        tvVoucherPay.setText("Transaction No : " + param);
+        tvInfo.setText("Transfer to " + recname + "" + "\nSUCCESS");
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 /*mDialog.dismiss();
-                TransferChatActivity.this.onBackPressed();*/
+                getActivity().onBackPressed();*/
                 redirectHome();
             }
         });

@@ -407,7 +407,7 @@ public interface MainAPIInterface<R extends Retrofit> {
     );
 
     @POST(Constants.GET_MAPPING2)
-    Call<MappingResponse2> getMapping(
+    Call<JsonObject> getMapping(
             @Body JsonObject param
     );
 

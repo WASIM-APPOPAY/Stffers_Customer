@@ -2,6 +2,7 @@ package com.stuffer.stuffers.fragments.wallet_fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +13,24 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.adapter.recyclerview.CountryAdapter;
 import com.stuffer.stuffers.communicator.CountryListener;
 import com.stuffer.stuffers.models.ListCountry;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 
 public class CountryFragment extends Fragment {
 
-
+    private static final String TAG = "CountryFragment";
     private View mView;
     private RecyclerView rvCountryList;
     ArrayList<ListCountry> mListCountries;
@@ -47,7 +55,7 @@ public class CountryFragment extends Fragment {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_country, container, false);
         rvCountryList = mView.findViewById(R.id.rvCountryList);
-        rvCountryList.setLayoutManager(new GridLayoutManager(getActivity(), 2, RecyclerView.VERTICAL, false));
+        rvCountryList.setLayoutManager(new GridLayoutManager(getActivity(), 3, RecyclerView.VERTICAL, false));
         addCountries();
 
         return mView;
@@ -85,18 +93,53 @@ public class CountryFragment extends Fragment {
         mListCountries.add(new ListCountry("Peru", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo3QzE2MzA2QjNCMjA2ODExOTEwOTkzNkE0OUQ5OUE5OSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo5QjYwRjQ5MTk2RjIxMUUwQTVDQTg2RDUwOTA5QjE5NSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo5QjYwRjQ5MDk2RjIxMUUwQTVDQTg2RDUwOTA5QjE5NSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IFdpbmRvd3MiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo3QkYwNEVEODE2NkRFMDExOEI5OUY3NUM5RDg4RUFBOCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo3QzE2MzA2QjNCMjA2ODExOTEwOTkzNkE0OUQ5OUE5OSIvPiA8L3JkZjpEZXNjcmlwdGlv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"));
         mListCountries.add(new ListCountry("Dominican Republic", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo3QzE2MzA2QjNCMjA2ODExOTEwOTkzNkE0OUQ5OUE5OSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDoxQ0JBNEQ5N0FEOUQxMUUyOTQ0NkFDNzVBQzczN0MyQyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDoxQ0JBNEQ5NkFEOUQxMUUyOTQ0NkFDNzVBQzczN0MyQyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IFdpbmRvd3MiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpEREEwMkNGREVCOTZFMDExOEU1N0RFMEQxMkRFQTQxMyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo3QzE2MzA2QjNCMjA2ODExOTEwOTkzNkE0OUQ5OUE5OSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pu2V1DUAAASKSURBVHja7FtNbxtFGH52vbGdko8mJQlNGiUVqoJahFqgcIAeqIRUcewFwYkDohVCIHHj3iPixC+AA4dWCpd+SIgPCahAqEJIbSVkmlBi3CTQuCQO8czuzjDj7Lr2rtebmIzXsue1Rjv2zs6888zzfszu2uCco5fFRI+LBkADoAHQAGjpZTFqmNAnSsY7diszmCi2KMQ7Mss7ISc99PzrF1YPTYwo1eDSR283Pb/4xrtKx7cLy5j74uK4qK5LIHwA5MqP5+7ewzuvnQZLMDscPnNaHd1NE3c+uCCr4x4LSB0DZGW9VEZxYxNRGMjU2TCMurqfTvu/B9vtRmi+oAyA1P5hqRm8uco5w6rxARmptOO6lcJZBADiY8AI/bbtUKIn3Oi6hu0cp9rXTq+JGiN0vZiXt7IZ389ZgR5AXQbHYWAsGTPgjuurUnes99u8CQjR3025sIEGVhBBWyggS2IA2LbCvp0QRPUAVBjQGgDS3PfCd24rqQgA6oQoEjABjrLtggol9pIBvCbh2DUAQVSbOVa/bUQbTpxQf1ZQUckAGsOA5lb4f1eJ7n348yIVt2kMAOIkpZIBMgqwZBIBBT6gOmVqxwGAigmQFgBoNe6HclWq0AkSCh7LACIYIJxFUgxQGgUamFcIgLKYPBFKJAYAoer67iPb26FmTpAk7ANaNYHa9Dyyb2LHO8GynTADWowCfKcMiAOAiFhpUxkG3boQshvU/WtacYpMmEBcv1F61M6joZ4W3UEUkE5QUIWL3VAjRRopETXh2l1iI8VzC4swUyYen5mpYYD9cDUDCQdHIKPiTVbfCJ/nZpgBfndjohzb2tr6OpvNqg3zIsn6/PK3KG0VMXJgDGm42HiwgoHBCZx5+UWkUiml45fLZfT3978kqrdE+avtt742SwSL95dxY+F3QUkXr6wXMPbTN8gX7uDfTbftPsdqu5cXjsg4Usb175bASkuYLf2NxXtrWDu1H9T8xyNjFwPw8Q+f4Mfcz3jzubMYH7CRowz8+ADmf/0Qo6PzOPfCW90NwPRjs1guLuH8tRv48s8VXN83iYNzh/FgEsizjWRNoLJjUnxD9OzGDK788RmuToziKWMIt4cOYN74HsVcDq8+8aTy8WP3AqoVyAyP4ORXBfw2uSZMYBbPZglKK7dwKn8QR997JlkAmMj+VINgHZnC+59eg3M3j7WZUaQz+3ByYRXm1KNgg1mphLKxZT7CAv3XAfDL9AkMptKgzKne6d1rOS5WGwN9SB07/NDfz01tjyaATz+t0Ammh8Rmp9h8M+QfeZsomLSEAOCJA6ASIIbYu8LV0osMaMt2Nw4AlQD5qxttAvUf7QM0AN3mBHmME9QM6IA8oL0E6MAooE0gURPohDCYIAM6wwS6PAx2mlhhknBkTHW3pmMflvQ9opB+LBIAeYbc5y7yCp/OSrFv3mzeoJRXu+Rm5e044s25+mBEvjc3LcpRUQ5537tR5NuhEuHboizJ7z4DJCKrXl02yHQpAMQDYdWr65eloaXHxdD/G+xx0QBoADQAGgANQC/LfwIMAEzZwS/B41VsAAAAAElFTkSuQmCC"));
         mListCountries.add(new ListCountry("Paraguay", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo3QzE2MzA2QjNCMjA2ODExOTEwOTkzNkE0OUQ5OUE5OSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo1N0YyOEU1Rjk2RjIxMUUwQUJGOEI5ODY5RUExRkI3NiIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo1N0YyOEU1RTk2RjIxMUUwQUJGOEI5ODY5RUExRkI3NiIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IFdpbmRvd3MiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo3QkYwNEVEODE2NkRFMDExOEI5OUY3NUM5RDg4RUFBOCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo3QzE2MzA2QjNCMjA2ODExOTEwOTkzNkE0OUQ5OUE5OSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PitpTg8AAAS+SURBVHja7FtdbNtUFP5sJ7Hz26TJMvoHY2J0WlUegA4xNDHYJgQMJFRp4nnihQeENIH4kXiYeChISDwhwRMST0MIygMw0JBAUIHYC5M2WFc6IrGu6k+6pU2T1Hbsy7mZg5Kw/HRd3M7xiY7i2Nc393z+znfPdRyBMYZONhEdbi4ALgAuAC4ArnWyCRVM8JLL1rtTmWGS6+Sq9W56rAM86MiVQ08tSImEo6+4kU6j7/tvkrS5woEoA8CvfDJ3KYXeF44RLgacWCAKkoTZN97im0mLBWoVAxgYjGwW5vIy6iLA9wtC9Xa5bXl/bbt6Vq+vZufdqP9G51nHxGgUPEYeqxUzPBUaIPOGzCiCFYutAVC5rxaAVs6r167cV6vntAgKj83qXy7rnKe6A3IePHfT3KI8FnDT+Vm6sNW7PKhFoGhcZ8BWBWAjRrHVIvA/BjBNB9P1dQMg0Ithaysnj60xAzi1VI1myPUzgK0nN9ejDbV0b6VtvTY8NsYaA8B0jZDSGgOwkTzcRN3gsTUH4CZT4Haw6ynAmqUA1QfNGLCRaW4zjcfWCAAuYiY1Mku54jwGCBQbQ0sMUOHIWrgZA0oawFHStNsPgMqSul6WNgPgrtQkFEWxX5wq1uXttvDaGuD316sE7TGNGJbOrlJtzkqCK3q90OnKRMMBRIJBW8diOwDLq6tIL2UQOH8GytRPMLQ5EicF0vbdyOw7guVkEn3bEhBFe+7J2HrnZ41ycHHuKrq++wTBUx/AiPdA3DsKc+9BBLJ/ITz+GoR/UriymLZtTLYCMH9tBeGpH+D741ucfeZFfLFrGFMD+3AquQOf7T8K/e4hBL8eQzGdQTafd1YKmJTjYkGFb2Icsw8+gZMrc2Bn+nHy/KeIxLahe2QR8T2HcHD6N8iTP1MqPIdwIOAcBuRIfbMzKXhnLuL0fBaZBQm/TPyK1599F0HtY8yfjeFCfglFhCGmzkHy+pyVAlzURJEI5zchhxgkSYdmbMfEuW7MpuPwBWk5TdWnyIoQZI9tZYhYXQextrlCU523vx85aQCP/Z0HC63i8NNhTK2M4c77jiDT+zuGzSBy45MoRAeh64W2jWVTAOCFjqh4kR05BuWjz/FKJoTYIPDyiSE8MprEqw88ifvHPoSWHEZh5FEkwiFbAKgSQZNWgDdqdKusJxrDpQMPw/PmccTffg/PD94D70PTOLB0FfLpH6Ht3IH8Oyfgj4QgE2PMW7wkF6hcru3TU48B7TCJdGAgkcDlo6OQhofg+/IrCBenIXp80I+/BPXw44jQ8Z54vG1jaMiAdgPATZFl7OrrRaYrgvnd9xIoAjRdR6wriiStQ/yKv63f3xCAgkoKLBWJJu2VYK4HQSWEnT0hGAYpP1GzRE8a3BqNgbVtJhJKMdYF4I797wNyEtAzjrwhAl83oC40qgRZjTvuriCa/i7QYfG7DOj4R2RcBrgMcGeBmuOmg+M3W5oFOgsB90lRVwRrU4DRYkEKOjNaHlsdEeTJoaKYA7RrDud86WarasX8309y/Lm5AfI95P3WZycafzp0hvxP8sv8c5kBHJHyOpE3kB0KgGqBsGBtuw9Lw7UON8H936BbCboAuAC4ALgAuAB0rP0rwACktVAyytBbMwAAAABJRU5ErkJggg=="));
-        CountryAdapter mCountryAdapter = new CountryAdapter(mListCountries, getActivity());
-        rvCountryList.setAdapter(mCountryAdapter);
+        /*CountryAdapter mCountryAdapter = new CountryAdapter(mListCountries, getActivity());
+        rvCountryList.setAdapter(mCountryAdapter);*/
 
+        getFlags();
+
+    }
+
+    private void getFlags() {
+        mListCountries=new ArrayList<>();
+        AndroidNetworking.get("https://prodapi.appopay.com/api/s3/bucket/appopay-mobile-logos/location/list")
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e(TAG, "onResponse: " + response);
+                        try {
+                            JSONArray result = response.getJSONArray("result");
+                            for (int i = 0; i < result.length(); i++) {
+                                String path = (String) result.get(i);
+                                mListCountries.add(new ListCountry("", path));
+
+                            }
+                            if (mListCountries.size() > 0) {
+                                CountryAdapter mCountryAdapter = new CountryAdapter(mListCountries, getActivity());
+                                rvCountryList.setAdapter(mCountryAdapter);
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e(TAG, "onError: " + anError.getErrorDetail());
+                    }
+                });
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        mCountryListener=(CountryListener)context;
+        mCountryListener = (CountryListener) context;
     }
 
     public void updatePosition(int pos) {
-        mCountryListener.onCountrySelect(pos,mListCountries.get(pos).getName(),mListCountries.get(pos).getFlagPath());
+        mCountryListener.onCountrySelect(pos, mListCountries.get(pos).getName(), mListCountries.get(pos).getFlagPath());
     }
 }

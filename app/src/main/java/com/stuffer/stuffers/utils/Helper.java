@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -229,10 +230,15 @@ public class Helper {
 
     public static float getTwoDecimal(float params) {
         float roundedFloat = (float) ((float) Math.round(params * 100.0) / 100.0);
+        DecimalFormat df = new DecimalFormat("#.00");
+        String format = df.format(roundedFloat);
+        //String ret=String.format("%.2f", roundedFloat);
         //Log.e(TAG, "getTwoDecimal: ::: " + roundedFloat);
-        return roundedFloat;
+        return Float.parseFloat(format);
+
     }
-   public static float getTwoDecimalTransfer(float params) {
+
+    public static float getTwoDecimalTransfer(float params) {
         float roundedFloat = (float) ((float) Math.round(params * 100.0) / 100.0);
         //Log.e(TAG, "getTwoDecimal: ::: " + roundedFloat);
         return roundedFloat;
@@ -2400,7 +2406,8 @@ public class Helper {
         }
         return null;
     }
-public static String getCurrencyId(JSONObject object) {
+
+    public static String getCurrencyId(JSONObject object) {
         try {
 
             JSONObject result = object.getJSONObject(AppoConstants.RESULT);
@@ -3011,7 +3018,12 @@ public static String getCurrencyId(JSONObject object) {
         try {
             JSONObject object = new JSONObject(Helper.getUserDetails());
             JSONObject result = object.getJSONObject(AppoConstants.RESULT);
-            String avatar = result.getString(AppoConstants.AVATAR);
+            String avatar = "";
+            if (result.has(AppoConstants.AVATAR)) {
+
+                avatar = result.getString(AppoConstants.AVATAR);
+            }
+
             return avatar;
 
         } catch (JSONException e) {
@@ -3023,7 +3035,12 @@ public static String getCurrencyId(JSONObject object) {
     public static String getReceiverAvatar(JSONObject object) {
         try {
             JSONObject result = object.getJSONObject(AppoConstants.RESULT);
-            String avatar = result.getString(AppoConstants.AVATAR);
+            String avatar = "";
+            if (result.has(AppoConstants.AVATAR)) {
+
+                avatar = result.getString(AppoConstants.AVATAR);
+            }
+
             return avatar;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -3049,6 +3066,7 @@ public static String getCurrencyId(JSONObject object) {
         }
         return "";
     }
+
     public static String getCurrencySymble(JSONObject object) {
         try {
             JSONObject result = object.getJSONObject(AppoConstants.RESULT);

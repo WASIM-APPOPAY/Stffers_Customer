@@ -101,6 +101,7 @@ public class BankFragment extends Fragment {
     private int mType = 0;
     private CircleImageView circularSender;
     private String receiverAvatar;
+    private JSONObject indexUserTo;
 
 
     @Override
@@ -347,8 +348,8 @@ public class BankFragment extends Fragment {
 
 
                     try {
-                        indexUser = new JSONObject(res);
-                        if (indexUser.isNull("result")) {
+                        indexUserTo = new JSONObject(res);
+                        if (indexUserTo.isNull("result")) {
 
                             Toast.makeText(getContext(), getString(R.string.error_user_detail_not_found), Toast.LENGTH_SHORT).show();
                         } else {
@@ -415,13 +416,18 @@ public class BankFragment extends Fragment {
         String nameWithMobile = null;
         receiverAvatar = "";
         try {
-            JSONObject root = indexUser;
+            JSONObject root = indexUserTo;
             JSONObject objResult = root.getJSONObject(AppoConstants.RESULT);
             nameWithMobile = objResult.getString(AppoConstants.FIRSTNAME) + " " + objResult.getString(AppoConstants.LASTNAME) + "-" + objResult.getString(AppoConstants.MOBILENUMBER);
             recivername = objResult.getString(AppoConstants.FIRSTNAME) + " " + objResult.getString(AppoConstants.LASTNAME);
             reciveruserid = objResult.getString(AppoConstants.ID);
             reciveremail = objResult.getString(AppoConstants.EMIAL);
-            receiverAvatar = objResult.getString(AppoConstants.AVATAR);
+            if (objResult.has(AppoConstants.AVATAR)) {
+                receiverAvatar = objResult.getString(AppoConstants.AVATAR);
+            } else {
+                receiverAvatar = "";
+            }
+
 
             JSONObject objCustomerDetails = objResult.getJSONObject(AppoConstants.CUSTOMERDETAILS);
             JSONArray arrCustomerAccount = objCustomerDetails.getJSONArray(AppoConstants.CUSTOMERACCOUNT);
@@ -500,7 +506,7 @@ public class BankFragment extends Fragment {
             objReceiver.put(AppoConstants.RECIEVERUSERID, reciveruserid);
             objReceiver.put(AppoConstants.EMIAL, reciveremail);
             objReceiver.put(AppoConstants.AVATAR, receiverAvatar);
-            String currencySymble = Helper.getCurrencySymble(indexUser);
+            String currencySymble = Helper.getCurrencySymble(indexUserTo);
             //Log.e(TAG, "sentParam: To Currency" + currencySymble);
             objReceiver.put(AppoConstants.TOCURRENCY, currencySymble);
 

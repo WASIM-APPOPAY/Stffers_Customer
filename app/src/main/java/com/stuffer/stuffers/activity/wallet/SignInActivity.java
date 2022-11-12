@@ -28,7 +28,10 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.hbb20.CountryCodePicker;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.MyContextWrapper;
@@ -39,6 +42,7 @@ import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.Constants;
 import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.commonChat.chatModel.Chat;
+import com.stuffer.stuffers.commonChat.chatUtils.ChatHelper;
 import com.stuffer.stuffers.communicator.AreaSelectListener;
 import com.stuffer.stuffers.commonChat.chat.TransferChatActivity;
 import com.stuffer.stuffers.communicator.OnTransactionPinSuccess;
@@ -62,6 +66,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -276,16 +281,29 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         mJsonObject.addProperty("userType", "CUSTOMER");
         //mainAPIInterface.getMapping("+" + selectedCountryCode + mDominicaAreaCode + edtMobile.getText().toString().trim()).enqueue(new Callback<MappingResponse>() {
 
-        mainAPIInterface.getMapping(mJsonObject).enqueue(new Callback<MappingResponse2>() {
+        mainAPIInterface.getMapping(mJsonObject).enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<MappingResponse2> call, Response<MappingResponse2> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    if (response.body().getStatus().equals(200)) {
-                        //Log.e(TAG, "onResponse: "+response.body().getResult().getUniqueNumber());
-                        DataVaultManager.getInstance(SignInActivity.this).saveUniqueNumber(response.body().getResult().getUniqueNumber());
-                        getAccessToken();
+                    JsonObject body = response.body();
+                    if (body.has("result")) {
+                        try {
+                            if (body.get("result").getAsString().equalsIgnoreCase("failed")) {
+                                Helper.showLongMessage(SignInActivity.this, body.get("message").getAsString());
+                            }
+
+                        } catch (Exception e) {
+                            JsonObject result = body.getAsJsonObject("result");
+                            MappingResponse2.Result mResult = new Gson().fromJson(result, new TypeToken<MappingResponse2.Result>() {
+                            }.getType());
+                            DataVaultManager.getInstance(SignInActivity.this).saveUniqueNumber(mResult.getUniqueNumber());
+                            getAccessToken();
+                        }
+                    } else {
+
                     }
+
                 } else {
                     if (response.code() == 502) {
                         Toast.makeText(SignInActivity.this, getString(R.string.info_bad_request), Toast.LENGTH_SHORT).show();
@@ -299,8 +317,14 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
             }
 
             @Override
-            public void onFailure(Call<MappingResponse2> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
+
+                RequestBody body = call.request().body();
+                String s = new Gson().toJson(body);
+                Log.e(TAG, "onFailure: " + s);
+                Log.e(TAG, "onFailure: " + t.getMessage());
+
                 //Log.e("tag", t.getMessage().toString());
             }
         });
