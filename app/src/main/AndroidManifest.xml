@@ -27,9 +27,7 @@
         android:largeScreens="true"
         android:normalScreens="true"
         android:resizeable="false"
-        android:smallScreens="true" />
-    <!--<uses-permission android:name="android.permission.RECEIVE_SMS"/>-->
-
+        android:smallScreens="true" /> <!-- <uses-permission android:name="android.permission.RECEIVE_SMS"/> -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -54,8 +52,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-
-
+        <activity
+            android:name=".SendCashActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.wallet.UrlsActivity"
             android:exported="false" />
@@ -452,33 +451,31 @@
         <activity
             android:name=".activity.wallet.ScanPayActivity"
             android:screenOrientation="portrait" />
-
         <activity
-            android:exported="false"
             android:name=".activity.wallet.P2PTransferActivity"
+            android:exported="false"
             android:parentActivityName=".activity.wallet.HomeActivity2"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.stuffer.stuffers.activity.wallet.P2PTransferActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
-                <!--<meta-data
+                <!--
+                    <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.stuffer.stuffers.activity.wallet.P2PTransferActivity" />-->
+                    android:value="com.stuffer.stuffers.activity.wallet.P2PTransferActivity" />
+                -->
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.wallet.MyQrCodeActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".commonChat.chat.TransferChatActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.wallet.TabsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".commonChat.chat.ImageViewerActivity"
             android:screenOrientation="portrait" />
@@ -486,11 +483,14 @@
             android:name=".commonChat.chat.BasicInfoActivity"
             android:exported="true"
             android:screenOrientation="portrait">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".activity.wallet.CurMapActivity"
@@ -502,7 +502,6 @@
             android:name=".activity.wallet.OtherBusinessActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.wallet.StatusActivity"
             android:exported="false"
@@ -510,7 +509,9 @@
         <activity
             android:name=".activity.wallet.OtherProductActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".activity.cashSends.SendCashActivity"
+            android:screenOrientation="portrait" />
         <!--
 <service
             android:name=".fragments.bottom.chatnotification.AppopayFirebaseMessaging"
@@ -522,7 +523,6 @@
             </intent-filter>
         </service>
         -->
-
         <receiver
             android:name=".myService.NotificationReceiver"
             android:enabled="true"
@@ -552,7 +552,6 @@
         <service
             android:name=".asyntask.MyJobIntentService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-
         <service
             android:name=".myService.FetchMyUsersService"
             android:exported="false" />

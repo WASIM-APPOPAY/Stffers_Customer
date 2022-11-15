@@ -102,6 +102,7 @@
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_remove_card.xml" value="0.15217391304347827" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_scan_pay.xml" value="0.12090163934426229" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_screen_lock.xml" value="0.12090163934426229" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_send_cash.xml" value="0.16047144152311876" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_setting_actvity.xml" value="0.11475409836065574" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_status.xml" value="0.2" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/activity_tabs.xml" value="0.12090163934426229" />
@@ -116,6 +117,8 @@
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/app_bar_drawer.xml" value="0.15217391304347827" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/bank_fragment.xml" value="0.11475409836065574" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/bottom_home_layout.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/bottom_not_card.xml" value="0.16047144152311876" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/bottom_send_type.xml" value="0.16047144152311876" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/common_bottom_layout.xml" value="0.1" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/custom_drawable_layout.xml" value="0.22" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/customer_homescreen_layout.xml" value="0.21" />
@@ -124,16 +127,17 @@
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/dialog_product_cart.xml" value="0.16047144152311876" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/dialog_select_bind.xml" value="0.16047144152311876" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/dialog_select_photo.xml" value="0.16047144152311876" />
-        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/dialog_success_cashdend.xml" value="0.15217391304347827" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/dialog_success_cashdend.xml" value="0.18" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/dialog_v_card_detail.xml" value="0.16032608695652173" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/empty_view.xml" value="0.16032608695652173" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_beneficiary_details.xml" value="0.22" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_bottom_chat.xml" value="0.12090163934426229" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_card_details.xml" value="0.12090163934426229" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_card_list.xml" value="0.11475409836065574" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_cash_beneficiary.xml" value="0.22" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_chat.xml" value="0.12090163934426229" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_confirmation.xml" value="0.16032608695652173" />
-        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_customer_details.xml" value="0.15217391304347827" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_customer_details.xml" value="0.25" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_finance.xml" value="0.15217391304347827" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_forgot_password.xml" value="0.15231187669990934" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_mycamera.xml" value="0.16047144152311876" />

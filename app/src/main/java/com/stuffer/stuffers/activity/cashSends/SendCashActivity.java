@@ -15,9 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.communicator.BeneficiaryListener;
 import com.stuffer.stuffers.communicator.CalculationListener;
 import com.stuffer.stuffers.communicator.CountrySelectListener;
-import com.stuffer.stuffers.communicator.BeneficiaryListener;
 import com.stuffer.stuffers.communicator.DestinationListener;
 import com.stuffer.stuffers.communicator.IncomeListener;
 import com.stuffer.stuffers.communicator.ModeListener;
@@ -28,8 +28,7 @@ import com.stuffer.stuffers.utils.Helper;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class CashSend extends AppCompatActivity implements CountrySelectListener, OnItemSelect, BeneficiaryListener, CalculationListener, ModeListener, DestinationListener, IncomeListener, PurposeListener {
-
+public class SendCashActivity extends AppCompatActivity implements CountrySelectListener, OnItemSelect, BeneficiaryListener, CalculationListener, ModeListener, DestinationListener, IncomeListener, PurposeListener {
     private TextView toolbarTitle;
     private String mNationalityCode;
     private String mIncomeId, mPurposeId;
@@ -37,7 +36,8 @@ public class CashSend extends AppCompatActivity implements CountrySelectListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cash_send);
+        setContentView(R.layout.activity_send_cash);
+
         setupActionBar();
         if (savedInstanceState == null) {
             CustomerDetails mCustomerDetails = new CustomerDetails();
@@ -89,6 +89,9 @@ public class CashSend extends AppCompatActivity implements CountrySelectListener
         if (fragmentById instanceof CustomerDetails) {
             Log.e("onCountrySelected: ", countryName + " : " + countryCode);
             ((CustomerDetails) fragmentById).setNationality(countryName, countryCode, code, pos);
+        }else if (fragmentById instanceof CashBeneficiary){
+            Log.e("onCountrySelected: ", countryName + " : " + countryCode);
+            ((CashBeneficiary) fragmentById).setNationality(countryName, countryCode, code, pos);
         }
     }
 
@@ -103,19 +106,19 @@ public class CashSend extends AppCompatActivity implements CountrySelectListener
     @Override
     public void onBeneficiaryRequest(String nameCode) {
         if (StringUtils.isEmpty(mIncomeId)) {
-            Helper.showLongMessage(CashSend.this, "Please select Source of Income");
+            Helper.showLongMessage(SendCashActivity.this, "Please select Source of Income");
             return;
         }
         if (StringUtils.isEmpty(mPurposeId)) {
-            Helper.showLongMessage(CashSend.this, "Please select Purpose of Transaction");
+            Helper.showLongMessage(SendCashActivity.this, "Please select Purpose of Transaction");
             return;
         }
         mNationalityCode = nameCode;
-        BeneficiaryDetails mBeneficiaryDetails = new BeneficiaryDetails();
+        CashBeneficiary mCashBeneficiarys = new CashBeneficiary();
         Bundle mBundle = new Bundle();
         mBundle.putString(AppoConstants.COUNTRYNAMECODE, nameCode);
-        mBeneficiaryDetails.setArguments(mBundle);
-        initFragment(mBeneficiaryDetails);
+        mCashBeneficiarys.setArguments(mBundle);
+        initFragment(mCashBeneficiarys);
 
     }
 
@@ -137,16 +140,16 @@ public class CashSend extends AppCompatActivity implements CountrySelectListener
     @Override
     public void onModeSelected(int pos) {
         Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.containerCashSend);
-        if (fragmentById instanceof BeneficiaryDetails) {
-            ((BeneficiaryDetails) fragmentById).hideModeDialog(pos);
+        if (fragmentById instanceof CashBeneficiary) {
+            ((CashBeneficiary) fragmentById).hideModeDialog(pos);
         }
     }
 
     @Override
     public void onDestinationSelect(String region, String country, String payoutCurrency) {
         Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.containerCashSend);
-        if (fragmentById instanceof BeneficiaryDetails) {
-            ((BeneficiaryDetails) fragmentById).hideDestinationDialog(region, country, payoutCurrency);
+        if (fragmentById instanceof CashBeneficiary) {
+            ((CashBeneficiary) fragmentById).hideDestinationDialog(region, country, payoutCurrency);
         }
     }
 
@@ -174,8 +177,25 @@ public class CashSend extends AppCompatActivity implements CountrySelectListener
     }
 
     @Override
-    public void onCashCalculation(String sendingCurrency, String receiverCurrency, String mRecName, String nationality, String recMobile, String address, String mPayout) {
+    public void onCashCalculation(String sendingCurrency, String receiverCurrency,
+                                  String mRecName, String nationality,
+                                  String recMobile, String address, String mPayout) {
+        SendCash mSendCash = new SendCash();
+        Bundle mBundle = new Bundle();
+        mBundle.putString(AppoConstants.SENDERCURRENCY, sendingCurrency);
+        mBundle.putString(AppoConstants.RECEIVERCURRENCY, receiverCurrency);
+        mBundle.putString(AppoConstants.RECEIVERNAME, mRecName);
 
+        mBundle.putString(AppoConstants.RECEIVERNATIONALITY, nationality);
+        mBundle.putString(AppoConstants.RECEIVERMOBILE, recMobile);
+        mBundle.putString(AppoConstants.RECEIVERADDRESS, address);
+        mBundle.putString(AppoConstants.SENDERNATIONALITY, mNationalityCode);
+        mBundle.putString(AppoConstants.PURPOSEOFTRANSFER, mPurposeId);
+        mBundle.putString(AppoConstants.SOURCE_OF_INCOME, mIncomeId);
+        mBundle.putString(AppoConstants.PAYOUTCOUNTRY, mPayout);
+
+        mSendCash.setArguments(mBundle);
+        initFragment(mSendCash);
     }
 
     @Override
@@ -196,3 +216,4 @@ public class CashSend extends AppCompatActivity implements CountrySelectListener
         }
     }
 }
+

@@ -66,6 +66,7 @@ import com.stuffer.stuffers.BuildConfig;
 import com.stuffer.stuffers.MainActivity;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.cashSends.CashSend;
+import com.stuffer.stuffers.activity.cashSends.SendCashActivity;
 import com.stuffer.stuffers.activity.shop_mall.ShopAdapter;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
@@ -86,7 +87,9 @@ import com.stuffer.stuffers.commonChat.interfaces.ChatItemClickListener;
 import com.stuffer.stuffers.commonChat.interfaces.MoreListener;
 import com.stuffer.stuffers.commonChat.interfaces.ProceedRequest;
 import com.stuffer.stuffers.commonChat.interfaces.UserGroupSelectionDismissListener;
+import com.stuffer.stuffers.communicator.CashTransferListener;
 import com.stuffer.stuffers.communicator.ShopListener;
+import com.stuffer.stuffers.fragments.bottom_fragment.BottomSendType;
 import com.stuffer.stuffers.models.shop_model.ShopModel;
 import com.stuffer.stuffers.myService.FetchMyUsersService;
 import com.stuffer.stuffers.my_camera.CameraActivity;
@@ -112,7 +115,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeActivity2 extends BaseActivity implements View.OnClickListener, ChatItemClickListener, ProceedRequest, MoreListener, ShopListener, UserGroupSelectionDismissListener {
+public class HomeActivity2 extends BaseActivity implements View.OnClickListener, ChatItemClickListener, ProceedRequest, MoreListener, ShopListener, UserGroupSelectionDismissListener, CashTransferListener {
     private static final String TAG = "HomeActivity";
     private static final int REQUEST_CODE_CHAT_FORWARD = 99;
     private static String CONFIRM_TAG = "confirmtag";
@@ -143,6 +146,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
     private ProgressDialog mProgress;
     private LinearLayout layoutAccount, layoutProfile, layoutSetting, layoutLogout;
     private String mShare = "";
+    private BottomSendType mBottomSendType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -654,7 +658,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
             case 100:
                 if (resultCode == Activity.RESULT_OK) {
                     mShare = data.getStringExtra("link");
-                    Log.e(TAG, "onActivityResult: "+mShare );
+                    Log.e(TAG, "onActivityResult: " + mShare);
                     userSelectDialogFragment = UserSelectDialogFragment.newUserSelectInstance(myUsers);
                     FragmentManager manager = getSupportFragmentManager();
                     Fragment frag = manager.findFragmentByTag(USER_SELECT_TAG);
@@ -767,9 +771,9 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
 
                     goToLoginScreen(11);
                 } else {
-                    Intent mIntent = new Intent(HomeActivity2.this, CashSend.class);
-                    mIntent.putExtra(AppoConstants.WHERE, 11);
-                    startActivity(mIntent);
+                    mBottomSendType = new BottomSendType();
+                    mBottomSendType.show(getSupportFragmentManager(), mBottomSendType.getTag());
+
                 }
 
             }
@@ -1038,5 +1042,18 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
     @Override
     public void selectionDismissed() {
 
+    }
+
+    @Override
+    public void onTransferSelect(int type) {
+        if (type == 0) {
+            Intent mIntent = new Intent(HomeActivity2.this, CashSend.class);
+            mIntent.putExtra(AppoConstants.WHERE, 11);
+            startActivity(mIntent);
+        } else {
+            Intent mIntent = new Intent(HomeActivity2.this, SendCashActivity.class);
+            mIntent.putExtra(AppoConstants.WHERE, 11);
+            startActivity(mIntent);
+        }
     }
 }

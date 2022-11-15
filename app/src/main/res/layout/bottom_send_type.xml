@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_10"
+    android:orientation="vertical">
+
+    <com.stuffer.stuffers.views.MyTextViewBold
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Transfer Type"
+        android:textColor="@color/colorPrimary"
+        android:textSize="22sp" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.stuffer.stuffers.views.MyRadioButton
+            android:layout_marginTop="@dimen/dp_4"
+            android:id="@+id/radioBank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#0D30F3"
+            android:text="By Bank" />
+
+        <com.stuffer.stuffers.views.MyRadioButton
+            android:textColor="#0D30F3"
+            android:id="@+id/radioCash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="By Cash" />
+
+    </RadioGroup>
+
+    <com.stuffer.stuffers.views.MyButton
+        android:id="@+id/btnNextType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="Next"
+        android:textColor="@color/white"
+        android:theme="@style/MaterialButton"
+
+        />
+
+
+</LinearLayout>

@@ -3,10 +3,6 @@ package com.stuffer.stuffers.activity.cashSends;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -15,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
@@ -22,13 +21,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.api.ApiUtils;
-import com.stuffer.stuffers.api.Constants;
 import com.stuffer.stuffers.api.MainAPIInterface;
-import com.stuffer.stuffers.fragments.dialog.BankDialog;
 import com.stuffer.stuffers.fragments.dialog.ModeDialog;
-import com.stuffer.stuffers.models.Country.CountryCodeResponse;
 import com.stuffer.stuffers.models.output.CalTransfer;
-import com.stuffer.stuffers.models.output.DetinationCurrency;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.views.MyButton;
@@ -45,12 +40,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-
-public class SendMoneyToBank extends Fragment implements View.OnClickListener {
+public class SendCash extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "SendMoneyToBank";
     private View mView;
@@ -62,12 +53,14 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
     private ProgressDialog mLoader;
     List<CalTransfer.Result> mListCal;
     private String mSender, mReceiverCurrency, mRecName, mRecBankName, mRecBankAccount, mRecBranch, mRecBankCode, mNationalityCode, mPurposeTransfer, mSourceIncome;
+    private String mRecNationality,mRecMobile,mRecAddress;
     MainAPIInterface apiService;
     private String mPayoutCountry;
     private AlertDialog mDialogSuccess;
     private Dialog dialogError;
+    String mRFirstName,mRLastName;
 
-    public SendMoneyToBank() {
+    public SendCash() {
         // Required empty public constructor
     }
 
@@ -79,10 +72,15 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
             mSender = getArguments().getString(AppoConstants.SENDERCURRENCY);
             mReceiverCurrency = getArguments().getString(AppoConstants.RECEIVERCURRENCY);
             mRecName = getArguments().getString(AppoConstants.RECEIVERNAME);
-            mRecBankName = getArguments().getString(AppoConstants.RECEIVERBANKNAME);
-            mRecBankAccount = getArguments().getString(AppoConstants.RECEIVERBANKACCOUNT);
-            mRecBranch = getArguments().getString(AppoConstants.RECEIVERBRANCH);
-            mRecBankCode = getArguments().getString(AppoConstants.RECEIVERBANKCODE);
+            String[] split = mRecName.split(",");
+            mRFirstName=split[0];
+            mRLastName=split[1];
+
+            mRecNationality=getArguments().getString(AppoConstants.RECEIVERNATIONALITY);
+            mRecMobile=getArguments().getString(AppoConstants.RECEIVERMOBILE);
+            mRecAddress=getArguments().getString(AppoConstants.RECEIVERADDRESS);
+
+
             mNationalityCode = getArguments().getString(AppoConstants.SENDERNATIONALITY);
             mPurposeTransfer = getArguments().getString(AppoConstants.PURPOSEOFTRANSFER);
             mSourceIncome = getArguments().getString(AppoConstants.SOURCE_OF_INCOME);
@@ -155,7 +153,7 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
                 mSendingObject.put("transferCurrency", Helper.getCurrencySymble()); // i have usd
                 mSendingObject.put("payoutCurrency", mReceiverCurrency); //on selected rec curr in prev screen
                 mSendingObject.put("transferAmount", edSendAmount.getText().toString().trim());
-                mSendingObject.put("paymentMode", "BANK");
+                mSendingObject.put("paymentMode", "CASH");
                 Log.e(TAG, "onClick: Calculation : " + mSendingObject);
 
                 String currantBalance = Helper.getCurrantBalance();
@@ -208,14 +206,14 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
                 mSendBody.put("remitterNationality", mNationalityCode);
                 mSendBody.put("customerRelation", "");//
                 mSendBody.put("messageToBeneficiary", "");
-                String mFirstName = Helper.beneficiaryFirstName(mRecName);
-                mSendBody.put("beneficiaryFirstName", mFirstName);
-                String mLastName = Helper.beneficiaryLastName(mRecName);
-                mSendBody.put("beneficiaryLastName", mLastName);
+                //String mFirstName = Helper.beneficiaryFirstName(mRecName);
+                mSendBody.put("beneficiaryFirstName", mRFirstName);
+                //String mLastName = Helper.beneficiaryLastName(mRecName);
+                mSendBody.put("beneficiaryLastName", mRLastName);
                 mSendBody.put("beneficiaryTelNo", "");//O
-                mSendBody.put("beneficiaryMobileNo", "");//M
+                mSendBody.put("beneficiaryMobileNo", mRecMobile);
                 mSendBody.put("beneficiaryEmail", "");
-                mSendBody.put("beneficiaryAddress1", "");//M
+                mSendBody.put("beneficiaryAddress1", mRecAddress);
                 mSendBody.put("beneficiaryAddress2", "");
                 mSendBody.put("beneficiaryAddress3", "");
                 mSendBody.put("beneficiaryIDType", "0");
@@ -225,11 +223,11 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
                 mSendBody.put("beneficiaryIDTypeExpiryDate", "");
                 mSendBody.put("beneficiaryDOB", "");
                 mSendBody.put("beneficiaryGender", "");
-                mSendBody.put("beneficiaryNationality", "");
-                mSendBody.put("benficiaryBankCode", mRecBankCode);
-                mSendBody.put("paymentMode", "BANK");
-                mSendBody.put("benificiaryBankAcNo", mRecBankAccount);
-                mSendBody.put("benificiaryBankAcName", mRecBankName);
+                mSendBody.put("beneficiaryNationality", mRecNationality);
+                mSendBody.put("benficiaryBankCode", "");
+                mSendBody.put("paymentMode", "CASH");
+                mSendBody.put("benificiaryBankAcNo", "");
+                mSendBody.put("benificiaryBankAcName", "");
                 mSendBody.put("benificiaryBankAddress1", "");
                 mSendBody.put("benificiaryBankAddress2", "");
                 mSendBody.put("purposeCode", mPurposeTransfer);//purpose code to call api
@@ -238,7 +236,7 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
                 mSendBody.put("settlementCurrency", mReceiverCurrency);
                 mSendBody.put("remitterPayInAmt", cTvTotalPayable.getText().toString().trim());
                 mSendBody.put("msgPayOutBranch", "");
-                mSendBody.put("contactBenificiary", "false");
+                mSendBody.put("contactBenificiary", "true");
                 mSendBody.put("rptno", "0");
                 mSendBody.put("sourceofIncome", mSourceIncome); //call the api
                 mSendBody.put("userID", "");
@@ -255,10 +253,11 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
         LayoutInflater inflater = getLayoutInflater();
 
         View dialogLayout = inflater.inflate(R.layout.dialog_balance_error, null);
-        MyTextView tvTitle = dialogLayout.findViewById(R.id.tvTitle);
-        MyTextView tvInfo = dialogLayout.findViewById(R.id.tvInfo);
-        tvTitle.setText("CASH SEND");
-        tvInfo.setText("Your account doesn\'t have enough balance to Transfer.");
+        MyTextView tvTitle=dialogLayout.findViewById(R.id.tvTitle);
+        MyTextView tvInfo=dialogLayout.findViewById(R.id.tvInfo);
+       tvTitle.setText("CASH SEND");
+       tvInfo.setText("Your account doesn\'t have enough balance to Transfer.");
+
 
 
         MyButton btnClose = dialogLayout.findViewById(R.id.btnClose);
@@ -284,7 +283,7 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
 
     private void makeRequestBody(JSONObject mSendBody) {
         showLoading(getString(R.string.info_please_wait_dots));
-        //  AndroidNetworking.post("http://13.58.156.32:8080/api/appopay/send-transfer")
+      //  AndroidNetworking.post("http://13.58.156.32:8080/api/appopay/send-transfer")
         AndroidNetworking.post("https://api-prod.cashsends.com:8080/api/appopay/send-transfer")
                 .addJSONObjectBody(mSendBody)
                 .build()
@@ -351,7 +350,7 @@ public class SendMoneyToBank extends Fragment implements View.OnClickListener {
     }
 
     private void hidePayments() {
-        if (mDialogSuccess != null && mDialogSuccess.isShowing()) {
+        if (mDialogSuccess!=null && mDialogSuccess.isShowing()){
             mDialogSuccess.dismiss();
         }
         getActivity().finish();

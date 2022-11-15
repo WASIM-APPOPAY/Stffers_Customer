@@ -238,8 +238,11 @@ public class AppoConstants {
     public static final String RECEIVERCURRENCY = "receivercurrency";
     public static final String RECEIVERNAME = "receivername";
     public static final String RECEIVERBANKNAME = "receiverbankname";
+    public static final String RECEIVERNATIONALITY = "receivernationality";
     public static final String RECEIVERBANKACCOUNT = "receiverbankaccount";
+    public static final String RECEIVERMOBILE = "receivermobile";
     public static final String RECEIVERBRANCH = "receiverbranch";
+    public static final String RECEIVERADDRESS = "receiveraddress";
     public static final String RECEIVERBANKCODE = "receiverbankcode";
     public static final String SENDERNATIONALITY = "sendernationality";
     public static final String PURPOSEOFTRANSFER = "purposeOfTransfer";

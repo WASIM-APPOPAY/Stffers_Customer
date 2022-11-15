@@ -480,7 +480,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
     }
 
     public void goToScreen(int param) {
-        if (mType == 0 || mType == 3) {
+        if (mType == 0 || mType == 3 || mType == 11) {
             finish();
             return;
         }
