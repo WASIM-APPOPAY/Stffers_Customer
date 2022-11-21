@@ -1,5 +1,6 @@
 package com.stuffer.stuffers.fragments.wallet_fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.adapter.recyclerview.CountryAdapter;
 import com.stuffer.stuffers.communicator.CountryListener;
 import com.stuffer.stuffers.models.ListCountry;
+import com.stuffer.stuffers.utils.AppoConstants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +37,7 @@ public class CountryFragment extends Fragment {
     private RecyclerView rvCountryList;
     ArrayList<ListCountry> mListCountries;
     private CountryListener mCountryListener;
+    private ProgressDialog mProgress;
 
     public CountryFragment() {
         // Required empty public constructor
@@ -52,13 +55,13 @@ public class CountryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        //Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_country, container, false);
         rvCountryList = mView.findViewById(R.id.rvCountryList);
-        rvCountryList.setLayoutManager(new GridLayoutManager(getActivity(), 3, RecyclerView.VERTICAL, false));
+        rvCountryList.setLayoutManager(new GridLayoutManager(getActivity(), 2, RecyclerView.VERTICAL, false));
         addCountries();
-
         return mView;
+
     }
 
     private void addCountries() {
@@ -101,18 +104,23 @@ public class CountryFragment extends Fragment {
     }
 
     private void getFlags() {
-        mListCountries=new ArrayList<>();
-        AndroidNetworking.get("https://prodapi.appopay.com/api/s3/bucket/appopay-mobile-logos/location/list")
+        showLoading(getString(R.string.info_please_wait_dots));
+        mListCountries = new ArrayList<>();
+
+        AndroidNetworking.get("https://prodapi.appopay.com/api/s3/bucket/appopay-mobile-logos/location/rectangle")
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e(TAG, "onResponse: " + response);
+                        //Log.e(TAG, "onResponse: " + response);
+                        hideLoading();
                         try {
                             JSONArray result = response.getJSONArray("result");
                             for (int i = 0; i < result.length(); i++) {
-                                String path = (String) result.get(i);
-                                mListCountries.add(new ListCountry("", path));
+                                JSONObject index = result.getJSONObject(i);
+                                String name = index.getString(AppoConstants.NAME);
+                                String path = index.getString(AppoConstants.URL);
+                                mListCountries.add(new ListCountry(name, path));
 
                             }
                             if (mListCountries.size() > 0) {
@@ -128,9 +136,21 @@ public class CountryFragment extends Fragment {
 
                     @Override
                     public void onError(ANError anError) {
+                        hideLoading();
                         Log.e(TAG, "onError: " + anError.getErrorDetail());
                     }
                 });
+    }
+
+    private void showLoading(String string) {
+
+        mProgress = new ProgressDialog(getActivity());
+        mProgress.setMessage(string);
+        mProgress.show();
+    }
+
+    private void hideLoading() {
+        mProgress.dismiss();
     }
 
     @Override

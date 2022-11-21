@@ -140,6 +140,7 @@
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_customer_details.xml" value="0.25" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_finance.xml" value="0.15217391304347827" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_forgot_password.xml" value="0.15231187669990934" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_funds.xml" value="0.16047144152311876" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_mycamera.xml" value="0.16047144152311876" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_num_email.xml" value="0.25" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/fragment_scan_appopay.xml" value="0.12090163934426229" />
@@ -185,8 +186,10 @@
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/row_common.xml" value="0.16032608695652173" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/row_countries.xml" value="0.1559383499546691" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/row_destination.xml" value="0.16032608695652173" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/row_fund.xml" value="0.1" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/row_more_option.xml" value="0.16032608695652173" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/row_shop_items.xml" value="0.16047144152311876" />
+        <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/row_transaction_list_items.xml" value="0.15231187669990934" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/schedule_timer_select.xml" value="0.16047144152311876" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/service_dialog.xml" value="0.21" />
         <entry key="..\:/Stuffer-Customer/app/src/main/res/layout/shopping_orders_fragment.xml" value="0.12090163934426229" />

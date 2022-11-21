@@ -237,6 +237,15 @@ public class Helper {
         return Float.parseFloat(format);
 
     }
+public static float getTwoDecimal1(float params) {
+        float roundedFloat = (float) ((float) Math.round(params * 100.0) / 100.0);
+        DecimalFormat df = new DecimalFormat("#.00");
+        String format = df.format(roundedFloat);
+        //String ret=String.format("%.2f", roundedFloat);
+        //Log.e(TAG, "getTwoDecimal: ::: " + roundedFloat);
+        return Float.parseFloat(format);
+
+    }
 
     public static float getTwoDecimalTransfer(float params) {
         float roundedFloat = (float) ((float) Math.round(params * 100.0) / 100.0);
@@ -2453,7 +2462,7 @@ public class Helper {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
+        return "";
         //currentbalance
     }
 

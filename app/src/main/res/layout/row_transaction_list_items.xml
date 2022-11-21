@@ -110,6 +110,7 @@
             android:orientation="horizontal">
 
             <com.stuffer.stuffers.views.MyTextView
+                android:layout_gravity="center_vertical"
                 android:id="@+id/tvTransactionStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -118,6 +119,7 @@
                 android:textSize="16sp" />
 
             <com.stuffer.stuffers.views.MyTextView
+                android:layout_gravity="center_vertical"
                 android:id="@+id/tvTransactionInfo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -125,6 +127,13 @@
                 android:gravity="end"
                 android:padding="8dp"
                 android:textSize="16sp" />
+            <ImageView
+                android:id="@+id/ivView"
+                android:padding="@dimen/dp_8"
+                android:src="@drawable/ic_remove_red_eye"
+                app:tint="#6310F6"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"/>
 
 
         </LinearLayout>

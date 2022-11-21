@@ -1,41 +1,75 @@
 package com.stuffer.stuffers.activity.wallet;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.adapter.recyclerview.TransactionListAdapter;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
+import com.stuffer.stuffers.commonChat.chat.ChatActivity;
+import com.stuffer.stuffers.commonChat.chat.UserSelectDialogFragment;
+import com.stuffer.stuffers.commonChat.chatModel.Chat;
+import com.stuffer.stuffers.commonChat.chatModel.Message;
+import com.stuffer.stuffers.commonChat.chatModel.User;
+import com.stuffer.stuffers.commonChat.chatUtils.ChatHelper;
+import com.stuffer.stuffers.commonChat.interfaces.ChatItemClickListener;
+import com.stuffer.stuffers.commonChat.interfaces.UserGroupSelectionDismissListener;
 import com.stuffer.stuffers.communicator.RecyclerViewRowItemCLickListener;
+import com.stuffer.stuffers.communicator.SeeListener;
 import com.stuffer.stuffers.models.output.CurrencyResponse;
 import com.stuffer.stuffers.models.output.CurrencyResult;
 import com.stuffer.stuffers.models.output.TransactionList2;
 import com.stuffer.stuffers.models.output.TransactionListResponse;
+import com.stuffer.stuffers.my_camera.CameraActivity;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.utils.Helper;
+import com.stuffer.stuffers.views.MyButton;
 import com.stuffer.stuffers.views.MySwitchView;
+import com.stuffer.stuffers.views.MyTextView;
+import com.stuffer.stuffers.views.MyTextViewBold;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -50,7 +84,7 @@ import retrofit2.Response;
 
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_ACCESSTOKEN;
 
-public class TransactionListActivity extends AppCompatActivity implements RecyclerViewRowItemCLickListener {
+public class TransactionListActivity extends AppCompatActivity implements RecyclerViewRowItemCLickListener, UserGroupSelectionDismissListener, ChatItemClickListener, SeeListener {
     private List<TransactionListResponse.Result> mListTransaction;
     private ProgressDialog dialog;
     private MainAPIInterface mainAPIInterface;
@@ -59,7 +93,18 @@ public class TransactionListActivity extends AppCompatActivity implements Recycl
     private String mAccountNumber, mEncryptAccountNumber;
     List<CurrencyResult> result;
     MySwitchView swAccountNumber;
+
     ArrayList<TransactionList2> mListFinal;
+    private static String USER_SELECT_TAG = "userselectdialog";
+    private ArrayList<Message> messageForwardList = new ArrayList<>();
+    private UserSelectDialogFragment userSelectDialogFragment;
+    private String mShare = "";
+
+
+    private static final int REQUEST_CODE_CHAT_FORWARD = 99;
+    private ArrayList<User> myUsers;
+    private AlertDialog mDialog;
+    private File mFileSSort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +136,8 @@ public class TransactionListActivity extends AppCompatActivity implements Recycl
                 }
             }
         });
+        ChatHelper mChatHelper = new ChatHelper(TransactionListActivity.this);
+        myUsers = mChatHelper.getMyUsers();
 
 
     }
@@ -113,7 +160,7 @@ public class TransactionListActivity extends AppCompatActivity implements Recycl
             @Override
             public void onFailure(Call<CurrencyResponse> call, Throwable t) {
                 dialog.dismiss();
-              //  Log.e(TAG, "onFailure: " + t.getMessage().toString());
+                //  Log.e(TAG, "onFailure: " + t.getMessage().toString());
             }
         });
 
@@ -196,7 +243,7 @@ public class TransactionListActivity extends AppCompatActivity implements Recycl
         String accesstoken = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_ACCESSTOKEN);
         JsonObject paramSent = new JsonObject();
         paramSent.addProperty(AppoConstants.ACCOUNTNUMBER, mAccountNumber);
-      //  Log.e(TAG, "getTransactionList: " + paramSent.toString());
+        //  Log.e(TAG, "getTransactionList: " + paramSent.toString());
         String bearer_ = Helper.getAppendAccessToken("bearer ", accesstoken);
         mainAPIInterface.postUserTransactionList(paramSent, bearer_).enqueue(new Callback<TransactionListResponse>() {
             @Override
@@ -204,11 +251,11 @@ public class TransactionListActivity extends AppCompatActivity implements Recycl
                 dialog.dismiss();
                 if (response.isSuccessful()) {
                     if (response.body().getMessage().equalsIgnoreCase(AppoConstants.SUCCESS)) {
-                      //  Log.e(TAG, "onResponse: " + new Gson().toJson(response.body()));
+                        //  Log.e(TAG, "onResponse: " + new Gson().toJson(response.body()));
                         mListTransaction = response.body().getResult();
                         getCurrencyCode();
                     } else {
-                      //  Log.e(TAG, "onResponse: else called");
+                        //  Log.e(TAG, "onResponse: else called");
                     }
                 } else {
                     if (response.code() == 401) {
@@ -228,17 +275,15 @@ public class TransactionListActivity extends AppCompatActivity implements Recycl
             @Override
             public void onFailure(Call<TransactionListResponse> call, Throwable t) {
                 dialog.dismiss();
-              //  Log.e(TAG, "onFailure: " + t.getMessage().toString());
+                //  Log.e(TAG, "onFailure: " + t.getMessage().toString());
             }
         });
 
     }
 
-    private String getTimeDateOther(String dateParam){
+    private String getTimeDateOther(String dateParam) {
         // milliseconds
         long milliSec = Long.parseLong(dateParam);
-
-        // Creating date format
         //DateFormat simple = new SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z");
         DateFormat simple = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
 
@@ -246,41 +291,12 @@ public class TransactionListActivity extends AppCompatActivity implements Recycl
         // using Date() constructor
         Date result = new Date(milliSec);
 
-        // Formatting Date according to the
-        // given format
-        //System.out.println(simple.format(result));
-        Log.e(TAG, "getTimeDateOther: "+simple.format(result) );
+
+        //Log.e(TAG, "getTimeDateOther: " + simple.format(result));
 
         return simple.format(result);
     }
 
-
-
-    private String getTimeDate(String dateString) {
-        //  DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        String ourDate = null;
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            //SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd'T'HH:mm:ss.SSS");
-            //TimeZone utc = TimeZone.getTimeZone("UTC");
-            TimeZone utc = TimeZone.getDefault();
-            formatter.setTimeZone(utc);
-            Date value = formatter.parse(dateString);
-            SimpleDateFormat dateFormatter = new SimpleDateFormat("MMM dd,yyyy,HH:mm:ss aa"); //this format changeable
-            dateFormatter.setTimeZone(TimeZone.getDefault());
-           // crunchifyFormat
-            ourDate = dateFormatter.format(value);
-            Log.e(TAG, "getTimeDate: :::: " + ourDate);
-            return ourDate;
-            //Log.d("ourDate", ourDate);
-        } catch (Exception e) {
-            e.printStackTrace();
-            ////Log.e(TAG, "getTimeDate: exception called");
-        }
-
-
-        return ourDate;
-    }
 
     private void setupActionBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -349,11 +365,205 @@ public class TransactionListActivity extends AppCompatActivity implements Recycl
             Intent intentDetails = new Intent(TransactionListActivity.this, TransactionDetailsActivity.class);
             intentDetails.putExtra(AppoConstants.INFO, objSent.toString());
             startActivity(intentDetails);
+            //share();
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+
+    }
+
+    public void share() {
+        //mShare = data.getStringExtra("link");
+        //Log.e(TAG, "onActivityResult: " + mShare);
+        mShare = mFileSSort.getAbsolutePath();
+
+        userSelectDialogFragment = UserSelectDialogFragment.newUserSelectInstance(myUsers);
+        FragmentManager manager = getSupportFragmentManager();
+        Fragment frag = manager.findFragmentByTag(USER_SELECT_TAG);
+        if (frag != null) {
+            manager.beginTransaction().remove(frag).commit();
+        }
+        userSelectDialogFragment.show(manager, USER_SELECT_TAG);
+    }
+
+    @Override
+    public void onUserGroupSelectDialogDismiss(ArrayList<User> selectedUsers) {
+        messageForwardList.clear();
+
+    }
+
+    @Override
+    public void selectionDismissed() {
+
+    }
+
+    @Override
+    public void onChatItemClick(Chat chat, int position, View userImage) {
+        openChat(ChatActivity.newIntent(TransactionListActivity.this, messageForwardList, chat, mShare), userImage);
+    }
+
+    @Override
+    public void placeCall(boolean callIsVideo, User user) {
+
+    }
+
+    private void openChat(Intent intent, View userImage) {
+        ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(TransactionListActivity.this, userImage, "userImage");
+        startActivityForResult(intent, REQUEST_CODE_CHAT_FORWARD, activityOptionsCompat.toBundle());
+        if (userSelectDialogFragment != null) {
+            userSelectDialogFragment.dismiss();
+            messageForwardList.clear();
+            //mShare = "";
+        }
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (REQUEST_CODE_CHAT_FORWARD):
+                if (resultCode == Activity.RESULT_OK) {
+                    //show forward dialog to choose users
+                    messageForwardList.clear();
+                    ArrayList<Message> temp = data.getParcelableArrayListExtra("FORWARD_LIST");
+                    String s = new Gson().toJson(temp);
+                    //Log.e(TAG, "onActivityResult: "+s );
+                    messageForwardList.addAll(temp);
+                    userSelectDialogFragment = UserSelectDialogFragment.newUserSelectInstance(myUsers);
+                    FragmentManager manager = getSupportFragmentManager();
+                    Fragment frag = manager.findFragmentByTag(USER_SELECT_TAG);
+                    if (frag != null) {
+                        manager.beginTransaction().remove(frag).commit();
+                    }
+                    userSelectDialogFragment.show(manager, USER_SELECT_TAG);
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onSeeRequest(int pos) {
+        Log.e(TAG, "onSeeRequest: called");
+        TransactionList2 transactionList2 = mListFinal.get(pos);
+        showPayDialogLikeUnion(transactionList2);
+
+
+    }
+
+    private void showPayDialogLikeUnion(TransactionList2 mResponse) {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(TransactionListActivity.this);
+        View mCustomLayout = LayoutInflater.from(TransactionListActivity.this).inflate(R.layout.success_dialog_inner_appopay_transfer, null);
+        LinearLayout layoutRoot = mCustomLayout.findViewById(R.id.layoutRoot);
+        MyTextView tvInfo = mCustomLayout.findViewById(R.id.tvInfo);
+        MyTextView tvHeader = mCustomLayout.findViewById(R.id.tvHeader);
+        MyTextViewBold tvAmountPay = mCustomLayout.findViewById(R.id.tvAmountPay);
+        MyTextViewBold tvCost = mCustomLayout.findViewById(R.id.tvCost);
+        MyTextViewBold tvReceiverAmt = mCustomLayout.findViewById(R.id.tvReceiverAmt);
+        MyTextView tvCurrencyPay = mCustomLayout.findViewById(R.id.tvCurrencyPay);
+        MyTextView tvTransactionTime = mCustomLayout.findViewById(R.id.tvTransactionTime);
+        MyTextView tvVoucherPay = mCustomLayout.findViewById(R.id.tvVoucherPay);
+        MyButton btnShare = mCustomLayout.findViewById(R.id.btnShare);
+        MyButton btnClose = mCustomLayout.findViewById(R.id.btnClose);
+        tvHeader.setText(mResponse.getPaymenttype().toUpperCase());
+        float mTransactionAmt = Float.parseFloat(mResponse.getTransactionamount());
+        Float mProcessing = Float.valueOf(mResponse.getProcessingfees());
+        Float mTaxes = Float.valueOf(mResponse.getTaxes());
+        float mCreditAmt = mTransactionAmt - (mProcessing + mTaxes);
+
+        tvReceiverAmt.setText("Receiver Amount : " + mCreditAmt);
+        tvReceiverAmt.setTextColor(Color.parseColor("#334CFF"));
+        //float cost = amountaftertax_fees - Float.parseFloat(edAmount.getText().toString().trim());
+        //float twoDecimal = Helper.getTwoDecimal(cost);
+
+        String param1 = "Processing Fees : " + Helper.getTwoDecimal(mProcessing) + "\n" + " Taxes : " + Helper.getTwoDecimal(mTaxes) + "\n" + "Transaction Cost : " + Helper.getTwoDecimal(mProcessing + mTaxes);
+        tvCost.setText(param1);
+        tvCost.setTextColor(Color.parseColor("#FE3156"));
+
+
+        tvAmountPay.setText(" Amount : " + mTransactionAmt + " " + mResponse.getCurrencycode());
+        tvCurrencyPay.setText("Currency : " + mResponse.getCurrencycode());
+        tvTransactionTime.setText("Transaction Time : " + mResponse.getViewdate());
+        tvVoucherPay.setText("Transaction No : " + mResponse.getTransactionid());
+        //tvInfo.setText("Transfer to " + recname + "" + "\nSUCCESS");
+        tvInfo.setText(mResponse.getTransactiondescription());
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDialog.dismiss();
+            }
+        });
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                takeScreenShort(layoutRoot);
+            }
+        });
+        mBuilder.setView(mCustomLayout);
+        mDialog = mBuilder.create();
+        mDialog.setCanceledOnTouchOutside(false);
+        mDialog.show();
+
+    }
+
+    private void takeScreenShort(LinearLayout rootLayout) {
+        mDialog.dismiss();
+
+        Bitmap bitmap = getScreenShot(rootLayout);
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+        String path;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+
+            path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator + "/YourDirName";
+        } else {
+            path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/YourDirName";
+        }
+
+        File dir = new File(path);
+        if (!dir.exists())
+            dir.mkdirs();
+        String uniqueFileName = Helper.getUniqueFileName();
+        mFileSSort = new File(dir, uniqueFileName);
+
+        try {
+            boolean newFile = mFileSSort.createNewFile();
+            if (newFile) {
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+                byte[] bitmapdata = bos.toByteArray();
+                FileOutputStream fos = null;
+                try {
+                    fos = new FileOutputStream(mFileSSort);
+                    fos.write(bitmapdata);
+                    fos.flush();
+                    fos.close();
+                    //openScreenshot(mFileSSort);
+                    share();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private Bitmap getScreenShot(View view) {
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(returnedBitmap);
+        Drawable bgDrawable = view.getBackground();
+        if (bgDrawable != null)
+            bgDrawable.draw(canvas);
+        else
+            canvas.drawColor(Color.WHITE);
+        view.draw(canvas);
+        return returnedBitmap;
 
     }
 }

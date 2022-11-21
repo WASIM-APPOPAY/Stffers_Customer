@@ -69,7 +69,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryH
         }
 
         public void bind() {
-            tvCountryName.setText(mListCountries.get(getAdapterPosition()).getName());
+            tvCountryName.setText(mListCountries.get(getAdapterPosition()).getName().toUpperCase());
             Glide.with(mCtx).load(mListCountries.get(getAdapterPosition()).getFlagPath()).into(ivCountry);
 
 

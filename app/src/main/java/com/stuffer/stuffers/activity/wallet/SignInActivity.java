@@ -483,6 +483,11 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         if (mType == 0 || mType == 3 || mType == 11) {
             finish();
             return;
+        } else if (mType == 7) {
+            HomeActivity2.startResultForAccountActivity();
+            finish();
+            return;
+
         }
         Intent mIntent = null;
         switch (mType) {

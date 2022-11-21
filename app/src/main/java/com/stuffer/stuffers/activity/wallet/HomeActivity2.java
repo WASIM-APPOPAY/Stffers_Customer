@@ -107,6 +107,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -126,7 +127,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
     private ChatHelper helper;
     User userMe;
     private MyTextViewBold tvUserName;
-    private MyTextView tvMobileNumber, tvDrawername, tvDrawerNo, tvVersion;
+    private MyTextView tvMobileNumber, tvDrawername, tvDrawerNo, tvVersion, tvSideBalance;
     private DatabaseReference myInboxRef;
     private ArrayList<User> myUsers = new ArrayList<>();
     private ArrayList<Message> messageForwardList = new ArrayList<>();
@@ -144,13 +145,16 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
     private FrameLayout frameLayout;
     private MainAPIInterface apiService;
     private ProgressDialog mProgress;
-    private LinearLayout layoutAccount, layoutProfile, layoutSetting, layoutLogout;
+    private LinearLayout layoutAccount, layoutProfile, layoutSetting, layoutLogout, layoutMyCards;
     private String mShare = "";
     private BottomSendType mBottomSendType;
+    //public static Context mCtx;
+    public static Activity mCtx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mCtx = HomeActivity2.this;
         helper = new ChatHelper(this);
         setContentView(R.layout.activity_home2);
         apiService = ApiUtils.getAPIService();
@@ -165,8 +169,11 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         userMe = helper.getLoggedInUser();
         tvDrawername = (MyTextView) findViewById(R.id.tvDrawername);
         tvDrawerNo = (MyTextView) findViewById(R.id.tvDrawerNo);
+        tvSideBalance = (MyTextView) findViewById(R.id.tvSideBalance);
         llMyQr = (LinearLayout) findViewById(R.id.llMyQr);
         layoutLogout = (LinearLayout) findViewById(R.id.layoutLogout);
+        layoutMyCards = (LinearLayout) findViewById(R.id.layoutMyCards);
+
 
         tvUserName = (MyTextViewBold) findViewById(R.id.tvUserName);
         tvMobileNumber = (MyTextView) findViewById(R.id.tvMobileNumber);
@@ -182,6 +189,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         layoutAccount.setOnClickListener(this);
         layoutProfile.setOnClickListener(this);
         layoutSetting.setOnClickListener(this);
+        layoutMyCards.setOnClickListener(this);
 
 
         llChat.setOnClickListener(this);
@@ -313,6 +321,20 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
                 Glide.with(AppoPayApplication.getInstance()).load(idPath).fitCenter().into(ivUser);
             else
                 Glide.with(AppoPayApplication.getInstance()).load(new File(idPath)).fitCenter().into(ivUser);
+        }
+    }
+
+    public void upDateBalance() {
+        try {
+            String currantBalance = Helper.getCurrantBalance();
+            DecimalFormat df2 = new DecimalFormat("#.00");
+            Double doubleV = Double.parseDouble(currantBalance);
+            String format = df2.format(doubleV);
+            tvSideBalance.setText("$0");
+            tvSideBalance.setText("$" + format);
+        } catch (Exception e) {
+            //tvSideBalance.setText("$0");
+            tvSideBalance.setText("$" + "0.00");
         }
     }
 
@@ -559,13 +581,33 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
                     if (TextUtils.isEmpty(userData)) {
                         goToLoginScreen(7);
                     } else {
-                        Intent mIntentQrCode = new Intent(HomeActivity2.this, AccountActivity.class);
+                        startResultForAccountActivity();
+                    }
+                }
+            }, 200);
+        } else if (view.getId() == R.id.layoutMyCards) {
+            drawer_layout.closeDrawer(GravityCompat.START);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+                    if (TextUtils.isEmpty(userData)) {
+                        goToLoginScreen(7);
+                    } else {
+                        /*Intent mIntentQrCode = new Intent(HomeActivity2.this, AccountActivity.class);
                         mIntentQrCode.putExtra(AppoConstants.WHERE, 7);
-                        startActivity(mIntentQrCode);
+                        startActivity(mIntentQrCode);*/
+                        startResultForAccountActivity();
                     }
                 }
             }, 200);
         }
+    }
+
+    public static void startResultForAccountActivity() {
+        Intent mIntentQrCode = new Intent(mCtx, AccountActivity.class);
+        mIntentQrCode.putExtra(AppoConstants.WHERE, 7);
+        mCtx.startActivityForResult(mIntentQrCode, 100);
     }
 
     public void disable() {
@@ -656,6 +698,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
                     }
                 }
             case 100:
+                Log.e(TAG, "onActivityResult: 100 called");
                 if (resultCode == Activity.RESULT_OK) {
                     mShare = data.getStringExtra("link");
                     Log.e(TAG, "onActivityResult: " + mShare);
@@ -1023,6 +1066,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         localBroadcastManager.registerReceiver(myContactsReceiver, new IntentFilter(ChatHelper.BROADCAST_MY_CONTACTS));
         localBroadcastManager.registerReceiver(myUsersReceiver, new IntentFilter(ChatHelper.BROADCAST_MY_USERS));
         localBroadcastManager.registerReceiver(userReceiver, new IntentFilter(ChatHelper.BROADCAST_USER_ME));
+        upDateBalance();
     }
 
     @Override

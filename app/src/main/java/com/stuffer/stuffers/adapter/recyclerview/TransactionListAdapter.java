@@ -13,12 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.communicator.RecyclerViewRowItemCLickListener;
+import com.stuffer.stuffers.communicator.SeeListener;
 import com.stuffer.stuffers.models.output.TransactionList2;
 import com.stuffer.stuffers.views.MyTextView;
 
 import java.util.ArrayList;
 
 public class TransactionListAdapter extends RecyclerView.Adapter<TransactionListAdapter.TransactionListHolder> {
+    private SeeListener mSeeListener;
     Context mContext;
     ArrayList<TransactionList2> mListItems;
     RecyclerViewRowItemCLickListener mItemClickListener;
@@ -28,6 +30,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
         this.mListItems = items;
         try {
             this.mItemClickListener = (RecyclerViewRowItemCLickListener) mContext;
+            this.mSeeListener = (SeeListener) mContext;
         } catch (ClassCastException e) {
             throw new ClassCastException("parent must implement RecyclerViewRowItemCLickListener");
         }
@@ -51,7 +54,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
     }
 
     public class TransactionListHolder extends RecyclerView.ViewHolder {
-        ImageView ivType;
+        ImageView ivType, ivView;
         MyTextView tvDescription, tvDateTime, tvAmountCurrency, tvTransactionInfo;
         CardView cardTransaction;
 
@@ -59,10 +62,17 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             super(itemView);
             cardTransaction = itemView.findViewById(R.id.cardTransaction);
             ivType = itemView.findViewById(R.id.ivType);
+            ivView = itemView.findViewById(R.id.ivView);
             tvDescription = itemView.findViewById(R.id.tvDescription);
             tvDateTime = itemView.findViewById(R.id.tvDateTime);
             tvAmountCurrency = itemView.findViewById(R.id.tvAmountCurrency);
             tvTransactionInfo = itemView.findViewById(R.id.tvTransactionInfo);
+            ivView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mSeeListener.onSeeRequest(getAdapterPosition());
+                }
+            });
             cardTransaction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -77,11 +87,14 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             if (mListItems.get(getAdapterPosition()).getPaymenttype().equalsIgnoreCase("DEPOSITE") ||
                     mListItems.get(getAdapterPosition()).getPaymenttype().equalsIgnoreCase("null")) {
                 ivType.setImageResource(R.mipmap.ic_recive_money);
+                ivView.setVisibility(View.GONE);
             }
             if (mListItems.get(getAdapterPosition()).getPaymenttype().equalsIgnoreCase("PAID") ||
                     mListItems.get(getAdapterPosition()).getPaymenttype().equalsIgnoreCase("BILL") ||
                     mListItems.get(getAdapterPosition()).getPaymenttype().equalsIgnoreCase("TRANSFER")) {
                 ivType.setImageResource(R.mipmap.ic_send_money);
+                ivView.setVisibility(View.VISIBLE);
+
             }
             tvDescription.setText(mListItems.get(getAdapterPosition()).getTransactiondescription());
             tvTransactionInfo.setText(mListItems.get(getAdapterPosition()).getTransactionstatus());

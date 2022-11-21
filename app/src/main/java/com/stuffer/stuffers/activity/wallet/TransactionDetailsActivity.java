@@ -137,4 +137,6 @@ public class TransactionDetailsActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 }
