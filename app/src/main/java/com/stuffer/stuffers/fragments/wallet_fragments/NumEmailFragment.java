@@ -1,8 +1,10 @@
 package com.stuffer.stuffers.fragments.wallet_fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -168,7 +171,28 @@ public class NumEmailFragment extends Fragment {
             }
         });
 
+
+
+
         edtCustomerCountryCode.setExcludedCountries(getString(R.string.info_exclude_countries));
+        edtCustomerCountryCode.setDialogEventsListener(new CountryCodePicker.DialogEventsListener() {
+            @Override
+            public void onCcpDialogOpen(Dialog dialog) {
+                //your code
+                TextView title =(TextView)  dialog.findViewById(R.id.textView_title);
+                title.setText(getString(R.string.info_cc_reg));
+            }
+
+            @Override
+            public void onCcpDialogDismiss(DialogInterface dialogInterface) {
+                //your code
+            }
+
+            @Override
+            public void onCcpDialogCancel(DialogInterface dialogInterface) {
+                //your code
+            }
+        });
 
         mCountryName = edtCustomerCountryCode.getSelectedCountryName();
 

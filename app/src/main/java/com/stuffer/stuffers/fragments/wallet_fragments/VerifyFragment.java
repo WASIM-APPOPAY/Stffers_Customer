@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -107,7 +108,29 @@ public class VerifyFragment extends Fragment {
         String headingOtp3 = "<font color='#00baf2'>" + "to verify your number." + "</font>";
         tvOtpHeading.setText(Html.fromHtml(headingOtp1 + headingOtp2 + headingOtp3));
         edtCustomerCountryCode.setCountryForPhoneCode(Integer.parseInt(mParamCountryCode));
-        edtCustomerCountryCode.setDialogEventsListener(mListener);
+
+
+        edtCustomerCountryCode.setDialogEventsListener(new CountryCodePicker.DialogEventsListener() {
+            @Override
+            public void onCcpDialogOpen(Dialog dialog) {
+
+                //your code
+                TextView title =(TextView)  dialog.findViewById(R.id.textView_title);
+                title.setText(getString(R.string.info_cc_reg));
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onCcpDialogDismiss(DialogInterface dialogInterface) {
+                //your code
+            }
+
+            @Override
+            public void onCcpDialogCancel(DialogInterface dialogInterface) {
+                //your code
+            }
+        });
+
         edtCustomerMobileNumber.setText(mParamMobile);
         edtCustomerMobileNumber.setEnabled(false);
         edtCustomerMobileNumber.setClickable(false);
@@ -219,22 +242,7 @@ public class VerifyFragment extends Fragment {
 
     }
 
-    CountryCodePicker.DialogEventsListener mListener = new CountryCodePicker.DialogEventsListener() {
-        @Override
-        public void onCcpDialogOpen(Dialog dialog) {
-            dialog.dismiss();
-        }
 
-        @Override
-        public void onCcpDialogDismiss(DialogInterface dialogInterface) {
-
-        }
-
-        @Override
-        public void onCcpDialogCancel(DialogInterface dialogInterface) {
-
-        }
-    };
 
     private void startTimer() {
         seconds = 59;

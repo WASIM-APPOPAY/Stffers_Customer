@@ -104,6 +104,7 @@ public class BottomChatFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.addConversation) {
+
             FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             if (firebaseUser != null) {
                 firebaseUser.getIdToken(false).addOnCompleteListener(task -> {

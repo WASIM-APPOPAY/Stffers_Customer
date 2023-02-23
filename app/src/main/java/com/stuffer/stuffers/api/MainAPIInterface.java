@@ -355,6 +355,11 @@ public interface MainAPIInterface<R extends Retrofit> {
             @Header("Authorization") String xAccessToken
     );
 
+    @GET(Constants.GET_PROFILE)
+    Call<JsonObject> getProfileDetails(
+            @Path("mobileno") long mobileNumber,
+            @Path("areacode") int areacode );
+
     @Headers({
             "Accept: application/json",
             "Content-Type: application/json"
@@ -417,6 +422,18 @@ public interface MainAPIInterface<R extends Retrofit> {
     @FormUrlEncoded
     @POST(com.stuffer.stuffers.api.Constants.GET_TOKEN)
     Call<AuthorizationResponse> getAuthorization(
+            @Header("Authorization") String xAccessToken,
+            @Field("username") String email,
+            @Field("password") String name,
+            @Field("grant_type") String school
+    );
+
+@Headers({
+            "Access-Control-Allow-Origin: appopay.com"
+    })
+    @FormUrlEncoded
+    @POST(com.stuffer.stuffers.api.Constants.GET_TOKEN)
+    Call<JsonObject> getAuthorization2(
             @Header("Authorization") String xAccessToken,
             @Field("username") String email,
             @Field("password") String name,

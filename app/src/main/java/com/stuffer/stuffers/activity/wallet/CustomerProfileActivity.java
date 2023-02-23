@@ -243,7 +243,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //getSavedCard();
+
         //showNoCardDialog();
     }
 
@@ -567,6 +567,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
                             Glide.with(CustomerProfileActivity.this).load(decodedBytes).into(customerQrCodeQrCode);
                             //Log.e(TAG, "onResponse: called" );
                             frameLayout.setVisibility(View.VISIBLE);
+                            getSavedCard();
                         }
 
                     } catch (JSONException e) {
@@ -765,7 +766,8 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
                     dialog.dismiss();
                     if (response.isSuccessful()) {
                         //String res = new Gson().toJson(response.body());
-                        //////Log.e(TAG, "onResponse: getprofile :" + res);
+                        Log.e(TAG, "onResponse: getprofile :");
+                        Helper.setUserDetailsNull();
                         JsonObject body = response.body();
                         String res = body.toString();
                         DataVaultManager.getInstance(CustomerProfileActivity.this).saveUserDetails(res);

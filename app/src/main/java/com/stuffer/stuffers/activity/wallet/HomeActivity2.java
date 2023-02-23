@@ -88,7 +88,10 @@ import com.stuffer.stuffers.commonChat.interfaces.MoreListener;
 import com.stuffer.stuffers.commonChat.interfaces.ProceedRequest;
 import com.stuffer.stuffers.commonChat.interfaces.UserGroupSelectionDismissListener;
 import com.stuffer.stuffers.communicator.CashTransferListener;
+import com.stuffer.stuffers.communicator.LinkAccountListener;
 import com.stuffer.stuffers.communicator.ShopListener;
+import com.stuffer.stuffers.fragments.bottom_fragment.BottomNotCard;
+import com.stuffer.stuffers.fragments.bottom_fragment.BottomRegister;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomSendType;
 import com.stuffer.stuffers.models.shop_model.ShopModel;
 import com.stuffer.stuffers.myService.FetchMyUsersService;
@@ -112,11 +115,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.michaelrocks.libphonenumber.android.NumberParseException;
+import io.michaelrocks.libphonenumber.android.PhoneNumberUtil;
+import io.michaelrocks.libphonenumber.android.Phonenumber;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeActivity2 extends BaseActivity implements View.OnClickListener, ChatItemClickListener, ProceedRequest, MoreListener, ShopListener, UserGroupSelectionDismissListener, CashTransferListener {
+public class HomeActivity2 extends BaseActivity implements View.OnClickListener, ChatItemClickListener, ProceedRequest, MoreListener, ShopListener, UserGroupSelectionDismissListener, CashTransferListener, LinkAccountListener {
     private static final String TAG = "HomeActivity";
     private static final int REQUEST_CODE_CHAT_FORWARD = 99;
     private static String CONFIRM_TAG = "confirmtag";
@@ -150,6 +156,8 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
     private BottomSendType mBottomSendType;
     //public static Context mCtx;
     public static Activity mCtx;
+    private PhoneNumberUtil phoneUtil;
+    private BottomRegister mBottomRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,6 +209,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         rvShop = findViewById(R.id.rvShop);
         rvShop.setLayoutManager(new LinearLayoutManager(HomeActivity2.this, LinearLayoutManager.HORIZONTAL, false));
         findViewById(R.id.customlayout_create_merchant).setOnClickListener(this);
+        isAppoPayAccountExist(userMe.getId(), userMe.getName());
         ArrayList<ShopModel> mList = Helper.getShopItems(HomeActivity2.this);
         ShopAdapter adapter = new ShopAdapter(HomeActivity2.this, mList, this);
         rvShop.setAdapter(adapter);
@@ -283,7 +292,6 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
                 String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
                 if (TextUtils.isEmpty(userData)) {
                     goToLoginScreen(10);
-
                 } else {
                     Intent mIntentQrCode = new Intent(HomeActivity2.this, CameraActivity.class);
                     mIntentQrCode.putExtra(AppoConstants.WHERE, 10);
@@ -309,7 +317,109 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
             }, 200);
         });
         tvVersion.setText(getString(R.string.info_version) + BuildConfig.VERSION_NAME);
+
         refreshMyContacts();
+
+
+    }
+
+    private void isAppoPayAccountExist(String id, String name) {
+
+        try {
+
+            if (phoneUtil == null) {
+                phoneUtil = PhoneNumberUtil.createInstance(HomeActivity2.this);
+            }
+            Phonenumber.PhoneNumber numberProto = phoneUtil.parse("+" + id, "");
+            int countryCode = numberProto.getCountryCode();
+            //Log.e(TAG, "onActivityResult: " + countryCode);
+            long nationalNumber = numberProto.getNationalNumber();
+            //Log.e(TAG, "isAppoPayAccountExist: " + nationalNumber);
+            isAccountExist(countryCode, nationalNumber);
+
+        } catch (NumberParseException e) {
+            System.err.println("NumberParseException was thrown: " + e.toString());
+        }
+
+    }
+
+    /*{
+        "rules": {
+        // only authenticated users can read or write to my Firebase
+        ".read": "auth !== null",
+                ".write": "auth !== null"
+    }
+    }*/
+
+    //Secure Rule
+    /*{
+        "rules": {
+        "Tokens": {
+            ".read": true,
+                    ".write": true
+
+        },
+        "Users": {
+            ".read": true,
+                    ".write": true
+
+        },
+        "chats": {
+            ".read": true,
+                    ".write": true
+
+        },
+        "inbox": {
+            ".read": true,
+                    ".write": true
+
+        },
+        "users": {
+            ".read": true,
+                    ".write": true
+
+        }
+
+
+
+
+    }
+    }*/
+
+    private void isAccountExist(int countryCode, long nationalNumber) {
+        //long mRequest = 987455555;
+
+        apiService.getProfileDetails(nationalNumber, countryCode).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Log.e(TAG, "onResponse: " + response.body());
+                //{"result":"failed","message":"user not exist in system","status":500}
+                if (response.code()==401){
+
+                }else {
+                JsonObject body = response.body();
+                if (body.get("result").isJsonObject()) {
+                    Log.e(TAG, "onResponse: yes");
+
+                } else {
+                    mBottomRegister = new BottomRegister();
+                    mBottomRegister.show(getSupportFragmentManager(), mBottomRegister.getTag());
+                    mBottomRegister.setCancelable(false);
+                }
+                }
+
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e(TAG, "onFailure: " + t.getMessage());
+
+            }
+        });
 
     }
 
@@ -325,6 +435,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
     }
 
     public void upDateBalance() {
+        Log.e(TAG, "upDateBalance: called");
         try {
             String currantBalance = Helper.getCurrantBalance();
             DecimalFormat df2 = new DecimalFormat("#.00");
@@ -395,12 +506,17 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
             if (!stateChanges.getFrom().isSubscribed() && stateChanges.getTo().isSubscribed()) {
                 usersRef.child(userMe.getId()).child("userPlayerId").setValue(stateChanges.getTo().getUserId());
                 helper.setMyPlayerId(stateChanges.getTo().getUserId());
+                //Log.e("TAG", "updateFcmToken: 1"+ stateChanges.getTo().getUserId());
             }
         });
+        //{"id":"a8c2cfd1-021c-489b-8e57-e8fb2496036f","recipients":1,"external_id":null}
+        //1d60d3334-1cb0-4dce-a7c5-0ee35b727ce0 //vivo
+
         OSDeviceState status = OneSignal.getDeviceState();
         if (status != null && status.isSubscribed() && status.getUserId() != null) {
             usersRef.child(userMe.getId()).child("userPlayerId").setValue(status.getUserId());
             helper.setMyPlayerId(status.getUserId());
+            //Log.e("TAG", "updateFcmToken: 1"+ status.getUserId());
         }
     }
 
@@ -804,6 +920,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         LinearLayout llBProfile = window.findViewById(R.id.llBProfile);
         LinearLayout llProfile = window.findViewById(R.id.llProfile);
         LinearLayout llCashSend = window.findViewById(R.id.llCashSend);
+        LinearLayout layoutScanUnion = window.findViewById(R.id.layoutScanUnion);
 
         llCashSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -870,15 +987,22 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         llProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+            String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+             if (TextUtils.isEmpty(userData)) {
+                  goToLoginScreen(9);
+              } else {
+                Intent mIntent = new Intent(HomeActivity2.this, CustomerProfileActivity.class);
+                mIntent.putExtra(AppoConstants.WHERE, 9);
+                startActivity(mIntent);
+             }
+            }
+        });
 
-                String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
-                if (TextUtils.isEmpty(userData)) {
-                    goToLoginScreen(9);
-                } else {
-                    Intent mIntent = new Intent(HomeActivity2.this, CustomerProfileActivity.class);
-                    mIntent.putExtra(AppoConstants.WHERE, 9);
-                    startActivity(mIntent);
-                }
+        layoutScanUnion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity2.this, InnerPayActivity.class);
+                startActivity(intent);
             }
         });
         dialog.setCancelable(true);
@@ -1099,5 +1223,12 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
             mIntent.putExtra(AppoConstants.WHERE, 11);
             startActivity(mIntent);
         }
+    }
+
+    @Override
+    public void onLinkAccountConfirm() {
+        mBottomRegister.dismiss();
+        Intent intent = new Intent(HomeActivity2.this, Registration.class);
+        startActivity(intent);
     }
 }

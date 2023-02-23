@@ -13,6 +13,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Point;
@@ -38,6 +40,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
@@ -394,6 +397,8 @@ public class MyCameraFragment extends Fragment implements ActivityCompat.OnReque
     };
     private View border_camera;
     private FrameLayout camera_root;
+    private Size largest;
+    private View rectangle;
 
     private void sentPathAfterCloseCamera(String absolutePath) {
         try {
@@ -402,6 +407,9 @@ public class MyCameraFragment extends Fragment implements ActivityCompat.OnReque
                 mCameraDevice = null;
             }
             mCameraListener.onCameraCapturePerform(absolutePath, null);
+
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -648,6 +656,7 @@ public class MyCameraFragment extends Fragment implements ActivityCompat.OnReque
         mFocusView = (FocusView) view.findViewById(R.id.focusView);
         //border_camera=(View)view.findViewById(R.id.border_camera);
         camera_root=(FrameLayout)view.findViewById(R.id.camera_root);
+        rectangle=(View)view.findViewById(R.id.rectangle);
         /*mTextureView.setGestureListener(new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
@@ -870,8 +879,9 @@ public class MyCameraFragment extends Fragment implements ActivityCompat.OnReque
                         Arrays.asList(map.getOutputSizes(ImageFormat.JPEG)),
                         new CompareSizesByArea());*/
 
-                Size largest = choosePictureSize(map.getOutputSizes(ImageFormat.JPEG));
+                largest = choosePictureSize(map.getOutputSizes(ImageFormat.JPEG));
                 //  Size minSize = Collections.min(Arrays.asList(map.getOutputSizes(ImageFormat.JPEG)),new CompareSizesByArea());
+
 
                 mImageReader = ImageReader.newInstance(640, 480,
                         ImageFormat.JPEG, /*maxImages*/2);
@@ -1584,6 +1594,10 @@ public class MyCameraFragment extends Fragment implements ActivityCompat.OnReque
                     }
                 }
             }
+            //BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            //Bitmap bitmap = BitmapFactory.decodeFile(mFile.getAbsolutePath(),bmOptions);
+            //bitmap = Bitmap.createScaledBitmap(bitmap,parent.getWidth(),parent.getHeight(),true);
+
             sentPathAfterCloseCamera(mFile.getAbsolutePath());
         }
 

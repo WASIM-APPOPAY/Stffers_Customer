@@ -71,7 +71,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-import io.card.payment.CardIOActivity;
+//import io.card.payment.CardIOActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -761,16 +761,16 @@ public class WalletCardActivity extends AppCompatActivity implements CurrencySel
         /*Intent intentCamera = new Intent(WalletCardActivity.this, CameraActivity.class);
         startActivityForResult(intentCamera, 777);*/
         //KYCCamera.create(this).openCamera(KYCCamera.TYPE_PANCARD_FRONT);
-        Intent scanIntent = new Intent(WalletCardActivity.this, CardIOActivity.class);
-        scanIntent.putExtra(CardIOActivity.EXTRA_SUPPRESS_SCAN, true); // supmit cuando termine de reconocer el documento
-        scanIntent.putExtra(CardIOActivity.EXTRA_SUPPRESS_MANUAL_ENTRY, true); // esconder teclado
-        scanIntent.putExtra(CardIOActivity.EXTRA_USE_CARDIO_LOGO, false); // cambiar logo de paypal por el de card.io
-        scanIntent.putExtra(CardIOActivity.EXTRA_HIDE_CARDIO_LOGO, true);
-        scanIntent.putExtra(CardIOActivity.EXTRA_RETURN_CARD_IMAGE, true); // capture img
-        scanIntent.putExtra(CardIOActivity.EXTRA_CAPTURED_CARD_IMAGE, true); // capturar img
+        //Intent scanIntent = new Intent(WalletCardActivity.this, CardIOActivity.class);
+        //scanIntent.putExtra(CardIOActivity.EXTRA_SUPPRESS_SCAN, true); // supmit cuando termine de reconocer el documento
+        //scanIntent.putExtra(CardIOActivity.EXTRA_SUPPRESS_MANUAL_ENTRY, true); // esconder teclado
+        //scanIntent.putExtra(CardIOActivity.EXTRA_USE_CARDIO_LOGO, false); // cambiar logo de paypal por el de card.io
+        //scanIntent.putExtra(CardIOActivity.EXTRA_HIDE_CARDIO_LOGO, true);
+        //scanIntent.putExtra(CardIOActivity.EXTRA_RETURN_CARD_IMAGE, true); // capture img
+        //scanIntent.putExtra(CardIOActivity.EXTRA_CAPTURED_CARD_IMAGE, true); // capturar img
         //scanIntent.putExtra(CardIOActivity.EXTRA_UNBLUR_DIGITS, true);
         // laszar activity
-        startActivityForResult(scanIntent, MY_SCAN_REQUEST_CODE_TOP);
+        //startActivityForResult(scanIntent, MY_SCAN_REQUEST_CODE_TOP);
     }
 
     @Override
@@ -780,7 +780,7 @@ public class WalletCardActivity extends AppCompatActivity implements CurrencySel
         // Log.e(TAG, "onActivityResult: elase called");
         if (requestCode == MY_SCAN_REQUEST_CODE_TOP) {//|| requestCode == RESULT_SCAN_SUPPRESSED) {               // RESULT_SCAN_SUPPRESSED
             Log.e(TAG, "onActivityResult: called signature");
-            Bitmap myBitmap = CardIOActivity.getCapturedCardImage(data);
+            Bitmap myBitmap =null ;//CardIOActivity.getCapturedCardImage(data);
             if (myBitmap != null) {
                 //pcf.setImageBitmap(myBitmap);
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

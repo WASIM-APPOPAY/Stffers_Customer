@@ -2,7 +2,9 @@
 <network-security-config>
     <base-config cleartextTrafficPermitted="true">
         <trust-anchors>
-            <certificates src="system" />
+            <certificates src="system" />  <!-- for Firebase -->
+            <certificates src="user" /> <!-- for tooling.   Ex:Charles -->
+
         </trust-anchors>
     </base-config>
 </network-security-config>

@@ -94,12 +94,22 @@ public class TransactionListResponse {
         @SerializedName("paymenttype")
         @Expose
         private Object paymenttype;
+
+        @SerializedName("receiverName")
+        @Expose
+        private Object receiverName;
+
+        @SerializedName("receiverCurrencyCode")
+        @Expose
+        private Object receiverCurrencyCode;
+
         @SerializedName("areacode")
         @Expose
         private Integer areacode;
         @SerializedName("taxes")
         @Expose
         private Float taxes;
+
 
         public Integer getId() {
             return id;
@@ -231,6 +241,22 @@ public class TransactionListResponse {
 
         public Object getPaymenttype() {
             return paymenttype;
+        }
+
+        public Object getReceiverName() {
+            return receiverName;
+        }
+
+        public void setReceiverName(Object receiverName) {
+            this.receiverName = receiverName;
+        }
+
+        public Object getReceiverCurrencyCode() {
+            return receiverCurrencyCode;
+        }
+
+        public void setReceiverCurrencyCode(Object receiverCurrencyCode) {
+            this.receiverCurrencyCode = receiverCurrencyCode;
         }
 
         public void setPaymenttype(Object paymenttype) {

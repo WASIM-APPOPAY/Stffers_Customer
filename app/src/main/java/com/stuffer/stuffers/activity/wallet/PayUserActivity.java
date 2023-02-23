@@ -591,7 +591,9 @@ public class PayUserActivity extends AppCompatActivity implements ConfirmSelectL
 
     private void requestForPayment(String authToken) {
         showLoading();
+
         AndroidNetworking.post("https://labapi-union.appopay.com/scis/switch/qremvpayment")
+
                 .addHeaders("requestPath", "/scis/switch/qremvpayment")
                 .addHeaders("Content-Type", "application/json")
                 .addHeaders("authToken", authToken)

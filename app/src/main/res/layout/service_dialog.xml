@@ -270,6 +270,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layoutScanUnion"
             style="@style/LayoutFundLinearStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -278,15 +279,23 @@
             android:gravity="center"
             android:orientation="vertical"
             android:padding="8dp"
-            android:visibility="invisible">
+            android:visibility="visible">
 
-            <ImageView
+            <!--<ImageView
 
                 android:layout_width="65dp"
                 android:layout_height="65dp"
 
 
-                android:src="@drawable/practi_icon" />
+                android:src="@drawable/practi_icon" />-->
+
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:background="@drawable/bg_circle_profile"
+                android:padding="10dp"
+                android:src="@drawable/ic_qr_code_scanner"
+                app:tint="@color/white" />
 
             <com.stuffer.stuffers.views.MyTextView
                 android:layout_width="wrap_content"
@@ -294,7 +303,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="3dp"
                 android:gravity="center"
-                android:text="@string/info_pracktipago"
+                android:text="Scan UnionPay"
                 android:textColor="@color/black"
                 android:textSize="12sp"
 

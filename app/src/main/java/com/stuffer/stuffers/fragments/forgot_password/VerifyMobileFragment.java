@@ -1,7 +1,9 @@
 package com.stuffer.stuffers.fragments.forgot_password;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.stuffer.stuffers.BuildConfig;
@@ -143,6 +146,24 @@ public class VerifyMobileFragment extends Fragment {
                     mDominicaAreaCode = "";
                     tvAreaCodeDo.setVisibility(View.GONE);
                 }
+            }
+        });
+        edtCustomerCountryCode.setDialogEventsListener(new CountryCodePicker.DialogEventsListener() {
+            @Override
+            public void onCcpDialogOpen(Dialog dialog) {
+                //your code
+                TextView title =(TextView)  dialog.findViewById(R.id.textView_title);
+                title.setText(getString(R.string.info_cc_reg));
+            }
+
+            @Override
+            public void onCcpDialogDismiss(DialogInterface dialogInterface) {
+                //your code
+            }
+
+            @Override
+            public void onCcpDialogCancel(DialogInterface dialogInterface) {
+                //your code
             }
         });
         tvAreaCodeDo.setOnClickListener(new View.OnClickListener() {

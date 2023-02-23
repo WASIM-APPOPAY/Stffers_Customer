@@ -339,20 +339,6 @@ public class VerificationActivity extends AppCompatActivity {
 
 
         } else {
-
-
-            /*String keyUserDetails = DataVaultManager.getInstance(this).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
-            if (!StringUtils.isEmpty(keyUserDetails)) {
-                Intent intent = new Intent(this, HomeActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                VerificationActivity.this.finish();
-            } else {
-                Intent intent = new Intent(this, SignInActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                VerificationActivity.this.finish();
-            }*/
             Intent intent = new Intent(this, HomeActivity2.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

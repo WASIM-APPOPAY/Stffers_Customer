@@ -1,15 +1,18 @@
 package com.stuffer.stuffers.fragments.bottom;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -131,6 +134,24 @@ public class BankFragment extends Fragment {
 
 
         edtCustomerCountryCode.setExcludedCountries(getString(R.string.info_exclude_countries));
+        edtCustomerCountryCode.setDialogEventsListener(new CountryCodePicker.DialogEventsListener() {
+            @Override
+            public void onCcpDialogOpen(Dialog dialog) {
+                //your code
+                TextView title =(TextView)  dialog.findViewById(R.id.textView_title);
+                title.setText(getString(R.string.info_cc_reg));
+            }
+
+            @Override
+            public void onCcpDialogDismiss(DialogInterface dialogInterface) {
+                //your code
+            }
+
+            @Override
+            public void onCcpDialogCancel(DialogInterface dialogInterface) {
+                //your code
+            }
+        });
 
 
         btnChange.setVisibility(View.GONE);
@@ -547,7 +568,6 @@ public class BankFragment extends Fragment {
     public void passPhoneNumber(String mMobileNumber) {
         edtphone_number.setText(mMobileNumber);
         try {
-
             if (phoneUtil == null) {
                 phoneUtil = PhoneNumberUtil.createInstance(getActivity());
             }
@@ -555,7 +575,6 @@ public class BankFragment extends Fragment {
             int countryCode = numberProto.getCountryCode();
             Log.e(TAG, "onActivityResult: " + countryCode);
             edtCustomerCountryCode.setCountryForPhoneCode(countryCode);
-
             long nationalNumber = numberProto.getNationalNumber();
             edtphone_number.setText(String.valueOf(nationalNumber));
         } catch (NumberParseException e) {

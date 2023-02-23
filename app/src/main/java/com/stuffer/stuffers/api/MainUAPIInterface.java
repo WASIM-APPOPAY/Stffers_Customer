@@ -42,12 +42,15 @@ public interface MainUAPIInterface<R extends Retrofit> {
     /**
      * @Below for get card enrollment
      */
+
     @HTTP(method = "POST", path = Constants.POST_CARD_ENROLLMENT, hasBody = true)
     @Headers({
             "Content-Type:application/json;charset=utf-8",
             "requestPath: /scis/switch/cardenrollment"
     })
     Call<JsonObject> getCardEnrollment(@Body RequestBody param, @Header("authToken") String xAccessToken, @Header("accountNumber") String accountNumber);
+
+
 
     @Headers({
             "Accept: text/plain",

@@ -101,7 +101,17 @@ public class FundCountry extends AppCompatActivity implements RecyclerViewRowIte
 
     @Override
     public void onCountrySelect(int pos, String name, String flag) {
-        if (name.equalsIgnoreCase("dominican")) {
+        Glide.with(FundCountry.this).load(flag).into(ivScanCard);
+        ivScanCard.setVisibility(View.VISIBLE);
+        toolbarTitle.setText(name.toUpperCase());
+
+        FundsFragment mFundsFragment = new FundsFragment();
+        Bundle mBundle = new Bundle();
+        mBundle.putString(AppoConstants.COUNTRY, name);
+        mFundsFragment.setArguments(mBundle);
+        initFragment(mFundsFragment);
+
+        /*if (name.equalsIgnoreCase("dominican")) {
             Glide.with(FundCountry.this).load(flag).into(ivScanCard);
             ivScanCard.setVisibility(View.VISIBLE);
             toolbarTitle.setText(name);
@@ -120,11 +130,7 @@ public class FundCountry extends AppCompatActivity implements RecyclerViewRowIte
             mBundle.putString(AppoConstants.COUNTRY, name);
             mFundsFragment.setArguments(mBundle);
             initFragment(mFundsFragment);
-            /*SpecificFragment mSpecificFragment = new SpecificFragment();
-            Bundle mBundle = new Bundle();
-            mBundle.putString(SpecificFragment.ARG_PARAM1, "2");
-            mSpecificFragment.setArguments(mBundle);
-            initFragment(mSpecificFragment);*/
+
 
         } else if (name.equalsIgnoreCase("paraguay")) {
             Glide.with(FundCountry.this).load(flag).into(ivScanCard);
@@ -135,6 +141,6 @@ public class FundCountry extends AppCompatActivity implements RecyclerViewRowIte
             mBundle.putString(SpecificFragment.ARG_PARAM1, "3");
             mSpecificFragment.setArguments(mBundle);
             initFragment(mSpecificFragment);
-        }
+        }*/
     }
 }

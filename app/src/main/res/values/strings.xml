@@ -788,6 +788,7 @@ data.</string>
     <string name="permission_contact_message">Please allow permission to work properlly Note, we do not save or share your contact list with anyone.</string>
     <string name="permission_contact_title">Permission to read contacts</string>
     <string name="okay">OK</string>
+    <string name="info_cc_reg">Select Country or Region</string>
 
 
 </resources>

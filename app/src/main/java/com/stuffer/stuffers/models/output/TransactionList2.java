@@ -22,6 +22,24 @@ public class TransactionList2 {
     String taxes;
     String currencycode;
     String viewdate;
+    String receiverName;
+    String receiverCurrencyCode;
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public String getReceiverCurrencyCode() {
+        return receiverCurrencyCode;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
+
+    public void setReceiverCurrencyCode(String receiverCurrencyCode) {
+        this.receiverCurrencyCode = receiverCurrencyCode;
+    }
 
     public String getCurrencycode() {
         return currencycode;

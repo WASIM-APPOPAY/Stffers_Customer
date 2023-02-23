@@ -430,18 +430,7 @@
     </LinearLayout>
 
 
-    <com.stuffer.stuffers.views.MyTextView
-        android:id="@+id/skip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginLeft="3dp"
-        android:background="@drawable/register_button_bg"
-        android:padding="10dp"
-        android:text="@string/info_skip"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+
 
 </FrameLayout>
 

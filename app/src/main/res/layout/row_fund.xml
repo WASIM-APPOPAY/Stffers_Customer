@@ -12,6 +12,7 @@
 
     <com.stuffer.stuffers.views.MyTextView
         android:id="@+id/tvFundName"
+        android:lines="2"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

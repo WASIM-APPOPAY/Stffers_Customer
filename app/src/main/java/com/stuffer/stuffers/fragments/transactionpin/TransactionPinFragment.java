@@ -1,13 +1,16 @@
 package com.stuffer.stuffers.fragments.transactionpin;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -85,6 +88,7 @@ public class TransactionPinFragment extends Fragment {
         mainAPIInterface = ApiUtils.getAPIService();
         newTimer = new Timer();
         edtCustomerCountryCode.setExcludedCountries(getString(R.string.info_exclude_countries));
+
         send_customer_otp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,6 +150,26 @@ public class TransactionPinFragment extends Fragment {
                 }
             }
         });
+
+        edtCustomerCountryCode.setDialogEventsListener(new CountryCodePicker.DialogEventsListener() {
+            @Override
+            public void onCcpDialogOpen(Dialog dialog) {
+                //your code
+                TextView title =(TextView)  dialog.findViewById(R.id.textView_title);
+                title.setText(getString(R.string.info_cc_reg));
+            }
+
+            @Override
+            public void onCcpDialogDismiss(DialogInterface dialogInterface) {
+                //your code
+            }
+
+            @Override
+            public void onCcpDialogCancel(DialogInterface dialogInterface) {
+                //your code
+            }
+        });
+
         tvAreaCodeDo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

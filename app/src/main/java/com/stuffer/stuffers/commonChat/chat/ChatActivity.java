@@ -504,6 +504,9 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
                 Log.e("TAG", "notifyMessage: called");
                 //String headings = userMe.getId() + " " + getString(R.string.new_message_sent);
                 String headings = (chat.isGroup() && group != null) ? group.getName() : userMe.getId();
+                Log.e("TAG", "notifyMessage: "+headings );
+                
+
                 OneSignal.postNotification(new JSONObject("{'headings': {'en':'" + headings + "'}, 'contents': {'en':'" + message.getBody() + "'}, 'include_player_ids': " + userPlayerIds.toString() + ",'data': " + new Gson().toJson(message) + ",'android_group':" + message.getChatId() + " }"),
                         new OneSignal.PostNotificationResponseHandler() {
                             @Override
@@ -1059,11 +1062,12 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
                     ChatHelper.presentToast(this, getString(R.string.hold_record), false);
                 } else {
                     msg = newMessage.getText().toString().trim();
-                    newMessage.setText(newMessage.getText().toString().trim());
+                    /*newMessage.setText(newMessage.getText().toString().trim());
                     if (!TextUtils.isEmpty(newMessage.getText().toString())) {
                         sendMessage(newMessage.getText().toString(), AttachmentTypes.NONE_TEXT, null);
                         newMessage.setText("");
-                    }
+                    }*/
+
                     if (msg.matches(Regex)) {
                         newMessage.setText("");
                         String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);

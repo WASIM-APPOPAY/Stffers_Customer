@@ -43,6 +43,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import com.onesignal.OneSignal;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.contact.ContactDemoActivity;
 import com.stuffer.stuffers.api.ApiUtils;
@@ -196,6 +197,7 @@ public class P2PTransferActivity extends AppCompatActivity implements UserAccoun
                 String mMobileNumber = data.getStringExtra(AppoConstants.INFO);
                 //Fragment currentFragment = getSupportFragmentManager().findFragmentByTag("bank");
                 Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.transferContainer);
+
                 if (currentFragment instanceof BankFragment) {
                     ((BankFragment) currentFragment).passPhoneNumber(mMobileNumber);
                 }
@@ -357,6 +359,22 @@ public class P2PTransferActivity extends AppCompatActivity implements UserAccoun
 
     private void hideLoading() {
         mProgressDialog.dismiss();
+    }
+
+    public void sentNotification() {
+
+        /*OneSignal.postNotification(new JSONObject("{'headings': {'en':'" +headings + "'}, 'contents': {'en':'" + message.getBody() + "'}, 'include_player_ids': " + userPlayerIds.toString() + ",'data': " + new Gson().toJson(message) + ",'android_group':" + message.getChatId() + " }"),
+                new OneSignal.PostNotificationResponseHandler() {
+                    @Override
+                    public void onSuccess(JSONObject response) {
+                        Log.i("OneSignalExample", "postNotification Success: " + response.toString());
+                    }
+
+                    @Override
+                    public void onFailure(JSONObject response) {
+                        Log.e("OneSignalExample", "postNotification Failure: " + response.toString());
+                    }
+                });*/
     }
 
     //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

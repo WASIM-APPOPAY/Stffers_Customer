@@ -217,6 +217,19 @@ public class TransactionListActivity extends AppCompatActivity implements Recycl
             model.setPaymenttype(String.valueOf(mListTransaction.get(i).getPaymenttype()));
             model.setAreacode(String.valueOf(mListTransaction.get(i).getAreacode()));
             model.setTaxes(String.valueOf(mListTransaction.get(i).getTaxes()));
+            if (mListTransaction.get(i).getReceiverName() == null) {
+                model.setReceiverName("");
+            } else {
+                model.setReceiverName(String.valueOf(mListTransaction.get(i).getReceiverName()));
+            }
+
+            if (mListTransaction.get(i).getReceiverCurrencyCode() == null) {
+                model.setReceiverCurrencyCode("");
+            } else {
+                model.setReceiverCurrencyCode(String.valueOf(mListTransaction.get(i).getReceiverCurrencyCode()));
+            }
+
+
             mListFinal.add(model);
         }
 
@@ -472,8 +485,13 @@ public class TransactionListActivity extends AppCompatActivity implements Recycl
         Float mProcessing = Float.valueOf(mResponse.getProcessingfees());
         Float mTaxes = Float.valueOf(mResponse.getTaxes());
         float mCreditAmt = mTransactionAmt - (mProcessing + mTaxes);
+        if (mResponse.getReceiverCurrencyCode().isEmpty()) {
+            tvReceiverAmt.setText("Receiver Amount : " + mCreditAmt);
+        } else {
+            tvReceiverAmt.setText("Receiver Amount : " + mCreditAmt + " " + mResponse.getCurrencycode());
+        }
 
-        tvReceiverAmt.setText("Receiver Amount : " + mCreditAmt);
+
         tvReceiverAmt.setTextColor(Color.parseColor("#334CFF"));
         //float cost = amountaftertax_fees - Float.parseFloat(edAmount.getText().toString().trim());
         //float twoDecimal = Helper.getTwoDecimal(cost);
@@ -484,11 +502,19 @@ public class TransactionListActivity extends AppCompatActivity implements Recycl
 
 
         tvAmountPay.setText(" Amount : " + mTransactionAmt + " " + mResponse.getCurrencycode());
+        tvAmountPay.setTextSize(18);
         tvCurrencyPay.setText("Currency : " + mResponse.getCurrencycode());
         tvTransactionTime.setText("Transaction Time : " + mResponse.getViewdate());
         tvVoucherPay.setText("Transaction No : " + mResponse.getTransactionid());
         //tvInfo.setText("Transfer to " + recname + "" + "\nSUCCESS");
-        tvInfo.setText(mResponse.getTransactiondescription());
+
+        if (mResponse.getReceiverName().isEmpty()) {
+            tvInfo.setText(mResponse.getTransactiondescription());
+        } else {
+            tvInfo.setText("Transfer To " + mResponse.getReceiverName() + "\n" + mResponse.getTransactiondescription());
+        }
+
+        tvInfo.setTextSize(14);
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -45,6 +45,7 @@ import com.stuffer.stuffers.activity.wallet.InnerPayActivity;
 import com.stuffer.stuffers.activity.wallet.SignInActivity;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
+import com.stuffer.stuffers.commonChat.chat.TransferChatActivity;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottotmPinFragment;
 import com.stuffer.stuffers.fragments.dialog.FromAccountDialogFragment;
 import com.stuffer.stuffers.models.output.AccountModel;
@@ -66,10 +67,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -149,7 +153,7 @@ public class AppoPayFragment extends Fragment {
         //String s = new Gson().toJson(decode);
         resultScan = new Gson().toJson(mDecode);
 
-        Log.e("TAG", "onCreateView: onGson : " + resultScan);
+        //Log.e("TAG", "onCreateView: onGson : " + resultScan);
 
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,6 +191,53 @@ public class AppoPayFragment extends Fragment {
 
             }
         });
+
+        /*edAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                try {
+                    String inputAmount = edAmount.getText().toString().trim();
+                    if (inputAmount.length() > 0) {
+                        float tranaferAmount = Float.parseFloat(inputAmount);
+                        //float transfer = (float) (tranaferAmount * conversionRates);
+                        float transfer = (float) (tranaferAmount / exchange);
+                        float twoDecimal = (float) Helper.getTwoDecimal(transfer);
+                        mCreditAmount = twoDecimal;
+                        tvAmountCredit.setText(String.valueOf(twoDecimal) + " " + toCurrency.toUpperCase());
+                        DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+                        formatter.applyPattern("#,###,###,###.00");
+                        String formattedString = formatter.format(twoDecimal);
+                        tvAmountCredit.setText(String.valueOf(formattedString) + " " + toCurrency.toUpperCase());
+                        btnPayNow.setEnabled(true);
+                        btnPayNow.setClickable(true);
+                    } else {
+                        float twoDecimal = (float) Helper.getTwoDecimal(0);
+                        tvAmountCredit.setText(String.valueOf(twoDecimal));
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if (edAmount.getText().toString().trim().isEmpty()) {
+
+                    } else {
+                        Toast.makeText(getActivity(), getString(R.string.info_invalid_format), Toast.LENGTH_SHORT).show();
+                        btnPayNow.setEnabled(false);
+                        btnPayNow.setClickable(false);
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });*/
 
         //showSuccessDialog("param result");
 
@@ -639,7 +690,6 @@ public class AppoPayFragment extends Fragment {
 
 
     private void calculateCommission() {
-        //Log.e(TAG, "calculateCommission: " + jsonCommission.toString());
         try {
             JSONObject jsonResult = jsonCommission.getJSONObject(AppoConstants.RESULT);
             float bankcommission = Float.parseFloat(jsonResult.getString(AppoConstants.BANKCOMMISSION));
@@ -728,17 +778,6 @@ public class AppoPayFragment extends Fragment {
         params.addProperty(AppoConstants.FEES, processingfees);
         params.addProperty(AppoConstants.TRANSACTIONPIN, userTransactionPin);
         params.addProperty(AppoConstants.TAXES, taxes);
-
-/**
- *  merchantaccount: newbarcodetext[0],
- *         merchantname: newbarcodetext[1],
- *         mobilenumber: newbarcodetext[2],
- *         areacode: newbarcodetext[3],
- *         email: newbarcodetext[4],
- *         address: newbarcodetext[5],
- *         currencycode: newbarcodetext[6]
- */
-
         params.addProperty(AppoConstants.MERCHANTNAME, valueMerchantName);
         params.addProperty(AppoConstants.MERCHANTACCOUNT, merchantWalletAccount);
         params.addProperty(AppoConstants.MERCHANTNUMBER, valuePhone);

@@ -33,7 +33,7 @@ import com.stuffer.stuffers.utils.AppoConstants;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Registration extends AppCompatActivity implements OtpRequestListener, VerifiedListener, CarrierSelectListener , StateSelectListener {
+public class Registration extends AppCompatActivity implements OtpRequestListener, VerifiedListener, CarrierSelectListener, StateSelectListener {
     String mNameCode, mCountryCode, mMobileNo, mEmailId, mAddress, mCountryId;
     String[] descriptionData = {"Step One", "Step Two", "Step Three"};
     StateProgressBar stateProgressBar;
@@ -41,7 +41,7 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
     private static final String TAG = "Registration";
     private AppSMSBroadcastReceiver appSMSBroadcastReceiver;
     private IntentFilter intentFilter;
-    private String mStateId,mZipCode,mCity;
+    private String mStateId, mZipCode, mCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,8 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         registerReceiver(appSMSBroadcastReceiver, intentFilter);
         NumEmailFragment mNumEmailFragment = new NumEmailFragment();
         intiFragment(mNumEmailFragment);
+        /*IdentityFragment identityFragment = new IdentityFragment();
+        intiFragment(identityFragment);*/
 
 
     }
@@ -86,7 +88,7 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
 
 
     @Override
-    public void onOtpRequest(String nameCode, String countryCode, String mobileNumber, String emailId, String address, String countryId,int stateId, String zipCode,String city) {
+    public void onOtpRequest(String nameCode, String countryCode, String mobileNumber, String emailId, String address, String countryId, int stateId, String zipCode, String city) {
         state(1);
         mNameCode = nameCode;
         mCountryCode = countryCode;
@@ -95,10 +97,9 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         mAddress = address;
         mCountryId = countryId;
 
-        mStateId= String.valueOf(stateId);
-        mZipCode=zipCode;
-        mCity=city;
-
+        mStateId = String.valueOf(stateId);
+        mZipCode = zipCode;
+        mCity = city;
 
 
         Bundle mBundle = new Bundle();
@@ -108,8 +109,8 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         mBundle.putString(AppoConstants.EMIAL_ID, emailId);
         mBundle.putString(AppoConstants.ADDRESS, address);
         mBundle.putString(AppoConstants.STATEID, String.valueOf(stateId));
-        mBundle.putString(AppoConstants.ZIPCODE2,zipCode);
-        mBundle.putString(AppoConstants.CITY,city);
+        mBundle.putString(AppoConstants.ZIPCODE2, zipCode);
+        mBundle.putString(AppoConstants.CITY, city);
         VerifyFragment mVerifyFragment = new VerifyFragment();
         mVerifyFragment.setArguments(mBundle);
         intiFragment(mVerifyFragment);
@@ -128,8 +129,8 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         mBundle.putString(AppoConstants.ADDRESS, mAddress);
         mBundle.putString(AppoConstants.COUNTRYID, mCountryId);
         mBundle.putString(AppoConstants.STATEID, mStateId);
-        mBundle.putString(AppoConstants.ZIPCODE2,mZipCode);
-        mBundle.putString(AppoConstants.CITY,mCity);
+        mBundle.putString(AppoConstants.ZIPCODE2, mZipCode);
+        mBundle.putString(AppoConstants.CITY, mCity);
 
         mIdentityFragment.setArguments(mBundle);
         intiFragment(mIdentityFragment);
@@ -189,8 +190,8 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
                 Log.e(TAG, "onReceive: " + messageCode);
                 Toast.makeText(Registration.this, messageCode, Toast.LENGTH_SHORT).show();
 
-                Pattern otpPattern=Pattern.compile("(|^)\\d{6}");
-                Matcher matcher=otpPattern.matcher(messageCode);
+                Pattern otpPattern = Pattern.compile("(|^)\\d{6}");
+                Matcher matcher = otpPattern.matcher(messageCode);
                 Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.containerSignUp);
                 if (fragmentById instanceof VerifyFragment) {
                     if (matcher.find()) {
@@ -226,7 +227,7 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
     public void onStateSelected(String statename, int stateid) {
         Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.containerSignUp);
         if (fragmentById instanceof NumEmailFragment) {
-            ((NumEmailFragment) fragmentById).setStateName(statename,stateid);
+            ((NumEmailFragment) fragmentById).setStateName(statename, stateid);
         }
     }
 

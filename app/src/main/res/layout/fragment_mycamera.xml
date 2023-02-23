@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/camera_root"
 
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <com.stuffer.stuffers.my_camera.AutoFitTextureView
         android:id="@+id/texture"
@@ -15,6 +15,18 @@
         android:id="@+id/texture"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>-->
+
+    <View
+        android:visibility="gone"
+        android:id="@+id/rectangle"
+        android:layout_marginStart="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/dp_5"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_250"
+        android:padding="@dimen/dp_32"
+        android:background="@drawable/cam_border_shape" />
+
 
 
     <com.stuffer.stuffers.my_camera.FocusView

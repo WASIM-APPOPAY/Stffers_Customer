@@ -1,13 +1,15 @@
 package com.stuffer.stuffers.activity.wallet;
 
-import static com.stuffer.stuffers.utils.DataVaultManager.KEY_BASE_64;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_ACCESSTOKEN;
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_BASE_64;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_UNIQUE_NUMBER;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_LANGUAGE;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -16,20 +18,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
-import androidx.fragment.app.Fragment;
 
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.hbb20.CountryCodePicker;
@@ -39,19 +37,16 @@ import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.cashSends.CashSend;
 import com.stuffer.stuffers.activity.forgopassword.ForgotPasswordActvivity;
 import com.stuffer.stuffers.api.ApiUtils;
-import com.stuffer.stuffers.api.Constants;
 import com.stuffer.stuffers.api.MainAPIInterface;
-import com.stuffer.stuffers.commonChat.chatModel.Chat;
-import com.stuffer.stuffers.commonChat.chatUtils.ChatHelper;
-import com.stuffer.stuffers.communicator.AreaSelectListener;
 import com.stuffer.stuffers.commonChat.chat.TransferChatActivity;
+import com.stuffer.stuffers.commonChat.chatModel.Chat;
+import com.stuffer.stuffers.communicator.AreaSelectListener;
 import com.stuffer.stuffers.communicator.OnTransactionPinSuccess;
 import com.stuffer.stuffers.communicator.TransactionPinListener;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomPasswordPolicy;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomTransactionPin;
 import com.stuffer.stuffers.fragments.dialog.AreaCodeDialog;
 import com.stuffer.stuffers.models.output.AuthorizationResponse;
-import com.stuffer.stuffers.models.output.MappingResponse;
 import com.stuffer.stuffers.models.output.MappingResponse2;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
@@ -87,7 +82,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
 
     private CountryCodePicker edtCustomerCountryCode;
     private String selectedCountryCode;
-    private MyTextView skip;
+
     private FirebaseAuth mAuth;
     private long mLastClickTime = 0;
     MyTextView tvForgotPassword;
@@ -131,7 +126,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         edtCustomerCountryCode = findViewById(R.id.edtCustomerCountryCode);
         signup = (MyTextView) findViewById(R.id.signup);
         signin1 = (MyTextView) findViewById(R.id.signin1);
-        skip = findViewById(R.id.skip);
+
         signin11 = findViewById(R.id.signin11);
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
         tvPwdPolicy = findViewById(R.id.tvPwdPolicy);
@@ -144,6 +139,25 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         ivRefresh = (ImageView) findViewById(R.id.ivRefresh);
 
         edtCustomerCountryCode.setExcludedCountries(getString(R.string.info_exclude_countries));
+
+        edtCustomerCountryCode.setDialogEventsListener(new CountryCodePicker.DialogEventsListener() {
+            @Override
+            public void onCcpDialogOpen(Dialog dialog) {
+                //your code
+                TextView title =(TextView)  dialog.findViewById(R.id.textView_title);
+                title.setText(getString(R.string.info_cc_reg));
+            }
+
+            @Override
+            public void onCcpDialogDismiss(DialogInterface dialogInterface) {
+                //your code
+            }
+
+            @Override
+            public void onCcpDialogCancel(DialogInterface dialogInterface) {
+                //your code
+            }
+        });
 
 
         signin1.setOnClickListener(new View.OnClickListener() {
@@ -185,17 +199,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
 
             }
         });
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DataVaultManager.getInstance(SignInActivity.this).saveUserAccessToken("");
-                DataVaultManager.getInstance(SignInActivity.this).saveUserDetails("");
-                Intent i = new Intent(SignInActivity.this, HomeActivity.class);
-                startActivity(i);
-                finish();
 
-            }
-        });
 
         signin11.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -266,6 +270,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         mAreaDialog.setArguments(bundle);
         mAreaDialog.setCancelable(false);
         mAreaDialog.show(getSupportFragmentManager(), mAreaDialog.getTag());
+
 
     }
 
@@ -343,7 +348,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
         String loginPassword = edtPassword.getText().toString().trim();
 
-        mainAPIInterface.getAuthorization(authHeader, strUniqueNumber, loginPassword, "password").enqueue(new Callback<AuthorizationResponse>() {
+        /*mainAPIInterface.getAuthorization(authHeader, strUniqueNumber, loginPassword, "password").enqueue(new Callback<AuthorizationResponse>() {
             @Override
             public void onResponse(Call<AuthorizationResponse> call, Response<AuthorizationResponse> response) {
                 dialog.dismiss();
@@ -361,7 +366,45 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
             @Override
             public void onFailure(Call<AuthorizationResponse> call, Throwable t) {
                 dialog.dismiss();
-                //////Log.e("tag", t.getMessage().toString());
+            }
+        });*/
+mainAPIInterface.getAuthorization2(authHeader, strUniqueNumber, loginPassword, "password").enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                dialog.dismiss();
+                if (response.isSuccessful()) {
+                    //Log.e(TAG, "onResponse: "+response.body().toString());
+
+                    if (response.body().has("access_token")){
+                        String access_token = response.body().get("access_token").getAsString();
+                        DataVaultManager.getInstance(SignInActivity.this).saveUserAccessToken(access_token);
+                        getSignInDetails();
+                    }else{
+                        if (response.body().has("result"))
+                        {
+                            if (response.body().get("result").getAsString().equalsIgnoreCase("failed")){
+                                Toast.makeText(SignInActivity.this, ""+response.body().get("message").getAsString(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+
+                    /*String accessToken = response.body().getAccessToken();
+                    DataVaultManager.getInstance(SignInActivity.this).saveUserAccessToken(accessToken);
+
+                    getSignInDetails();*/
+                } else {
+                    Toast.makeText(SignInActivity.this, getString(R.string.error_account_verification), Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "onResponse: "+new Gson().toJson(response.body()) );
+
+
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                dialog.dismiss();
             }
         });
 

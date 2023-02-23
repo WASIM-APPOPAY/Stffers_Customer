@@ -254,6 +254,7 @@ public class TransferChatActivity extends AppCompatActivity implements Transacti
         substring = mPhWithCode.substring(mAreaCode.length());
         btnTransfer.setEnabled(false);
         btnTransfer.setClickable(false);
+
         edAmount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

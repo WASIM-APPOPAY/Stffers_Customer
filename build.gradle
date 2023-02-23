@@ -11,6 +11,7 @@ buildscript {
         maven {
             url 'https://storage.googleapis.com/r8-releases/raw'
         }
+        maven { url 'https://plugins.gradle.org/m2/' }
         flatDir {
             dirs 'libs'
         }
@@ -19,6 +20,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.google.gms:google-services:4.3.13'
+        //classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.10, 0.99.99]'
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.12.6'
         classpath 'com.android.tools:r8:3.1.51'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
         classpath 'com.android.tools.build:gradle:7.1.1'
