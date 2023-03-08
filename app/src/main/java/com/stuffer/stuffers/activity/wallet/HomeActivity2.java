@@ -394,8 +394,8 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Log.e(TAG, "onResponse: " + response.body());
                 //{"result":"failed","message":"user not exist in system","status":500}
-                if (response.code()==401){
-
+                if (response.code()==401 || response.code()==500){
+                    //Toast.makeText(HomeActivity2.this, "Error Code : "+response.code(), Toast.LENGTH_SHORT).show();
                 }else {
                 JsonObject body = response.body();
                 if (body.get("result").isJsonObject()) {

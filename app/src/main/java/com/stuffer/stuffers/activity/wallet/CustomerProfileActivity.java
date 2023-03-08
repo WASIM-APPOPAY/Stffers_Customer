@@ -567,7 +567,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
                             Glide.with(CustomerProfileActivity.this).load(decodedBytes).into(customerQrCodeQrCode);
                             //Log.e(TAG, "onResponse: called" );
                             frameLayout.setVisibility(View.VISIBLE);
-                            getSavedCard();
+                            //latergetSavedCard();
                         }
 
                     } catch (JSONException e) {
@@ -644,7 +644,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
             if (mBottomAdditional != null) {
                 mBottomAdditional.dismiss();
             }
-            getSavedCard();
+           //latergetSavedCard();
         } else {
             if (mBottomAdditional != null) {
                 mBottomAdditional.dismiss();

@@ -279,7 +279,7 @@
             android:gravity="center"
             android:orientation="vertical"
             android:padding="8dp"
-            android:visibility="visible">
+            android:visibility="invisible">
 
             <!--<ImageView
 
@@ -322,7 +322,7 @@
             android:gravity="center"
             android:orientation="vertical"
             android:padding="8dp"
-            android:visibility="visible">
+            android:visibility="invisible">
 
             <ImageView
 

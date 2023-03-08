@@ -7,10 +7,10 @@ public class Constants {
     //public static final String APPOPAY_BASE_URL = "https://labapi.appopay.com/";
     public static final String APPOPAY_BASE_NODE_URL = "https://prodapi-node.appopay.com/";
     //public static final String APPOPAY_BASE_NODE_URL = "https://labapi-node.appopay.com/";
-    public static final String BASE_UNION_PAY = "https://prodapi-union.appopay.com/";
-    //public static final String BASE_UNION_PAY = "https://labapi-union.appopay.com/";
-    public static final String UNION_PAY = "https://prodapi-union.appopay.com/scis/switch/";
-    //public static final String UNION_PAY = "https://labapi-union.appopay.com/scis/switch/";
+    //public static final String BASE_UNION_PAY = "https://prodapi-union.appopay.com/";
+    public static final String BASE_UNION_PAY = "https://labapi-union.appopay.com/";
+    //public static final String UNION_PAY = "https://prodapi-union.appopay.com/scis/switch/";
+    public static final String UNION_PAY = "https://labapi-union.appopay.com/scis/switch/";
     public static final String POST_JWE = "getJWEToken";
     public static final String POST_JWS = "getJWSToken";
     public static final String POST_QR_BAR_CODE = "generate/qrcodeandbarcode";
@@ -247,4 +247,5 @@ public class Constants {
     public static final String GET_MERCHANT_SHOPTYPE = "api/seller/{shopType}";
     public static final String GET_TRANSACTION_PIN="api/users/update-trx-pin/{userId}/{pin}";
     public static final String GET_MAPPING2 = "api/users/mobileMapping";
+
 }
