@@ -34,7 +34,6 @@ import com.hbb20.CountryCodePicker;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.MyContextWrapper;
 import com.stuffer.stuffers.R;
-import com.stuffer.stuffers.activity.cashSends.CashSend;
 import com.stuffer.stuffers.activity.forgopassword.ForgotPasswordActvivity;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
@@ -46,7 +45,6 @@ import com.stuffer.stuffers.communicator.TransactionPinListener;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomPasswordPolicy;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomTransactionPin;
 import com.stuffer.stuffers.fragments.dialog.AreaCodeDialog;
-import com.stuffer.stuffers.models.output.AuthorizationResponse;
 import com.stuffer.stuffers.models.output.MappingResponse2;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
@@ -573,7 +571,7 @@ mainAPIInterface.getAuthorization2(authHeader, strUniqueNumber, loginPassword, "
                 finish();
                 break;
             case 11:
-                mIntent = new Intent(SignInActivity.this, CashSend.class);
+//                mIntent = new Intent(SignInActivity.this, CashSend.class);
                 break;
 
         }

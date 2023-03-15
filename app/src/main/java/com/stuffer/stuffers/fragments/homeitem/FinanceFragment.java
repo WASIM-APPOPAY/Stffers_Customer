@@ -16,9 +16,7 @@ import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.FianceTab.DominaActivity;
 import com.stuffer.stuffers.activity.FianceTab.FinanceActivity;
-import com.stuffer.stuffers.activity.FianceTab.TarjetaActivity;
 import com.stuffer.stuffers.activity.FianceTab.UnionPayActivity;
-import com.stuffer.stuffers.activity.cashSends.CashSend;
 import com.stuffer.stuffers.activity.finance.GoBankActivity;
 import com.stuffer.stuffers.activity.finance.InsuranceActivity;
 import com.stuffer.stuffers.activity.finance.LoanActivity;
@@ -107,8 +105,8 @@ public class FinanceFragment extends Fragment {
         layoutRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent mIntent = new Intent(getActivity(), CashSend.class);
-                startActivity(mIntent);
+//                Intent mIntent = new Intent(getActivity(), CashSend.class);
+//                startActivity(mIntent);
 
             }
         });

@@ -12,7 +12,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -34,7 +33,6 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.os.BuildCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -46,11 +44,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
-import com.fasterxml.jackson.core.Version;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -63,9 +56,7 @@ import com.onesignal.OSDeviceState;
 import com.onesignal.OneSignal;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.BuildConfig;
-import com.stuffer.stuffers.MainActivity;
 import com.stuffer.stuffers.R;
-import com.stuffer.stuffers.activity.cashSends.CashSend;
 import com.stuffer.stuffers.activity.cashSends.SendCashActivity;
 import com.stuffer.stuffers.activity.shop_mall.ShopAdapter;
 import com.stuffer.stuffers.api.ApiUtils;
@@ -90,7 +81,6 @@ import com.stuffer.stuffers.commonChat.interfaces.UserGroupSelectionDismissListe
 import com.stuffer.stuffers.communicator.CashTransferListener;
 import com.stuffer.stuffers.communicator.LinkAccountListener;
 import com.stuffer.stuffers.communicator.ShopListener;
-import com.stuffer.stuffers.fragments.bottom_fragment.BottomNotCard;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomRegister;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomSendType;
 import com.stuffer.stuffers.models.shop_model.ShopModel;
@@ -1215,9 +1205,9 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
     @Override
     public void onTransferSelect(int type) {
         if (type == 0) {
-            Intent mIntent = new Intent(HomeActivity2.this, CashSend.class);
-            mIntent.putExtra(AppoConstants.WHERE, 11);
-            startActivity(mIntent);
+//            Intent mIntent = new Intent(HomeActivity2.this, CashSend.class);
+//            mIntent.putExtra(AppoConstants.WHERE, 11);
+//            startActivity(mIntent);
         } else {
             Intent mIntent = new Intent(HomeActivity2.this, SendCashActivity.class);
             mIntent.putExtra(AppoConstants.WHERE, 11);
