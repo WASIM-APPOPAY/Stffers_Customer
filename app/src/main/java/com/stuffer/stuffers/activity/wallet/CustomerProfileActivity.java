@@ -323,11 +323,9 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
     }
 
     private void getConsumerQrCode(String tokenParam) {
-
         mRootObject = new JSONObject();
         mMsgInfo = new JSONObject();
         mTrxInfo = new JSONObject();
-
         try {
             mMsgInfo.put("versionNo", "1.0.0");
             String mTimeStamp = TimeUtils.getUniqueTimeStamp();

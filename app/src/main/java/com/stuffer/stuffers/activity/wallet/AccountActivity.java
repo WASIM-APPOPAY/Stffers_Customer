@@ -115,16 +115,16 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
     private String cardFaceID;
     private MyTextView tvCvvU;
     private MyTextViewBold tvTopTap;
-    private int mType=0;
+    private int mType = 0;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
-        if (getIntent().getExtras()!=null){
+        if (getIntent().getExtras() != null) {
 
-            mType=getIntent().getIntExtra(AppoConstants.WHERE,0);
+            mType = getIntent().getIntExtra(AppoConstants.WHERE, 0);
         }
         mainAPIInterface = ApiUtils.getAPIService();
         apiServiceUNIONPay = ApiUtils.getApiServiceUNIONPay();
@@ -310,7 +310,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
                 tvCardNumber1.setText("" + mListAccount.get(0).getAccountEncrypt());
                 tvName1.setText(mUserName);
             }
-
+            //need to unCooment Below
             /*if (mListAccount.size() > 0) {
                 GiftCardAdapter giftCardAdapter = new GiftCardAdapter(AccountActivity.this, mUserName, mListAccount, mListWalletNumber);
                 rvGiftCards.setAdapter(giftCardAdapter);
@@ -671,7 +671,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
                         DataVaultManager.getInstance(AccountActivity.this).saveUserDetails("");
                         DataVaultManager.getInstance(AccountActivity.this).saveUserAccessToken("");
                         Intent intent = new Intent(AccountActivity.this, SignInActivity.class);
-                        intent.putExtra(AppoConstants.WHERE,mType);
+                        intent.putExtra(AppoConstants.WHERE, mType);
                         startActivity(intent);
                         finish();
                     } else if (response.code() == 400) {
@@ -713,7 +713,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
                         DataVaultManager.getInstance(AccountActivity.this).saveUserDetails("");
                         DataVaultManager.getInstance(AccountActivity.this).saveUserAccessToken("");
                         Intent intent = new Intent(AccountActivity.this, SignInActivity.class);
-                        intent.putExtra(AppoConstants.WHERE,mType);
+                        intent.putExtra(AppoConstants.WHERE, mType);
                         startActivity(intent);
                         finish();
                     }
