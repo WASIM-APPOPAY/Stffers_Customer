@@ -32,7 +32,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
-            android:text="By Cash" />
+            android:text="By Cash"
+            android:visibility="gone"/>
 
     </RadioGroup>
 
