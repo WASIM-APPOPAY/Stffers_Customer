@@ -1,14 +1,17 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 
+
 android {
-    compileSdk 32
-    buildToolsVersion "30.0.3"
+    compileSdk 33
+
     defaultConfig {
         applicationId "com.stuffer.stuffers"
+        //buildToolsVersion "30.0.3"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         multiDexEnabled true
         versionCode 17
         versionName "1.0.17"

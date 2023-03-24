@@ -283,6 +283,7 @@ public class VerificationActivity extends AppCompatActivity {
             progressDialog.setMessage(getString(R.string.logging_in));
             login();
         }).addOnFailureListener(e -> {
+            e.getMessage();
             Toast.makeText(VerificationActivity.this, getString(R.string.error_detail) + (e.getMessage() != null ? "\n" + e.getMessage() : ""), Toast.LENGTH_LONG).show();
             progressDialog.dismiss();
             authInProgress = false;

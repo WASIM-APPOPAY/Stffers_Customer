@@ -506,6 +506,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         if (status != null && status.isSubscribed() && status.getUserId() != null) {
             usersRef.child(userMe.getId()).child("userPlayerId").setValue(status.getUserId());
             helper.setMyPlayerId(status.getUserId());
+
             //Log.e("TAG", "updateFcmToken: 1"+ status.getUserId());
         }
     }

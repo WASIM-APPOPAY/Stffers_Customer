@@ -216,6 +216,9 @@
 -keep class com.onesignal.shortcutbadger.impl.XiaomiHomeBadger { <init>(...); }
 -keep class com.onesignal.shortcutbadger.impl.ZukHomeBadger { <init>(...); }
 
+-dontwarn com.coremedia.iso.boxes.SampleToChunkBox$Entry
+-dontwarn com.coremedia.iso.boxes.TimeToSampleBox$Entry
+
 
 -dontwarn com.amazon.**
 
