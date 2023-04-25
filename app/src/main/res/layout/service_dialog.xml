@@ -16,6 +16,7 @@
         android:weightSum="4">
 
         <LinearLayout
+            android:id="@+id/llLinkCard"
             style="@style/LayoutFundLinearStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -269,48 +270,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/layoutScanUnion"
-            style="@style/LayoutFundLinearStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/no_round_bg2"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="8dp"
-            android:visibility="invisible">
 
-            <!--<ImageView
-
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-
-
-                android:src="@drawable/practi_icon" />-->
-
-            <ImageView
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:background="@drawable/bg_circle_profile"
-                android:padding="10dp"
-                android:src="@drawable/ic_qr_code_scanner"
-                app:tint="@color/white" />
-
-            <com.stuffer.stuffers.views.MyTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="3dp"
-                android:gravity="center"
-                android:text="Scan UnionPay"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-
-                />
-
-
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/llCashSend"
@@ -344,6 +304,49 @@
                 android:textColor="@color/black"
                 android:textSize="12sp"
 
+
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutScanUnion"
+            style="@style/LayoutFundLinearStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/no_round_bg2"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:visibility="visible">
+
+            <!--<ImageView
+
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+
+
+                android:src="@drawable/practi_icon" />-->
+
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:background="@drawable/bg_circle_profile"
+                android:padding="10dp"
+                android:src="@drawable/ic_qr_code_scanner"
+                app:tint="@color/white" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:text="Scan UnionPay"
+                android:textColor="@color/black"
+                android:textSize="12sp"
 
                 />
 

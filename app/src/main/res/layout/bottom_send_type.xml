@@ -19,12 +19,12 @@
         android:orientation="vertical">
 
         <com.stuffer.stuffers.views.MyRadioButton
-            android:layout_marginTop="@dimen/dp_4"
             android:id="@+id/radioBank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#0D30F3"
-            android:text="By Bank" />
+            android:layout_marginTop="@dimen/dp_4"
+            android:text="By Bank"
+            android:textColor="#0D30F3" />
 
         <com.stuffer.stuffers.views.MyRadioButton
             android:textColor="#0D30F3"

@@ -26,6 +26,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:orientation="horizontal">
@@ -56,6 +57,7 @@
             </LinearLayout>
 
             <View
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginLeft="10dp"
@@ -173,6 +175,7 @@
                 </LinearLayout>
 
                 <com.stuffer.stuffers.views.MyCheckBox
+                    android:visibility="gone"
                     android:id="@+id/defaultCheckBox"
                     android:layout_marginTop="16dp"
                     android:layout_width="match_parent"

@@ -53,6 +53,7 @@ import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.communicator.ConfirmSelectListener;
 import com.stuffer.stuffers.communicator.InnerScanListener;
+import com.stuffer.stuffers.communicator.LoginRequestListener;
 import com.stuffer.stuffers.communicator.RecyclerViewRowItemCLickListener;
 import com.stuffer.stuffers.communicator.TransactionPinListener;
 import com.stuffer.stuffers.fragments.bottom.AppoPayFragment;
@@ -89,7 +90,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class InnerPayActivity extends AppCompatActivity implements TransactionPinListener , InnerScanListener {
+public class InnerPayActivity extends AppCompatActivity implements TransactionPinListener , InnerScanListener , LoginRequestListener {
     private static final String TAG = "InnerPayActivity";
 
 
@@ -215,5 +216,18 @@ public class InnerPayActivity extends AppCompatActivity implements TransactionPi
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    @Override
+    public void onLoginRequest() {
+        Intent intent = new Intent(InnerPayActivity.this, SignInActivity.class);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(AppoConstants.WHERE, 0);
+        startActivity(intent);
+        finish();
+        /*Intent intent = new Intent(getActivity(), SignInActivity.class);
+        intent.putExtra(AppoConstants.WHERE, mWhere);
+        startActivity(intent);
+        getActivity().finish();*/
     }
 }

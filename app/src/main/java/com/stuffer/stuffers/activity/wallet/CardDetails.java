@@ -183,7 +183,7 @@ public class CardDetails extends AppCompatActivity {
                 sentPayloads.addProperty(AppoConstants.ISDEFAULT, false);
             }
             sentPayloads.addProperty(AppoConstants.LASTNAME, lastName);
-            saveCardType(sentPayloads, accesstoken);
+            //saveCardType(sentPayloads, accesstoken); //open it later
 
         } catch (JSONException e) {
             e.printStackTrace();

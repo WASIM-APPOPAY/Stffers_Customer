@@ -905,6 +905,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         dialog.setTitle(null);
 
         dialog.setContentView(R.layout.service_dialog);
+        LinearLayout llLinkCard = window.findViewById(R.id.llLinkCard);
         LinearLayout llRecharge = window.findViewById(R.id.llRecharge);
         LinearLayout llPTransfer = window.findViewById(R.id.llPTransfer);
         LinearLayout llScan = window.findViewById(R.id.llScan);
@@ -912,6 +913,14 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         LinearLayout llProfile = window.findViewById(R.id.llProfile);
         LinearLayout llCashSend = window.findViewById(R.id.llCashSend);
         LinearLayout layoutScanUnion = window.findViewById(R.id.layoutScanUnion);
+
+        llLinkCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(HomeActivity2.this,CardDetails.class);
+                startActivity(intent);
+            }
+        });
 
         llCashSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -929,6 +938,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
 
             }
         });
+        //llCashSend.setVisibility(VISIBLE);
 
         llRecharge.setOnClickListener(view -> {
             String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);

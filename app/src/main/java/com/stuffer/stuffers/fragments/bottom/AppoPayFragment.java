@@ -35,6 +35,10 @@ import android.widget.Toast;
 
 import com.emv.qrcode.core.model.mpm.TagLengthString;
 import com.emv.qrcode.decoder.mpm.DecoderMpm;
+import com.emv.qrcode.model.mpm.AdditionalDataField;
+import com.emv.qrcode.model.mpm.AdditionalDataFieldTemplate;
+import com.emv.qrcode.model.mpm.MerchantAccountInformation;
+import com.emv.qrcode.model.mpm.MerchantAccountInformationTemplate;
 import com.emv.qrcode.model.mpm.MerchantPresentedMode;
 import com.emv.qrcode.model.mpm.UnreservedTemplate;
 import com.google.gson.Gson;
@@ -84,6 +88,7 @@ import retrofit2.Response;
 
 public class AppoPayFragment extends Fragment {
 
+    private static final String TAG = "qrcode";
     String merchantWalletAccount;
     private View mView;
     MainAPIInterface mainAPIInterface;
@@ -158,7 +163,7 @@ public class AppoPayFragment extends Fragment {
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                verifyDetails();
+                //verifyDetails();
             }
         });
 
@@ -244,7 +249,7 @@ public class AppoPayFragment extends Fragment {
         //showPayDialogLikeUnion("param result");
 
 
-        getMerchantProfile();
+        //getMerchantProfile();
         showMerchantDetails();
 
 
@@ -278,7 +283,7 @@ public class AppoPayFragment extends Fragment {
 
 
         String bearer_ = Helper.getAppendAccessToken("bearer ", accessToken);
-        mainAPIInterface.getProfileMerchantDetails(ph, area, bearer_).enqueue(new Callback<JsonObject>() {
+        /*mainAPIInterface.getProfileMerchantDetails(ph, area, bearer_).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
 
@@ -329,7 +334,10 @@ public class AppoPayFragment extends Fragment {
                 dialog.dismiss();
                 //Log.e(TAG, "onFailure: " + t.getMessage().toString());
             }
-        });
+        });*/
+
+        showMerchantDetails();
+        getLatestUserDetails();
 
 
     }
@@ -373,14 +381,54 @@ public class AppoPayFragment extends Fragment {
 
         conversionRates = 1;
         tvCardMerchant.setVisibility(View.VISIBLE);
+        Log.e(TAG, "showMerchantDetails: "+new Gson().toJson(mDecode) );
+        String mWhole=new Gson().toJson(mDecode);
 
         TagLengthString countryCode1 = mDecode.getCountryCode();
         valueCountry = countryCode1.getValue();
         TagLengthString merchantNameTL = mDecode.getMerchantName();
         valueMerchantName = merchantNameTL.getValue();
+        AdditionalDataFieldTemplate additionalDataField1 = mDecode.getAdditionalDataField();
+        AdditionalDataField value2 = additionalDataField1.getValue();
+        TagLengthString terminalLabel1 = value2.getTerminalLabel();
+        String mTerminalId = terminalLabel1.getValue();
+        //Log.e(TAG, "showMerchantDetails: "+mTerminalId );
+        TagLengthString merchantCity = mDecode.getMerchantCity();
+        String mMerchantCity = merchantCity.getValue();
+        //Log.e(TAG, "showMerchantDetails: "+mMerchantCity );
 
 
+        String s = new Gson().toJson(mDecode.getMerchantAccountInformation());
+        //Log.e(TAG, "showMerchantDetails: "+s );
         try {
+            JSONObject mAccountInfo=new JSONObject(s);
+            JSONObject jsonObject15 = mAccountInfo.getJSONObject("15");
+            JSONObject value = jsonObject15.getJSONObject("value");
+            String value1 = value.getString("value");
+            String mMerchantId = value1.substring(value1.length()-15);
+            //Log.e(TAG, "showMerchantDetails: "+mMerchantId );
+
+            tvEmialId.setText("TID : " + mTerminalId);
+            tvIndex5.setText("MID : " + mMerchantId);
+            tvIndex5.setVisibility(View.VISIBLE);
+            tvHeader.setText(valueMerchantName);
+            tvCodeMobile.setText("(+" + valueCountry + ") " + mMerchantCity.toUpperCase());
+            JSONObject mJsonWhole=new JSONObject(mWhole);
+            if (mJsonWhole.has("transactionAmount")){
+                TagLengthString transactionAmount = mDecode.getTransactionAmount();
+                String transactionValue = transactionAmount.getValue();
+                edAmount.setText(transactionValue);
+
+
+            }
+
+
+            getLatestUserDetails();
+
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        /*try {
             JSONObject mRoot = new JSONObject(resultScan);
             JSONObject unreserveds = mRoot.getJSONObject("unreserveds");
             JSONObject unreserved80 = unreserveds.getJSONObject("80");
@@ -425,7 +473,7 @@ public class AppoPayFragment extends Fragment {
 
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     private void getLatestUserDetails() {
@@ -443,8 +491,11 @@ public class AppoPayFragment extends Fragment {
             JSONObject mResult = mIndex.getJSONObject(AppoConstants.RESULT);
             ph1 = mResult.getString(AppoConstants.MOBILENUMBER);
             area1 = mResult.getString(AppoConstants.PHONECODE);
+            Log.e(TAG, "getLatestUserDetails: "+ph1 );
+            Log.e(TAG, "getLatestUserDetails: "+area1 );
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.e(TAG, "getLatestUserDetails: called" );
         }
         String bearer_ = Helper.getAppendAccessToken("bearer ", accessToken);
 

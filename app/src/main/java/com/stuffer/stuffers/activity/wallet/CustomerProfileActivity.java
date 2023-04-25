@@ -270,9 +270,10 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         apiServiceUNIONPay.getSavedCardUnion(walletAccountNumber).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                //Log.e(TAG, "onResponse: "+response );
+                Log.e(TAG, "onResponse: " + response);
                 if (response.isSuccessful()) {
                     String s1 = new Gson().toJson(response.body());
+                    Log.e(TAG, "onResponse: " + s1);
                     try {
                         JSONObject mRoot = new JSONObject(s1);
                         if (mRoot.getInt("status") == 200 && mRoot.getString("message").equalsIgnoreCase("success")) {
@@ -642,7 +643,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
             if (mBottomAdditional != null) {
                 mBottomAdditional.dismiss();
             }
-           getSavedCard();
+            getSavedCard();
         } else {
             if (mBottomAdditional != null) {
                 mBottomAdditional.dismiss();

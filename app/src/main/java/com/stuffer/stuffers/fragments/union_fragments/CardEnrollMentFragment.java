@@ -120,14 +120,6 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
     }
 
     private void getCmvInfo() {
-
-
-       /* if (mCnedAccNo.getText().toString().trim().isEmpty()) {
-            showToast("Enter account no.");
-            return;
-        }*/
-
-
         //JSONObject mRoot = new JSONObject();
         JsonObject mCvmInfoGoogle = new JsonObject();
         if (mPrdNo == 1003) {
@@ -142,7 +134,7 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
         mCvmInfoGoogle.addProperty("fullName", fullName);
         mCvmInfoGoogle.addProperty("mobileNo", phWithCode);
         mCvmInfoGoogle.addProperty("idCountry", phoneCode);
-        // Log.e(TAG, "getCmvInfo: request for JWE " + mCvmInfoGoogle.toString());
+        Log.e(TAG, "getCmvInfo: request for JWE " + mCvmInfoGoogle.toString());
         String s1 = new Gson().toJson(mCvmInfoGoogle);
         //String s2 = JSON.toJSONString(s1);
         MediaType mediaType = MediaType.parse("application/json");
@@ -156,9 +148,9 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
                     try {
                         JSONObject mResponse = new JSONObject(responseString);
                         if (mResponse.getInt("status") == 200) {
-                            ////Log.e(TAG, "onResponse: called");
                             if (mResponse.getString("message").equalsIgnoreCase("success")) {
                                 String mResult = mResponse.getString("result");
+                                Log.e(TAG, "onResponse: JWE Response"+mResponse);
                                 makeRequest2(mResult);
                             }
                         } else {
@@ -182,7 +174,7 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Helper.showErrorMessage(getActivity(), t.getMessage());
-                ////Log.e(TAG, "onFailure: JWE " + t.getMessage());
+
             }
         });
     }
@@ -207,7 +199,7 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
         mTrxInfo.addProperty("cvmInfo", mResult);
         mRoot.add("msgInfo", mMsgInfo);
         mRoot.add("trxInfo", mTrxInfo);
-        // Log.e(TAG, "makeRequest: JWS === " + mRoot.toString());
+         Log.e(TAG, "makeRequest: JWS === " + mRoot.toString());
         sentRequest2(mRoot);
 
 
@@ -225,12 +217,15 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
 
                 if (response.isSuccessful()) {
                     String responseString = new Gson().toJson(response.body());
+                    Log.e(TAG, "onResponse: JWS Response :"+responseString);
                     try {
                         JSONObject mResponse = new JSONObject(responseString);
                         if (mResponse.getInt("status") == 200) {
                             //Log.e(TAG, "onResponse: called");
                             if (mResponse.getString("message").equalsIgnoreCase("success")) {
+
                                 String mResult = mResponse.getString("result");
+                                //Log.e(TAG, "onResponse: "+mResult );
                                 makeFinalRequest2(mResult, mRoot1);
                             }
                         } else {
@@ -267,7 +262,7 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 hide();
-                ////Log.e(TAG, "onResponse: Final :: " + response.body());
+                Log.e(TAG, "onResponse: Final :: " + response.body());
                 if (response.isSuccessful()) {
                     ////Log.e(TAG, "onResponse: Final if :: " + response.body());
                     //JsonObject body1 = response.body();

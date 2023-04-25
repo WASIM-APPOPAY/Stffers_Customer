@@ -311,7 +311,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
                 tvName1.setText(mUserName);
             }
             //need to unCooment Below
-            /*if (mListAccount.size() > 0) {
+            if (mListAccount.size() > 0) {
                 GiftCardAdapter giftCardAdapter = new GiftCardAdapter(AccountActivity.this, mUserName, mListAccount, mListWalletNumber);
                 rvGiftCards.setAdapter(giftCardAdapter);
                 new Handler().postDelayed(new Runnable() {
@@ -322,7 +322,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
 
                     }
                 }, 300);
-            }*/
+            }
 
 
         } catch (JSONException e) {

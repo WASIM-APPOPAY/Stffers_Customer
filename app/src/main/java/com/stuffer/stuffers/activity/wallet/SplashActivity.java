@@ -257,7 +257,9 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
                                 Manifest.permission.READ_CONTACTS,
                                 Manifest.permission.RECORD_AUDIO,
                                 Manifest.permission.CAMERA
-                                , Manifest.permission.RECEIVE_SMS}, 2298);
+                                }, 2298);
+
+
                     }
                 });
         snackbar.setActionTextColor(Color.RED);
@@ -268,18 +270,6 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
         snackbar.show();
     }
 
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 2296) {
-            if (SDK_INT >= Build.VERSION_CODES.R) {
-                if (Environment.isExternalStorageManager()) {
-                    ActivityCompat.requestPermissions(SplashActivity.this, new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA}, 2299);
-                } else {
-                    showPermission(getString(R.string.permission_desc_storage));
-                }
-            }
-        }
-    }*/
+
 
 }
