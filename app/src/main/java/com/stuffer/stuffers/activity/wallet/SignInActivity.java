@@ -263,7 +263,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
 
         mAreaDialog = new AreaCodeDialog();
         Bundle bundle = new Bundle();
-        bundle.putString(AppoConstants.TITLE, "Please Select Area Code");
+        bundle.putString(AppoConstants.TITLE, getString(R.string.info_select_area_code));
         bundle.putStringArrayList(AppoConstants.INFO, mAreaList);
         mAreaDialog.setArguments(bundle);
         mAreaDialog.setCancelable(false);
@@ -278,13 +278,14 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         dialog.setMessage(getString(R.string.info_mapping_user));
         dialog.show();
         selectedCountryCode = edtCustomerCountryCode.getSelectedCountryCode();
-        JsonObject mJsonObject = new JsonObject();
-        mJsonObject.addProperty("phoneCode", selectedCountryCode);
-        mJsonObject.addProperty("mobile", edtMobile.getText().toString().trim());
-        mJsonObject.addProperty("userType", "CUSTOMER");
+
+        //JsonObject mJsonObject = new JsonObject();
+        //mJsonObject.addProperty("phoneCode", selectedCountryCode);
+        //mJsonObject.addProperty("mobile", edtMobile.getText().toString().trim());
+        //mJsonObject.addProperty("userType", "CUSTOMER");
         //mainAPIInterface.getMapping("+" + selectedCountryCode + mDominicaAreaCode + edtMobile.getText().toString().trim()).enqueue(new Callback<MappingResponse>() {
 
-        mainAPIInterface.getMapping(mJsonObject).enqueue(new Callback<JsonObject>() {
+        mainAPIInterface.getMapping3(selectedCountryCode,edtMobile.getText().toString().trim(),"CUSTOMER").enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
@@ -300,6 +301,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                             JsonObject result = body.getAsJsonObject("result");
                             MappingResponse2.Result mResult = new Gson().fromJson(result, new TypeToken<MappingResponse2.Result>() {
                             }.getType());
+
                             DataVaultManager.getInstance(SignInActivity.this).saveUniqueNumber(mResult.getUniqueNumber());
                             getAccessToken();
                         }
@@ -337,9 +339,11 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
 
     private void getAccessToken() {
         dialog = new ProgressDialog(SignInActivity.this);
-        dialog.setMessage("Please wait, getting access token.");
+        //dialog.setMessage("Please wait, getting access token.");
+        dialog.setMessage(getString(R.string.info_please_wait_dots));
         dialog.show();
         String strUniqueNumber = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_UNIQUE_NUMBER);
+        Log.e(TAG, "getAccessToken: "+strUniqueNumber );
         String userName = "devglan-client";
         String password = "devglan-secret";
         String base = userName + ":" + password;

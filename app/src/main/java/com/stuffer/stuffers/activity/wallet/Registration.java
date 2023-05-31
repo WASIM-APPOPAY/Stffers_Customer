@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 
 public class Registration extends AppCompatActivity implements OtpRequestListener, VerifiedListener, CarrierSelectListener, StateSelectListener {
     String mNameCode, mCountryCode, mMobileNo, mEmailId, mAddress, mCountryId;
-    String[] descriptionData = {"Step One", "Step Two", "Step Three"};
+
     StateProgressBar stateProgressBar;
     private SMSReceiver smsReceiver;
     private static final String TAG = "Registration";
@@ -48,6 +48,9 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         stateProgressBar = (StateProgressBar) findViewById(R.id.my_progress_bar_id);
+
+        String[] descriptionData ={ ""+getString(R.string.info_step_one),""+getString(R.string.info_step_two),""+getString(R.string.info_step_three)};
+
         stateProgressBar.setStateDescriptionData(descriptionData);
         smsListener();
         initBroadCast();
@@ -58,7 +61,11 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         intiFragment(identityFragment);*/
 
 
-    }
+
+    ;
+
+
+}
 
     private void intiFragment(Fragment fragment) {
         FragmentManager supportFragmentManager = getSupportFragmentManager();

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Appopay</string>
+    <string name="app_name">AppOpay</string>
 
     <string name="copyright">Copyright &#169;. All Rights Reserved.</string>
     <string name="select_country_code">Please select country code</string>
@@ -650,10 +650,10 @@ data.</string>
     <string name="info_select_language">SELECT LANGUAGE</string>
 
     <string name="info_split1"> Tap</string>
-    <string name="info_split2"> Agree and Continue</string>
+    <string name="info_split2"> to read the </string>
     <string name="info_split3"> to accept the</string>
     <string name="info_split4"> Terms  and Condition </string>
-    <string name="info_accept_intro"><![CDATA[ACCEPT T&C]]></string>
+    <string name="info_accept_intro"><![CDATA[READ T&C]]></string>
     <string name="info_select_your_app_language">Select Your App Language</string>
     <string name="info_apply">Apply</string>
     <string name="info_term_condition">Please Accept Term and Conditions.</string>
@@ -686,29 +686,53 @@ data.</string>
     <string name="otp_verifying">Verifying OTP</string>
     <string name="otp_verifying_msg">Verifying OTP…</string>
     <string name="otp_sending_msg">To your phone number</string>
-    <string name="logging_in">Logging you in!</string>
+
+    <string name="logging_in">We have verified your devise</string>
+
+
     <string name="error_detail">Something went wrong</string>
 
     <string name="empty_text_chat_list">Your chats appear here. Start chatting by selecting a user.</string>
     <string name="empty_group_chat_list">Your group chats appear here. Start chatting by selecting a group.</string>
 
     <string name="get_image_camera">Camera</string>
+
+
     <string name="get_image_gallery">Gallery</string>
+
     <string name="type_your_message">Type your message</string>
 
     <string name="just_moment">Just a moment..</string>
+
     <string name="slide_cancel">(Slide left to cancel)</string>
+
     <string name="hold_record">Hold down to record.</string>
+
+
     <string name="file_na">File unavailable</string>
+
+
     <string name="downloading">Downloading</string>
+
+
     <string name="recording_cancelled">Recording cancelled</string>
+
+
+
     <string name="message_copied">Messages copied</string>
+
+
     <string name="delete_msg_title">Delete messages</string>
+
+
     <string name="delete_msg_message">Continue deleting selected messages?</string>
+
+
     <string name="removed_from_group">You no longer belong to this group.</string>
 
     <string name="no">NO</string>
     <string name="yes">YES</string>
+
 
     <string name="phone_number">Mobile Number</string>
 
@@ -717,16 +741,39 @@ data.</string>
     <string name="lname">Last Name</string>
     <string name="enter_your_last_name">Enter Your Last Name</string>
     <string name="you">You</string>
+
     <string name="voice_message">Voice Message</string>
+
+
     <string name="uploading">Uploading</string>
+
+
     <string name="upload_fail">Uploading Failed</string>
+
+
+
     <string name="up_and_send">Upload and Send</string>
+
+
+
     <string name="close">Close</string>
+
+
     <string name="add_to_contact">Add to contact</string>
+
+
     <string name="settings">ALLOW</string>
+
+
     <string name="permission_desc_storage">AppOPay Need Storage,Camera,Audio and Contact Access Permission to work properly.</string>
+
     <string name="info_shop_our_mall">Shop Our Mall</string>
+
+
+
     <string name="info_tab_agree">Tap Agree and Continue to accept the Term of Service.</string>
+
+
     <string name="info_phone_number_verification">Phone Number Verification</string>
     <string name="info_we_will_send_you_a_otp">We will Send you a OTP</string>
     <string name="info_next">Next</string>
@@ -734,9 +781,12 @@ data.</string>
 
     <string name="info_is_this_ok_or">Is this number ok, or do you want\n to edit.</string>
     <string name="info_enter_otp2">Enter OTP</string>
-    <string name="info_we_send">We have Send an OTP on your Number</string>
+    <string name="info_we_send">We will Send you a verification number</string>
 
-    <string name="otp_resend_in_13_sec">OTP Resend in 4:59 secs</string>
+
+
+    <string name="otp_resend_in_13_sec">OTP Resend in </string>
+    <string name="otp_resend_in_13_sec2">secs</string>
     <string name="info_verify">VERIFY</string>
 
     <string name="info_save">Save</string>
@@ -750,45 +800,242 @@ data.</string>
     <string name="info_cash_sends">Cash Sends</string>
     <string name="info_scan_qr_code_amp_pay"><![CDATA[Scan QR Code & Pay]]></string>
     <string name="info_version">"App Version : "</string>
+
     <string name="position_fail">Failed to obtain positioning,please re-point</string>
+
+
+
     <string name="catalogue_manager_title">Catalogue Manager</string>
+
+
+
+
     <string name="business_info_title"></string>
+
     <string name="create_catalogue_manager_title">Create a Catalogue</string>
+
+
     <string name="schedule_business_hours_title">Edit Business Hours</string>
+
+
+
     <string name="schedule_business_address_title">Business Address</string>
+
+
     <string name="schedule_business_add_item_title">Add Item</string>
+
+
     <string name="schedule_business_product_detail_title">Product Detail</string>
+
+
+
     <string name="schedule_business_type_title">Business Type</string>
+
+
+
     <string name="schedule_business_search_title">Search Business</string>
+
+
     <string name="schedule_business_search_et_hit">Please enter business name</string>
+
+
+
     <!--选择图片相关-->
+
     <string name="select_picture_photograph">Photograph</string>
+
+
+
     <string name="select_picture_select_from_album">Choose from album</string>
+
+
+
     <string name="select_picture_cancel">Cancel</string>
+
 
     <!--  选择时间相关  -->
     <string name="schedule_op_time_up">Choose your hours of operation</string>
+
+
+
+
+
     <string name="schedule_select_time_up">Open at selected hours</string>
+
+
+
+
+
     <string name="schedule_all_time_up">Open all day</string>
+
+
+
     <string name="schedule_reserve_time_up">By appointment only</string>
+
+
 
     <string name="enable_required_permissions">Please manually enable the required permissions</string>
 
+
+
     <string name="business_info_name">Name</string>
+
+
+
     <string name="business_info_desc">Description</string>
+
+
+
+
     <string name="business_info_other">Other Business</string>
+
+
+
+
+
     <string name="business_info_address">Address</string>
+
+
+
     <string name="business_info_hours">Business Hours</string>
+
+
+
+
     <string name="business_info_email">Emaiil</string>
+
+
+
+
+
     <string name="business_info_website">Website</string>
+
+
+
+
     <string name="business_info_using">Hey There! I am using AppOpay</string>
+
+
     <string name="business_info_phone"></string>
+
+
     <string name="forward_message">Forward Message</string>
+
+
     <string name="forward_to">Forward to:</string>
+
+
     <string name="permission_contact_message">Please allow permission to work properlly Note, we do not save or share your contact list with anyone.</string>
+
+
     <string name="permission_contact_title">Permission to read contacts</string>
+
+
+
     <string name="okay">OK</string>
+
+
     <string name="info_cc_reg">Select Country or Region</string>
+
+
+
+    <string name="info_scan_unionpay">Scan UnionPay</string>
+
+
+
+    <string name="info_voice_input">Voice Input</string>
+
+
+    <string name="info_voice_call">Voice Call</string>
+
+
+    <string name="info_video_call">Video Call</string>
+
+
+    <string name="info_token">Token</string>
+
+
+
+    <string name="info_add_fud">ADD Fund</string>
+
+
+
+    <string name="info_account_list">Account List</string>
+
+
+
+    <string name="info_location">Location</string>
+
+
+
+
+    <string name="info_select_area_code">Please Select Area Code</string>
+
+
+
+
+    <string name="info_step_one">Step One</string>
+
+
+
+
+    <string name="info_step_two">Step Two</string>
+
+
+
+
+    <string name="info_step_three">Step Three</string>
+
+
+
+    <string name="info_valid_email_id">please enter valid email id</string>
+
+
+
+    <string name="info_select_state">Please Select State</string>
+
+
+
+    <string name="info_city_name">Please Enter City Name</string>
+
+
+    <string name="info_already_used">\" has been already used.\"</string>
+
+
+    <string name="info_provide_mobile">\"Provided phone number \"</string>
+
+
+
+
+    <string name="info_provided_email">\"Provided Email-Id \"</string>
+
+
+
+    <string name="info_verified">Successfully Verified!...</string>
+
+
+    <string name="info_id_type">Id Type</string>
+
+
+    <string name="info_please_select_id_type">Please Select Id Type</string>
+
+
+
+    <string name="info_tap_to_capture_your_id">Tap to capture your Id</string>
+
+
+
+    <string name="info_select_your_date_of_birth">Select your date of birth</string>
+
+
+
+
+    <string name="info_id_number">ID Number</string>
+
+
+    <string name="info_select_id_expiry_date">Select id expiry date</string>
+
+
 
 
 </resources>

@@ -23,6 +23,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="30dp"
+            android:tint="@color/colorPrimary"
             app:srcCompat="@mipmap/ic_send_money" />
 
 
@@ -41,6 +42,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="30dp"
             android:layout_marginRight="10dp"
+            android:tint="@color/colorPrimary"
             app:srcCompat="@mipmap/ic_recive_money" />
 
     </RelativeLayout>
@@ -81,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:padding="8dp"
-                    android:text="Id Type"
+                    android:text="@string/info_id_type"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -108,7 +110,7 @@
                         android:textStyle="bold"
                         android:textSize="18sp"
                         android:paddingLeft="8dp"
-                        android:text="Please Select Id Type"
+                        android:text="@string/info_please_select_id_type"
                         app:drawableTint="@color/colorPrimary" />
 
                     <com.stuffer.stuffers.views.MyEditText
@@ -154,7 +156,8 @@
                         android:inputType="none"
                         android:lines="1"
                         android:padding="15dp"
-                        android:text="Tap to capture your Id"
+                        android:text="@string/info_tap_to_capture_your_id"
+
                         android:textColor="@color/Tex"
                         android:textColorHint="@color/textSub"
                         android:textSize="16sp" />
@@ -243,7 +246,7 @@
                        android:editable="false"
                        android:focusable="false"
                        android:gravity="left|center_vertical"
-                       android:hint="Select your date of birth "
+                       android:hint="@string/info_select_your_date_of_birth"
                        android:inputType="none"
                        android:lines="1"
                        android:padding="15dp"
@@ -282,7 +285,7 @@
                        android:layout_height="wrap_content"
                        android:background="@drawable/edit_text_rounded"
                        android:gravity="left|center"
-                       android:hint="ID Number"
+                       android:hint="@string/info_id_number"
                        android:imeOptions="flagNoExtractUi|actionNext"
                        android:inputType="text"
                        android:lines="1"
@@ -313,7 +316,7 @@
                        android:editable="false"
                        android:focusable="false"
                        android:gravity="left|center_vertical"
-                       android:hint="Select id expiry date"
+                       android:hint="@string/info_select_id_expiry_date"
                        android:inputType="none"
                        android:lines="1"
 
@@ -388,7 +391,7 @@
                    android:elevation="1.5dp"
                    android:gravity="center"
                    android:padding="12dp"
-                   android:text="Next"
+                   android:text="@string/info_next"
                    android:textColor="#fff"
                    android:textSize="16sp" />
            </LinearLayout>

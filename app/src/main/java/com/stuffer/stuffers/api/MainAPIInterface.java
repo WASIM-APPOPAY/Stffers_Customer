@@ -358,7 +358,7 @@ public interface MainAPIInterface<R extends Retrofit> {
     @GET(Constants.GET_PROFILE)
     Call<JsonObject> getProfileDetails(
             @Path("mobileno") long mobileNumber,
-            @Path("areacode") int areacode );
+            @Path("areacode") int areacode);
 
     @Headers({
             "Accept: application/json",
@@ -416,6 +416,10 @@ public interface MainAPIInterface<R extends Retrofit> {
             @Body JsonObject param
     );
 
+    @GET(Constants.GET_MAPPING3)
+    Call<JsonObject> getMapping3(
+            @Path("areacode") String areacode, @Path("mobilenumber") String mobile, @Path("usertype") String type);
+
     @Headers({
             "Access-Control-Allow-Origin: appopay.com"
     })
@@ -428,7 +432,7 @@ public interface MainAPIInterface<R extends Retrofit> {
             @Field("grant_type") String school
     );
 
-@Headers({
+    @Headers({
             "Access-Control-Allow-Origin: appopay.com"
     })
     @FormUrlEncoded

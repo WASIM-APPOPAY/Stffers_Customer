@@ -366,18 +366,19 @@ public class ChatHelper {
 
     }
 
-    public static ArrayList<ChatMore> getMoreItems() {
+    public static ArrayList<ChatMore> getMoreItems(Context ctx) {
         ArrayList<ChatMore> mListMore = new ArrayList<>();
-        mListMore.add(new ChatMore("Voice Input",R.drawable.icon_voice_input));
-        mListMore.add(new ChatMore("Voice Call",R.drawable.icon_voice_call));
-        mListMore.add(new ChatMore("Video Call",R.drawable.icon_video_call));
-        mListMore.add(new ChatMore("Token",R.drawable.icon_token));
+        mListMore.add(new ChatMore(ctx.getString(R.string.info_voice_input),R.drawable.icon_voice_input));
+        mListMore.add(new ChatMore(ctx.getString(R.string.info_voice_call),R.drawable.icon_voice_call));
+        mListMore.add(new ChatMore(ctx.getString(R.string.info_video_call),R.drawable.icon_video_call));
+        mListMore.add(new ChatMore(ctx.getString(R.string.info_token),R.drawable.icon_token));
 
-        mListMore.add(new ChatMore("Link Your Bank", R.drawable.icon_link_your_bank));
-        mListMore.add(new ChatMore("ADD Fund",R.drawable.icon_add_fund));
+        mListMore.add(new ChatMore(ctx.getString(R.string.info_link_your_bank), R.drawable.icon_link_your_bank));
+        mListMore.add(new ChatMore(ctx.getString(R.string.info_add_fud),R.drawable.icon_add_fund));
 
-        mListMore.add(new ChatMore("Account List",R.drawable.icon_account_list));
-        mListMore.add(new ChatMore("Location",R.drawable.icon_location));
+        mListMore.add(new ChatMore(ctx.getString(R.string.info_account_list),R.drawable.icon_account_list));
+        mListMore.add(new ChatMore(ctx.getString(R.string.info_location),R.drawable.icon_location));
+
         return mListMore;
 
     }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:src="@drawable/logo2" />
+
+    <com.stuffer.stuffers.views.MyTextViewBold
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:padding="5dp"
+        android:text="Please select Qr-Code Type"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_0_5">
+
+        <com.stuffer.stuffers.views.MyRadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:letterSpacing="0.1"
+            android:text="AppOpay"
+            android:textSize="16sp"
+            android:id="@+id/rbtnAppopay"
+            android:layout_marginTop="@dimen/dp_0_5"
+            android:textStyle="bold" />
+
+        <com.stuffer.stuffers.views.MyRadioButton
+            android:id="@+id/rbtnUnionPay"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/dp_0_5"
+            android:layout_height="wrap_content"
+            android:letterSpacing="0.1"
+            android:text="UnionPay"
+            android:textStyle="bold" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp_0_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnCancelQr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:text="cancel"
+            android:textColor="@color/white"
+            android:theme="@style/MaterialButton" />
+
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnConfirmQr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:text="confirm"
+            android:textColor="@color/white"
+            android:theme="@style/MaterialButton" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

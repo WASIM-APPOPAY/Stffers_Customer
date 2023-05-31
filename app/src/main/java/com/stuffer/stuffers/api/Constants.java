@@ -247,5 +247,6 @@ public class Constants {
     public static final String GET_MERCHANT_SHOPTYPE = "api/seller/{shopType}";
     public static final String GET_TRANSACTION_PIN="api/users/update-trx-pin/{userId}/{pin}";
     public static final String GET_MAPPING2 = "api/users/mobileMapping";
+    public static final String GET_MAPPING3 = "api/users/mobilemapping/{areacode}/{mobilenumber}/{usertype}";
 
 }

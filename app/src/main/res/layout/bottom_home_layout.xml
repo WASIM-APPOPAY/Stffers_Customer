@@ -119,7 +119,7 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_add_new"
-            app:tint="@color/color_orange" />
+            app:tint="@color/white" />
 
         <com.stuffer.stuffers.views.MyTextView
             android:layout_width="0dp"
@@ -139,6 +139,7 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="4dp"
+            android:tint="@color/color_white"
             android:src="@drawable/ic_add_circle" />
 
 
@@ -177,6 +178,7 @@
             android:adjustViewBounds="true"
             android:padding="20sp"
             android:scaleType="centerCrop"
+            android:backgroundTint="@color/white"
             android:src="@drawable/bottom_logo_2" />
 
         <ImageView

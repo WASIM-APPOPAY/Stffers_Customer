@@ -141,7 +141,7 @@ public class NumEmailFragment extends Fragment {
                     return;
                 }
                 if (mEmail.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(mEmail).matches()) {
-                    edtEmail.setError("please enter valid email id");
+                    edtEmail.setError(getString(R.string.info_valid_email_id));
                     edtEmail.setFocusable(true);
                     edtEmail.requestFocus();
                     return;
@@ -154,11 +154,11 @@ public class NumEmailFragment extends Fragment {
                     return;
                 }
                 if (tvState.getText().toString().trim().isEmpty()) {
-                    Helper.showErrorMessage(getActivity(), "Please Select State");
+                    Helper.showErrorMessage(getActivity(), getString(R.string.info_select_state));
                     return;
                 }
                 if (tvCity.getText().toString().trim().isEmpty()) {
-                    Helper.showErrorMessage(getActivity(), "Please Enter City Name");
+                    Helper.showErrorMessage(getActivity(), getString(R.string.info_city_name));
                     return;
                 }
 
@@ -166,10 +166,12 @@ public class NumEmailFragment extends Fragment {
                 //mOtpRequestListener.onOtpRequest("IN", "91", "9836683269", "mdwasim508@gmail.com", "bankra mondal para killa math kolkata 711403, West Bengal","27");
                 //Log.e(TAG, "onClick: Add 1 : "+mAddress );
                 //Log.e(TAG, "onClick: Add 2 : "+placesAutocomplete.getText().toString() );
+                //temp
                 verifyMobileNumber(mCountryCode + mMobileNumber);
                 //requestForOtp();
             }
         });
+
 
 
 
@@ -251,9 +253,9 @@ public class NumEmailFragment extends Fragment {
                         } else {
                             BottomAlreadyFragment fragmentBottomAlready = new BottomAlreadyFragment();
                             Bundle mBundle = new Bundle();
-                            String param1 = "<font color='#000000'>" + "Provided phone number " + "</font>";
+                            String param1 = "<font color='#000000'>" + getString(R.string.info_provide_mobile) + "</font>";
                             String param2 = "<font color='#FF0000'>" + mCountryCode + " " + mMobileNumber + "</font>";
-                            String param3 = "<font color='#000000'>" + " has been already used." + "</font>";
+                            String param3 = "<font color='#000000'>" + getString(R.string.info_already_used) + "</font>";
                             mBundle.putString(AppoConstants.PARAM, param1 + param2 + param3);
                             fragmentBottomAlready.setArguments(mBundle);
                             fragmentBottomAlready.show(getChildFragmentManager(), fragmentBottomAlready.getTag());
@@ -304,7 +306,7 @@ public class NumEmailFragment extends Fragment {
                             Toast.makeText(getActivity(), getString(R.string.error_email_already_exists), Toast.LENGTH_SHORT).show();
                             BottomAlreadyFragment fragmentBottomAlready = new BottomAlreadyFragment();
                             Bundle mBundle = new Bundle();
-                            String param1 = "<font color='#000000'>" + "Provided Email-Id " + "</font>";
+                            String param1 = "<font color='#000000'>" + getString(R.string.info_provided_email) + "</font>";
                             String param2 = "<font color='#FF0000'>" + mEmail + "</font>";
                             String param3 = "<font color='#000000'>" + " has been already used." + "</font>";
                             mBundle.putString(AppoConstants.PARAM, param1 + param2 + param3);

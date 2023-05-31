@@ -144,7 +144,9 @@ public class VerifyFragment extends Fragment {
                     edtOtpNumber.setFocusable(true);
                     edtOtpNumber.setError(getString(R.string.info_enter_otp));
                 } else {
-                    getConfirmation();
+                    //getConfirmation();
+                    mVerifiedListener.onVerified(mParamNameCode, mParamCountryCode, mParamMobile);
+
                 }
                 //mVerifiedListener.onVerified(mParamNameCode, mParamCountryCode, mParamMobile);
             }
@@ -171,7 +173,7 @@ public class VerifyFragment extends Fragment {
                         hideProgress();
                         if (response.isSuccessful()) {
                             if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
-                                Helper.showLongMessage(getActivity(), "Successfully Verified!...");
+                                Helper.showLongMessage(getActivity(), getString(R.string.info_verified));
                                 mVerifiedListener.onVerified(mParamNameCode, mParamCountryCode, mParamMobile);
                             } else {
                                 if (response.body().get("result").getAsString().equalsIgnoreCase("failed")) {

@@ -53,12 +53,12 @@ public class NumberActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (TextUtils.isEmpty(selectedCountryCode)) {
-                    Toast.makeText(NumberActivity.this, "Select country code", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NumberActivity.this, getString(R.string.select_country_code), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (TextUtils.isEmpty(edtMobile.getText().toString().trim())) {
-                    Toast.makeText(NumberActivity.this, "Enter mobile number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NumberActivity.this, getString(R.string.info_enter_mobile_number), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 showEdit();

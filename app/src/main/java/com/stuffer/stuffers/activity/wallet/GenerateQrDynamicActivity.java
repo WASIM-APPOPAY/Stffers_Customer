@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.earthling.atminput.ATMEditText;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.hbb20.CountryCodePicker;
@@ -45,7 +46,8 @@ public class GenerateQrDynamicActivity extends AppCompatActivity implements View
     private MyButton btnQrCreate;
     private FrameLayout frameLayout;
     private TextView tvUserName;
-    private MyEditText edQrAmount;
+    //private MyEditText edQrAmount;
+    private ATMEditText edQrAmount;
     private ProgressDialog mDialog;
     private MainAPIInterface apiService;
     private MyTextView tvInfo;
@@ -59,7 +61,7 @@ public class GenerateQrDynamicActivity extends AppCompatActivity implements View
         setContentView(R.layout.activity_generate_qr_dynamic);
         apiService = ApiUtils.getAPIService();
         setupActionBar();
-        edQrAmount = (MyEditText) findViewById(R.id.edQrAmount);
+        edQrAmount = (ATMEditText) findViewById(R.id.edQrAmount);
         btnQrCreate = (MyButton) findViewById(R.id.btnQrCreate);
         user_qr_image = (ImageView) findViewById(R.id.user_qr_image);
         frameLayout = (FrameLayout) findViewById(R.id.frameLayout);

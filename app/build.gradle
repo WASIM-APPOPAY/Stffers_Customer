@@ -50,14 +50,7 @@ android {
             //signingConfig signingConfigs.release
         }
 
-        /*debug {
-            mini fyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }*/
 
-        /*lint {
-            baseline = file("lint-baseline.xml")
-        }*/
 
     }
 
@@ -230,6 +223,7 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'com.google.android.gms:play-services-safetynet:18.0.1'
     implementation 'com.github.zhpanvip:bannerviewpager:3.5.6'
+    implementation 'com.github.dinukapj:ATM-EditText:1.7.3'
 
 }
 apply plugin: 'com.google.gms.google-services'

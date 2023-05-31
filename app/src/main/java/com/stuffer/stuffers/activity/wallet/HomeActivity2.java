@@ -43,6 +43,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -89,6 +92,8 @@ import com.stuffer.stuffers.my_camera.CameraActivity;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.utils.Helper;
+import com.stuffer.stuffers.views.MyButton;
+import com.stuffer.stuffers.views.MyRadioButton;
 import com.stuffer.stuffers.views.MyTextView;
 import com.stuffer.stuffers.views.MyTextViewBold;
 
@@ -194,10 +199,12 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         llService.setOnClickListener(this);
         llCall.setOnClickListener(this);
         llMyQr.setOnClickListener(this);
-        ivMenuBottom.setOnClickListener(this);
+        //ivMenuBottom.setOnClickListener(this);
+        ivMenuBottom.setVisibility(View.GONE);
         add_attachment.setOnClickListener(this);
         rvShop = findViewById(R.id.rvShop);
         rvShop.setLayoutManager(new LinearLayoutManager(HomeActivity2.this, LinearLayoutManager.HORIZONTAL, false));
+        rvShop.setNestedScrollingEnabled(false);
         findViewById(R.id.customlayout_create_merchant).setOnClickListener(this);
         isAppoPayAccountExist(userMe.getId(), userMe.getName());
         ArrayList<ShopModel> mList = Helper.getShopItems(HomeActivity2.this);
@@ -272,7 +279,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         tvMobileNumber.setText("+" + userMe.getId());
         tvDrawername.setText(userMe.getName());
         tvDrawerNo.setText("+" + userMe.getId());
-        moreItems = ChatHelper.getMoreItems();
+        moreItems = ChatHelper.getMoreItems(HomeActivity2.this);
         registerChatUpdates();
         updateFcmToken();
         frameLayout.setOnClickListener(new View.OnClickListener() {
@@ -307,7 +314,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
             }, 200);
         });
         tvVersion.setText(getString(R.string.info_version) + BuildConfig.VERSION_NAME);
-
+        showPictureialog();
         refreshMyContacts();
 
 
@@ -378,15 +385,58 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
 
     private void isAccountExist(int countryCode, long nationalNumber) {
         //long mRequest = 987455555;
+        //customerType=CUSTOMER&phoneCode=86&mobileNumber=17610588273&
+        String url = "https://prodapi.appopay.com/api/users/checkUserExist?" + "customerType=CUSTOMER" + "&phoneCode=" + "" + countryCode + "&mobileNumber=" + "" + nationalNumber + "&";
+        Log.e(TAG, "isAccountExist: " + url);
+        //https://prodapi.appopay.com/api/users/checkUserExist?CUSTOMER&phoneCode=91&mobileNumber=9836683269&
+        // https://prodapi.appopay.com/api/users/checkUserExist?customerType=CUSTOMER&phoneCode=86&mobileNumber=17610588273&
+        AndroidNetworking.get(url)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //Log.e(TAG, "onResponse: " + response);
+                        //{"result":"","message":"user not exist","status":500}
+                        /*mBottomRegister = new BottomRegister();
+                        mBottomRegister.show(getSupportFragmentManager(), mBottomRegister.getTag());
+                        mBottomRegister.setCancelable(false);
 
-        apiService.getProfileDetails(nationalNumber, countryCode).enqueue(new Callback<JsonObject>() {
+                        Intent intent = new Intent(this, Registration.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        BasicInfoActivity.this.finish();*/
+
+                        try {
+                            if (response.getString("message").equalsIgnoreCase("success")) {
+
+                            } else {
+                                mBottomRegister = new BottomRegister();
+                                mBottomRegister.show(getSupportFragmentManager(), mBottomRegister.getTag());
+                                mBottomRegister.setCancelable(false);
+                                /*Intent intent = new Intent(HomeActivity2.this, Registration.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                HomeActivity2.this.finish();*/
+                            }
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.e(TAG, "onError: " + anError.getErrorDetail());
+                    }
+                });
+
+        /*apiService.getProfileDetails(nationalNumber, countryCode).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Log.e(TAG, "onResponse: " + response.body());
                 //{"result":"failed","message":"user not exist in system","status":500}
                 if (response.code()==401 || response.code()==500){
                     //Toast.makeText(HomeActivity2.this, "Error Code : "+response.code(), Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                 JsonObject body = response.body();
                 if (body.get("result").isJsonObject()) {
                     Log.e(TAG, "onResponse: yes");
@@ -395,6 +445,11 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
                     mBottomRegister = new BottomRegister();
                     mBottomRegister.show(getSupportFragmentManager(), mBottomRegister.getTag());
                     mBottomRegister.setCancelable(false);
+
+                    Intent intent = new Intent(this, Registration.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    BasicInfoActivity.this.finish();
                 }
                 }
 
@@ -409,7 +464,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
                 Log.e(TAG, "onFailure: " + t.getMessage());
 
             }
-        });
+        });*/
 
     }
 
@@ -892,8 +947,61 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         ;
     }
 
-    private void showPictureialog() {
+    public void typeQrCodeDialog(int param) {
+        if (param == 1) {
+            String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+            if (TextUtils.isEmpty(userData)) {
+                goToLoginScreen(4);
+            } else {
+                Intent mIntent = new Intent(HomeActivity2.this, ScanPayActivity.class);
+                mIntent.putExtra(AppoConstants.WHERE, 4);
+                startActivity(mIntent);
+            }
+        } else {
+            Intent intent = new Intent(HomeActivity2.this, InnerPayActivity.class);
+            startActivity(intent);
+        }
+
+    }
+
+    private void showScanTypeDialog() {
         Dialog dialog = new Dialog(HomeActivity2.this,
+                0);
+
+        dialog.setContentView(R.layout.row_scan_type);
+        MyButton btnConfirm = dialog.findViewById(R.id.btnConfirmQr);
+        MyButton btnCncel = dialog.findViewById(R.id.btnCancelQr);
+        MyRadioButton rbtnAppopay = dialog.findViewById(R.id.rbtnAppopay);
+        MyRadioButton rbtnUnionPay = dialog.findViewById(R.id.rbtnUnionPay);
+        btnCncel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (rbtnAppopay.isChecked()) {
+                    typeQrCodeDialog(1);
+                    dialog.dismiss();
+                } else if (rbtnUnionPay.isChecked()) {
+                    typeQrCodeDialog(2);
+                    dialog.dismiss();
+                } else {
+                    Toast.makeText(HomeActivity2.this, "Please Select Scan Type", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+
+
+    }
+
+    private void showPictureialog() {
+        /*Dialog dialog = new Dialog(HomeActivity2.this,
                 android.R.style.Theme_Translucent_NoTitleBar);
 
         // Setting dialogue
@@ -904,20 +1012,41 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
 
         dialog.setTitle(null);
 
-        dialog.setContentView(R.layout.service_dialog);
-        LinearLayout llLinkCard = window.findViewById(R.id.llLinkCard);
-        LinearLayout llRecharge = window.findViewById(R.id.llRecharge);
-        LinearLayout llPTransfer = window.findViewById(R.id.llPTransfer);
-        LinearLayout llScan = window.findViewById(R.id.llScan);
-        LinearLayout llBProfile = window.findViewById(R.id.llBProfile);
-        LinearLayout llProfile = window.findViewById(R.id.llProfile);
-        LinearLayout llCashSend = window.findViewById(R.id.llCashSend);
-        LinearLayout layoutScanUnion = window.findViewById(R.id.layoutScanUnion);
+        dialog.setContentView(R.layout.service_dialog);*/
+        LinearLayout llLinkCard = findViewById(R.id.llLinkCard);
+        LinearLayout llRecharge = findViewById(R.id.llRecharge);
+        LinearLayout llPTransfer = findViewById(R.id.llPTransfer);
+        LinearLayout llScan = findViewById(R.id.llScan);
+        LinearLayout llBProfile = findViewById(R.id.llBProfile);
+        LinearLayout llProfile = findViewById(R.id.llProfile);
+        LinearLayout llCashSend = findViewById(R.id.llCashSend);
+        LinearLayout layoutScanUnion = findViewById(R.id.layoutScanUnion);
+
+        llScan.setOnClickListener(view -> {
+            /*String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+            if (TextUtils.isEmpty(userData)) {
+                goToLoginScreen(4);
+            } else {
+                Intent mIntent = new Intent(HomeActivity2.this, ScanPayActivity.class);
+                mIntent.putExtra(AppoConstants.WHERE, 4);
+                startActivity(mIntent);
+            }*/
+            showScanTypeDialog();
+        });
+
+
+        /*layoutScanUnion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity2.this, InnerPayActivity.class);
+                startActivity(intent);
+            }
+        });*/
 
         llLinkCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(HomeActivity2.this,CardDetails.class);
+                Intent intent = new Intent(HomeActivity2.this, CardDetails.class);
                 startActivity(intent);
             }
         });
@@ -966,16 +1095,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
                 }
             }
         });
-        llScan.setOnClickListener(view -> {
-            String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
-            if (TextUtils.isEmpty(userData)) {
-                goToLoginScreen(4);
-            } else {
-                Intent mIntent = new Intent(HomeActivity2.this, ScanPayActivity.class);
-                mIntent.putExtra(AppoConstants.WHERE, 4);
-                startActivity(mIntent);
-            }
-        });
+
 
         llBProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -988,27 +1108,21 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         llProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
-             if (TextUtils.isEmpty(userData)) {
-                  goToLoginScreen(9);
-              } else {
-                Intent mIntent = new Intent(HomeActivity2.this, CustomerProfileActivity.class);
-                mIntent.putExtra(AppoConstants.WHERE, 9);
-                startActivity(mIntent);
-             }
+                String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+                if (TextUtils.isEmpty(userData)) {
+                    goToLoginScreen(9);
+                } else {
+                    Intent mIntent = new Intent(HomeActivity2.this, CustomerProfileActivity.class);
+                    mIntent.putExtra(AppoConstants.WHERE, 9);
+                    startActivity(mIntent);
+                }
             }
         });
 
-        layoutScanUnion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity2.this, InnerPayActivity.class);
-                startActivity(intent);
-            }
-        });
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
+
+        //dialog.setCancelable(true);
+        //dialog.setCanceledOnTouchOutside(true);
+        //dialog.show();
     }
 
     private void goToLoginScreen(int where) {

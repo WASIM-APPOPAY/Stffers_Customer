@@ -102,7 +102,9 @@
                             android:layout_height="wrap_content"
                             android:background="#0000"
                             android:clickable="false"
+
                             android:drawableStart="@drawable/ic_fiber_pin"
+
                             android:drawablePadding="12dp"
                             android:gravity="left"
                             android:hint="@string/error_new_enter_transaction_pin"
@@ -181,6 +183,7 @@
                     <ImageView
                         android:layout_width="28dp"
                         android:layout_height="28dp"
+                        android:tint="@color/colorPrimary"
                         android:layout_gravity="start|center_vertical"
                         android:src="@drawable/ic_language1" />
 

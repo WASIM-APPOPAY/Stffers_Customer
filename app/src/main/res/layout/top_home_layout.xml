@@ -7,61 +7,13 @@
     android:background="@color/colorPrimary"
     android:orientation="vertical">
 
-    <LinearLayout
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/menu_icon_drawer"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="2dp"
-            android:src="@drawable/icmenu_new"
-            app:tint="@color/white" />
-
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <com.stuffer.stuffers.views.MyTextViewBold
-                android:id="@+id/tvUserName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="ALHARAZI MOHAMMAD"
-                android:textStyle="bold" />
-
-            <com.stuffer.stuffers.views.MyTextView
-                android:id="@+id/tvMobileNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="63516303" />
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="2dp"
-            android:id="@+id/ivMenu"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic__more_new"
-            app:tint="@color/white" />
-
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
+
         <com.stuffer.stuffers.views.MyTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,6 +26,7 @@
             android:textColor="@color/Black"
             android:textSize="14sp" />
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvShop"
             android:layout_width="match_parent"
@@ -82,8 +35,411 @@
 
             />
 
-    </LinearLayout>
+        <com.stuffer.stuffers.views.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:text="Finance"
+            android:textAllCaps="false"
+            android:textColor="#541360"
+            android:textSize="20sp" />
 
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <LinearLayout
+                    android:id="@+id/llLinkCard"
+                    style="@style/LayoutFundLinearStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/no_round_bg2"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <ImageView
+
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/bg_circle_link"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_credit_card_drawable"
+                        app:tint="@color/white" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:text="@string/info_link_card"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llRecharge"
+                    style="@style/LayoutFundLinearStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/no_round_bg2"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <ImageView
+
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/bg_circle_recharge"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_recharge"
+                        app:tint="@color/white" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:text="@string/info_recharge"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llPTransfer"
+                    style="@style/LayoutFundLinearStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/no_round_bg2"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <ImageView
+
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/bg_circle_transfer"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_transfer_money"
+                        app:tint="@color/white" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:text="@string/info_p_2_p_transfer"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llBProfile"
+                    style="@style/LayoutFundLinearStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/no_round_bg2"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:visibility="gone">
+
+                    <ImageView
+
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/bg_circle_business"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_user_drawable"
+                        app:tint="@color/white" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:text="Create Business pro"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+
+                        />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/llProfile"
+                    style="@style/LayoutFundLinearStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/no_round_bg2"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/bg_circle_profile"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_user_drawable"
+                        app:tint="@color/green" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:text="Profile\n"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/LayoutFundLinearStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/no_round_bg2"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+
+                    <ImageView
+
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/bg_circle_express"
+                        android:padding="10dp"
+                        android:src="@drawable/bottom_logo_union" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:text="@string/info_unionpay_nmoney_express"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+
+                        />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <LinearLayout
+                    style="@style/LayoutFundLinearStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/no_round_bg2"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:visibility="invisible">
+
+                    <ImageView
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/bg_circle_profile"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_user_drawable"
+                        app:tint="@color/green" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:text="Profile\n"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+
+                        />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/llCashSend"
+                    style="@style/LayoutFundLinearStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/no_round_bg2"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:visibility="invisible">
+
+                    <ImageView
+
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/bg_circle_appopay"
+                        android:padding="10dp"
+
+                        android:src="@drawable/icon_cash_send" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="@string/info_cash_sends"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+
+
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:id="@+id/layoutScanUnion"
+                    style="@style/LayoutFundLinearStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/no_round_bg2"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:visibility="invisible">
+
+                    <!--<ImageView
+
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+
+
+                        android:src="@drawable/practi_icon" />-->
+
+                    <ImageView
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/bg_circle_profile"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_qr_code_scanner"
+                        app:tint="@color/white" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:text="@string/info_scan_unionpay"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+
+                        />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/llScan"
+                    style="@style/LayoutFundLinearStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/no_round_bg2"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/bg_circle_union"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_qr_code_scanner"
+                        app:tint="@color/white" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="Scan"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+
+                        />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </LinearLayout>

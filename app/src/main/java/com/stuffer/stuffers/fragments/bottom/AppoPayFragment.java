@@ -33,6 +33,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.emv.qrcode.core.model.mpm.TagLengthString;
 import com.emv.qrcode.decoder.mpm.DecoderMpm;
 import com.emv.qrcode.model.mpm.AdditionalDataField;
@@ -118,6 +121,7 @@ public class AppoPayFragment extends Fragment {
     private String valueCountry;
     private MerchantPresentedMode mDecode;
     private int mWhere = 0;
+    private String scanText;
 
     public AppoPayFragment() {
         // Required empty public constructor
@@ -125,8 +129,7 @@ public class AppoPayFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_appo_pay, container, false);
 
@@ -149,7 +152,7 @@ public class AppoPayFragment extends Fragment {
         tvConversionRates = (MyTextView) mView.findViewById(R.id.tvConversionRates);
         btnPayNow = (MyButton) mView.findViewById(R.id.btnPayNow);
         Bundle arguments = this.getArguments();
-        String scanText = arguments.getString(AppoConstants.MERCHANTSCANCODE);
+        scanText = arguments.getString(AppoConstants.MERCHANTSCANCODE);
 
         mWhere = arguments.getInt(AppoConstants.WHERE, 0);
         Log.e("TAG", "onCreateView: scanText " + scanText);
@@ -163,7 +166,7 @@ public class AppoPayFragment extends Fragment {
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //verifyDetails();
+                verifyDetails();
             }
         });
 
@@ -381,8 +384,8 @@ public class AppoPayFragment extends Fragment {
 
         conversionRates = 1;
         tvCardMerchant.setVisibility(View.VISIBLE);
-        Log.e(TAG, "showMerchantDetails: "+new Gson().toJson(mDecode) );
-        String mWhole=new Gson().toJson(mDecode);
+        Log.e(TAG, "showMerchantDetails: " + new Gson().toJson(mDecode));
+        String mWhole = new Gson().toJson(mDecode);
 
         TagLengthString countryCode1 = mDecode.getCountryCode();
         valueCountry = countryCode1.getValue();
@@ -401,11 +404,11 @@ public class AppoPayFragment extends Fragment {
         String s = new Gson().toJson(mDecode.getMerchantAccountInformation());
         //Log.e(TAG, "showMerchantDetails: "+s );
         try {
-            JSONObject mAccountInfo=new JSONObject(s);
+            JSONObject mAccountInfo = new JSONObject(s);
             JSONObject jsonObject15 = mAccountInfo.getJSONObject("15");
             JSONObject value = jsonObject15.getJSONObject("value");
             String value1 = value.getString("value");
-            String mMerchantId = value1.substring(value1.length()-15);
+            String mMerchantId = value1.substring(value1.length() - 15);
             //Log.e(TAG, "showMerchantDetails: "+mMerchantId );
 
             tvEmialId.setText("TID : " + mTerminalId);
@@ -413,8 +416,8 @@ public class AppoPayFragment extends Fragment {
             tvIndex5.setVisibility(View.VISIBLE);
             tvHeader.setText(valueMerchantName);
             tvCodeMobile.setText("(+" + valueCountry + ") " + mMerchantCity.toUpperCase());
-            JSONObject mJsonWhole=new JSONObject(mWhole);
-            if (mJsonWhole.has("transactionAmount")){
+            JSONObject mJsonWhole = new JSONObject(mWhole);
+            if (mJsonWhole.has("transactionAmount")) {
                 TagLengthString transactionAmount = mDecode.getTransactionAmount();
                 String transactionValue = transactionAmount.getValue();
                 edAmount.setText(transactionValue);
@@ -491,11 +494,11 @@ public class AppoPayFragment extends Fragment {
             JSONObject mResult = mIndex.getJSONObject(AppoConstants.RESULT);
             ph1 = mResult.getString(AppoConstants.MOBILENUMBER);
             area1 = mResult.getString(AppoConstants.PHONECODE);
-            Log.e(TAG, "getLatestUserDetails: "+ph1 );
-            Log.e(TAG, "getLatestUserDetails: "+area1 );
+            Log.e(TAG, "getLatestUserDetails: " + ph1);
+            Log.e(TAG, "getLatestUserDetails: " + area1);
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.e(TAG, "getLatestUserDetails: called" );
+            Log.e(TAG, "getLatestUserDetails: called");
         }
         String bearer_ = Helper.getAppendAccessToken("bearer ", accessToken);
 
@@ -797,7 +800,8 @@ public class AppoPayFragment extends Fragment {
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makePayment();
+                //makePayment();
+                makePaymentUnion();
             }
         });
         btnNo.setOnClickListener(new View.OnClickListener() {
@@ -811,6 +815,55 @@ public class AppoPayFragment extends Fragment {
         dialogMerchant = builder.create();
         dialogMerchant.setCanceledOnTouchOutside(false);
         dialogMerchant.show();
+    }
+
+    private void makePaymentUnion() {
+        if (dialogMerchant != null) {
+            dialogMerchant.dismiss();
+        }
+        JSONObject mParam = new JSONObject();
+        try {
+            mParam.put("userType", "CUSTOMER");
+            mParam.put("money", edAmount.getText().toString().trim());
+            mParam.put("accountNumber", Helper.getWalletAccountNumber());
+            mParam.put("qrCode", scanText);
+           // Log.e(TAG, "makePaymentUnion: " + mParam.toString());
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        dialog = new ProgressDialog(getActivity());
+        dialog.setMessage(getString(R.string.info_sending_request));
+        dialog.show();
+        AndroidNetworking.post("https://prodapi.appopay.com/api/unionpay/trnasferMoney").addJSONObjectBody(mParam).build().getAsJSONObject(new JSONObjectRequestListener() {
+            @Override
+            public void onResponse(JSONObject response) {
+                //Log.e(TAG, "onResponse: " + response);
+                dialog.dismiss();
+                //{"result":{"merchantId":"000000000000096","merchantName":"STUFFRS, S.A."},"message":"success","status":200}
+                try {
+                    JSONObject result = response.getJSONObject("result");
+                    String merchantId = result.getString("merchantId");
+                    showPayDialogLikeUnion(merchantId);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                //showPayDialogLikeUnion();
+
+
+            }
+
+            @Override
+            public void onError(ANError anError) {
+
+                dialog.dismiss();
+                Toast.makeText(getActivity(), "" + anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+
     }
 
     private void makePayment() {
@@ -936,7 +989,7 @@ public class AppoPayFragment extends Fragment {
         }
         tvCurrencyPay.setText("Currency : " + mCurrencyId);
         tvTransactionTime.setText("Transaction Time : " + getDateTime());
-        tvVoucherPay.setText("Transaction No : " + param);
+        tvVoucherPay.setText("Merchant Id : " + param);
         String info = "<font color='#FF0000'>" + "<b>" + "Paid to " + valueMerchantName + "</b></font>" + "<br>" + "SUCCESS";
         tvInfo.setText(Html.fromHtml(info));
 
@@ -1018,10 +1071,8 @@ public class AppoPayFragment extends Fragment {
         Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(returnedBitmap);
         Drawable bgDrawable = view.getBackground();
-        if (bgDrawable != null)
-            bgDrawable.draw(canvas);
-        else
-            canvas.drawColor(Color.WHITE);
+        if (bgDrawable != null) bgDrawable.draw(canvas);
+        else canvas.drawColor(Color.WHITE);
         view.draw(canvas);
         return returnedBitmap;
 
@@ -1128,8 +1179,14 @@ public class AppoPayFragment extends Fragment {
 
 
     public void onConfirm(String pin) {
-        if (bottotmPinFragment != null)
-            bottotmPinFragment.dismiss();
-        getCommissions(pin);
+        if (bottotmPinFragment != null) bottotmPinFragment.dismiss();
+        //getCommissions(pin);
+        String transactionPin = Helper.getTransactionPin();
+        if (transactionPin.equalsIgnoreCase(pin)) {
+            showYouAboutToPay();
+        } else {
+            Toast.makeText(getActivity(), "Invalid Transaction Pin", Toast.LENGTH_SHORT).show();
+        }
     }
+
 }

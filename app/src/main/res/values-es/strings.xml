@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Appopay</string>
+    <string name="app_name">AppOpay</string>
     <string name="copyright"> Derechos de autor ©. Todos los derechos reservados.</string>
     <string name="select_country_code"> Por favor seleccione el código del país </string>
     <string name="code"><u> el código </u></string>
@@ -22,7 +22,7 @@
     <string name="carddetails_cvv_label">CVV</string>
     <!--  TODO: Remove or change this placeholder text  -->
     <string name="hello_blank_fragment"> Hello fragmento en blanco </string>
-    <string name="type_your_message"> escribe un mensaje </string>
+    <string name="type_your_message"> Escriba su mensaje </string>
     <string name="trans_note"> la nota </string>
     <string name="trans_info"> La longitud del pin de transacción debe ser de seis dígitos</string>
     <string name="screen_note"> lnota </string>
@@ -121,7 +121,7 @@
     <string name="info_verify_your_phone_number"> Verifique su número de teléfono </string>
     <string name="info_resend_otp"> Reenviar OTP </string>
     <string name="info_already_registered"> Ya registrado?</string>
-    <string name="info_sign_in"> registrarse </string>
+    <string name="info_sign_in"> acceso </string>
     <string name="info_enter_phone_number"> Ingrese el número de teléfono </string>
     <string name="info_appopay_will_send_otp"> Appopay enviará una contraseña de una sola vez </string>
     <string name="info_enter_valid_phone_number"> Por favor, introduzca un número de teléfono válido</string>
@@ -578,26 +578,28 @@
 <![CDATA[ Compra, Venta, Pago y Chat.\nAceptado en 52.000.000 de comercios de todo el mundo ]]>
 </string>
     <string name="info_split1"> Pulse</string>
-    <string name="info_split2"> Aceptar y Continuar</string>
+    <string name="info_split2">para leer el</string>
     <string name="info_split3"> para aceptar las</string>
     <string name="info_split4"> Término y Condición </string>
     <string name="info_accept_intro">
-<![CDATA[ Aceptar T&C ]]>
+<![CDATA[ Leer T&C ]]>
 </string>
     <string name="info_select_language">SELECCIONAR IDIOMA</string>
     <string name="info_select_your_app_language">Seleccione el idioma de su aplicación</string>
     <string name="info_apply">Aplicar</string>
     <string name="info_term_condition">Acepte los términos y condiciones.</string>
     <string name="info_phone_number_verification">Verificación del número de teléfono</string>
-    <string name="info_we_will_send_you_a_otp">Te enviaremos unOTP por mensaje de text</string>
+    <string name="info_we_will_send_you_a_otp">Le enviaremos un OTP</string>
     <string name="info_next">Siguiente</string>
     <string name="info_enter_otp2">Ingresar OTP</string>
-    <string name="info_you_enter_a_phone_number">Introduce un número de teléfono</string>
-    <string name="info_is_this_ok_or">¿Está bien este número o quieres editarlo?</string>
-    <string name="info_we_send">Hemos enviado un OTP en su número</string>
-    <string name="otp_resend_in_13_sec">Renvío OTP en </string>
-    <string name="info_verify">VERIFICAR</string>
-    <string name="phone_number">Número Celular</string>
+    <string name="info_you_enter_a_phone_number">Introduce un número de móvil</string>
+    <string name="info_is_this_ok_or">¿Está bien este número, o quiere editarlo?</string>
+
+    <string name="otp_resend_in_13_sec">Reenvío de OTP en  </string>
+
+    <string name="otp_resend_in_13_sec2"> segundos </string>
+    <string name="info_verify">VERIFIQUE</string>
+    <string name="phone_number">Número de móvil</string>
 
     <string name="fname">Primer Nombre</string>
     <string name="enter_first_your_name">Pongasu primer nombre</string>
@@ -606,7 +608,7 @@
 
     <string name="info_save">Guardar</string>
 
-    <string name="info_my_qr_code">Mi código QR</string>
+    <string name="info_my_qr_code">Mi código Qr</string>
     <string name="info_link_card">Tarjeta de enlace</string>
     <string name="info_recharge">Recarga</string>
     <string name="info_p_2_p_transfer">Transferencia P-2-P</string>
@@ -614,8 +616,96 @@
     <string name="info_unionpay_nmoney_express">UnionPay\nMoney Express</string>
     <string name="info_cash_sends">Envíos de efectivo</string>
     <string name="info_scan_qr_code_amp_pay"><![CDATA[Escanear código QR y pagar]]></string>
-    <string name="info_version">"Version de aplicación : "</string>
+    <string name="info_version">"Versión App : "</string>
+    <string name="info_we_send">Le enviaremos un número de verificación</string>
+    <string name="logging_in">Hemos verificado su dispositivo</string>
+    <string name="get_image_camera">Cámara</string>
+    <string name="get_image_gallery">Galería de imágenes</string>
+    <string name="just_moment">Un momento..</string>
+    <string name="slide_cancel">(Deslizar a la izquierda para cancelar)</string>
+    <string name="hold_record">Mantener pulsado para grabar.</string>
+    <string name="file_na">Archivo no disponible</string>
+    <string name="downloading">Descargar</string>
+    <string name="recording_cancelled">Grabación cancelada</string>
+    <string name="message_copied">Mensajes copiados</string>
+    <string name="delete_msg_title">Borrar mensajes</string>
+    <string name="delete_msg_message">¿Seguir borrando los mensajes seleccionados?</string>
+    <string name="no">NO</string>
+    <string name="yes">Sí</string>
+
+    <string name="you">Usted</string>
+    <string name="voice_message">Mensaje de voz</string>
+    <string name="uploading">Cargando</string>
+    <string name="upload_fail">Error de carga</string>
+    <string name="up_and_send">Cargar y enviar</string>
+    <string name="close">Cerrar</string>
+    <string name="add_to_contact">Añadir a contactos</string>
+    <string name="settings">PERMITIR</string>
+    <string name="permission_desc_storage">AppOPay necesita permisos de almacenamiento, cámara, audio y acceso a contactos para funcionar correctamente.</string>
+    <string name="info_shop_our_mall"> Compre en nuestro centro comercial</string>
+    <string name="info_tab_agree">Pulse Aceptar para aceptar las Condiciones del servicio.</string>
+    <string name="position_fail">No se ha podido obtener el posicionamiento, por favor, vuelva a señalar</string>
+
+    <string name="catalogue_manager_title">Gestor de catálogos</string>
+
+    <string name="create_catalogue_manager_title">Crear un catálogo</string>
+    <string name="schedule_business_hours_title">Editar horario comercial</string>
+
+    <string name="schedule_business_address_title">Dirección profesional</string>
 
 
+    <string name="schedule_business_add_item_title">Añadir artículo</string>
+    <string name="schedule_business_product_detail_title">Detalle del producto</string>
+    <string name="schedule_business_type_title">Tipo de empresa</string>
+    <string name="schedule_business_search_title">Buscar empresas</string>
+    <string name="schedule_business_search_et_hit">Introduzca el nombre de la empresa</string>
+    <string name="select_picture_photograph">Fotografía</string>
+    <string name="select_picture_select_from_album">Elija del álbum</string>
+    <string name="select_picture_cancel">Cancelar</string>
+    <string name="schedule_op_time_up">Elija su horario de apertura</string>
+    <string name="schedule_select_time_up">Abierto a determinadas horas</string>
+    <string name="schedule_all_time_up">Abierto todo el día</string>
+    <string name="schedule_reserve_time_up">Sólo con cita previa</string>
+    <string name="enable_required_permissions">Habilite manualmente los permisos necesarios</string>
+    <string name="business_info_name">Nombre</string>
+    <string name="business_info_desc">Descripción</string>
+    <string name="business_info_other">Otros asuntos</string>
+    <string name="business_info_address">Dirección</string>
+    <string name="business_info_hours">Horario comercial</string>
+    <string name="business_info_email">Correo electrónico</string>
+    <string name="business_info_website">Página web</string>
+    <string name="business_info_using">¡Hola! Estoy usando AppOpay</string>
+    <string name="forward_message">Reenviar mensaje</string>
+    <string name="forward_to">Adelante:</string>
+    <string name="permission_contact_message">Tenga en cuenta que no guardamos ni compartimos su lista de contactos con nadie.</string>
+    <string name="permission_contact_title">Permiso para leer contactos</string>
+    <string name="okay">OK</string>
+    <string name="info_cc_reg">Seleccionar país o región</string>
+    <string name="info_scan_unionpay">Escanear UnionPay</string>
+    <string name="info_voice_input">Entrada de voz</string>
+    <string name="info_voice_call">Llamada de voz</string>
+    <string name="info_video_call">Videollamada</string>
+    <string name="info_token">Token</string>
+    <string name="info_add_fud">Añadir Fondos</string>
+    <string name="info_account_list">Lista de cuentas</string>
+    <string name="info_location">Ubicación</string>
+    <string name="info_select_area_code">Seleccione el código de área</string>
+    <string name="info_step_one">Primer paso</string>
+    <string name="info_step_two">Segundo paso</string>
+    <string name="info_step_three">Tercer paso</string>
+    <string name="info_valid_email_id">Introduzca una dirección de correo electrónico válida</string>
+    <string name="info_select_state">Seleccione un Estado</string>
+    <string name="info_city_name">Introduzca el nombre de la ciudad</string>
+    <string name="info_already_used">\" ya se ha utilizado.\"</string>
+    <string name="info_provide_mobile">\"Número de móvil facilitado \"</string>
+    <string name="info_provided_email">\"Dirección de correo electrónico facilitada \"</string>
+    <string name="info_verified">¡Verificado con éxito!...</string>
+    <string name="info_id_type">Tipo de identificación</string>
+
+    <string name="info_please_select_id_type">Seleccione el tipo de identificación</string>
+    <string name="info_tap_to_capture_your_id">Toque para capturar su Identificación</string>
+    <string name="info_select_your_date_of_birth">Seleccione su fecha de nacimiento</string>
+    <string name="info_id_number">Número de identificación</string>
+    <string name="info_select_id_expiry_date">Seleccione fecha expiración de identificación</string>
 
 </resources>

@@ -16,6 +16,7 @@
         android:layout_marginRight="20dp">
 
         <ImageView
+            android:tint="@color/colorPrimary"
             android:id="@+id/saloonUstara"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -35,6 +36,7 @@
 
 
         <ImageView
+            android:tint="@color/colorPrimary"
             android:id="@+id/saloonScizer"
             android:layout_width="48dp"
             android:layout_height="48dp"

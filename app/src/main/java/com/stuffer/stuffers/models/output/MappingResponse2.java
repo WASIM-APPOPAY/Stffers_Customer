@@ -47,14 +47,12 @@ public class MappingResponse2 {
         @SerializedName("id")
         @Expose
         private String id;
-        @SerializedName("mobile")
+        @SerializedName("mobilenumber")
         @Expose
         private String mobile;
 
-        @SerializedName("phoneCode")
-        @Expose
-        private String phoneCode;
-        @SerializedName("uniqueNumber")
+
+        @SerializedName("uniquenumber")
         @Expose
         private String uniqueNumber;
         @SerializedName("userType")
@@ -76,9 +74,7 @@ public class MappingResponse2 {
             return mobile;
         }
 
-        public String getPhoneCode() {
-            return phoneCode;
-        }
+
 
         public String getUniqueNumber() {
             return uniqueNumber;

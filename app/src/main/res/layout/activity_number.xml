@@ -34,10 +34,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:textSize="@dimen/dp_16"
             android:text="@string/info_we_will_send_you_a_otp"
             android:textAppearance="?attr/textAppearanceBody1"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/dp_16" />
 
 
         <RelativeLayout
@@ -51,7 +51,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_gravity="center_vertical"
-
 
 
                 android:background="@drawable/bg_border_round"

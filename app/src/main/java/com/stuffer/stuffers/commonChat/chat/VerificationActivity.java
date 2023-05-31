@@ -194,7 +194,7 @@ public class VerificationActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Log.e(TAG, "run: mobile : " + mAreaCode + mMobileNumber);
+                //Log.e(TAG, "run: mobile : " + mAreaCode + mMobileNumber);
                 initAuth("+" + mAreaCode + mMobileNumber);
             }
         }, 500);
@@ -210,7 +210,7 @@ public class VerificationActivity extends AppCompatActivity {
                         @Override
                         public void onCodeAutoRetrievalTimeOut(String s) {
                             super.onCodeAutoRetrievalTimeOut(s);
-                            Log.e(TAG, "onCodeAutoRetrievalTimeOut: " + s);
+                            //Log.e(TAG, "onCodeAutoRetrievalTimeOut: " + s);
                             onCodeSent(mVerificationId, mResendToken);
                         }
 
@@ -218,7 +218,7 @@ public class VerificationActivity extends AppCompatActivity {
                         public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
                             progressDialog.dismiss();
                             String smsCode = phoneAuthCredential.getSmsCode();
-                            Log.e(TAG, "onVerificationCompleted: " + smsCode);
+                            //Log.e(TAG, "onVerificationCompleted: " + smsCode);
                             for (int i = 0; i < smsCode.length(); i++) {
                                 mList.get(i).setText("" + smsCode.charAt(i));
                             }
@@ -263,7 +263,7 @@ public class VerificationActivity extends AppCompatActivity {
             @Override
             public void onTick(long l) {
                 if (retryTimer != null) {
-                    retryTimer.setText(String.valueOf(l / 1000));
+                    retryTimer.setText( getString(R.string.otp_resend_in_13_sec)+" "+ String.valueOf(l / 1000)+" "+getString(R.string.otp_resend_in_13_sec2));
                 }
             }
 
@@ -333,6 +333,10 @@ public class VerificationActivity extends AppCompatActivity {
 
     //Go to main activity
     private void done(boolean newUser) {
+        /*Intent intent = new Intent(mContext, BasicInfoActivity.class);
+        startActivity(intent);
+        VerificationActivity.this.finish();*/
+        //Temporary
         if (newUser) {
             Intent intent = new Intent(mContext, BasicInfoActivity.class);
             startActivity(intent);

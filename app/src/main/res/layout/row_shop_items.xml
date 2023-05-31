@@ -24,7 +24,7 @@
         android:gravity="center"
         android:padding="5dp"
         android:text="Resturant"
-        android:textColor="@color/textSub"
+        android:textColor="@color/shop_text_color"
         android:lines="2"
         android:maxLines="2"
         android:textSize="12sp" />

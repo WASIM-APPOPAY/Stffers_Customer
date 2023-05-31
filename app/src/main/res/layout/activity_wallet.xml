@@ -33,16 +33,14 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="230dp"
-                    android:background="@drawable/user_card_new" />
-<!--android:text="0000000000000000000"-->
+                    android:background="@drawable/card_design4" />
+                <!--android:text="0000000000000000000"-->
                 <com.stuffer.stuffers.views.MyTextView
-
                     android:id="@+id/tvAccountNos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="140dp"
                     android:gravity="center"
-
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
@@ -55,7 +53,7 @@
                     android:text="01/30"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
-<!--android:text="MD WASIM"-->
+                <!--android:text="MD WASIM"-->
                 <com.stuffer.stuffers.views.MyTextView
                     android:id="@+id/tvFullName"
                     android:layout_width="wrap_content"

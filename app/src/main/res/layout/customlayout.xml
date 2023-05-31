@@ -12,7 +12,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="110dp"
-            android:background="@mipmap/header">
+            android:background="@color/colorPrimaryDark">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -60,12 +60,14 @@
                     android:orientation="vertical">
 
                     <com.stuffer.stuffers.views.MyTextView
+                        android:textColor="@color/color_white"
                         android:id="@+id/tvDrawername"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Sebastian Deo" />
 
                     <com.stuffer.stuffers.views.MyTextView
+                        android:textColor="@color/color_white"
                         android:id="@+id/tvDrawerNo"
 
                         android:layout_width="wrap_content"
