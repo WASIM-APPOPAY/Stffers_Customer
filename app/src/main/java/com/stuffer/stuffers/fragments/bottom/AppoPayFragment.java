@@ -36,6 +36,7 @@ import android.widget.Toast;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.earthling.atminput.ATMEditText;
 import com.emv.qrcode.core.model.mpm.TagLengthString;
 import com.emv.qrcode.decoder.mpm.DecoderMpm;
 import com.emv.qrcode.model.mpm.AdditionalDataField;
@@ -108,7 +109,7 @@ public class AppoPayFragment extends Fragment {
     private int fromAccountPosition;
     private FromAccountDialogFragment fromAccountDialogFragment;
     private Dialog dialogMerchant;
-    private MyEditText edAmount;
+    private ATMEditText edAmount;
     private float conversionRates = 0;
     MyButton btnPayNow;
     private float finaamount, bankfees, processingfees = 0, amountaftertax_fees, taxes;
@@ -146,7 +147,7 @@ public class AppoPayFragment extends Fragment {
         //tvRequiredFilled.setText(Html.fromHtml(required));
         tvFromAccount = (MyTextView) mView.findViewById(R.id.tvFromAccount);
 
-        edAmount = (MyEditText) mView.findViewById(R.id.edAmount);
+        edAmount = (ATMEditText) mView.findViewById(R.id.edAmount);
         tvAmountCredit = (MyTextView) mView.findViewById(R.id.tvAmountCredit);
 
         tvConversionRates = (MyTextView) mView.findViewById(R.id.tvConversionRates);
@@ -200,52 +201,7 @@ public class AppoPayFragment extends Fragment {
             }
         });
 
-        /*edAmount.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                try {
-                    String inputAmount = edAmount.getText().toString().trim();
-                    if (inputAmount.length() > 0) {
-                        float tranaferAmount = Float.parseFloat(inputAmount);
-                        //float transfer = (float) (tranaferAmount * conversionRates);
-                        float transfer = (float) (tranaferAmount / exchange);
-                        float twoDecimal = (float) Helper.getTwoDecimal(transfer);
-                        mCreditAmount = twoDecimal;
-                        tvAmountCredit.setText(String.valueOf(twoDecimal) + " " + toCurrency.toUpperCase());
-                        DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
-                        formatter.applyPattern("#,###,###,###.00");
-                        String formattedString = formatter.format(twoDecimal);
-                        tvAmountCredit.setText(String.valueOf(formattedString) + " " + toCurrency.toUpperCase());
-                        btnPayNow.setEnabled(true);
-                        btnPayNow.setClickable(true);
-                    } else {
-                        float twoDecimal = (float) Helper.getTwoDecimal(0);
-                        tvAmountCredit.setText(String.valueOf(twoDecimal));
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    if (edAmount.getText().toString().trim().isEmpty()) {
-
-                    } else {
-                        Toast.makeText(getActivity(), getString(R.string.info_invalid_format), Toast.LENGTH_SHORT).show();
-                        btnPayNow.setEnabled(false);
-                        btnPayNow.setClickable(false);
-                    }
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });*/
 
         //showSuccessDialog("param result");
 
@@ -827,7 +783,7 @@ public class AppoPayFragment extends Fragment {
             mParam.put("money", edAmount.getText().toString().trim());
             mParam.put("accountNumber", Helper.getWalletAccountNumber());
             mParam.put("qrCode", scanText);
-           // Log.e(TAG, "makePaymentUnion: " + mParam.toString());
+            Log.e(TAG, "makePaymentUnion: " + mParam.toString());
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -835,7 +791,7 @@ public class AppoPayFragment extends Fragment {
         dialog = new ProgressDialog(getActivity());
         dialog.setMessage(getString(R.string.info_sending_request));
         dialog.show();
-        AndroidNetworking.post("https://prodapi.appopay.com/api/unionpay/trnasferMoney").addJSONObjectBody(mParam).build().getAsJSONObject(new JSONObjectRequestListener() {
+        AndroidNetworking.post("https://prodapi.appopay.com/api/unionpay/transferMoney").addJSONObjectBody(mParam).build().getAsJSONObject(new JSONObjectRequestListener() {
             @Override
             public void onResponse(JSONObject response) {
                 //Log.e(TAG, "onResponse: " + response);
@@ -855,6 +811,8 @@ public class AppoPayFragment extends Fragment {
 
             @Override
             public void onError(ANError anError) {
+                Log.e(TAG, "onError: "+anError.getErrorBody() );
+                Log.e(TAG, "onError: "+anError.getErrorDetail() );
 
                 dialog.dismiss();
                 Toast.makeText(getActivity(), "" + anError.getErrorDetail(), Toast.LENGTH_SHORT).show();

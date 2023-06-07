@@ -130,6 +130,8 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
     private FrameLayout frameLayout;
     private ProgressDialog mProgressDialog;
     private int mType = 0;
+    MyTextViewBold tvTitleProfile;
+    private ImageView ivBack;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -163,8 +165,9 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
                 .build();
         AndroidNetworking.initialize(getApplicationContext());
         //AndroidNetworking.initialize(getApplicationContext());
-        setupActionBar();
+        //setupActionBar();
         mainAPIInterface = ApiUtils.getAPIService();
+        tvTitleProfile = findViewById(R.id.tvTitleProfile);
         vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
         strUserName = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_NAME);
         strUserMobile = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_MOBILE);
@@ -519,10 +522,10 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
                 JSONObject customerDetails = result.getJSONObject(AppoConstants.CUSTOMERDETAILS);
                 if (!result.getString(AppoConstants.TRANSACTIONPIN).isEmpty() || !result.getString(AppoConstants.TRANSACTIONPIN).equalsIgnoreCase("null")) {
                     tvProfileDetails.setVisibility(View.VISIBLE);
-                    txtUpdateProfile.setVisibility(View.GONE);
+                    //txtUpdateProfile.setVisibility(View.GONE);
                 } else {
                     tvProfileDetails.setVisibility(View.VISIBLE);
-                    txtUpdateProfile.setVisibility(View.GONE);
+                    //txtUpdateProfile.setVisibility(View.GONE);
                 }
             }
             //String customerId = Helper.getCustomerId();
@@ -566,7 +569,8 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
                             Glide.with(CustomerProfileActivity.this).load(decodedBytes).into(customerQrCodeQrCode);
                             //Log.e(TAG, "onResponse: called" );
                             frameLayout.setVisibility(View.VISIBLE);
-                            getSavedCard();
+                            //later enable
+                            //getSavedCard();
                         }
 
                     } catch (JSONException e) {
@@ -595,13 +599,14 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         //Log.e(TAG, "initViews: " + android_id);
         customerQrCodeQrCode = findViewById(R.id.customerQrCodeQrCode);
         frameLayout = findViewById(R.id.frameLayout);
-        txtUpdateProfile = (MyTextView) findViewById(R.id.txtUpdateProfile);
+        //txtUpdateProfile = (MyTextView) findViewById(R.id.txtUpdateProfile);
         tvUserName = findViewById(R.id.tvUserName);
         tvUserMobile = findViewById(R.id.tvUserMobile);
         user_qr_image = findViewById(R.id.user_qr_image);
         user_qr_image1 = findViewById(R.id.user_qr_image1);
         tvProfileDetails = findViewById(R.id.tvProfileDetails);
         tvWalletAmount = findViewById(R.id.tvWalletAmount);
+        ivBack = findViewById(R.id.ivBack);
 
         tvSacnQrCode = findViewById(R.id.tvSacnQrCode);
         tvDeliveryAddress = findViewById(R.id.tvDeliveryAddress);
@@ -610,6 +615,14 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         tabLayout = (TabLayout) findViewById(R.id.profile_tabs);
         countryCodePicker = findViewById(R.id.countryCodePicker);
         countryCodePicker.setEnabled(false);
+        tvTitleProfile.setText(getString(R.string.info_profile));
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+                finish();
+            }
+        });
         setupTabIcons();
 
 
@@ -643,7 +656,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
             if (mBottomAdditional != null) {
                 mBottomAdditional.dismiss();
             }
-            getSavedCard();
+            //getSavedCard();
         } else {
             if (mBottomAdditional != null) {
                 mBottomAdditional.dismiss();

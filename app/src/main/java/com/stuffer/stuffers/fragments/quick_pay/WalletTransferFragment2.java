@@ -40,6 +40,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
+import com.earthling.atminput.ATMEditText;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.stuffer.stuffers.AppoPayApplication;
@@ -92,7 +93,7 @@ public class WalletTransferFragment2 extends Fragment {
     private ArrayList<AccountModel> mListAccount;
     private ArrayList<String> mListTemp;
     private List<CurrencyResult> resultCurrency;
-    private MyEditText edAmount;
+    private ATMEditText edAmount;
     private MyTextView btnTransfer;
     private int mFromPosition;
     private String reciveraccountnumber;
@@ -146,7 +147,7 @@ public class WalletTransferFragment2 extends Fragment {
         tvBalance = (MyTextView) view.findViewById(R.id.tvBalance);
         tvBalance1 = (MyTextView) view.findViewById(R.id.tvBalance1);
         tvToAccount = (MyTextView) view.findViewById(R.id.tvToAccount);
-        edAmount = (MyEditText) view.findViewById(R.id.edAmount);
+        edAmount = (ATMEditText) view.findViewById(R.id.edAmount);
         tvAmountCredit = (MyTextView) view.findViewById(R.id.tvAmountCredit);
         tvExchange = (MyTextView) view.findViewById(R.id.tvExchange);
         tvConversionRates = (MyTextView) view.findViewById(R.id.tvConversionRates);

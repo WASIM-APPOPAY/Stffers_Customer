@@ -134,7 +134,6 @@ public class InnerPayActivity extends AppCompatActivity implements TransactionPi
             if (isPermissionGranted()) {
                 ScanAppopayFragment mScanAppopayFragment = new ScanAppopayFragment();
                 initFragments(mScanAppopayFragment);
-
             } else {
                 Toast.makeText(this, "permission denied by user", Toast.LENGTH_SHORT).show();
             }

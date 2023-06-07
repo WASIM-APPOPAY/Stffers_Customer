@@ -26,6 +26,8 @@ import com.stuffer.stuffers.communicator.InnerScanListener;
 import com.stuffer.stuffers.communicator.TransactionPinListener;
 import com.stuffer.stuffers.fragments.bottom.AppoPayFragment;
 import com.stuffer.stuffers.fragments.bottom.ScanAppopayFragment;
+import com.stuffer.stuffers.fragments.merchant_pay.PayToAppopayMerchant;
+import com.stuffer.stuffers.fragments.merchant_pay.ScanAppopayMerchant;
 import com.stuffer.stuffers.utils.AppoConstants;
 
 public class ScanPayActivity extends AppCompatActivity implements TransactionPinListener, InnerScanListener {
@@ -42,7 +44,7 @@ public class ScanPayActivity extends AppCompatActivity implements TransactionPin
         }
         if (isPermissionGranted()) {
             if (savedInstanceState == null) {
-                ScanAppopayFragment mScanAppopayFragment = new ScanAppopayFragment();
+                ScanAppopayMerchant mScanAppopayFragment = new ScanAppopayMerchant();
                 Bundle mBundle = new Bundle();
                 mBundle.putInt(AppoConstants.WHERE, mType);
                 mScanAppopayFragment.setArguments(mBundle);
@@ -72,7 +74,7 @@ public class ScanPayActivity extends AppCompatActivity implements TransactionPin
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == AppoConstants.CAMERA_REQUEST_CODE) {
             if (isPermissionGranted()) {
-                ScanAppopayFragment mScanAppopayFragment = new ScanAppopayFragment();
+                ScanAppopayMerchant mScanAppopayFragment = new ScanAppopayMerchant();
                 initFragments(mScanAppopayFragment);
 
             } else {
@@ -137,15 +139,15 @@ public class ScanPayActivity extends AppCompatActivity implements TransactionPin
     public void onPinConfirm(String pin) {
 
         Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.scanContainer);
-        if (fragmentById instanceof AppoPayFragment) {
-            ((AppoPayFragment) fragmentById).onConfirm(pin);
+        if (fragmentById instanceof PayToAppopayMerchant) {
+            ((PayToAppopayMerchant) fragmentById).onConfirm(pin);
         }
 
     }
 
     @Override
     public void onInnerRequestListener(String param) {
-        AppoPayFragment mFragment = new AppoPayFragment();
+        PayToAppopayMerchant mFragment = new PayToAppopayMerchant();
         Bundle mBundle = new Bundle();
         mBundle.putString(AppoConstants.MERCHANTSCANCODE, param);
         mBundle.putInt(AppoConstants.WHERE, mType);

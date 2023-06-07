@@ -402,7 +402,5 @@ public class CustomerPayFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
     }
 }

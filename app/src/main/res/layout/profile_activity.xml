@@ -3,10 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_light_tertiary"
+    android:background="@drawable/bg_common2"
     android:orientation="vertical">
 
-    <include layout="@layout/profile_toolbar" />
+    <LinearLayout
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+        <ImageView
+            android:id="@+id/ivBack"
+            android:padding="5dp"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_arrow_back"
+            />
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:id="@+id/tvTitleProfile"
+            android:layout_width="match_parent"
+            android:text="profile"
+            android:textSize="20sp"
+            android:letterSpacing="0.05"
+            android:gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_gravity="center_vertical"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <!--<include layout="@layout/profile_toolbar" />-->
 
 
     <ScrollView
@@ -20,292 +45,356 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
+            <!--<androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp">-->
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:paddingBottom="10dp">
 
                 <LinearLayout
+                    android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="vertical"
-                    android:padding="5dp"
-                    android:paddingBottom="10dp">
-
+                    android:orientation="horizontal">
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="@dimen/dp_155"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_width="@dimen/dp_155"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="100dp"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="5dp"
-                                android:background="@drawable/bg_border_address"
-                                android:padding="@dimen/dp_10"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/union_pay5" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
+                        <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:orientation="vertical">
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
 
-                            <com.stuffer.stuffers.views.MyTextView
-                                android:id="@+id/tvUserName"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-
-                                android:gravity="center"
-
-                                android:textColor="@color/Black"
-                                android:textSize="20sp"
-                                android:textStyle="bold" />
-
-                            <com.stuffer.stuffers.views.MyTextView
-                                android:id="@+id/tvUserMobile"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginTop="10dp"
-                                android:layout_weight="1"
-                                android:gravity="center"
-
-                                android:textColor="@color/Black"
-                                android:textSize="16sp" />
-
-
-                        </LinearLayout>
+                            android:padding="@dimen/dp_10"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/unionpay_logo" />
 
 
                     </LinearLayout>
-
-                    <!--<ImageView
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="5dp"
-                        android:src="@drawable/appopaybar_code" />-->
-
-
-                    <LinearLayout
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@drawable/edit_text_rounded"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-
-                        <ImageView
-                            android:id="@+id/user_qr_image"
-                            android:layout_width="200dp"
-                            android:layout_height="180dp"
-                            android:layout_gravity="center" />
-
-
-                    </LinearLayout>
-
                     <LinearLayout
 
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@drawable/edit_text_rounded"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-
-                        <ImageView
-                            android:id="@+id/user_qr_image1"
-                            android:layout_width="200dp"
-                            android:layout_height="180dp"
-                            android:layout_gravity="center" />
-
-
-                    </LinearLayout>
-
-                    <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/profile_tabs"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/bg_strok"
-                        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                        android:visibility="gone"
-                        app:tabGravity="fill"
-                        app:tabIndicatorColor="@color/colorAccent"
-                        app:tabMode="fixed"
-                        app:tabSelectedTextColor="@color/colorAccent"
-                        app:tabTextColor="@color/black" />
-
-                    <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/profile_viewpager"
-                        android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        android:visibility="gone"
-                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-                    <FrameLayout
-                        android:id="@+id/frameLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone">
-
-                        <ImageView
-                            android:id="@+id/customerQrCodeQrCode"
-                            android:layout_width="230dp"
-                            android:layout_height="230dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/qr_code" />
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:padding="5dp"
-                            android:src="@drawable/scan_appopay" />
-                    </FrameLayout>
-
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="false"
-
-                        android:focusable="false">
-
-                        <com.hbb20.CountryCodePicker
-                            android:id="@+id/countryCodePicker"
-                            android:layout_width="wrap_content"
-
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="5dp"
-                            android:clickable="false"
-                            android:focusable="false"
-                            android:gravity="center_vertical"
-                            app:ccp_autoDetectCountry="true"
-                            app:ccp_showFlag="true"
-                            app:ccp_showFullName="true"
-                            app:ccp_showPhoneCode="true" />
-
-                        <com.hbb20.CountryCodePicker
-                            android:layout_width="wrap_content"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="5dp"
-                            android:gravity="center_vertical"
-                            android:visibility="gone"
-                            app:ccp_autoDetectCountry="true"
-                            app:ccp_defaultPhoneCode="507"
-                            app:ccp_showFlag="true"
-                            app:ccp_showFullName="true" />
-
-                    </FrameLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="55dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/subcat_bg"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="10dp">
+                        android:orientation="vertical">
 
                         <com.stuffer.stuffers.views.MyTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableEnd="@drawable/ic_remove_red_eye"
-                            android:drawablePadding="5dp"
-                            android:drawableTint="@color/colorPrimary"
-                            android:gravity="center"
-                            android:padding="5dp"
-                            android:text="@string/info_balance_in_the_wallet"
-                            android:textColor="@color/icon_color"
-                            android:textSize="16sp" />
-
-                        <com.stuffer.stuffers.views.MyTextView
-                            android:id="@+id/tvWalletAmount"
+                            android:id="@+id/tvUserName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="end|center"
-                            android:padding="5dp"
-                            android:text="$0"
-                            android:textColor="#000000"
+
+                            android:gravity="center"
+
+                            android:textColor="@color/Black"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <com.stuffer.stuffers.views.MyTextView
+                            android:id="@+id/tvUserMobile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+
+                            android:textColor="@color/Black"
                             android:textSize="16sp" />
 
 
                     </LinearLayout>
 
 
-                    <com.stuffer.stuffers.views.MyTextView
-                        android:id="@+id/tvSacnQrCode"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/subcat_bg"
-                        android:clickable="true"
-                        android:drawableStart="@drawable/ic_scan"
-                        android:drawableEnd="@drawable/ic_forward"
-                        android:drawablePadding="8dp"
-                        android:drawableTint="@color/colorPrimary"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:padding="5dp"
-                        android:text="@string/info_qr_code"
-                        android:textColor="#000000"
-                        android:textSize="16sp" />
 
-                    <com.stuffer.stuffers.views.MyTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp"
-                        android:gravity="center"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="10dp"
-                        android:text="Your personal AppOpay QR ID,\nShow this QR to verify your identity."
-                        android:textColor="@color/Black"
-                        android:textSize="12sp" />
+
 
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+                <!--<ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/appopaybar_code" />-->
 
 
-            <include
-                layout="@layout/profile_activity_bottom"
+                <LinearLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/edit_text_rounded"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+
+                    <ImageView
+                        android:id="@+id/user_qr_image"
+                        android:layout_width="200dp"
+                        android:layout_height="140dp"
+                        android:layout_gravity="center" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/edit_text_rounded"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+
+                    <ImageView
+                        android:id="@+id/user_qr_image1"
+                        android:layout_width="200dp"
+                        android:layout_height="180dp"
+                        android:layout_gravity="center" />
+
+
+                </LinearLayout>
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/profile_tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_strok"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    android:visibility="gone"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@color/colorAccent"
+                    app:tabMode="fixed"
+                    app:tabSelectedTextColor="@color/colorAccent"
+                    app:tabTextColor="@color/black" />
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/profile_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:visibility="gone"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+                <FrameLayout
+                    android:id="@+id/frameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/customerQrCodeQrCode"
+                        android:layout_width="230dp"
+                        android:layout_height="180dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/qr_code" />
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:padding="5dp"
+                        android:src="@drawable/scan_appopay" />
+                </FrameLayout>
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+
+                    android:focusable="false">
+
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/countryCodePicker"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:gravity="center_vertical"
+                        app:ccp_autoDetectCountry="true"
+                        app:ccp_showFlag="true"
+                        app:ccp_showFullName="true"
+                        app:ccp_showPhoneCode="true" />
+
+                    <com.hbb20.CountryCodePicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_vertical"
+                        android:visibility="gone"
+                        app:ccp_autoDetectCountry="true"
+                        app:ccp_defaultPhoneCode="507"
+                        app:ccp_showFlag="true"
+                        app:ccp_showFullName="true" />
+
+                </FrameLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/subcat_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_remove_red_eye"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/colorPrimary"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="@string/info_balance_in_the_wallet"
+                        android:textColor="@color/icon_color"
+                        android:textSize="16sp" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/tvWalletAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end|center"
+                        android:padding="5dp"
+                        android:text="$0"
+                        android:textColor="#000000"
+                        android:textSize="16sp" />
+
+
+                </LinearLayout>
+
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/tvSacnQrCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/subcat_bg"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_scan"
+                    android:drawableEnd="@drawable/ic_forward"
+                    android:drawablePadding="8dp"
+                    android:drawableTint="@color/colorPrimary"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:padding="5dp"
+                    android:text="@string/info_qr_code"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="Your personal AppOpay QR ID,\nShow this QR to verify your identity."
+                    android:textColor="@color/Black"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
+            <!--</androidx.cardview.widget.CardView>-->
+
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:background="@drawable/subcat_bg"
+                android:id="@+id/tvProfileDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:drawableTint="@color/colorPrimary"
+                android:clickable="true"
+                android:drawableLeft="@drawable/ic_user_drawable"
+                android:drawableRight="@mipmap/ic_forward"
+                android:focusable="true"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="@string/info_profile_details"
+                android:textColor="@color/Tex"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
     </ScrollView>
 
-    <include layout="@layout/common_bottom_layout" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="2dp"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:padding="15dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bottom_logo_union" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:padding="20sp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bottom_logo_2" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:padding="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_quick_pass" />
+
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:padding="5dp"
+            android:src="@drawable/wallet_card140" />
+
+
+    </LinearLayout>
 </LinearLayout>
