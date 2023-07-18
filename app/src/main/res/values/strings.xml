@@ -975,4 +975,101 @@ data.</string>
     <string name="info_select_id_expiry_date">Select id expiry date</string>
 
 
+    <string name="sub_food_a1">cake milk tea</string>
+    <string name="sub_food_a2">snack fast food</string>
+    <string name="sub_food_a3">hot pot</string>
+    <string name="sub_food_a4">local dishes</string>
+    <string name="sub_food_a5">BBQ grill</string>
+    <string name="sub_food_a6">Sichuan and Hunan cuisine</string>
+    <string name="sub_food_a7">Japanese cuisine</string>
+    <string name="sub_food_a8">western food</string>
+    <string name="sub_food_a9">Korean food</string>
+    <string name="sub_food_a10">seafood</string>
+    <string name="sub_food_a11">Sichuan cuisine</string>
+    <string name="sub_food_a12">incense sticks</string>
+    <string name="sub_food_a13">Fragrant Pot Grilled Fish</string>
+    <string name="sub_food_a14">crayfish</string>
+
+    <string name="sub_grocery_a1">personal care</string>
+    <string name="sub_grocery_a2">paper towels</string>
+    <string name="sub_grocery_a3">household cleaning</string>
+    <string name="sub_grocery_a4">kitchen cooking</string>
+    <string name="sub_grocery_a5">Cup tableware</string>
+    <string name="sub_grocery_a6">pots and kettles</string>
+    <string name="sub_grocery_a7">Organize</string>
+    <string name="sub_grocery_a8">stationery teaching aids</string>
+    <string name="sub_grocery_a9">flower gardening</string>
+    <string name="sub_grocery_a10">Animal Husbandry</string>
+    <string name="sub_grocery_a11">Holiday gift</string>
+    <string name="sub_grocery_a12">pet supplies</string>
+
+    <string name="sub_pharmacy_a1">Astragalus</string>
+    <string name="sub_pharmacy_a2">donkey-hide gelatin</string>
+    <string name="sub_pharmacy_a3">Ganoderma lucidum</string>
+    <string name="sub_pharmacy_a4">wolfberry</string>
+    <string name="sub_pharmacy_a5">Face mask</string>
+    <string name="sub_pharmacy_a6">oxygen machine</string>
+    <string name="sub_pharmacy_a7">atomizer</string>
+    <string name="sub_pharmacy_a8">wheelchair</string>
+
+    <string name="sub_phone_a1">cell phone</string>
+    <string name="sub_phone_a2">Millet</string>
+    <string name="sub_phone_a3">apple</string>
+    <string name="sub_phone_a4">Huawei/Honor</string>
+    <string name="sub_phone_a5">OPPO/vivo</string>
+    <string name="sub_phone_a6">headset microphone</string>
+    <string name="sub_phone_a7">charging accessories</string>
+    <string name="sub_phone_a8">Second-hand digital</string>
+    <string name="sub_phone_a9">Bluetooth earphone</string>
+    <string name="sub_phone_a10">smart device</string>
+    <string name="sub_phone_a11">Digital Accessories</string>
+    <string name="sub_phone_a12">shell membrane scaffold</string>
+    <string name="sub_phone_a13">power Bank</string>
+    <string name="sub_phone_a14">Speaker video</string>
+    <string name="sub_phone_a15">camera</string>
+
+    <string name="sub_men_a1">top jacket</string>
+    <string name="sub_men_a2">trousers</string>
+    <string name="sub_men_a3">Hoodie</string>
+    <string name="sub_men_a4">New in autumn and winter</string>
+    <string name="sub_men_a5">casual pants</string>
+    <string name="sub_men_a6">jeans</string>
+    <string name="sub_men_a7">t-shirt</string>
+    <string name="sub_men_a8">jacket</string>
+    <string name="sub_men_a9">set</string>
+    <string name="sub_men_a10">dad outfit</string>
+    <string name="sub_men_a11">shirt</string>
+    <string name="sub_men_a12">vest vest</string>
+    <string name="sub_men_a13">polo shirt</string>
+    <string name="sub_men_a14">suit trousers</string>
+    <string name="sub_men_a15">leather jacket</string>
+
+    <string name="sub_app_a1">personal care</string>
+    <string name="sub_app_a2">television</string>
+    <string name="sub_app_a3">refrigerator</string>
+    <string name="sub_app_a4">washing machine</string>
+    <string name="sub_app_a5">home devices</string>
+    <string name="sub_app_a6">Chinese kitchen</string>
+    <string name="sub_app_a7">Western kitchen appliances</string>
+    <string name="sub_app_a8">water heater</string>
+    <string name="sub_app_a9">kitchen appliances</string>
+    <string name="sub_app_a10">air conditioner</string>
+
+    <string name="sub_laptops_a1">laptop</string>
+    <string name="sub_laptops_a2">tablet</string>
+    <string name="sub_laptops_a3">Desktop PC</string>
+    <string name="sub_laptops_a4">apple</string>
+    <string name="sub_laptops_a5">Mouse and keyboard</string>
+    <string name="sub_laptops_a6">monitor</string>
+    <string name="sub_laptops_a7">graphics card</string>
+    <string name="sub_laptops_a8">computer hardware</string>
+    <string name="sub_laptops_a9">Peripheral accessories</string>
+    <string name="sub_laptops_a10">leaning machine</string>
+    <string name="sub_laptops_a11">video game</string>
+    <string name="sub_laptops_a12">office equipment</string>
+    <string name="sub_laptops_a13">3C accessories</string>
+    <string name="sub_laptops_a14">Network equipment</string>
+    <string name="sub_laptops_a15">router</string>
+
+
 </resources>

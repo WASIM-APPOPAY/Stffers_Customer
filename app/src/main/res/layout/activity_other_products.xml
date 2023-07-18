@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.wallet.OtherProductActivity">
+    tools:context=".activity.PictureCatalogueActivity">
 
     <LinearLayout
         android:id="@+id/picture_catalogue_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/purple_200"
+        android:background="#F98230"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_20"
@@ -69,7 +69,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
-                android:background="@color/purple_200" />
+                android:background="#F98230" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/avator_profile" />
+                    android:src="@drawable/avator_profile1" />
 
                 <TextView
                     android:id="@+id/picture_catalogue_current_status"

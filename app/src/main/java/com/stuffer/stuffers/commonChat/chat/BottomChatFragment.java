@@ -19,11 +19,17 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.gson.Gson;
 
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.commonChat.chatAdapters.ChatAdapter;
+import com.stuffer.stuffers.commonChat.chatModel.AttachmentTypes;
 import com.stuffer.stuffers.commonChat.chatModel.Chat;
+import com.stuffer.stuffers.commonChat.chatModel.Message;
 import com.stuffer.stuffers.commonChat.chatModel.User;
 import com.stuffer.stuffers.commonChat.chatUtils.ChatHelper;
 import com.stuffer.stuffers.views.MyRecyclerView;
@@ -34,7 +40,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 
-public class BottomChatFragment extends Fragment implements View.OnClickListener {
+public class BottomChatFragment extends BaseFragment implements View.OnClickListener {
 
 
     private FloatingActionButton addConversation;
@@ -46,6 +52,7 @@ public class BottomChatFragment extends Fragment implements View.OnClickListener
     private ArrayList<Chat> chatDataList = new ArrayList<>();
     private MyRecyclerView recyclerView;
     private ChatAdapter chatAdapter;
+    private DatabaseReference myInboxRef;
 
     public BottomChatFragment() {
         // Required empty public constructor
@@ -63,6 +70,12 @@ public class BottomChatFragment extends Fragment implements View.OnClickListener
         super.onDetach();
         helper.saveChats(("chats_" + groupChats), chatDataList);
         mContext = null;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        registerChatUpdates();
     }
 
     @Override
@@ -123,6 +136,7 @@ public class BottomChatFragment extends Fragment implements View.OnClickListener
         }
     }
     public void addMessage(Chat chat) {
+        Log.e(TAG, "addMessage: called" );
         if (mContext != null && chatAdapter != null) {
             int pos = chatDataList.indexOf(chat);
             if (pos == -1) {
@@ -143,6 +157,84 @@ public class BottomChatFragment extends Fragment implements View.OnClickListener
         if (mContext != null && chatAdapter != null && chatAdapter.getItemCount() > 0) {
             chatAdapter.loadLastReadIds(chatChild, force);
             chatAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private ChildEventListener chatChildEventListener = new ChildEventListener() {
+        @Override
+        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            if (mContext != null) {
+                Message newMessage = dataSnapshot.getValue(Message.class);
+                if (newMessage != null && newMessage.getId() != null && newMessage.getChatId() != null) {
+
+                    if (newMessage.getAttachmentType() == AttachmentTypes.NONE_NOTIFICATION) {
+                        setNotificationMessageNames(newMessage);
+                    }
+
+                    Chat newChat = new Chat(newMessage, newMessage.getSenderId().equals(userMe.getId()));
+
+
+                    //Log.e(TAG, "onChildAdded: "+new Gson().toJson(newChat) );
+                    if (!newChat.isGroup()) {
+                        newChat.setChatName(getNameById(newChat.getUserId()));
+//                            for (User user : myUsers) {
+//                                if (user.getId().equals(newChat.getUserId())) {
+//                                    newChat.setChatName(user.getNameToDisplay());
+//                                    break;
+//                                }
+//                            }
+                    }
+                    //if (adapter != null) {
+                    //Fragment mFragment = getSupportFragmentManager().findFragmentById(R.id.landingContainer);
+                    //if (mFragment instanceof BottomChatFragment) {
+                        addMessage(newChat);
+                    //}
+
+                }
+            }
+        }
+
+        @Override
+        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            if (mContext != null) {
+                Message updatedMessage = dataSnapshot.getValue(Message.class);
+                if (updatedMessage != null && updatedMessage.getId() != null && updatedMessage.getChatId() != null) {
+                    if (updatedMessage.getAttachmentType() == AttachmentTypes.NONE_NOTIFICATION) {
+                        setNotificationMessageNames(updatedMessage);
+                    }
+
+                    Chat newChat = new Chat(updatedMessage, updatedMessage.getSenderId().equals(userMe.getId()));
+                    if (!newChat.isGroup()) {
+                        newChat.setChatName(getNameById(newChat.getUserId()));
+                        //Fragment mFragment = getSupportFragmentManager().findFragmentById(R.id.landingContainer);
+                        //if (mFragment instanceof BottomChatFragment) {
+                            //((BottomChatFragment) mFragment).addMessage(newChat);
+                        //}
+                        addMessage(newChat);
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+    private void registerChatUpdates() {
+        if (myInboxRef == null) {
+            myInboxRef = inboxRef.child(userMe.getId());
+            myInboxRef.addChildEventListener(chatChildEventListener);
         }
     }
 }

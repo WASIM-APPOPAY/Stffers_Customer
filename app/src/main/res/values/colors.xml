@@ -21,6 +21,7 @@
     <color name="trans1">#40000000</color>
     <color name="trans">#20000000</color>
     <color name="colorGreenProgressBars">#34b7f1</color>
+    <color name="loan_bg_color">#34b7f1</color>
     <color name="colorRipple">#A9A9F5</color>
     <color name="colorSlideIndicator">#dd4b39</color>
     <color name="colorSlideIndicatorLight">#8fdd4b39</color>
@@ -575,6 +576,12 @@
     <color name="color_333333">#333333</color>
     <color name="colorBgDrawer">#ffffffff</color>
     <color name="shop_text_color">#FFFFFF</color>
+
+
+    <!---dots active colors -->
+    <color name="dot_active">#FA8128</color>
+    <!--dots inactive colors -->
+    <color name="dot_inactive">#000000</color>
 
 </resources>
 <!--<resources>

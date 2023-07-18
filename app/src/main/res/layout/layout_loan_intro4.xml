@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:weightSum="10">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_weight="2"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/logo2" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_weight="5"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/intro4" />
+
+    <com.stuffer.stuffers.views.MyTextViewBold
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Ready For New Loans?"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2">
+
+        <Button
+            android:id="@+id/btnContinue"
+            android:textColor="@color/white"
+            android:text="CONTINUE"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:background="@drawable/round_dark_continue_button" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

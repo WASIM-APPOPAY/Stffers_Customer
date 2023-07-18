@@ -3,19 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".activity.wallet.ProductItemDetailActivity">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@color/purple_200"
+        android:background="#F98230"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/product_item_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/purple_200"
+        android:background="#F98230"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_20"
@@ -148,6 +149,7 @@
                     android:id="@+id/product_item_avator"
                     android:layout_width="@dimen/dp_50"
                     android:layout_height="@dimen/dp_50"
+                    android:tint="@color/black"
                     android:src="@drawable/business_info_avator" />
 
                 <LinearLayout

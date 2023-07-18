@@ -170,7 +170,7 @@ public class OtherBusinessActivity extends AppCompatActivity implements View.OnC
             statusContainer.setVisibility(View.GONE);
         }
         if (!TextUtils.isEmpty(otherBean.businessType)) {
-            otherType.setText(otherBean.businessType);
+            otherType.setText(otherBean.businessType + ", " + otherBean.subBusinessType);
         }
         if (!TextUtils.isEmpty(otherBean.businessAddress)) {
             String[] splitAdd = otherBean.businessAddress.split("@#");
@@ -369,7 +369,7 @@ public class OtherBusinessActivity extends AppCompatActivity implements View.OnC
     }
 
     private void jumpStatusPage() {
-        Intent intent = new Intent(OtherBusinessActivity.this, StatusActivity.class);
+        Intent intent = new Intent(this, StatusActivity.class);
         startActivity(intent);
     }
 
@@ -400,10 +400,10 @@ public class OtherBusinessActivity extends AppCompatActivity implements View.OnC
                 int nameFieldColumnIndex = c.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME);
                 String contact = c.getString(nameFieldColumnIndex);
                 if (DataManager.merchantInfoBean.businessName.equals(contact)) {
-                    @SuppressLint("Range") String contactId = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
+                    String contactId = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
                     Cursor pc = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?", new String[]{contactId}, null, null);
                     while (pc.moveToNext()) {
-                        @SuppressLint("Range") String phoneNumber = pc.getString(pc.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        String phoneNumber = pc.getString(pc.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                         if (DataManager.merchantInfoBean.mobileNumber.equals(phoneNumber)) {
                             return true;
                         }
@@ -466,7 +466,7 @@ public class OtherBusinessActivity extends AppCompatActivity implements View.OnC
     private void openGPSSettings() {
         LocationManager alm = (LocationManager) this
                 .getSystemService(Context.LOCATION_SERVICE);
-        if (alm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        if (alm.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
             getLocation();
             return;
         } else {
@@ -543,7 +543,7 @@ public class OtherBusinessActivity extends AppCompatActivity implements View.OnC
 
     public String getCurrentTime() {
         Date date = new Date();
-        SimpleDateFormat dateFormat= new SimpleDateFormat("hh:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
         return dateFormat.format(date);
     }
 

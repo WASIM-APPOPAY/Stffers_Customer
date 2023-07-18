@@ -29,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.wallet.HomeActivity;
 import com.stuffer.stuffers.activity.wallet.HomeActivity2;
+import com.stuffer.stuffers.activity.wallet.HomeActivity3;
 import com.stuffer.stuffers.activity.wallet.SignInActivity;
 import com.stuffer.stuffers.commonChat.chatModel.User;
 import com.stuffer.stuffers.commonChat.chatUtils.ChatHelper;
@@ -344,7 +345,8 @@ public class VerificationActivity extends AppCompatActivity {
 
 
         } else {
-            Intent intent = new Intent(this, HomeActivity2.class);
+            //Intent intent = new Intent(this, HomeActivity2.class);
+            Intent intent = new Intent(this, HomeActivity3.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             VerificationActivity.this.finish();

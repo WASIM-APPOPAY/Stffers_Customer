@@ -3,6 +3,11 @@ package com.stuffer.stuffers.utils;
 import java.io.Serializable;
 import java.util.List;
 
+
+
+import java.io.Serializable;
+import java.util.List;
+
 public class MerchantInfoBean implements Serializable {
     public String id;
     public String avatar;
@@ -18,6 +23,7 @@ public class MerchantInfoBean implements Serializable {
     public ScheduleTimeBean schedule;
     public String website;
     public String shopType;
+    public String subBusinessType;
     public String merchantAccount;
 
     public static class CategoryBean implements Serializable{
@@ -31,5 +37,6 @@ public class MerchantInfoBean implements Serializable {
         public List<String> pictureList;
         public int price = -1;
         public int count;
+        public int srcPos = -1;
     }
 }

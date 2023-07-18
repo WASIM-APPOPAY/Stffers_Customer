@@ -4,6 +4,7 @@
     <item
         android:id="@+id/action_home"
         android:checked="true"
+        
         android:icon="@drawable/ic_home"
         android:title="@string/info_home" />
 

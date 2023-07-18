@@ -14,8 +14,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 
+import com.google.gson.Gson;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.activity.wallet.ProductItemDetailActivity;
+import com.stuffer.stuffers.activity.wallet.SubTabsActivity;
+import com.stuffer.stuffers.commonChat.chatUtils.SharedPreferenceHelper;
 import com.stuffer.stuffers.models.lunex_giftcard.GiftProductList;
 import com.stuffer.stuffers.models.output.CurrencyResult;
 import com.stuffer.stuffers.models.shop_model.ShopModel;
@@ -209,6 +213,13 @@ public class Helper {
             "    \"areacode_with_name\": \"(+505) NICARAGUA\"\n" +
             "  }\n" +
             "]";
+    private  SharedPreferenceHelper sharedPreferenceHelper;
+    private  Gson gson;
+
+    public Helper(Context context) {
+        sharedPreferenceHelper = new SharedPreferenceHelper(context);
+        gson = new Gson();
+    }
 
     /**
      * @param view
@@ -2712,14 +2723,14 @@ public static float getTwoDecimal1(float params) {
 
     public static ArrayList<ShopModel> getShopItems(Context mCtx) {
         ArrayList<ShopModel> mListShop = new ArrayList<>();
-        mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_grocery), R.mipmap.cat_grocery));
         mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_resturant), R.drawable.restaurant_icon2));
+        mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_grocery), R.drawable.cat_grocery));
         mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_pharmacy), R.drawable.cross1));
-        mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_mobile), R.mipmap.cat_mobile));
-        mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_men), R.mipmap.cat_men));
-        mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_women), R.mipmap.cat_women));
-        mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_electronics), R.mipmap.cat_electronics));
-        mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_tv_amp_appliances), R.mipmap.cat_tvac));
+        mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_mobile), R.drawable.cat_mobile));
+        mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_men), R.drawable.cat_men));
+        mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_women), R.drawable.cat_women));
+        mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_electronics), R.drawable.cat_electronics));
+        mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_tv_amp_appliances), R.drawable.cat_tvac));
         mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_laptops), R.mipmap.cat_pc));
         mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_home_amp_kithcen), R.mipmap.cat_kitcheb));
         mListShop.add(new ShopModel(mCtx.getString(R.string.info_item_health_amp_fitness), R.mipmap.cat_health));
@@ -3123,6 +3134,153 @@ public static float getTwoDecimal1(float params) {
     public static String beneficiaryLastName(String mRecName) {
         String[] s = mRecName.split(" ");
         return s[s.length - 1];
+    }
+
+    public static ArrayList<ArrayList<ShopModel>> getSubShopItems(Context mCtx) {
+        ArrayList<ArrayList<ShopModel>> ret = new ArrayList<>();
+        ArrayList<ShopModel> restaurant = new ArrayList() {{
+//            add(new ShopModel(mCtx.getString(R.string.sub_food_a1), R.drawable.a3));
+//            add(new ShopModel(mCtx.getString(R.string.sub_food_a2), R.drawable.a3));
+            add(new ShopModel(mCtx.getString(R.string.sub_food_a3), R.drawable.a3));
+            add(new ShopModel(mCtx.getString(R.string.sub_food_a4), R.drawable.a4));
+            add(new ShopModel(mCtx.getString(R.string.sub_food_a5), R.drawable.a5));
+            add(new ShopModel(mCtx.getString(R.string.sub_food_a6), R.drawable.a6));
+            add(new ShopModel(mCtx.getString(R.string.sub_food_a7), R.drawable.a7));
+            add(new ShopModel(mCtx.getString(R.string.sub_food_a8), R.drawable.a8));
+            add(new ShopModel(mCtx.getString(R.string.sub_food_a9), R.drawable.a9));
+            add(new ShopModel(mCtx.getString(R.string.sub_food_a10), R.drawable.a10));
+            add(new ShopModel(mCtx.getString(R.string.sub_food_a11), R.drawable.a11));
+            add(new ShopModel(mCtx.getString(R.string.sub_food_a12), R.drawable.a12));
+            add(new ShopModel(mCtx.getString(R.string.sub_food_a13), R.drawable.a13));
+            add(new ShopModel(mCtx.getString(R.string.sub_food_a14), R.drawable.a14));
+        }};
+        ret.add(restaurant);
+        ArrayList<ShopModel> grocery = new ArrayList() {{
+            add(new ShopModel(mCtx.getString(R.string.sub_grocery_a1), R.drawable.grocery_a1));
+            add(new ShopModel(mCtx.getString(R.string.sub_grocery_a2), R.drawable.grocery_a2));
+            add(new ShopModel(mCtx.getString(R.string.sub_grocery_a3), R.drawable.grocery_a3));
+            add(new ShopModel(mCtx.getString(R.string.sub_grocery_a4), R.drawable.grocery_a4));
+            add(new ShopModel(mCtx.getString(R.string.sub_grocery_a5), R.drawable.grocery_a5));
+            add(new ShopModel(mCtx.getString(R.string.sub_grocery_a6), R.drawable.grocery_a6));
+            add(new ShopModel(mCtx.getString(R.string.sub_grocery_a7), R.drawable.grocery_a7));
+            add(new ShopModel(mCtx.getString(R.string.sub_grocery_a8), R.drawable.grocery_a8));
+            add(new ShopModel(mCtx.getString(R.string.sub_grocery_a9), R.drawable.grocery_a9));
+            add(new ShopModel(mCtx.getString(R.string.sub_grocery_a10), R.drawable.grocery_a10));
+            add(new ShopModel(mCtx.getString(R.string.sub_grocery_a11), R.drawable.grocery_a11));
+            add(new ShopModel(mCtx.getString(R.string.sub_grocery_a12), R.drawable.grocery_a12));
+        }};
+        ret.add(grocery);
+        ArrayList<ShopModel> pharmacy = new ArrayList() {{
+            add(new ShopModel(mCtx.getString(R.string.sub_pharmacy_a1), R.drawable.pharmacy_a1));
+            add(new ShopModel(mCtx.getString(R.string.sub_pharmacy_a2), R.drawable.pharmacy_a2));
+            add(new ShopModel(mCtx.getString(R.string.sub_pharmacy_a3), R.drawable.pharmacy_a3));
+            add(new ShopModel(mCtx.getString(R.string.sub_pharmacy_a4), R.drawable.pharmacy_a4));
+            add(new ShopModel(mCtx.getString(R.string.sub_pharmacy_a5), R.drawable.pharmacy_a5));
+            add(new ShopModel(mCtx.getString(R.string.sub_pharmacy_a6), R.drawable.pharmacy_a6));
+            add(new ShopModel(mCtx.getString(R.string.sub_pharmacy_a7), R.drawable.pharmacy_a7));
+            add(new ShopModel(mCtx.getString(R.string.sub_pharmacy_a8), R.drawable.pharmacy_a8));
+        }};
+        ret.add(pharmacy);
+        ArrayList<ShopModel> mobile = new ArrayList() {{
+            add(new ShopModel(mCtx.getString(R.string.sub_phone_a1), R.drawable.sub_phone_a1));
+            add(new ShopModel(mCtx.getString(R.string.sub_phone_a2), R.drawable.sub_phone_a2));
+            add(new ShopModel(mCtx.getString(R.string.sub_phone_a3), R.drawable.sub_phone_a3));
+            add(new ShopModel(mCtx.getString(R.string.sub_phone_a4), R.drawable.sub_phone_a4));
+            add(new ShopModel(mCtx.getString(R.string.sub_phone_a5), R.drawable.sub_phone_a5));
+            add(new ShopModel(mCtx.getString(R.string.sub_phone_a6), R.drawable.sub_phone_a6));
+            add(new ShopModel(mCtx.getString(R.string.sub_phone_a7), R.drawable.sub_phone_a7));
+            add(new ShopModel(mCtx.getString(R.string.sub_phone_a8), R.drawable.sub_phone_a8));
+            add(new ShopModel(mCtx.getString(R.string.sub_phone_a9), R.drawable.sub_phone_a9));
+            add(new ShopModel(mCtx.getString(R.string.sub_phone_a10), R.drawable.sub_phone_a10));
+            add(new ShopModel(mCtx.getString(R.string.sub_phone_a11), R.drawable.sub_phone_a11));
+            add(new ShopModel(mCtx.getString(R.string.sub_phone_a12), R.drawable.sub_phone_a12));
+            add(new ShopModel(mCtx.getString(R.string.sub_phone_a13), R.drawable.sub_phone_a13));
+            add(new ShopModel(mCtx.getString(R.string.sub_phone_a14), R.drawable.sub_phone_a14));
+            add(new ShopModel(mCtx.getString(R.string.sub_phone_a15), R.drawable.sub_phone_a15));
+        }};
+        ret.add(mobile);
+        ArrayList<ShopModel> men = new ArrayList() {{
+            add(new ShopModel(mCtx.getString(R.string.sub_men_a1), R.drawable.men_a1));
+            add(new ShopModel(mCtx.getString(R.string.sub_men_a2), R.drawable.men_a2));
+            add(new ShopModel(mCtx.getString(R.string.sub_men_a3), R.drawable.men_a3));
+            add(new ShopModel(mCtx.getString(R.string.sub_men_a4), R.drawable.men_a4));
+            add(new ShopModel(mCtx.getString(R.string.sub_men_a5), R.drawable.men_a5));
+            add(new ShopModel(mCtx.getString(R.string.sub_men_a6), R.drawable.men_a6));
+            add(new ShopModel(mCtx.getString(R.string.sub_men_a7), R.drawable.men_a7));
+            add(new ShopModel(mCtx.getString(R.string.sub_men_a8), R.drawable.men_a8));
+            add(new ShopModel(mCtx.getString(R.string.sub_men_a9), R.drawable.men_a9));
+            add(new ShopModel(mCtx.getString(R.string.sub_men_a10), R.drawable.men_a10));
+            add(new ShopModel(mCtx.getString(R.string.sub_men_a11), R.drawable.men_a11));
+            add(new ShopModel(mCtx.getString(R.string.sub_men_a12), R.drawable.men_a12));
+            add(new ShopModel(mCtx.getString(R.string.sub_men_a13), R.drawable.men_a13));
+            add(new ShopModel(mCtx.getString(R.string.sub_men_a14), R.drawable.men_a14));
+            add(new ShopModel(mCtx.getString(R.string.sub_men_a15), R.drawable.men_a15));
+        }};
+        ret.add(men);
+        ArrayList<ShopModel> women = new ArrayList() {{
+            add(new ShopModel(mCtx.getString(R.string.info_item_women), R.drawable.cat_women));
+        }};
+        ret.add(women);
+        ArrayList<ShopModel> electronics = new ArrayList() {{
+            add(new ShopModel(mCtx.getString(R.string.info_item_electronics), R.drawable.cat_electronics));
+        }};
+        ret.add(electronics);
+        ArrayList<ShopModel> tv_appliances = new ArrayList() {{
+            add(new ShopModel(mCtx.getString(R.string.sub_app_a1), R.drawable.app_a1));
+            add(new ShopModel(mCtx.getString(R.string.sub_app_a2), R.drawable.app_a2));
+            add(new ShopModel(mCtx.getString(R.string.sub_app_a3), R.drawable.app_a3));
+            add(new ShopModel(mCtx.getString(R.string.sub_app_a4), R.drawable.app_a4));
+            add(new ShopModel(mCtx.getString(R.string.sub_app_a5), R.drawable.app_a5));
+            add(new ShopModel(mCtx.getString(R.string.sub_app_a6), R.drawable.app_a6));
+            add(new ShopModel(mCtx.getString(R.string.sub_app_a7), R.drawable.app_a7));
+            add(new ShopModel(mCtx.getString(R.string.sub_app_a8), R.drawable.app_a8));
+            add(new ShopModel(mCtx.getString(R.string.sub_app_a9), R.drawable.app_a9));
+            add(new ShopModel(mCtx.getString(R.string.sub_app_a10), R.drawable.app_a10));
+        }};
+        ret.add(tv_appliances);
+        ArrayList<ShopModel> laptops = new ArrayList() {{
+            add(new ShopModel(mCtx.getString(R.string.sub_laptops_a1), R.drawable.laptops_a1));
+            add(new ShopModel(mCtx.getString(R.string.sub_laptops_a2), R.drawable.laptops_a2));
+            add(new ShopModel(mCtx.getString(R.string.sub_laptops_a3), R.drawable.laptops_a3));
+            add(new ShopModel(mCtx.getString(R.string.sub_laptops_a4), R.drawable.laptops_a4));
+            add(new ShopModel(mCtx.getString(R.string.sub_laptops_a5), R.drawable.laptops_a5));
+            add(new ShopModel(mCtx.getString(R.string.sub_laptops_a6), R.drawable.laptops_a6));
+            add(new ShopModel(mCtx.getString(R.string.sub_laptops_a7), R.drawable.laptops_a7));
+            add(new ShopModel(mCtx.getString(R.string.sub_laptops_a8), R.drawable.laptops_a8));
+            add(new ShopModel(mCtx.getString(R.string.sub_laptops_a9), R.drawable.laptops_a9));
+            add(new ShopModel(mCtx.getString(R.string.sub_laptops_a10), R.drawable.laptops_a10));
+            add(new ShopModel(mCtx.getString(R.string.sub_laptops_a11), R.drawable.laptops_a11));
+            add(new ShopModel(mCtx.getString(R.string.sub_laptops_a12), R.drawable.laptops_a12));
+            add(new ShopModel(mCtx.getString(R.string.sub_laptops_a13), R.drawable.laptops_a13));
+            add(new ShopModel(mCtx.getString(R.string.sub_laptops_a14), R.drawable.laptops_a14));
+            add(new ShopModel(mCtx.getString(R.string.sub_laptops_a15), R.drawable.laptops_a15));
+        }};
+        ret.add(laptops);
+        ArrayList<ShopModel> home_kithcen = new ArrayList() {{
+            add(new ShopModel(mCtx.getString(R.string.info_item_home_amp_kithcen), R.mipmap.cat_kitcheb));
+        }};
+        ret.add(home_kithcen);
+        ArrayList<ShopModel> health_fitness = new ArrayList() {{
+            add(new ShopModel(mCtx.getString(R.string.info_item_health_amp_fitness), R.mipmap.cat_health));
+        }};
+        ret.add(health_fitness);
+        ArrayList<ShopModel> kids_toys = new ArrayList() {{
+            add(new ShopModel(mCtx.getString(R.string.info_item_kids_toys), R.mipmap.cat_kids));
+        }};
+        ret.add(kids_toys);
+        ArrayList<ShopModel> beauty_grooming = new ArrayList() {{
+            add(new ShopModel(mCtx.getString(R.string.info_item_beauty_amp_grooming), R.mipmap.cat_beauty));
+        }};
+        ret.add(beauty_grooming);
+        ArrayList<ShopModel> bags_luggage = new ArrayList() {{
+            add(new ShopModel(mCtx.getString(R.string.info_item_bags_amp_luggage), R.mipmap.cat_bags));
+        }};
+        ret.add(bags_luggage);
+        ArrayList<ShopModel> gift_vouchers = new ArrayList() {{
+            add(new ShopModel(mCtx.getString(R.string.info_item_gift_vouchers), R.mipmap.cat_giftvoucher));
+        }};
+        ret.add(gift_vouchers);
+        return ret;
     }
 }
 

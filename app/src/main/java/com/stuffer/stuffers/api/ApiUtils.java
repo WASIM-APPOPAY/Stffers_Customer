@@ -20,6 +20,7 @@ public class ApiUtils {
     public static final String BASE_UNION_PAY = Constants.UNION_PAY;
     public static final String BASE_OCR=Constants.BASE_OCR;
 
+
     public static MainUAPIInterface getApiServiceUNIONPay() {
 
         return RetrofitClient.getClientUnionPayCard(BASE_UNION_PAY).create(MainUAPIInterface.class);

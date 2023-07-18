@@ -154,7 +154,8 @@
         android:visibility="gone" />
 
     <LinearLayout
-
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
         android:layout_width="match_parent"
 
         android:layout_height="50dp"
@@ -172,11 +173,13 @@
             android:src="@drawable/bottom_logo_union" />
 
         <ImageView
+
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:padding="20sp"
+            android:padding="20dp"
+
             android:scaleType="centerCrop"
             android:backgroundTint="@color/white"
             android:src="@drawable/bottom_logo_2" />

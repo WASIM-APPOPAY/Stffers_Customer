@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/bg_common2"
     tools:context=".activity.wallet.TransactionListActivity">
 
     <include layout="@layout/toolbar" />
@@ -29,7 +30,7 @@
         android:id="@+id/rvTransactionList"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <include layout="@layout/common_bottom_layout"/>
+    <include layout="@layout/common_bottom_layout2"/>
 
 
 </LinearLayout>

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
 
 
-    android:background="@color/colorPrimaryDark"
+
     android:orientation="vertical">
 
     <com.stuffer.stuffers.views.MyTextView
@@ -14,7 +14,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:text="@string/info_balance"
-        android:textColor="@color/white" />
+        android:textColor="@color/black" />
 
     <com.stuffer.stuffers.views.MyTextView
         android:id="@+id/tvSideBalance"
@@ -23,7 +23,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:text="$0"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="18sp" />
 
 
@@ -61,7 +61,7 @@
                 android:layout_marginTop="3dp"
                 android:gravity="center"
                 android:text="@string/info_deposit"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="12sp"
 
                 />
@@ -93,7 +93,7 @@
                 android:layout_marginTop="3dp"
                 android:gravity="center"
                 android:text="@string/info_withdraw"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="12sp"
 
                 />
@@ -126,7 +126,7 @@
                 android:layout_marginTop="3dp"
                 android:gravity="center"
                 android:text="@string/info_send"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="12sp"
 
                 />
@@ -159,7 +159,7 @@
                 android:layout_marginTop="3dp"
                 android:gravity="center"
                 android:text="@string/info_my_cards"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="12sp" />
 
 

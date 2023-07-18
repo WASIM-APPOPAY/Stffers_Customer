@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:id="@+id/rLayout"
+    android:background="@drawable/bg_common2"
     android:orientation="vertical"
     tools:context=".activity.wallet.SplashActivity">
 

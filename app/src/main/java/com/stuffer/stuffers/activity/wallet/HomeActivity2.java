@@ -163,6 +163,9 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         apiService = ApiUtils.getAPIService();
         frameLayout = findViewById(R.id.frameLayout);
         ivUser = findViewById(R.id.ivUser);
+        tvDrawername = (MyTextView) findViewById(R.id.tvDrawername);
+        tvDrawerNo = (MyTextView) findViewById(R.id.tvDrawerNo);
+        tvSideBalance = (MyTextView) findViewById(R.id.tvSideBalance);
         rvBottomChat = (RecyclerView) findViewById(R.id.rvBottomChat);
         rvBottomChat.setLayoutManager(new GridLayoutManager(this, 4));
         ivMenuBottom = (ImageView) findViewById(R.id.ivMenuBottom);
@@ -170,9 +173,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         menu_icon = (ImageView) findViewById(R.id.menu_icon_drawer);
         drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
         userMe = helper.getLoggedInUser();
-        tvDrawername = (MyTextView) findViewById(R.id.tvDrawername);
-        tvDrawerNo = (MyTextView) findViewById(R.id.tvDrawerNo);
-        tvSideBalance = (MyTextView) findViewById(R.id.tvSideBalance);
+
         llMyQr = (LinearLayout) findViewById(R.id.llMyQr);
         layoutLogout = (LinearLayout) findViewById(R.id.layoutLogout);
         layoutMyCards = (LinearLayout) findViewById(R.id.layoutMyCards);
@@ -181,6 +182,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         tvUserName = (MyTextViewBold) findViewById(R.id.tvUserName);
         tvMobileNumber = (MyTextView) findViewById(R.id.tvMobileNumber);
         tvVersion = (MyTextView) findViewById(R.id.tvVersion);
+
         ivMenu = (ImageView) findViewById(R.id.ivMenu);
         llChat = (LinearLayout) findViewById(R.id.layoutChat);
         llService = (LinearLayout) findViewById(R.id.layoutService);
@@ -566,12 +568,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         }
     }
 
-    private void registerChatUpdates() {
-        if (myInboxRef == null) {
-            myInboxRef = inboxRef.child(userMe.getId());
-            myInboxRef.addChildEventListener(chatChildEventListener);
-        }
-    }
+
 
     private void initFragment(Fragment mFragment) {
         FragmentManager supportFragmentManager = getSupportFragmentManager();
@@ -656,6 +653,116 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
 
         }
     };
+    private void registerChatUpdates() {
+        if (myInboxRef == null) {
+            myInboxRef = inboxRef.child(userMe.getId());
+            myInboxRef.addChildEventListener(chatChildEventListener);
+        }
+    }
+
+
+    private void refreshMyContacts() {
+        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+            if (!FetchMyUsersService.STARTED) {
+
+                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                if (firebaseUser != null) {
+                    firebaseUser.getIdToken(false).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            String idToken = task.getResult().getToken();
+                            FetchMyUsersService.startMyUsersService(HomeActivity2.this, userMe.getId(), idToken);
+                        }
+                    });
+                }
+            }
+        } else {
+            FragmentManager manager = getSupportFragmentManager();
+            ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newConfirmInstance(getString(R.string.permission_contact_title),
+                    getString(R.string.permission_contact_message), getString(R.string.okay), getString(R.string.no),
+                    view -> {
+                        ActivityCompat.requestPermissions(HomeActivity2.this, new String[]{android.Manifest.permission.READ_CONTACTS}, CONTACTS_REQUEST_CODE);
+                    },
+                    view -> {
+                        finish();
+                    });
+            confirmationDialogFragment.show(manager, CONFIRM_TAG);
+        }
+    }
+
+
+    private BroadcastReceiver userReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction() != null && intent.getAction().equals(ChatHelper.BROADCAST_USER_ME)) {
+                //userUpdated();
+            }
+        }
+    };
+    private BroadcastReceiver myUsersReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ArrayList<User> myUsers = intent.getParcelableArrayListExtra("data");
+            if (myUsers != null) {
+                //myusers includes inviteAble users with separator tag
+                chatHelper.setMyUsers(myUsers);
+                myUsersResult(myUsers);
+            }
+        }
+    };
+
+    private BroadcastReceiver myContactsReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            refreshMyContactsCache((HashMap<String, Contact>) intent.getSerializableExtra("data"));
+            /*refreshMyContactsCache((HashMap<String, Contact>) intent.getSerializableExtra("data"));
+            MyChatsFragment userChatsFragment = null, groupChatsFragment = null;
+            if (adapter != null && adapter.getCount() > 1)
+                userChatsFragment = ((MyChatsFragment) adapter.getItem(0));
+            if (adapter != null && adapter.getCount() >= 2)
+                groupChatsFragment = ((MyChatsFragment) adapter.getItem(1));
+            if (userChatsFragment != null) userChatsFragment.resetChatNames(getSavedContacts());
+            if (groupChatsFragment != null) groupChatsFragment.resetChatNames(getSavedContacts());*/
+        }
+    };
+
+    private void myUsersResult(ArrayList<User> myUsers) {
+        this.myUsers.clear();
+        this.myUsers.addAll(myUsers);
+        //refreshUsers(-1);
+        //menuUsersRecyclerAdapter.notifyDataSetChanged();
+        //swipeMenuRecyclerView.setRefreshing(false);
+
+        registerChatUpdates();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case CONTACTS_REQUEST_CODE:
+                refreshMyContacts();
+                break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(mContext);
+        localBroadcastManager.registerReceiver(myContactsReceiver, new IntentFilter(ChatHelper.BROADCAST_MY_CONTACTS));
+        localBroadcastManager.registerReceiver(myUsersReceiver, new IntentFilter(ChatHelper.BROADCAST_MY_USERS));
+        localBroadcastManager.registerReceiver(userReceiver, new IntentFilter(ChatHelper.BROADCAST_USER_ME));
+        upDateBalance();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(mContext);
+        localBroadcastManager.unregisterReceiver(myContactsReceiver);
+        localBroadcastManager.unregisterReceiver(myUsersReceiver);
+        localBroadcastManager.unregisterReceiver(userReceiver);
+    }
 
     @Override
     public void onBackPressed() {
@@ -948,7 +1055,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
     }
 
     public void typeQrCodeDialog(int param) {
-        if (param == 1) {
+        /*if (param == 1) {
             String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
             if (TextUtils.isEmpty(userData)) {
                 goToLoginScreen(4);
@@ -960,7 +1067,9 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         } else {
             Intent intent = new Intent(HomeActivity2.this, InnerPayActivity.class);
             startActivity(intent);
-        }
+        }*/
+        Intent intent = new Intent(HomeActivity2.this, InnerPayActivity.class);
+        startActivity(intent);
 
     }
 
@@ -1013,6 +1122,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
         dialog.setTitle(null);
 
         dialog.setContentView(R.layout.service_dialog);*/
+
         LinearLayout llLinkCard = findViewById(R.id.llLinkCard);
         LinearLayout llRecharge = findViewById(R.id.llRecharge);
         LinearLayout llPTransfer = findViewById(R.id.llPTransfer);
@@ -1031,7 +1141,8 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
                 mIntent.putExtra(AppoConstants.WHERE, 4);
                 startActivity(mIntent);
             }*/
-            showScanTypeDialog();
+           // showScanTypeDialog();
+            typeQrCodeDialog(2);
         });
 
 
@@ -1214,108 +1325,6 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
     }
 
 
-    private void refreshMyContacts() {
-        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-            if (!FetchMyUsersService.STARTED) {
-
-                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                if (firebaseUser != null) {
-                    firebaseUser.getIdToken(false).addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            String idToken = task.getResult().getToken();
-                            FetchMyUsersService.startMyUsersService(HomeActivity2.this, userMe.getId(), idToken);
-                        }
-                    });
-                }
-            }
-        } else {
-            FragmentManager manager = getSupportFragmentManager();
-            ConfirmationDialogFragment confirmationDialogFragment = ConfirmationDialogFragment.newConfirmInstance(getString(R.string.permission_contact_title),
-                    getString(R.string.permission_contact_message), getString(R.string.okay), getString(R.string.no),
-                    view -> {
-                        ActivityCompat.requestPermissions(HomeActivity2.this, new String[]{android.Manifest.permission.READ_CONTACTS}, CONTACTS_REQUEST_CODE);
-                    },
-                    view -> {
-                        finish();
-                    });
-            confirmationDialogFragment.show(manager, CONFIRM_TAG);
-        }
-    }
-
-
-    private BroadcastReceiver userReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction() != null && intent.getAction().equals(ChatHelper.BROADCAST_USER_ME)) {
-                //userUpdated();
-            }
-        }
-    };
-    private BroadcastReceiver myUsersReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            ArrayList<User> myUsers = intent.getParcelableArrayListExtra("data");
-            if (myUsers != null) {
-                //myusers includes inviteAble users with separator tag
-                chatHelper.setMyUsers(myUsers);
-                myUsersResult(myUsers);
-            }
-        }
-    };
-
-    private BroadcastReceiver myContactsReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            refreshMyContactsCache((HashMap<String, Contact>) intent.getSerializableExtra("data"));
-            /*refreshMyContactsCache((HashMap<String, Contact>) intent.getSerializableExtra("data"));
-            MyChatsFragment userChatsFragment = null, groupChatsFragment = null;
-            if (adapter != null && adapter.getCount() > 1)
-                userChatsFragment = ((MyChatsFragment) adapter.getItem(0));
-            if (adapter != null && adapter.getCount() >= 2)
-                groupChatsFragment = ((MyChatsFragment) adapter.getItem(1));
-            if (userChatsFragment != null) userChatsFragment.resetChatNames(getSavedContacts());
-            if (groupChatsFragment != null) groupChatsFragment.resetChatNames(getSavedContacts());*/
-        }
-    };
-
-    private void myUsersResult(ArrayList<User> myUsers) {
-        this.myUsers.clear();
-        this.myUsers.addAll(myUsers);
-        //refreshUsers(-1);
-        //menuUsersRecyclerAdapter.notifyDataSetChanged();
-        //swipeMenuRecyclerView.setRefreshing(false);
-
-        registerChatUpdates();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case CONTACTS_REQUEST_CODE:
-                refreshMyContacts();
-                break;
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(mContext);
-        localBroadcastManager.registerReceiver(myContactsReceiver, new IntentFilter(ChatHelper.BROADCAST_MY_CONTACTS));
-        localBroadcastManager.registerReceiver(myUsersReceiver, new IntentFilter(ChatHelper.BROADCAST_MY_USERS));
-        localBroadcastManager.registerReceiver(userReceiver, new IntentFilter(ChatHelper.BROADCAST_USER_ME));
-        upDateBalance();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(mContext);
-        localBroadcastManager.unregisterReceiver(myContactsReceiver);
-        localBroadcastManager.unregisterReceiver(myUsersReceiver);
-        localBroadcastManager.unregisterReceiver(userReceiver);
-    }
 
     @Override
     public void onUserGroupSelectDialogDismiss(ArrayList<User> selectedUsers) {

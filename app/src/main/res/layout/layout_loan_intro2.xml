@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:weightSum="10">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="2"
+        android:src="@drawable/logo2" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_weight="5"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/intro2" />
+
+    <com.stuffer.stuffers.views.MyTextViewBold
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="How to use the appOpay Cash app"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <com.stuffer.stuffers.views.MyTextViewBold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:gravity="center"
+        android:text="Signup and fill requirements\nfor easy loans"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+
+</LinearLayout>

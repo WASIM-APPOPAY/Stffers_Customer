@@ -492,7 +492,7 @@ mainAPIInterface.getAuthorization2(authHeader, strUniqueNumber, loginPassword, "
                                 } else {
                                     try {
                                         if (result.getString(AppoConstants.AVATAR).startsWith("http")) {
-                                            HomeActivity2.showProfileAvatarLogin(result.getString(AppoConstants.AVATAR));
+                                            HomeActivity3.showProfileAvatarLogin(result.getString(AppoConstants.AVATAR));
                                         }
                                         goToScreen(mType);
                                     } catch (Exception e) {
@@ -529,7 +529,7 @@ mainAPIInterface.getAuthorization2(authHeader, strUniqueNumber, loginPassword, "
             finish();
             return;
         } else if (mType == 7) {
-            HomeActivity2.startResultForAccountActivity();
+            HomeActivity3.startResultForAccountActivity();
             finish();
             return;
 
@@ -652,7 +652,7 @@ mainAPIInterface.getAuthorization2(authHeader, strUniqueNumber, loginPassword, "
                             String avatar = jsonObject.getString("avatar");
                             DataVaultManager.getInstance(SignInActivity.this).saveIdImagePath(avatar);
                             //DataVaultManager.getInstance(SignInActivity.this).saveIdImageSignup("");
-                            HomeActivity2.showProfileAvatar(avatar);
+                            HomeActivity3.showProfileAvatar(avatar);
                             //Toast.makeText(SignInActivity.this, "avatar updated successfully", Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {

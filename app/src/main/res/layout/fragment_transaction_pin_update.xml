@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
             android:text="Fillup required details to update transaction pin"
             android:textSize="18sp"
             android:textStyle="bold" />

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -33,6 +34,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.adapter.address.BusinessAdapter;
+import com.stuffer.stuffers.adapter.recyclerview.TabsViewAdapter;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.commonChat.chatUtils.DimenUtils;
@@ -55,7 +57,6 @@ import retrofit2.Response;
 public class TabsActivity extends AppCompatActivity implements View.OnClickListener, LocationListener {
 
     private RecyclerView rvShop;
-    private LinearLayout tabsContainers;
     private MainAPIInterface mainAPIInterface;
     private ProgressDialog mProgress;
     private TextView tvTitle;
@@ -64,23 +65,26 @@ public class TabsActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tabsPosition;
     private ViewGroup tabsPositionLayout;
     private View tabsPositionLine;
-    private int mExtra = 0;
+
+    private ViewPager tabsViewPager;
+    private ImageView tabs_dot1;
+    private ImageView tabs_dot2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs);
-        if (getIntent().hasExtra(AppoConstants.WHERE)) {
-            mExtra = getIntent().getIntExtra(AppoConstants.WHERE, 0);
-        }
+
         rvShop = findViewById(R.id.rvAllShop);
+        tabs_dot1 = findViewById(R.id.tabs_dot1);
+        tabs_dot2 = findViewById(R.id.tabs_dot2);
         tabsPosition = findViewById(R.id.tabs_location);
         tabsPositionLayout = findViewById(R.id.tabs_location_layout);
         tabsPositionLine = findViewById(R.id.tabs_position_line);
+        tabsViewPager = findViewById(R.id.tabs_viewpager);
         LinearLayoutManager lm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvShop.setLayoutManager(lm);
-        //rvShop.addItemDecoration(new MaterialDividerItemDecoration(this, MaterialDividerItemDecoration.VERTICAL));
-        tabsContainers = findViewById(R.id.tabs_containers);
+        rvShop.addItemDecoration(new MaterialDividerItemDecoration(this, MaterialDividerItemDecoration.VERTICAL));
         tvTitle = findViewById(R.id.tabs_title);
         findViewById(R.id.search_back).setOnClickListener(view -> TabsActivity.this.finish());
         tabsPositionLayout.setOnClickListener(view -> {
@@ -90,10 +94,9 @@ public class TabsActivity extends AppCompatActivity implements View.OnClickListe
         mainAPIInterface = ApiUtils.getAPIService();
         initView();
 
-
         // 判断当前是否拥有使用GPS的权限
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+            ActivityCompat.requestPermissions(this, new                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
         } else {
             openGPSSettings();
         }
@@ -111,25 +114,32 @@ public class TabsActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initView() {
         ArrayList<ShopModel> mList = Helper.getShopItems(this);
-        tabsContainers.removeAllViews();
-        for (ShopModel shopModel : mList) {
-            View view = View.inflate(this, R.layout.row_shop_items, null);
-            ImageView iv = view.findViewById(R.id.ivShopItems);
-            TextView tv = view.findViewById(R.id.tvItemTitle);
-            iv.setImageResource(shopModel.getResIds());
-            tv.setText(shopModel.getmTitle());
-            view.setTag(shopModel.getmTitle());
-            tabsContainers.addView(view);
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
-            params.rightMargin = DimenUtils.dip2px(this, 10);
-            view.setLayoutParams(params);
-            view.setBackground(null);
-            view.setOnClickListener(this);
-        }
+        tabsViewPager.setOffscreenPageLimit(2);
+        tabsViewPager.setAdapter(new TabsViewAdapter(this, mList));
+        tabs_dot1.setSelected(true);
+        tabs_dot2.setSelected(false);
+        tabsViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        if (tabsContainers.getChildCount() > 0) {
-            tabsContainers.getChildAt(mExtra).performClick();
-        }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    tabs_dot1.setSelected(true);
+                    tabs_dot2.setSelected(false);
+                } else {
+                    tabs_dot1.setSelected(false);
+                    tabs_dot2.setSelected(true);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -145,6 +155,31 @@ public class TabsActivity extends AppCompatActivity implements View.OnClickListe
             tvTitle.setText(type);
             fetchMerchantByShopType(type);
         }
+    }
+
+    private void fetchMerchantByBusinessTypes(String businessType, String subBusinessType) {
+        showLoading();
+       /* mainAPIInterface.getMerchantBusinessTypes(businessType, subBusinessType).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                hideLoading();
+                try {
+                    if (response.body().get("status").getAsInt() == 200) {
+                        List<MerchantInfoBean> data = new Gson().fromJson(response.body().get("result").toString(), new TypeToken<List<MerchantInfoBean>>() {
+                        }.getType());
+                        fillRecyclerList(getFilterArrayList(data));
+                    }
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                hideLoading();
+            }
+        });*/
+
     }
 
 
@@ -173,7 +208,7 @@ public class TabsActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private List<MerchantInfoBean> getFilterArrayList(List<MerchantInfoBean> data) {
-        for (int i = 0; i < data.size(); i++) {
+        for (int i = 0; i < data.size(); i ++) {
             MerchantInfoBean infoBean = data.get(i);
             if (!TextUtils.isEmpty(infoBean.businessAddress)) {
                 String[] splitAdd = infoBean.businessAddress.split("@#");
@@ -288,13 +323,3 @@ public class TabsActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 }
-
-
-
-
-
-
-
-
-
-

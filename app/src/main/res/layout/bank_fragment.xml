@@ -10,7 +10,7 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_rounded"
+
         android:orientation="vertical">
 
         <LinearLayout
@@ -239,7 +239,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="@drawable/rounder_top_corner"
+
         android:orientation="vertical">
 
 

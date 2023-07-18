@@ -38,10 +38,13 @@ import com.hbb20.CountryCodePicker;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.BuildConfig;
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.activity.wallet.HomeActivity3;
 import com.stuffer.stuffers.activity.wallet.MobileNumberRegistrationActivity;
 import com.stuffer.stuffers.adapter.address.AutoCompleteAdapter;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
+import com.stuffer.stuffers.commonChat.chatModel.User;
+import com.stuffer.stuffers.commonChat.chatUtils.ChatHelper;
 import com.stuffer.stuffers.communicator.OtpRequestListener;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomAlreadyFragment;
 import com.stuffer.stuffers.fragments.dialog.StateDialogFragment;
@@ -61,6 +64,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.michaelrocks.libphonenumber.android.NumberParseException;
+import io.michaelrocks.libphonenumber.android.PhoneNumberUtil;
+import io.michaelrocks.libphonenumber.android.Phonenumber;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -91,6 +97,9 @@ public class NumEmailFragment extends Fragment {
     MyEditText tvCity, tvZip;
 
     private int mStateId;
+    private ChatHelper helper;
+    private User userMe;
+    private PhoneNumberUtil phoneUtil;
 
     public NumEmailFragment() {
         // Required empty public constructor
@@ -101,6 +110,8 @@ public class NumEmailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //Inflate the layout for this fragment
+        helper = new ChatHelper(getActivity());
+        userMe = helper.getLoggedInUser();
         mainAPIInterface = ApiUtils.getAPIService();
         View mView = inflater.inflate(R.layout.fragment_num_email, container, false);
 
@@ -114,6 +125,19 @@ public class NumEmailFragment extends Fragment {
         edtEmail = mView.findViewById(R.id.edtEmail);
         tvZip = mView.findViewById(R.id.tvZip);
         tvCity = mView.findViewById(R.id.tvCity);
+        String id = userMe.getId();
+        try {
+            if (phoneUtil == null) {
+                phoneUtil = PhoneNumberUtil.createInstance(getActivity());
+            }
+            Phonenumber.PhoneNumber numberProto = phoneUtil.parse("+" + id, "");
+            long nationalNumber = numberProto.getNationalNumber();
+            edtCustomerMobileNumber.setText(""+nationalNumber);
+            edtCustomerCountryCode.setCountryForPhoneCode(numberProto.getCountryCode());
+
+        } catch (NumberParseException e) {
+            System.err.println("NumberParseException was thrown: " + e.toString());
+        }
 
         btnClearAll.setOnClickListener(new View.OnClickListener() {
             @Override

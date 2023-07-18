@@ -4,6 +4,8 @@ import com.stuffer.stuffers.fragments.bottom.chatnotification.MyResponse;
 import com.stuffer.stuffers.fragments.bottom.chatnotification.Sender;
 import com.stuffer.stuffers.models.Country.CountryCodeResponse;
 import com.stuffer.stuffers.models.Product.ProductResponse;
+import com.stuffer.stuffers.models.all_restaurant.AllRestaurant;
+import com.stuffer.stuffers.models.all_restaurant.RestaurantItems;
 import com.stuffer.stuffers.models.bank.BankCurrencyResponse;
 import com.stuffer.stuffers.models.bank.BankNameResponse;
 import com.stuffer.stuffers.models.bank.account.BankAccResponse;
@@ -38,7 +40,6 @@ import com.stuffer.stuffers.models.output.GetTopShoppingOffersModel;
 import com.stuffer.stuffers.models.output.GetWalletTransactionsOutput;
 import com.stuffer.stuffers.models.output.IsSellerExist;
 import com.stuffer.stuffers.models.output.MappingResponse;
-import com.stuffer.stuffers.models.output.MappingResponse2;
 import com.stuffer.stuffers.models.output.NewServiceListModel;
 import com.stuffer.stuffers.models.output.NewServiceListOutputModel;
 import com.stuffer.stuffers.models.output.NormalResponseBody;
@@ -78,6 +79,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 
@@ -919,6 +921,17 @@ public interface MainAPIInterface<R extends Retrofit> {
 
     @GET(Constants.GET_TRANSACTION_PIN)
     Call<JsonObject> getSetTransactionPin(@Path("userId") String userId, @Path("pin") String trans, @Header("Authorization") String xAccessToken);
+
+    @GET(Constants.GET_MERCHANT_BUSINESSTYPES)
+    Call<JsonObject> getMerchantBusinessTypes(@Query("businessType") String businessType, @Query("subBusinessType") String subBusinessType);
+
+    @GET(Constants.GET_ALL_RESTAURANT)
+    Call<AllRestaurant> getAllRestaurant(@Query("page") int page , @Query("size") int size);
+
+    @GET(Constants.GET_RESTAURANT_ITEMS)
+    Call<RestaurantItems> getAllRestaurantItems(@Query("userId") String userId );
+
+
 }
 
 

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_120"
+    android:layout_margin="@dimen/dp_8"
+    android:background="@drawable/rect3">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="@dimen/dp_0_5">
+
+            <ImageView
+
+                android:id="@+id/ivPic"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:scaleType="center" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/tvNameItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
+
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/tvDescItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/dp_3"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/tvRateItem"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/dp_3"
+                        android:textColor="@color/redcolor"
+                        android:textSize="14sp" />
+
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:id="@+id/tvDecrease"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:background="@drawable/subcat_bg1"
+                        android:padding="10dp"
+                        android:text="sub item"
+                        android:textColor="@color/white"
+                        />
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_weight="1"
+                        android:id="@+id/tvCountItem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:gravity="center"
+
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/dp_3"
+                        android:textColor="#CA7B07"
+                        android:textSize="14sp" />
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_gravity="end"
+                        android:gravity="end"
+                        android:id="@+id/tvIncrease"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:background="@drawable/subcat_bg1"
+                        android:padding="10dp"
+                        android:text="add item"
+                        android:textColor="@color/white"
+
+
+                        />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <!--style="?android:attr/buttonStyleSmall"-->
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

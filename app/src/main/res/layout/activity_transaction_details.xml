@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/bg_common2"
     tools:context=".activity.wallet.TransactionDetailsActivity">
 
     <include layout="@layout/toolbar" />
@@ -206,7 +207,7 @@
 
         </androidx.cardview.widget.CardView>
     </LinearLayout>
-    <include layout="@layout/common_bottom_layout"/>
+    <include layout="@layout/common_bottom_layout2"/>
 
 
 </LinearLayout>

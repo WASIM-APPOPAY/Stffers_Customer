@@ -249,4 +249,7 @@ public class Constants {
     public static final String GET_MAPPING2 = "api/users/mobileMapping";
     public static final String GET_MAPPING3 = "api/users/mobilemapping/{areacode}/{mobilenumber}/{usertype}";
 
+    public static final String GET_MERCHANT_BUSINESSTYPES = "api/seller/businessTypes";
+    public static final String GET_ALL_RESTAURANT ="api/odrRestaurant/pageRestaurant?";
+    public static final String GET_RESTAURANT_ITEMS = "api/odrGoods/listAll?";
 }

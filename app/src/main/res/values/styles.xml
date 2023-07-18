@@ -10,6 +10,15 @@
         <item name="windowNoTitle">true</item>
 
     </style>
+<style name="AppTheme2" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here.-->
+        <item name="colorPrimary">@color/loan_bg_color</item>
+        <item name="colorPrimaryDark">@color/loan_bg_color</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+    </style>
 
 
     <style name="Theme_Dialog" parent="android:Theme.Light">
@@ -188,6 +197,10 @@
 
  <style name="MaterialButton3" parent="Widget.AppCompat.Button.Borderless.Colored">
         <item name="colorButtonNormal">@color/color_reset</item>
+ </style>
+<style name="MaterialButton6" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="colorButtonNormal">@color/redcolor</item>
+
 
     </style>
     <style name="MaterialButton2" parent="Widget.AppCompat.Button.Borderless.Colored">

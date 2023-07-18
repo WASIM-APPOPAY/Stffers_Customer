@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.wallet.HomeActivity;
 import com.stuffer.stuffers.activity.wallet.HomeActivity2;
+import com.stuffer.stuffers.activity.wallet.HomeActivity3;
 import com.stuffer.stuffers.activity.wallet.Registration;
 import com.stuffer.stuffers.activity.wallet.SignInActivity;
 import com.stuffer.stuffers.commonChat.chatModel.User;
@@ -90,7 +91,8 @@ public class BasicInfoActivity extends AppCompatActivity {
         }*/
 
 
-        Intent intent = new Intent(this, HomeActivity2.class);
+        //Intent intent = new Intent(this, HomeActivity2.class);
+        Intent intent = new Intent(this, HomeActivity3.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         BasicInfoActivity.this.finish();

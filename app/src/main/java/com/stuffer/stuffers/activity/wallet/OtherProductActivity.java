@@ -84,6 +84,8 @@ public class OtherProductActivity extends BaseBusinessActivity {
         pictureStatus = findViewById(R.id.picture_catalogue_current_status);
         findViewById(R.id.other_product_back).setOnClickListener(view -> finish());
 
+        pictureAvator.setOnClickListener(v -> startActivity(new Intent(OtherProductActivity.this, OtherBusinessActivity.class)));
+
         findViewById(R.id.other_product_cart).setOnClickListener(view -> {
             productCartDialog = new ProductCartDialog(OtherProductActivity.this, R.style.ActionSheetDialogStyle);
             productCartDialog.setData(categorys);

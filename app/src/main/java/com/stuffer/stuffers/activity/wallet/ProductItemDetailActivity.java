@@ -46,7 +46,7 @@ public class ProductItemDetailActivity extends AppCompatActivity {
     private TextView productItemSellerName;
     private TextView productItemSellerDesc;
     private ProgressDialog mProgress;
-    private ChatHelper helper;
+    private Helper helper;
     private PhotoView scaleImg;
     private ViewGroup productItemContainer;
     private ImageView productItemClose;
@@ -112,7 +112,7 @@ public class ProductItemDetailActivity extends AppCompatActivity {
         scaleImg = findViewById(R.id.scale_img);
         productItemContainer = findViewById(R.id.product_item_scale_container);
         productItemClose = findViewById(R.id.product_item_close);
-        helper = new ChatHelper(this);
+        helper = new Helper(this);
 
         productItemBack.setOnClickListener(view -> ProductItemDetailActivity.this.finish());
         productItemAddCart.setOnClickListener(view -> {

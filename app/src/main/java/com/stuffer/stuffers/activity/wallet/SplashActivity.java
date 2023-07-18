@@ -160,8 +160,10 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
 
 
         //String tapInfoText1 = "<font color='#029DDC'>" + getString(R.string.info_split1) + " " + "&quot;" + getString(R.string.info_split2) + "&quot;" + "</font>" + "<font color='#029DDC'>" + " " + getString(R.string.info_split3) + "</font>";
-        String tapInfoText1 = "<font color='#029DDC'>" + getString(R.string.info_split1) + " " + "&quot;" + " " + getString(R.string.info_split2)  + " " +"&quot;" + "</font>";
-        String tapInfoText2 = "<font color='#FB8310'>" + " " + getString(R.string.info_split4) + "</font>";
+        /*String tapInfoText1 = "<font color='#029DDC'>" + getString(R.string.info_split1) + " " + "&quot;" + " " + getString(R.string.info_split2)  + " " +"&quot;" + "</font>";
+        String tapInfoText2 = "<font color='#FB8310'>" + " " + getString(R.string.info_split4) + "</font>";*/
+        String tapInfoText1 = "<font color='#000000'>" + getString(R.string.info_split1) + " " + "&quot;" + " " + getString(R.string.info_split2)  + " " +"&quot;" + "</font>";
+        String tapInfoText2 = "<font color='#000000'>" + " " + getString(R.string.info_split4) + "</font>";
         String wholeText = tapInfoText1 + tapInfoText2;
 
         tvTapInfo.setText(Html.fromHtml(wholeText));
@@ -217,7 +219,8 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
             finish();
         }else {
             if (chatHelper.getLoggedInUser() != null) {
-                Intent i = new Intent(SplashActivity.this, HomeActivity2.class);
+                //Intent i = new Intent(SplashActivity.this, HomeActivity2.class);
+                Intent i = new Intent(SplashActivity.this, HomeActivity3.class);
                 startActivity(i);
                 finish();
             }else {
@@ -261,8 +264,8 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
     protected void attachBaseContext(Context newBase) {
         String userLanguage = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_LANGUAGE);
         if (StringUtils.isEmpty(userLanguage)) {
-            userLanguage = "es";
-            //userLanguage = "en";
+            //userLanguage = "es";
+            userLanguage = "en";
         }
         super.attachBaseContext(MyContextWrapper.wrap(newBase, userLanguage));
     }

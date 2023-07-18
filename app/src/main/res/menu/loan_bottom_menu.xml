@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/lhome"
+        android:checked="true"
+        android:icon="@drawable/lhome"
+        android:title="@string/info_home" />
+
+
+    <item
+        android:id="@+id/lLoan"
+        android:icon="@drawable/lloan"
+        android:title="Loans" />
+
+
+    <item
+        android:id="@+id/lCalculator"
+        android:icon="@drawable/lcalculator"
+        android:title="Calculator"
+        app:iconTint="#052F73" />
+
+
+    <item
+        android:id="@+id/lMore"
+        android:icon="@drawable/lmore"
+        android:title="More" />
+
+
+</menu>
