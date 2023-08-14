@@ -28,6 +28,7 @@ public class DataVaultManager {
     public static String COMMON_VAULTNAME = "com.cooptavanza5477.appopay";
 
     public static final String KEY_NAME = "name";
+    public static final String KEY_CCODE = "ccode";
     public static final String KEY_MOBILE = "mobile";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PASSWORD = "password";
@@ -222,6 +223,12 @@ public class DataVaultManager {
     public void saveTerm(String check) {
         checkVaultStatus();
         vault.setString(TANDC, check);
+        vault.lock();
+    }
+
+    public void saveCCODE(String selectedCountryNameCode) {
+        checkVaultStatus();
+        vault.setString(KEY_CCODE, selectedCountryNameCode);
         vault.lock();
     }
 }

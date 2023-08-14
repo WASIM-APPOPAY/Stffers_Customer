@@ -1,6 +1,7 @@
 package com.stuffer.stuffers.activity.wallet;
 
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_ACCESSTOKEN;
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_CCODE;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_MOBILE;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_NAME;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_DETIALS;
@@ -229,20 +230,14 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
 
         countryCodePicker.setDialogEventsListener(mLis);
         try {
-            String phoneCode = Helper.getPhoneCode();
-            //String phoneCode = "1";
-            String senderMobileNumber = String.valueOf(Helper.getSenderMobileNumber());
-            //String senderMobileNumber = "8092345454";
-            //Log.e(TAG, "onCreate: senderMobileNumber : " + senderMobileNumber);
-            if (phoneCode.equalsIgnoreCase("1")) {
-                if (senderMobileNumber.startsWith("809") || senderMobileNumber.startsWith("829") || senderMobileNumber.startsWith("849")) {
-                    countryCodePicker.setCountryForNameCode("DO");
-                } else {
-                    countryCodePicker.setCountryForPhoneCode(!Helper.getPhoneCode().equals("") ? Integer.parseInt(Helper.getPhoneCode()) : countryCodePicker.getDefaultCountryCodeAsInt());
-                }
+
+            String vaultValue1 = DataVaultManager.getInstance(CustomerProfileActivity.this).getVaultValue(KEY_CCODE);
+            if (!StringUtils.isEmpty(vaultValue1)) {
+                countryCodePicker.setCountryForNameCode(vaultValue1);
             } else {
-                countryCodePicker.setCountryForPhoneCode(!Helper.getPhoneCode().equals("") ? Integer.parseInt(Helper.getPhoneCode()) : countryCodePicker.getDefaultCountryCodeAsInt());
+                countryCodePicker.setCountryForPhoneCode(countryCodePicker.getDefaultCountryCodeAsInt());
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

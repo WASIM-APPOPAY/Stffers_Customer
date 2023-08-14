@@ -582,6 +582,8 @@
     <color name="dot_active">#FA8128</color>
     <!--dots inactive colors -->
     <color name="dot_inactive">#000000</color>
+    <color name="color_gray_66">#666666</color>
+    <color name="lighter_gray">#DDDDDD</color>
 
 </resources>
 <!--<resources>

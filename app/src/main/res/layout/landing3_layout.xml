@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -10,6 +11,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -22,20 +24,24 @@
                 android:src="@drawable/landing6" />
 
             <com.stuffer.stuffers.views.MyTextViewBold
-                android:textColor="@color/black"
-                android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Store" />
+                android:text="Loan"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llShop"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -45,22 +51,22 @@
                 android:src="@drawable/landing7" />
 
             <com.stuffer.stuffers.views.MyTextViewBold
-                android:textColor="@color/black"
-                android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="SH Sports" />
+                android:text="Store"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/llTransfer"
-            android:background="?attr/selectableItemBackground"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -70,12 +76,12 @@
                 android:src="@drawable/landing8" />
 
             <com.stuffer.stuffers.views.MyTextViewBold
-                android:textColor="@color/black"
-                android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Transfer" />
+                android:text="P-2-P"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
 
         </LinearLayout>
@@ -93,12 +99,12 @@
                 android:src="@drawable/landing9" />
 
             <com.stuffer.stuffers.views.MyTextViewBold
-                android:textColor="@color/black"
-                android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Card Repay" />
+                android:text="Card Repay"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
 
         </LinearLayout>

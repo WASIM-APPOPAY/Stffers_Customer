@@ -228,6 +228,7 @@ dependencies {
 
     implementation 'com.github.delight-im:Android-AdvancedWebView:v3.2.1'
     implementation 'com.github.hamzaahmedkhan:SpinnerDialog:v1.2.3'
+    implementation "com.priyankvasa.android:cameraview-ex:3.5.5-alpha"
 
 }
 apply plugin: 'com.google.gms.google-services'

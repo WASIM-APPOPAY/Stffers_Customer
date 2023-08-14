@@ -44,8 +44,8 @@ public class L_IntroActivity extends AppCompatActivity {
         view4.findViewById(R.id.btnContinue).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Intent intentHome = new Intent(L_IntroActivity.this, L_HomeActivity.class);
-                startActivity(intentHome);*/
+                Intent intentHome = new Intent(L_IntroActivity.this, L_HomeActivity.class);
+                startActivity(intentHome);
             }
         });
 

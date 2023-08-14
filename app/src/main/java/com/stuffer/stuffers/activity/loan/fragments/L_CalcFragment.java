@@ -24,7 +24,7 @@ public class L_CalcFragment extends Fragment {
         if (getArguments() != null) {
         }
     }
-
+//https://stackoverflow.com/questions/52676299/how-can-i-make-a-custom-seekbar-like-these-in-android
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

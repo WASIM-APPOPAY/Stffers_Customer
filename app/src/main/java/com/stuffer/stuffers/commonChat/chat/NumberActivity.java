@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.hbb20.CountryCodePicker;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.utils.AppoConstants;
+import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
 import com.stuffer.stuffers.views.MyTextViewBold;
@@ -26,8 +27,6 @@ public class NumberActivity extends AppCompatActivity {
 
     private MyEditText edtMobile;
     private MyTextView tvSent;
-
-
 
 
     private CountryCodePicker edtCustomerCountryCode;
@@ -71,7 +70,7 @@ public class NumberActivity extends AppCompatActivity {
             @Override
             public void onCcpDialogOpen(Dialog dialog) {
                 //your code
-                TextView title =(TextView)  dialog.findViewById(R.id.textView_title);
+                TextView title = (TextView) dialog.findViewById(R.id.textView_title);
                 title.setText(getString(R.string.info_cc_reg));
             }
 
@@ -118,6 +117,8 @@ public class NumberActivity extends AppCompatActivity {
 
     private void nextScreen() {
         dialogEdit.dismiss();
+        String selectedCountryNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
+        DataVaultManager.getInstance(NumberActivity.this).saveCCODE(selectedCountryNameCode);
         Intent intent = new Intent(NumberActivity.this, VerificationActivity.class);
         intent.putExtra(AppoConstants.AREACODE, selectedCountryCode);
         intent.putExtra(AppoConstants.MOBILENUMBER, edtMobile.getText().toString().trim());

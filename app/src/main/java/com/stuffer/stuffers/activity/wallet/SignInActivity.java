@@ -35,6 +35,8 @@ import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.MyContextWrapper;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.forgopassword.ForgotPasswordActvivity;
+import com.stuffer.stuffers.activity.restaurant.E_ShopActivity;
+import com.stuffer.stuffers.activity.restaurant.E_StoreDiscountActivity;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.commonChat.chat.TransferChatActivity;
@@ -137,12 +139,14 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         ivRefresh = (ImageView) findViewById(R.id.ivRefresh);
 
         edtCustomerCountryCode.setExcludedCountries(getString(R.string.info_exclude_countries));
+        selectedCountryNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
 
         edtCustomerCountryCode.setDialogEventsListener(new CountryCodePicker.DialogEventsListener() {
             @Override
             public void onCcpDialogOpen(Dialog dialog) {
+                selectedCountryNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
                 //your code
-                TextView title =(TextView)  dialog.findViewById(R.id.textView_title);
+                TextView title = (TextView) dialog.findViewById(R.id.textView_title);
                 title.setText(getString(R.string.info_cc_reg));
             }
 
@@ -285,7 +289,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         //mJsonObject.addProperty("userType", "CUSTOMER");
         //mainAPIInterface.getMapping("+" + selectedCountryCode + mDominicaAreaCode + edtMobile.getText().toString().trim()).enqueue(new Callback<MappingResponse>() {
 
-        mainAPIInterface.getMapping3(selectedCountryCode,edtMobile.getText().toString().trim(),"CUSTOMER").enqueue(new Callback<JsonObject>() {
+        mainAPIInterface.getMapping3(selectedCountryCode, edtMobile.getText().toString().trim(), "CUSTOMER").enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
@@ -343,7 +347,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         dialog.setMessage(getString(R.string.info_please_wait_dots));
         dialog.show();
         String strUniqueNumber = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_UNIQUE_NUMBER);
-        Log.e(TAG, "getAccessToken: "+strUniqueNumber );
+        Log.e(TAG, "getAccessToken: " + strUniqueNumber);
         String userName = "devglan-client";
         String password = "devglan-secret";
         String base = userName + ":" + password;
@@ -370,22 +374,21 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                 dialog.dismiss();
             }
         });*/
-mainAPIInterface.getAuthorization2(authHeader, strUniqueNumber, loginPassword, "password").enqueue(new Callback<JsonObject>() {
+        mainAPIInterface.getAuthorization2(authHeader, strUniqueNumber, loginPassword, "password").enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
                     //Log.e(TAG, "onResponse: "+response.body().toString());
 
-                    if (response.body().has("access_token")){
+                    if (response.body().has("access_token")) {
                         String access_token = response.body().get("access_token").getAsString();
                         DataVaultManager.getInstance(SignInActivity.this).saveUserAccessToken(access_token);
                         getSignInDetails();
-                    }else{
-                        if (response.body().has("result"))
-                        {
-                            if (response.body().get("result").getAsString().equalsIgnoreCase("failed")){
-                                Toast.makeText(SignInActivity.this, ""+response.body().get("message").getAsString(), Toast.LENGTH_LONG).show();
+                    } else {
+                        if (response.body().has("result")) {
+                            if (response.body().get("result").getAsString().equalsIgnoreCase("failed")) {
+                                Toast.makeText(SignInActivity.this, "" + response.body().get("message").getAsString(), Toast.LENGTH_LONG).show();
                             }
                         }
                     }
@@ -396,9 +399,7 @@ mainAPIInterface.getAuthorization2(authHeader, strUniqueNumber, loginPassword, "
                     getSignInDetails();*/
                 } else {
                     Toast.makeText(SignInActivity.this, getString(R.string.error_account_verification), Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "onResponse: "+new Gson().toJson(response.body()) );
-
-
+                    Log.e(TAG, "onResponse: " + new Gson().toJson(response.body()));
 
 
                 }
@@ -479,6 +480,8 @@ mainAPIInterface.getAuthorization2(authHeader, strUniqueNumber, loginPassword, "
                             ////Log.e(TAG, "onResponse: " + jsonUserDetails);
                             Helper.setUserDetailsNull();
                             DataVaultManager.getInstance(SignInActivity.this).saveUserDetails(jsonUserDetails);
+
+                            DataVaultManager.getInstance(SignInActivity.this).saveCCODE(selectedCountryNameCode);
                             JSONObject result;
                             try {
                                 JSONObject obj = new JSONObject(jsonUserDetails);
@@ -576,6 +579,12 @@ mainAPIInterface.getAuthorization2(authHeader, strUniqueNumber, loginPassword, "
                 break;
             case 11:
 //                mIntent = new Intent(SignInActivity.this, CashSend.class);
+                break;
+            case 12:
+                mIntent = new Intent(SignInActivity.this, E_ShopActivity.class);
+                break;
+            case 13:
+                mIntent = new Intent(SignInActivity.this, E_StoreDiscountActivity.class);
                 break;
 
         }

@@ -59,7 +59,15 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
         <activity
-
+            android:name=".my_camera.MyCameraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.restaurant.E_StoreDiscountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.restaurant.E_ShopActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.loan.L_HomeActivity"
             android:exported="false" />
         <activity

@@ -22,7 +22,7 @@
         android:layout_marginEnd="25dp"
         android:layout_weight="5"
         android:layout_marginBottom="20dp"
-        android:src="@drawable/intro2" />
+        android:src="@drawable/lready" />
 
     <com.stuffer.stuffers.views.MyTextViewBold
 

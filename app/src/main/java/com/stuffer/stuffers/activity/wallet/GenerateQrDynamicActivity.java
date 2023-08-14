@@ -1,5 +1,7 @@
 package com.stuffer.stuffers.activity.wallet;
 
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_CCODE;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -28,11 +30,13 @@ import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.communicator.TransactionPinListener;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottotmPinFragment;
 import com.stuffer.stuffers.utils.AppoConstants;
+import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.views.MyButton;
 import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -72,20 +76,15 @@ public class GenerateQrDynamicActivity extends AppCompatActivity implements View
 
         btnQrCreate.setOnClickListener(this);
         try {
-            String phoneCode = Helper.getPhoneCode();
-            //String phoneCode = "1";
-            String senderMobileNumber = String.valueOf(Helper.getSenderMobileNumber());
-            //String senderMobileNumber = "8092345454";
-            //Log.e(TAG, "onCreate: senderMobileNumber : " + senderMobileNumber);
-            if (phoneCode.equalsIgnoreCase("1")) {
-                if (senderMobileNumber.startsWith("809") || senderMobileNumber.startsWith("829") || senderMobileNumber.startsWith("849")) {
-                    countryCodePicker.setCountryForNameCode("DO");
-                } else {
-                    countryCodePicker.setCountryForPhoneCode(!Helper.getPhoneCode().equals("") ? Integer.parseInt(Helper.getPhoneCode()) : countryCodePicker.getDefaultCountryCodeAsInt());
-                }
+
+            String vaultValue1 = DataVaultManager.getInstance(GenerateQrDynamicActivity.this).getVaultValue(KEY_CCODE);
+            Log.e(TAG, "onCreate: "+vaultValue1 );
+            if (!StringUtils.isEmpty(vaultValue1)) {
+                countryCodePicker.setCountryForNameCode(vaultValue1);
             } else {
-                countryCodePicker.setCountryForPhoneCode(!Helper.getPhoneCode().equals("") ? Integer.parseInt(Helper.getPhoneCode()) : countryCodePicker.getDefaultCountryCodeAsInt());
+                countryCodePicker.setCountryForPhoneCode(countryCodePicker.getDefaultCountryCodeAsInt());
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

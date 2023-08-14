@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.activity.restaurant.E_ShopActivity;
+import com.stuffer.stuffers.activity.restaurant.E_StoreDiscountActivity;
 import com.stuffer.stuffers.activity.restaurant.RestaurantListActivity;
 import com.stuffer.stuffers.activity.restaurant.RestaurantWebActivity;
 import com.stuffer.stuffers.activity.restaurant.RewardActivity;
@@ -24,14 +26,16 @@ import com.stuffer.stuffers.activity.wallet.MobileRechargeActivity;
 import com.stuffer.stuffers.activity.wallet.P2PTransferActivity;
 import com.stuffer.stuffers.activity.wallet.SignInActivity;
 import com.stuffer.stuffers.activity.wallet.TabsActivity;
+import com.stuffer.stuffers.my_camera.MyCameraActivity;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
 
 public class LandingFragment extends Fragment implements View.OnClickListener {
 
 
-    private LinearLayout llResturant, llTransfer, llScan, llLinkCard, llRecharge;
+    private LinearLayout llResturant, llTransfer, llScan, llLinkCard, llRecharge, llDiscount, llTrain;
     private ImageView ivReward;
+    private LinearLayout llShop;
 
     public LandingFragment() {
         // Required empty public constructor
@@ -44,6 +48,9 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_landing, container, false);
         llTransfer = view.findViewById(R.id.llTransfer);
+        llTrain = view.findViewById(R.id.llTrain);
+        llShop = view.findViewById(R.id.llShop);
+        llDiscount = view.findViewById(R.id.llDiscount);
         llResturant = view.findViewById(R.id.llResturant);
         llScan = view.findViewById(R.id.llScan);
         llLinkCard = view.findViewById(R.id.llLinkCard);
@@ -57,6 +64,9 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
         llRecharge.setOnClickListener(this);
         llResturant.setOnClickListener(this);
         ivReward.setOnClickListener(this);
+        llShop.setOnClickListener(this);
+        llDiscount.setOnClickListener(this);
+        llTrain.setOnClickListener(this);
 
         return view;
     }
@@ -114,10 +124,40 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
                 Intent intentResturant = new Intent(getActivity(), RestaurantWebActivity.class);
                 startActivity(intentResturant);
                 break;
-                case R.id.ivReward:
+            case R.id.ivReward:
 
                 Intent intentReward = new Intent(getActivity(), RewardActivity.class);
                 startActivity(intentReward);
+                break;
+
+            case R.id.llShop:
+
+                String userData2 = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+                if (TextUtils.isEmpty(userData2)) {
+                    goToLoginScreen(12);
+                } else {
+                    Intent mIntent = new Intent(getActivity(), E_ShopActivity.class);
+                    mIntent.putExtra(AppoConstants.WHERE, 12);
+                    startActivity(mIntent);
+                }
+
+                break;
+            case R.id.llDiscount:
+                String userData3 = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+                if (TextUtils.isEmpty(userData3)) {
+                    goToLoginScreen(13);
+                } else {
+                    Intent mIntent = new Intent(getActivity(), E_StoreDiscountActivity.class);
+                    mIntent.putExtra(AppoConstants.WHERE, 13);
+                    startActivity(mIntent);
+                }
+
+                break;
+
+            case R.id.llTrain:
+                /*Intent train=new Intent(getActivity(), MyCameraActivity.class);
+                startActivity(train);*/
+
                 break;
         }
     }

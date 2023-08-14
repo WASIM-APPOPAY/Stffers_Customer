@@ -1,9 +1,11 @@
 package com.stuffer.stuffers.activity.wallet;
 
 import static com.stuffer.stuffers.activity.wallet.HomeActivity2.startResultForAccountActivity;
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_CCODE;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
@@ -200,6 +202,61 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
 
         updateFcmToken();
         refreshMyContacts();
+        LinearLayout layoutLogout = (LinearLayout) findViewById(R.id.layoutLogout);
+        layoutLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLogoutClick();
+            }
+        });
+    }
+
+    private void onLogoutClick() {
+        drawer_layout.closeDrawer(GravityCompat.START);
+        ((AppoPayApplication) getApplication()).cancelTimer();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                logoutCalled();
+            }
+        }, 200);
+    }
+
+    private void logoutUserRequest() {
+
+
+        DataVaultManager.getInstance(HomeActivity3.this).saveUserAccessToken("");
+        DataVaultManager.getInstance(HomeActivity3.this).saveUserDetails("");
+        DataVaultManager.getInstance(HomeActivity3.this).saveCardToken("");
+
+
+    }
+
+    private void logoutCalled() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity3.this, R.style.MyAlertDialogStyle);
+        builder.setTitle(getString(R.string.app_name));
+        builder.setMessage(getString(R.string.info_want_to_logout));
+        builder.setIcon(R.drawable.appopay_gift_card);
+        builder.setPositiveButton(getString(R.string.info_yes),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        logoutUserRequest();
+                        dialog.dismiss();
+                    }
+                });
+        builder.setNegativeButton(getString(R.string.info_no),
+
+                new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.cancel();
+                    }
+                });
+
+        builder.show();
     }
 
     private void isAppoPayAccountExist(String id, String name) {
@@ -261,24 +318,21 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
         try {
             try {
 
-                if (phoneUtil == null) {
-                    phoneUtil = PhoneNumberUtil.createInstance(HomeActivity3.this);
-                }
-                String id = userMe.getId();
-                Phonenumber.PhoneNumber numberProto = phoneUtil.parse("+" + id, "");
-                int countryCode = numberProto.getCountryCode();
-                long nationalNumber = numberProto.getNationalNumber();
-                if (Integer.toString(countryCode).equalsIgnoreCase("1")) {
-                    if (Long.toString(nationalNumber).startsWith("809") || Long.toString(nationalNumber).startsWith("829") || Long.toString(nationalNumber).startsWith("849")) {
-                        ccWhere.setCountryForNameCode("DO");
+                ccWhere.setDialogEventsListener(mLis);
+                try {
+
+                    String vaultValue1 = DataVaultManager.getInstance(HomeActivity3.this).getVaultValue(KEY_CCODE);
+                    if (!StringUtils.isEmpty(vaultValue1)) {
+                        ccWhere.setCountryForNameCode(vaultValue1);
                     } else {
-                        ccWhere.setCountryForPhoneCode(!Integer.toString(countryCode).equals("") ? countryCode : ccWhere.getDefaultCountryCodeAsInt());
+                        ccWhere.setCountryForPhoneCode(ccWhere.getDefaultCountryCodeAsInt());
                     }
-                } else {
-                    ccWhere.setCountryForPhoneCode(!Integer.toString(countryCode).equals("") ? countryCode : ccWhere.getDefaultCountryCodeAsInt());
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
-            } catch (NumberParseException e) {
+            } catch (Exception e) {
                 System.err.println("NumberParseException was thrown: " + e.toString());
             }
 
@@ -734,11 +788,13 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onResume() {
         super.onResume();
+
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(mContext);
         localBroadcastManager.registerReceiver(myContactsReceiver, new IntentFilter(ChatHelper.BROADCAST_MY_CONTACTS));
         localBroadcastManager.registerReceiver(myUsersReceiver, new IntentFilter(ChatHelper.BROADCAST_MY_USERS));
         localBroadcastManager.registerReceiver(userReceiver, new IntentFilter(ChatHelper.BROADCAST_USER_ME));
         upDateBalance();
+        reflectCountry();
     }
 
     public static void showProfileAvatar(String avatar) {

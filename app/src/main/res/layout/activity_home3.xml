@@ -5,84 +5,89 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.wallet.HomeActivity3"
-    tools:openDrawer="start">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg_common2"
-    android:orientation="vertical"
     tools:context=".activity.wallet.HomeActivity3">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_gravity="center_vertical"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:background="@drawable/bg"
 
-        <ImageView
-            android:id="@+id/menu_icon_drawer"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="8dp"
-            android:src="@drawable/menu2" />
-
-        <com.hbb20.CountryCodePicker
-            android:id="@+id/ccWhere"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:ccp_autoDetectCountry="false"
-            app:ccp_showFlag="false"
-            app:ccp_showFullName="true"
-            app:ccp_showPhoneCode="false" />
+        android:orientation="vertical"
+        tools:context=".activity.wallet.HomeActivity3">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:gravity="center_vertical">
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <SearchView
-                android:layout_width="0dp"
+            <ImageView
+                android:id="@+id/menu_icon_drawer"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="8dp"
+                android:src="@drawable/menu2" />
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/ccWhere"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:background="@drawable/subcat_bg" />
+                app:ccp_autoDetectCountry="false"
+                app:ccp_showFlag="false"
+                app:ccp_showFullName="true"
+                app:ccp_showPhoneCode="false" />
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:padding="8dp"
-                android:src="@drawable/bright_left" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:gravity="center_vertical">
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:padding="8dp"
-                android:src="@drawable/bplus" />
+                <SearchView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:background="@drawable/subcat_bg" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="8dp"
+                    android:src="@drawable/bright_left" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="8dp"
+                    android:src="@drawable/bplus" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
+        <!--<include layout="@layout/fragment_landing" />-->
+
+        <FrameLayout
+            android:id="@+id/landingContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            android:layout_weight="1" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/landing_bottom" />
+
+            <!--<include layout="@layout/bottom_design_layout" />-->
+        </LinearLayout>
+
+
     </LinearLayout>
-    <FrameLayout
-        android:id="@+id/landingContainer"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"/>
-
-
-
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <include layout="@layout/landing_bottom" />
-        <include layout="@layout/bottom_design_layout" />
-    </LinearLayout>
-
-
-</LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="match_parent"

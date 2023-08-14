@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:orientation="vertical"
     tools:context=".fragments.landing.LandingFragment">
 
     <ScrollView
-        android:fillViewport="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -17,6 +19,70 @@
             android:orientation="vertical">
 
             <include layout="@layout/landing1_layout" />
+
+            <ImageView
+
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_80"
+                android:layout_gravity="center"
+                android:padding="@dimen/dp_0_5"
+                android:src="@drawable/teedy_bear" />
+
+
+            <!--<LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="8">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+
+                        android:layout_width="@dimen/dp_100"
+                        android:layout_height="@dimen/dp_80"
+                        android:layout_gravity="center"
+                        android:padding="10dp"
+                        android:src="@drawable/teddy_bear" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:orientation="vertical">
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Products Fu 500 dollars to get sccelerated\n egg 5 dollars certificate" />
+
+                    <com.stuffer.stuffers.views.MyTextView
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:background="@drawable/round2"
+                        android:layout_width="120dp"
+                        android:layout_height="30dp"
+                        android:text="Experience Now" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>-->
+
 
             <include layout="@layout/landing2_layout" />
 
@@ -40,9 +106,9 @@
                     android:layout_height="100dp"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:foreground="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
                     android:padding="5dp"
                     android:src="@drawable/lbanner2" />
 
@@ -62,12 +128,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="3">
+                android:weightSum="4">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="130dp"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#FDD4AC">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -89,7 +156,7 @@
                             android:layout_gravity="center"
                             android:text="Current+"
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="12sp" />
 
                         <com.stuffer.stuffers.views.MyTextViewBold
                             android:layout_width="wrap_content"
@@ -107,17 +174,21 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-
                     android:layout_height="130dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="15dp"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#FDD4AC">
 
                     <LinearLayout
+                        android:id="@+id/llDiscount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -131,17 +202,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:gravity="center"
                             android:text="Discount day"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
-                        <com.stuffer.stuffers.views.MyTextViewBold
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="Weekly discounts"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
 
                     </LinearLayout>
 
@@ -151,7 +216,8 @@
                     android:layout_width="0dp"
                     android:layout_height="130dp"
                     android:layout_marginStart="15dp"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#FDD4AC">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -186,6 +252,13 @@
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:src="@drawable/spin" />
 
             </LinearLayout>
 
@@ -320,7 +393,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="Small Program Recommendation"
+                    android:text="Hotcakes"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -329,7 +402,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:padding="5dp"
-                    android:text="List"
+                    android:text="More Pictures"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -340,9 +413,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/lbanner11" />
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -361,7 +435,7 @@
                     android:layout_weight="1"
                     android:src="@drawable/lbanner13" />
 
-            </LinearLayout>
+            </LinearLayout>-->
 
 
         </LinearLayout>

@@ -2,8 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@drawable/bg_common2"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_common2">
 
     <LinearLayout
 
@@ -13,9 +13,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="110dp"
-
-            >
+            android:layout_height="110dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -63,23 +61,40 @@
                     android:orientation="vertical">
 
                     <com.stuffer.stuffers.views.MyTextView
-                        android:textColor="@color/color_white"
                         android:id="@+id/tvDrawername"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sebastian Deo" />
+                        android:text="Sebastian Deo"
+                        android:textColor="@color/color_white" />
 
                     <com.stuffer.stuffers.views.MyTextView
-                        android:textColor="@color/color_white"
                         android:id="@+id/tvDrawerNo"
-
                         android:layout_width="wrap_content"
+
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:text="4029209"
+                        android:textColor="@color/color_white"
 
 
                         />
+
+                    <com.stuffer.stuffers.views.MyTextViewBold
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="AVC NUMBER"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <com.stuffer.stuffers.views.MyTextViewBold
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="5dp"
+                        android:text="1245877 91245512"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
@@ -170,8 +185,8 @@
                 android:layout_height="40dp"
                 android:background="@drawable/bg_circle"
                 android:padding="10dp"
-                app:tint="@color/white"
-                android:src="@drawable/ic_sent_money_drawable" />
+                android:src="@drawable/ic_sent_money_drawable"
+                app:tint="@color/white" />
 
             <com.stuffer.stuffers.views.MyTextView
                 android:layout_width="wrap_content"
@@ -205,8 +220,8 @@
                 android:layout_height="40dp"
                 android:background="@drawable/bg_circle"
                 android:padding="10dp"
-                app:tint="@color/white"
-                android:src="@drawable/ic_settings_drawable" />
+                android:src="@drawable/ic_settings_drawable"
+                app:tint="@color/white" />
 
             <com.stuffer.stuffers.views.MyTextView
                 android:layout_width="wrap_content"
@@ -239,8 +254,8 @@
                 android:layout_height="40dp"
                 android:background="@drawable/bg_circle"
                 android:padding="10dp"
-                app:tint="@color/white"
-                android:src="@drawable/ic_logout_drawable" />
+                android:src="@drawable/ic_logout_drawable"
+                app:tint="@color/white" />
 
             <com.stuffer.stuffers.views.MyTextView
                 android:layout_width="wrap_content"
