@@ -281,6 +281,11 @@ public interface MainAPIInterface<R extends Retrofit> {
     @POST(com.stuffer.stuffers.api.Constants.POST_PRODUCT)
     Call<ProductResponse> getProductResponse(@Body JsonObject body);
 
+    @GET(com.stuffer.stuffers.api.Constants.POST_PRODUCT1)
+    Call<ProductResponse> getProductResponse(@Query("productType") String productType,@Query("countryCode") String countryCode);
+
+
+
     @Headers({
             "Accept: application/json",
             "Content-Type: application/json"

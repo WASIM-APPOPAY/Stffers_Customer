@@ -19,7 +19,11 @@ public class ApiUtils {
     public static final String BASE_UNION = Constants.BASE_UNION_PAY;
     public static final String BASE_UNION_PAY = Constants.UNION_PAY;
     public static final String BASE_OCR=Constants.BASE_OCR;
+    public static final String BASE_LOAN=Constants.BASE_LOAN;
 
+    public static MainLoanInterface getApiServiceLoan(){
+      return RetrofitClient.getClientLoan(BASE_LOAN).create(MainLoanInterface.class);
+    }
 
     public static MainUAPIInterface getApiServiceUNIONPay() {
 

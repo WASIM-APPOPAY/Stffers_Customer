@@ -2,7 +2,6 @@ package com.stuffer.stuffers.activity.wallet;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -11,13 +10,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -35,20 +31,12 @@ import com.stuffer.stuffers.communicator.CarrierSelectListener;
 import com.stuffer.stuffers.communicator.CustomCountryListener;
 import com.stuffer.stuffers.communicator.ReceiverListener;
 import com.stuffer.stuffers.communicator.TransactionPinListener;
-import com.stuffer.stuffers.fragments.bottom.chatmodel.ChatUser;
-import com.stuffer.stuffers.fragments.bottom.chatnotification.Data;
-import com.stuffer.stuffers.fragments.bottom.chatnotification.MyResponse;
-import com.stuffer.stuffers.fragments.bottom.chatnotification.Sender;
-import com.stuffer.stuffers.fragments.bottom.chatnotification.Token;
 import com.stuffer.stuffers.fragments.dialog.CarrierDialogFragment;
 import com.stuffer.stuffers.fragments.dialog.CustomCountryDialogFragment;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottotmPinFragment;
 import com.stuffer.stuffers.models.Product.Amount;
-import com.stuffer.stuffers.models.Product.Product;
+import com.stuffer.stuffers.models.Product.Result;
 import com.stuffer.stuffers.models.Product.ProductResponse;
-import com.stuffer.stuffers.models.output.AccountModel;
-import com.stuffer.stuffers.models.output.CurrencyResponse;
-import com.stuffer.stuffers.models.output.CurrencyResult;
 import com.stuffer.stuffers.models.output.CustomArea;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
@@ -56,15 +44,9 @@ import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.views.MyButton;
 import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -94,7 +76,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
     ArrayList<CustomArea> mListArea;
     private String mAraaCode;
     private ProgressDialog dialog;
-    private List<Product> mListProduct;
+    private List<Result> mListProduct;
     private static final String TAG = "MobileRechargeActivity";
 
     private ArrayList<String> mListCarrier;
@@ -201,17 +183,20 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
 
     private void setListOfAreas() {
         mListArea = new ArrayList<>();
-        String data = Helper.AREA_CODE_JSON1;
+        mListArea = Helper.getCountryList();
+
+
+        /*String data = Helper.AREA_CODE_JSON1;
         try {
             JSONArray rowAreas = new JSONArray(data);
             for (int i = 0; i < rowAreas.length(); i++) {
                 JSONObject index = rowAreas.getJSONObject(i);
-                CustomArea customArea = new CustomArea(index.getString(AppoConstants.AREACODE), index.getString(AppoConstants.AREACODE_WITH_NAME));
+                CustomArea customArea = new CustomArea(index.getString(AppoConstants.AREACODE), index.getString(AppoConstants.AREACODE_WITH_NAME),"");
                 mListArea.add(customArea);
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
 
@@ -253,7 +238,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
 
     @Override
     public void onCustomCountryCodeSelect(String code) {
-        if (code.equalsIgnoreCase("1809")) {
+        /*if (code.equalsIgnoreCase("1809")) {
             tvAreaCode.setText("+" + "1");
             mAraaCode = "1";
             mDominicaCode = "1";
@@ -261,7 +246,9 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
             tvAreaCode.setText("+" + code);
             mAraaCode = code;
             mDominicaCode = "";
-        }
+        }*/
+        tvAreaCode.setText("+" + code);
+        mAraaCode=code;
 
         /*if (code.equalsIgnoreCase("1809")) {
             mDominicaCode = "809";
@@ -279,18 +266,18 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please wait.");
         dialog.show();
-        JsonObject param = new JsonObject();
-        if (mDominicaCode.isEmpty()){
+        //JsonObject param = new JsonObject();
+        /*if (mDominicaCode.isEmpty()) {
             param.addProperty(AppoConstants.COUNTRYCODE, mAraaCode);
-        }else {
+        } else {
             param.addProperty(AppoConstants.COUNTRYCODE, "1809");
-        }
+        }*/
 
-        mainAPIInterfaceNode.getProductResponse(param).enqueue(new Callback<ProductResponse>() {
+        mainAPIInterface.getProductResponse("TOPUP",mAraaCode).enqueue(new Callback<ProductResponse>() {
             @Override
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                 dialog.dismiss();
-                mListProduct = new ArrayList<Product>();
+                mListProduct = new ArrayList<Result>();
                 if (response.isSuccessful()) {
                     mListProduct = response.body().getProducts();
                     if (mListProduct != null) {
@@ -729,7 +716,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
         sentParams.addProperty(AppoConstants.PRODUCTCODE, mListProduct.get(mCarrierPosition).getProductCode());
         String code = "";
         code = mAraaCode;
-        if (code.equalsIgnoreCase("1809")) {
+        /*if (code.equalsIgnoreCase("1809")) {
             sentParams.addProperty(AppoConstants.RECEIVERAREACODE, "1");
         } else if (code.equalsIgnoreCase("1829")) {
             sentParams.addProperty(AppoConstants.RECEIVERAREACODE, "1");
@@ -737,8 +724,8 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
             sentParams.addProperty(AppoConstants.RECEIVERAREACODE, "1");
         } else {
             sentParams.addProperty(AppoConstants.RECEIVERAREACODE, mAraaCode);
-        }
-
+        }*/
+        sentParams.addProperty(AppoConstants.RECEIVERAREACODE, mAraaCode);
         sentParams.addProperty(AppoConstants.RECEIVERMOBILENUMBER, mDominicaCode + edtphone_number.getText().toString().trim());
         sentParams.addProperty(AppoConstants.SENDERACCOUNTNUMBER, senderAccountnumber);
         String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
@@ -882,8 +869,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
 
     @Override
     public void onPinConfirm(String pin) {
-        if (fragmentBottomSheet != null)
-            fragmentBottomSheet.dismiss();
+        if (fragmentBottomSheet != null) fragmentBottomSheet.dismiss();
         getCommissions(pin.trim(), newAmount);
     }
 

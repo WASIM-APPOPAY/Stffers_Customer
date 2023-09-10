@@ -56,6 +56,8 @@ public class Constants {
     public static final String GET_VAULTBYID = "v2/getbyVaultID";
 
     public static final String POST_PRODUCT = "v2/getProducts";
+    //public static final String POST_PRODUCT1 = "api/wallet/products/v2/{productType}/{countryCode}";
+    public static final String POST_PRODUCT1 = "api/wallet/products/v2";
 
 
     //public static final String GET_CONVERSIONS = "api/configurations/currencyconversions/PAB?";
@@ -70,7 +72,7 @@ public class Constants {
     public static final String GET_COMMISSION_TRANSFER = "api/configurations/comissiontype/WALLET-OTHER-WALLET";//change
 
 
-    public static final String POST_RECHARGE_TOPUP = "api/wallet/topup";//change
+    public static final String POST_RECHARGE_TOPUP = "api/wallet/top-up/v2";//change
     //https://appopay.com/api/wallet/transferfund?
     public static final String POST_TRANSFER_FUND = "api/wallet/transferfund";//change
 
@@ -231,6 +233,7 @@ public class Constants {
     public static final String CARDINFO = "cardInfo";
     //http://54.253.233.223:8889/ocr/credit
     public static final String BASE_OCR = "http://3.141.54.113:8889/";
+    public static final String BASE_LOAN = "https://en.corecoop.net";
     //public static final String BASE_OCR = "http://54.253.233.223:8889/";
     public static final String OCR_ID = "ocr/idcard_base64";
     public static final String OCR_BANK = "ocr/credit_base64";
@@ -252,4 +255,6 @@ public class Constants {
     public static final String GET_MERCHANT_BUSINESSTYPES = "api/seller/businessTypes";
     public static final String GET_ALL_RESTAURANT ="api/odrRestaurant/pageRestaurant?";
     public static final String GET_RESTAURANT_ITEMS = "api/odrGoods/listAll?";
+    public static final String IS_USER_REGISTER_OR_PROFILE="/api/wSignUp/MyProfile";
+    public static final String LOAN_CITY_LIST = "/api/wMasters/CityList";
 }

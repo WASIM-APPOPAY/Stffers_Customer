@@ -15,9 +15,9 @@ public class ProductResponse implements Parcelable {
     @SerializedName("Code")
     @Expose
     private Integer code;
-    @SerializedName("Products")
+    @SerializedName("result")
     @Expose
-    private List<Product> products = null;
+    private List<Result> products = null;
 
     protected ProductResponse(Parcel in) {
         message = in.readString();
@@ -26,7 +26,7 @@ public class ProductResponse implements Parcelable {
         } else {
             code = in.readInt();
         }
-        products = in.createTypedArrayList(Product.CREATOR);
+        products = in.createTypedArrayList(Result.CREATOR);
     }
 
     public static final Creator<ProductResponse> CREATOR = new Creator<ProductResponse>() {
@@ -57,11 +57,11 @@ public class ProductResponse implements Parcelable {
         this.code = code;
     }
 
-    public List<Product> getProducts() {
+    public List<Result> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(List<Result> products) {
         this.products = products;
     }
 

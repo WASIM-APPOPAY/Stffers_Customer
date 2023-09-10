@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:padding="@dimen/dp_5"
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
     android:background="@drawable/no_round_bg1"
     android:orientation="vertical">
 
-    <com.stuffer.stuffers.views.MyTextView
-        android:id="@+id/tvCountryCode"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:gravity="center_vertical"
-        android:padding="5dp"
-        android:text="India : 91"
-        android:letterSpacing="0.2"
-        android:textColor="@color/black"
-        android:textSize="16sp" />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/ivCountryFlag"
+            android:layout_width="45dp"
+            android:layout_height="45dp" />
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:id="@+id/tvCountryCode"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:letterSpacing="0.1"
+            android:padding="5dp"
+            android:text="India : 91"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+
+    </LinearLayout>
     <View
 
         android:layout_width="match_parent"

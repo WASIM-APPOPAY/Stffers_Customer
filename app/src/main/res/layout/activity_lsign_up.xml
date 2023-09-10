@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_common2"
+    android:orientation="vertical"
+    tools:context=".activity.loan.L_SignUpActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="center_vertical"
+
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/menu_icon_drawer"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="8dp"
+            android:src="@drawable/menu2"
+            android:visibility="invisible"
+            app:tint="@color/black" />
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:id="@+id/tvLHomeTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="-50dp"
+            android:gravity="left|center_vertical"
+            android:padding="@dimen/dp_0_5"
+            android:text="Sign up"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_strok"
+
+                android:orientation="vertical">
+
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="First Name"
+                    android:textSize="18sp" />
+
+                <com.stuffer.stuffers.views.MyEditText
+                    android:id="@+id/elname1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:hint="Enter first name" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_strok"
+                android:orientation="vertical">
+
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Middle Name"
+                    android:textSize="18sp" />
+
+                <com.stuffer.stuffers.views.MyEditText
+                    android:id="@+id/elname2"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:hint="Enter middle name" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_strok"
+                android:orientation="vertical">
+
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Last Name"
+                    android:textSize="18sp" />
+
+                <com.stuffer.stuffers.views.MyEditText
+                    android:id="@+id/elname3"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:hint="Enter last name" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_strok"
+                android:orientation="vertical">
+
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:textSize="18sp" />
+
+                <com.stuffer.stuffers.views.MyEditText
+                    android:id="@+id/elmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:hint="Enter email" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_strok"
+                android:orientation="vertical">
+
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Company Name"
+                    android:textSize="18sp" />
+
+                <com.stuffer.stuffers.views.MyEditText
+                    android:id="@+id/elcname"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:hint="Enter company name" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_strok"
+                android:orientation="vertical">
+
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Address"
+                    android:textSize="18sp" />
+
+                <com.stuffer.stuffers.views.MyEditText
+                    android:id="@+id/eladdress"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:hint="Enter address" />
+
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/bg_strok"
+                    android:orientation="vertical">
+
+                    <com.stuffer.stuffers.views.MyTextViewBold
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="City"
+                        android:textSize="18sp" />
+
+                    <com.stuffer.stuffers.views.MyEditText
+                        android:id="@+id/elcityname"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@null"
+                        android:hint="Enter city name" />
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|right"
+                    android:layout_margin="@dimen/dp_5"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_arrow_forward_drawable"
+
+                    app:tint="@color/redcolor" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_strok"
+                android:orientation="vertical">
+
+                <com.stuffer.stuffers.views.MyTextViewBold
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Province/State"
+                    android:textSize="18sp" />
+
+                <com.stuffer.stuffers.views.MyEditText
+                    android:id="@+id/elstatename"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:hint="Enter province/state" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_strok"
+                android:orientation="vertical">
+
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Country"
+                    android:textSize="18sp" />
+
+                <com.stuffer.stuffers.views.MyEditText
+                    android:id="@+id/elcountry"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:hint="Enter country" />
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnContinue"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:background="@drawable/round_dark_continue_button"
+                android:text="Sign up"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

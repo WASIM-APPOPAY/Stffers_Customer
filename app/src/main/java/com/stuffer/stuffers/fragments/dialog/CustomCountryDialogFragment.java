@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.communicator.CustomCountryListener;
 import com.stuffer.stuffers.models.output.CustomArea;
@@ -100,7 +102,8 @@ public class CustomCountryDialogFragment extends DialogFragment {
 
         @Override
         public void onBindViewHolder(@NonNull CustomCountryHolder holder, int position) {
-            holder.tvCountryCode.setText(mListFilter.get(position).getAreacode_with_name());
+            holder.tvCountryCode.setText("(+"+mListFilter.get(position).getAreacode() +")"+" "+mListFilter.get(position).getAreacode_with_name());
+            Glide.with(mContext).load(mListFilter.get(position).getmFlag()).into(holder.ivCountryFlag);
 
         }
 
@@ -143,10 +146,12 @@ public class CustomCountryDialogFragment extends DialogFragment {
 
         public class CustomCountryHolder extends RecyclerView.ViewHolder {
             MyTextView tvCountryCode;
+            ImageView ivCountryFlag;
 
             public CustomCountryHolder(@NonNull View itemView) {
                 super(itemView);
                 tvCountryCode = itemView.findViewById(R.id.tvCountryCode);
+                ivCountryFlag = itemView.findViewById(R.id.ivCountryFlag);
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

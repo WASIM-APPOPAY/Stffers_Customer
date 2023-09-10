@@ -56,9 +56,11 @@ import com.onesignal.OneSignal;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.BuildConfig;
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.activity.loan.L_HomeActivity;
 import com.stuffer.stuffers.activity.loan.L_IntroActivity;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
+import com.stuffer.stuffers.api.MainLoanInterface;
 import com.stuffer.stuffers.commonChat.chat.BaseActivity;
 import com.stuffer.stuffers.commonChat.chat.BottomChatFragment;
 import com.stuffer.stuffers.commonChat.chat.ChatActivity;
@@ -78,6 +80,7 @@ import com.stuffer.stuffers.communicator.CashTransferListener;
 import com.stuffer.stuffers.communicator.LinkAccountListener;
 import com.stuffer.stuffers.communicator.ShopListener;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomRegister;
+import com.stuffer.stuffers.fragments.landing.HomeLandingFragment;
 import com.stuffer.stuffers.fragments.landing.LandingFragment;
 import com.stuffer.stuffers.myService.FetchMyUsersService;
 import com.stuffer.stuffers.my_camera.CameraActivity;
@@ -138,11 +141,13 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
     private ProgressDialog mProgress;
     protected Context mContext;
     private DatabaseReference myInboxRef;
+    private MainLoanInterface apiServiceLoan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
+        apiServiceLoan = ApiUtils.getApiServiceLoan();
         setContentView(R.layout.activity_home3);
         mCtx = HomeActivity3.this;
         menu_icon = (ImageView) findViewById(R.id.menu_icon_drawer);
@@ -177,9 +182,11 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
         registerChatUpdates();
 
         reflectCountry();
+
         LandingFragment mLandingFragment = new LandingFragment();
         initFragment(mLandingFragment);
-
+        /*HomeLandingFragment mLandingFragment = new HomeLandingFragment();
+        initFragment(mLandingFragment);*/
         isAppoPayAccountExist(userMe.getId(), userMe.getName());
         llMsg.setOnClickListener(this);
 
@@ -223,8 +230,6 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
     }
 
     private void logoutUserRequest() {
-
-
         DataVaultManager.getInstance(HomeActivity3.this).saveUserAccessToken("");
         DataVaultManager.getInstance(HomeActivity3.this).saveUserDetails("");
         DataVaultManager.getInstance(HomeActivity3.this).saveCardToken("");
@@ -503,6 +508,7 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
             initFragment(mBottomChatFragment);
         } else if (view.getId() == R.id.llHome) {
             LandingFragment mLandingFragment = new LandingFragment();
+            //HomeLandingFragment mLandingFragment = new HomeLandingFragment();
             initFragment(mLandingFragment);
         } else if (view.getId() == R.id.llMe) {
             new Handler().postDelayed(new Runnable() {
@@ -519,9 +525,9 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
                 }
             }, 200);
         } else if (view.getId() == R.id.llFinance) {
-            Intent intentFinance = new Intent(HomeActivity3.this, L_IntroActivity.class);
-            startActivity(intentFinance);
-
+            /*Intent intentFinance = new Intent(HomeActivity3.this, L_IntroActivity.class);
+            startActivity(intentFinance);*/
+            getDetails();
         } else if (view.getId() == R.id.layoutMyCards) {
             drawer_layout.closeDrawer(GravityCompat.START);
             new Handler().postDelayed(new Runnable() {
@@ -584,6 +590,47 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
         }
 
 
+    }
+
+    private void getDetails() {
+        showLoading();
+        String param1 = "2017011900003";
+        String param2 = "das123";
+        String param3 = "en.corecoop.net";
+        String base = param1 + "|" + param2 + "|" + param3;
+        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+        JsonObject mParam = new JsonObject();
+        mParam.addProperty("MobileNo", "919836683269");
+
+        apiServiceLoan.getIsUserLogin_Or_Profile(mParam, authHeader).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                //Log.e(TAG, "onResponse: " + response);
+                /*{
+                            "message":"fail", "error":true, "AccountBalace":{
+                        },"base64QRImage":""
+                        }*/
+
+                hideLoading();
+                if (response.code() == 200) {
+                    if (response.body().getAsJsonPrimitive(AppoConstants.MESSAGE).getAsString().equalsIgnoreCase("fail")) {
+                        Intent intentFinance = new Intent(HomeActivity3.this, L_IntroActivity.class);
+                        startActivity(intentFinance);
+                    } else {
+                        Intent intentFinance = new Intent(HomeActivity3.this, L_HomeActivity.class);
+                        startActivity(intentFinance);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                hideLoading();
+                Log.e(TAG, "onFailure: " + t.getLocalizedMessage());
+                Log.e(TAG, "onFailure: " + t.getMessage());
+            }
+        });
     }
 
 

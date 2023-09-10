@@ -8,25 +8,40 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.api.ApiUtils;
+import com.stuffer.stuffers.api.MainLoanInterface;
+import com.stuffer.stuffers.commonChat.chatModel.User;
+import com.stuffer.stuffers.commonChat.chatUtils.ChatHelper;
+import com.stuffer.stuffers.utils.AppoConstants;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class L_IntroActivity extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+public class L_IntroActivity extends AppCompatActivity {
+    private static final String TAG = "L_IntroActivity";
+    MainLoanInterface apiServiceLoan;
     private LinearLayout dotsLayout;
     private TextView[] dots;
 
     private ViewPager mViewPager;
     private List<View> mList;
     private ViewAdapter mAdapter;
+    private ChatHelper helper;
+    private User userMe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +49,8 @@ public class L_IntroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lintro);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         mViewPager = findViewById(R.id.mViewPager);
+
+        apiServiceLoan = ApiUtils.getApiServiceLoan();
 
         mList = new ArrayList<>();
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -44,7 +61,7 @@ public class L_IntroActivity extends AppCompatActivity {
         view4.findViewById(R.id.btnContinue).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentHome = new Intent(L_IntroActivity.this, L_HomeActivity.class);
+                Intent intentHome = new Intent(L_IntroActivity.this, L_SignUpActivity.class);
                 startActivity(intentHome);
             }
         });
@@ -55,8 +72,11 @@ public class L_IntroActivity extends AppCompatActivity {
         mList.add(view4);
 
         mAdapter = new ViewAdapter(mList);
+
         mViewPager.setAdapter(mAdapter);
+
         addBottomDots(0);
+
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -71,6 +91,53 @@ public class L_IntroActivity extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+
+        helper = new ChatHelper(this);
+        userMe = helper.getLoggedInUser();
+        String id = userMe.getId();
+        Log.e(TAG, "onCreate: " + id);
+
+        getDetails();
+
+
+    }
+
+    private void getDetails() {
+
+        String param1 = "2017011900003";
+        String param2 = "das123";
+        String param3 = "en.corecoop.net";
+
+        String base = param1 + "|" + param2 + "|" + param3;
+        String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+        JsonObject mParam = new JsonObject();
+
+        mParam.addProperty("MobileNo", "919836683269");
+
+        apiServiceLoan.getIsUserLogin_Or_Profile(mParam, authHeader).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                //Log.e(TAG, "onResponse: " + response);
+                        /*{
+                            "message":"fail", "error":true, "AccountBalace":{
+                        },"base64QRImage":""
+                        }*/
+
+                if (response.code() == 200) {
+                    if (response.body().getAsJsonPrimitive(AppoConstants.MESSAGE).getAsString().equalsIgnoreCase("fail")) {
+                        Log.e(TAG, "onResponse: true called");
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+                Log.e(TAG, "onFailure: " + t.getLocalizedMessage());
+                Log.e(TAG, "onFailure: " + t.getMessage());
             }
         });
     }

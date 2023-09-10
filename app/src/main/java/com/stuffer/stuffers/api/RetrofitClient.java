@@ -26,6 +26,7 @@ public class RetrofitClient {
     private static Retrofit retrofitUnionCard = null;
     protected static Retrofit retrofitOpen = null;
     private static Retrofit retrofitOCR = null;
+    private static Retrofit retrofitLoan=null;
 
 
     static Gson gson = new GsonBuilder()
@@ -56,7 +57,7 @@ public class RetrofitClient {
             OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             //interceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            //interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             okHttpClientBuilder.addInterceptor(interceptor);
             if (Build.VERSION.SDK_INT < 29) {
                 okHttpClientBuilder.sslSocketFactory(sslContext.getSocketFactory());
@@ -175,6 +176,16 @@ public class RetrofitClient {
         return retrofitNotification;
     }
 
+    public static Retrofit getClientLoan(String baseLoan) {
+        if (retrofitLoan == null) {
+            retrofitLoan = new Retrofit.Builder()
+                    .baseUrl(baseLoan)
+                    .client(getClient())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+        }
+        return retrofitLoan;
+    }
 }
 
 

@@ -159,7 +159,7 @@ public class LunexGiftActivity extends AppCompatActivity implements View.OnClick
             JSONArray rowAreas = new JSONArray(data);
             for (int i = 0; i < rowAreas.length(); i++) {
                 JSONObject index = rowAreas.getJSONObject(i);
-                CustomArea customArea = new CustomArea(index.getString(AppoConstants.AREACODE), index.getString(AppoConstants.AREACODE_WITH_NAME));
+                CustomArea customArea = new CustomArea(index.getString(AppoConstants.AREACODE), index.getString(AppoConstants.AREACODE_WITH_NAME),"");
                 mListArea.add(customArea);
             }
         } catch (JSONException e) {

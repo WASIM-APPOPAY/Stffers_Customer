@@ -144,8 +144,8 @@ public class VerifyFragment extends Fragment {
                     edtOtpNumber.setFocusable(true);
                     edtOtpNumber.setError(getString(R.string.info_enter_otp));
                 } else {
-                    //getConfirmation();
-                    mVerifiedListener.onVerified(mParamNameCode, mParamCountryCode, mParamMobile);
+                    getConfirmation();
+                    //mVerifiedListener.onVerified(mParamNameCode, mParamCountryCode, mParamMobile);
 
                 }
                 //mVerifiedListener.onVerified(mParamNameCode, mParamCountryCode, mParamMobile);

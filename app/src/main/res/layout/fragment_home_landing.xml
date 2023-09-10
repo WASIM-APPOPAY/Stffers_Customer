@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.landing.HomeLandingFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        tools:context=".activity.restaurant.RestaurantWebActivity">
+
+
+
+
+        <include
+            android:id="@+id/includeLayout"
+            layout="@layout/landing1_layout"
+            android:visibility="visible" />
+
+        <!--<WebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/progressBar"
+            android:layout_marginTop="5dp" />-->
+        <im.delight.android.webview.AdvancedWebView
+            android:visibility="gone"
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent" />
+        <com.tamic.jswebview.view.ProgressBarWebView
+            android:id="@+id/login_progress_webview"
+            style="@style/NumberProgressBar_Default"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.tamic.jswebview.view.ProgressBarWebView>
+
+    </LinearLayout>
+</LinearLayout>
