@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import java.util.ArrayList;
@@ -63,6 +64,13 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
         this.setVerticalScrollBarEnabled(false);
         this.setHorizontalScrollBarEnabled(false);
         this.getSettings().setJavaScriptEnabled(true);
+        this.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        this.getSettings().setJavaScriptEnabled(true);
+        this.getSettings().setJavaScriptEnabled(true);
+        //设置 localStorge 传递信息到服务器的设置 默认是关闭的
+        this.getSettings().setDomStorageEnabled(true);// 打开本地缓存提供JS调用,至关重要
+        this.getSettings().setAllowFileAccess(true);
+        this.getSettings().setDatabaseEnabled(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
