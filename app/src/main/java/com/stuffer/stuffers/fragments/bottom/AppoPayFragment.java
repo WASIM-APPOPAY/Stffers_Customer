@@ -156,13 +156,13 @@ public class AppoPayFragment extends Fragment {
         scanText = arguments.getString(AppoConstants.MERCHANTSCANCODE);
 
         mWhere = arguments.getInt(AppoConstants.WHERE, 0);
-        Log.e("TAG", "onCreateView: scanText " + scanText);
+        ////Log.e("TAG", "onCreateView: scanText " + scanText);
         // resultScan = arguments.getString(AppoConstants.MERCHANTSCANCODE);
         mDecode = DecoderMpm.decode(scanText, MerchantPresentedMode.class);
         //String s = new Gson().toJson(decode);
         resultScan = new Gson().toJson(mDecode);
 
-        //Log.e("TAG", "onCreateView: onGson : " + resultScan);
+        ////Log.e("TAG", "onCreateView: onGson : " + resultScan);
 
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,11 +184,21 @@ public class AppoPayFragment extends Fragment {
                     return;
                 }
                 try {
-                    float twoDecimal = (float) Helper.getTwoDecimal(Float.parseFloat(edAmount.getText().toString().trim()) * conversionRates);
-                    tvAmountCredit.setText(String.valueOf(twoDecimal));
+                    String inputAmount = edAmount.getText().toString().trim();
+                    if (inputAmount.length() > 0) {
+                        if (String.valueOf(inputAmount.charAt(inputAmount.length() - 1)).equalsIgnoreCase(".")) {
+                            ////Log.e(TAG, "onTextChanged: no need to do anything" );
+
+                        } else {
+                            float twoDecimal = (float) Helper.getTwoDecimal(Float.parseFloat(edAmount.getText().toString().trim()) * conversionRates);
+                            tvAmountCredit.setText(String.valueOf(twoDecimal));
+                        }
+                    }
+
+
                 } catch (Exception e) {
                     if (edAmount.getText().toString().trim().isEmpty()) {
-                        //Log.e(TAG, "onTextChanged: no toast");
+                        ////Log.e(TAG, "onTextChanged: no toast");
                     } else {
                         Toast.makeText(getActivity(), "invalid format", Toast.LENGTH_SHORT).show();
                     }
@@ -200,7 +210,6 @@ public class AppoPayFragment extends Fragment {
 
             }
         });
-
 
 
         //showSuccessDialog("param result");
@@ -236,7 +245,7 @@ public class AppoPayFragment extends Fragment {
             String phoneNumber = contextSpecificData03.getString("value");
             ph = phoneNumber;
         } catch (JSONException e) {
-            Log.e("TAG", "getMerchantProfile: " + resultScan);
+            //Log.e("TAG", "getMerchantProfile: " + resultScan);
             e.printStackTrace();
         }
 
@@ -254,7 +263,7 @@ public class AppoPayFragment extends Fragment {
                     try {
                         indexMerchant = new JSONObject(res);
                         if (indexMerchant.isNull("result")) {
-                            //Log.e(TAG, "onResponse: " + true);
+                            ////Log.e(TAG, "onResponse: " + true);
                             Toast.makeText(getActivity(), "Merchant Details does not exists", Toast.LENGTH_LONG).show();
                             btnPayNow.setEnabled(false);
                             btnPayNow.setClickable(false);
@@ -282,7 +291,7 @@ public class AppoPayFragment extends Fragment {
                         startActivity(intent);
                         getActivity().finish();
                     } else if (response.code() == 400) {
-                        //Log.e(TAG, "onResponse: " + response.toString());
+                        ////Log.e(TAG, "onResponse: " + response.toString());
                     }
 
                 }
@@ -291,7 +300,7 @@ public class AppoPayFragment extends Fragment {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+                ////Log.e(TAG, "onFailure: " + t.getMessage().toString());
             }
         });*/
 
@@ -340,7 +349,7 @@ public class AppoPayFragment extends Fragment {
 
         conversionRates = 1;
         tvCardMerchant.setVisibility(View.VISIBLE);
-        Log.e(TAG, "showMerchantDetails: " + new Gson().toJson(mDecode));
+        ////Log.e(TAG, "showMerchantDetails: " + new Gson().toJson(mDecode));
         String mWhole = new Gson().toJson(mDecode);
 
         TagLengthString countryCode1 = mDecode.getCountryCode();
@@ -351,21 +360,21 @@ public class AppoPayFragment extends Fragment {
         AdditionalDataField value2 = additionalDataField1.getValue();
         TagLengthString terminalLabel1 = value2.getTerminalLabel();
         String mTerminalId = terminalLabel1.getValue();
-        //Log.e(TAG, "showMerchantDetails: "+mTerminalId );
+        ////Log.e(TAG, "showMerchantDetails: "+mTerminalId );
         TagLengthString merchantCity = mDecode.getMerchantCity();
         String mMerchantCity = merchantCity.getValue();
-        //Log.e(TAG, "showMerchantDetails: "+mMerchantCity );
+        ////Log.e(TAG, "showMerchantDetails: "+mMerchantCity );
 
 
         String s = new Gson().toJson(mDecode.getMerchantAccountInformation());
-        //Log.e(TAG, "showMerchantDetails: "+s );
+        ////Log.e(TAG, "showMerchantDetails: "+s );
         try {
             JSONObject mAccountInfo = new JSONObject(s);
             JSONObject jsonObject15 = mAccountInfo.getJSONObject("15");
             JSONObject value = jsonObject15.getJSONObject("value");
             String value1 = value.getString("value");
             String mMerchantId = value1.substring(value1.length() - 15);
-            //Log.e(TAG, "showMerchantDetails: "+mMerchantId );
+            ////Log.e(TAG, "showMerchantDetails: "+mMerchantId );
 
             tvEmialId.setText("TID : " + mTerminalId);
             tvIndex5.setText("MID : " + mMerchantId);
@@ -398,7 +407,7 @@ public class AppoPayFragment extends Fragment {
 
 
         } catch (JSONException e) {
-            Log.e("TAG", "getMerchantProfile: " + resultScan);
+            //Log.e("TAG", "getMerchantProfile: " + resultScan);
             e.printStackTrace();
         }
 
@@ -450,11 +459,11 @@ public class AppoPayFragment extends Fragment {
             JSONObject mResult = mIndex.getJSONObject(AppoConstants.RESULT);
             ph1 = mResult.getString(AppoConstants.MOBILENUMBER);
             area1 = mResult.getString(AppoConstants.PHONECODE);
-            Log.e(TAG, "getLatestUserDetails: " + ph1);
-            Log.e(TAG, "getLatestUserDetails: " + area1);
+            //Log.e(TAG, "getLatestUserDetails: " + ph1);
+            //Log.e(TAG, "getLatestUserDetails: " + area1);
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.e(TAG, "getLatestUserDetails: called");
+            //Log.e(TAG, "getLatestUserDetails: called");
         }
         String bearer_ = Helper.getAppendAccessToken("bearer ", accessToken);
 
@@ -464,11 +473,11 @@ public class AppoPayFragment extends Fragment {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
                     String res = new Gson().toJson(response.body());
-                    //Log.e(TAG, "onResponse: getprofile :" + res);
+                    ////Log.e(TAG, "onResponse: getprofile :" + res);
                     try {
                         JSONObject indexUser = new JSONObject(res);
                         if (indexUser.isNull("result")) {
-                            //Log.e(TAG, "onResponse: " + true);
+                            ////Log.e(TAG, "onResponse: " + true);
                             Toast.makeText(getActivity(), "User details not found", Toast.LENGTH_SHORT).show();
                         } else {
                             DataVaultManager.getInstance(getActivity()).saveUserDetails(res);
@@ -498,7 +507,7 @@ public class AppoPayFragment extends Fragment {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+                ////Log.e(TAG, "onFailure: " + t.getMessage().toString());
             }
         });
 
@@ -514,7 +523,7 @@ public class AppoPayFragment extends Fragment {
             public void onResponse(Call<CurrencyResponse> call, Response<CurrencyResponse> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    //Log.e(TAG, "onResponse: currency :: " + new Gson().toJson(response.body().getResult()));
+                    ////Log.e(TAG, "onResponse: currency :: " + new Gson().toJson(response.body().getResult()));
                     resultCurrency = response.body().getResult();
                     readUserAccounts();
                 }
@@ -523,7 +532,7 @@ public class AppoPayFragment extends Fragment {
             @Override
             public void onFailure(Call<CurrencyResponse> call, Throwable t) {
                 dialog.dismiss();
-                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+                ////Log.e(TAG, "onFailure: " + t.getMessage().toString());
             }
         });
 
@@ -534,7 +543,7 @@ public class AppoPayFragment extends Fragment {
         mListAccount = new ArrayList<>();
         String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
 
-        //Log.e(TAG, "readUserAccounts: " + vaultValue);
+        ////Log.e(TAG, "readUserAccounts: " + vaultValue);
 
         try {
             JSONObject root = new JSONObject(vaultValue);
@@ -546,14 +555,14 @@ public class AppoPayFragment extends Fragment {
                 AccountModel model = new AccountModel();
                 model.setAccountnumber(index.getString(AppoConstants.ACCOUNTNUMBER));
                 if (index.has(AppoConstants.ACCOUNTSTATUS)) {
-                    //Log.e(TAG, "readUserAccounts: AccountStatus : " + index.getString(AppoConstants.ACCOUNTSTATUS));
+                    ////Log.e(TAG, "readUserAccounts: AccountStatus : " + index.getString(AppoConstants.ACCOUNTSTATUS));
                     model.setAccountstatus(index.getString(AppoConstants.ACCOUNTSTATUS));
                     model.setCurrencyid(index.getString(AppoConstants.CURRENCYID));
                     model.setCurrencyCode(getCurrency(index.getString(AppoConstants.CURRENCYID)));
                     model.setCurrentbalance(index.getString(AppoConstants.CURRENTBALANCE));
                     mListAccount.add(model);
                 } /*else {
-                    //Log.e(TAG, "readUserAccounts: AccountStatus : " + "null");
+                    ////Log.e(TAG, "readUserAccounts: AccountStatus : " + "null");
                     model.setAccountstatus("");
                 }*/
 
@@ -574,7 +583,7 @@ public class AppoPayFragment extends Fragment {
                 conversionRates = 1;
                 tvConversionRates.setText(String.valueOf(conversionRates));
                 //} else {
-                //Log.e(TAG, "readUserAccounts: no need");
+                ////Log.e(TAG, "readUserAccounts: no need");
                 //getConversionBaseRate(mFromPosition);
                 //}
 
@@ -646,7 +655,7 @@ public class AppoPayFragment extends Fragment {
 
     private void getCommissions(String transaction) {
         userTransactionPin = transaction;
-        //Log.e(TAG, "getCommissions: pin : " + transaction);
+        ////Log.e(TAG, "getCommissions: pin : " + transaction);
         dialog = new ProgressDialog(getActivity());
         dialog.setMessage(getString(R.string.info_conversion_rate));
         dialog.show();
@@ -783,7 +792,7 @@ public class AppoPayFragment extends Fragment {
             mParam.put("money", edAmount.getText().toString().trim());
             mParam.put("accountNumber", Helper.getWalletAccountNumber());
             mParam.put("qrCode", scanText);
-            Log.e(TAG, "makePaymentUnion: " + mParam.toString());
+            //Log.e(TAG, "makePaymentUnion: " + mParam.toString());
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -794,7 +803,7 @@ public class AppoPayFragment extends Fragment {
         AndroidNetworking.post("https://prodapi.appopay.com/api/unionpay/transferMoney").addJSONObjectBody(mParam).build().getAsJSONObject(new JSONObjectRequestListener() {
             @Override
             public void onResponse(JSONObject response) {
-                //Log.e(TAG, "onResponse: " + response);
+                ////Log.e(TAG, "onResponse: " + response);
                 dialog.dismiss();
                 //{"result":{"merchantId":"000000000000096","merchantName":"STUFFRS, S.A."},"message":"success","status":200}
                 try {
@@ -811,8 +820,8 @@ public class AppoPayFragment extends Fragment {
 
             @Override
             public void onError(ANError anError) {
-                Log.e(TAG, "onError: "+anError.getErrorBody() );
-                Log.e(TAG, "onError: "+anError.getErrorDetail() );
+                //Log.e(TAG, "onError: " + anError.getErrorBody());
+                //Log.e(TAG, "onError: " + anError.getErrorDetail());
 
                 dialog.dismiss();
                 Toast.makeText(getActivity(), "" + anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
@@ -854,7 +863,7 @@ public class AppoPayFragment extends Fragment {
             String senderName = objResult.getString(AppoConstants.FIRSTNAME) + " " + objResult.getString(AppoConstants.LASTNAME);
             params.addProperty(AppoConstants.CUSTOMERNAME, senderName);
             params.addProperty(AppoConstants.AREACODE, objResult.getString(AppoConstants.PHONECODE));
-            //Log.e(TAG, "makePayment: " + params.toString());
+            ////Log.e(TAG, "makePayment: " + params.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -873,7 +882,7 @@ public class AppoPayFragment extends Fragment {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    //Log.e(TAG, "onResponse: " + new Gson().toJson(response.body()));
+                    ////Log.e(TAG, "onResponse: " + new Gson().toJson(response.body()));
                     String res = new Gson().toJson(response.body());
                     try {
                         JSONObject responsePayment = new JSONObject(res);
@@ -911,7 +920,7 @@ public class AppoPayFragment extends Fragment {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+                ////Log.e(TAG, "onFailure: " + t.getMessage().toString());
             }
         });
     }
@@ -976,7 +985,7 @@ public class AppoPayFragment extends Fragment {
         SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat(mDateFormat);
         Date mDate = new Date();
         String format = mSimpleDateFormat.format(mDate);
-        //Log.e(TAG, "getDate: " + format);
+        ////Log.e(TAG, "getDate: " + format);
         return format;
     }
 

@@ -263,7 +263,7 @@ public class P2PTransferActivity extends AppCompatActivity implements UserAccoun
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable t) {
                     dialog.dismiss();
-                    ////Log.e(TAG, "onFailure: " + t.getMessage().toString());
+
                 }
             });
 
@@ -340,12 +340,12 @@ public class P2PTransferActivity extends AppCompatActivity implements UserAccoun
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        Log.e(TAG, "onResponse: " + response.toString());
+
                     }
 
                     @Override
                     public void onError(ANError anError) {
-                        Log.e(TAG, "onError: " + anError.getErrorDetail());
+
                     }
                 });
 
@@ -372,7 +372,7 @@ public class P2PTransferActivity extends AppCompatActivity implements UserAccoun
 
                     @Override
                     public void onFailure(JSONObject response) {
-                        Log.e("OneSignalExample", "postNotification Failure: " + response.toString());
+
                     }
                 });*/
     }

@@ -132,7 +132,7 @@ public class NumEmailFragment extends Fragment {
             }
             Phonenumber.PhoneNumber numberProto = phoneUtil.parse("+" + id, "");
             long nationalNumber = numberProto.getNationalNumber();
-            edtCustomerMobileNumber.setText(""+nationalNumber);
+            edtCustomerMobileNumber.setText("" + nationalNumber);
             edtCustomerCountryCode.setCountryForPhoneCode(numberProto.getCountryCode());
 
         } catch (NumberParseException e) {
@@ -187,17 +187,14 @@ public class NumEmailFragment extends Fragment {
                 }
 
 
-                //mOtpRequestListener.onOtpRequest("IN", "91", "9836683269", "mdwasim508@gmail.com", "bankra mondal para killa math kolkata 711403, West Bengal","27");
-                //Log.e(TAG, "onClick: Add 1 : "+mAddress );
-                //Log.e(TAG, "onClick: Add 2 : "+placesAutocomplete.getText().toString() );
-                //temp
-                verifyMobileNumber(mCountryCode + mMobileNumber);
+                //mOtpRequestListener.onOtpRequest("IN", "91", "9830450542", "mdwasim508@gmail.com", "bankra mondal para killa math kolkata 711403, West Bengal","27",100,"711403","kolkata");
                 //requestForOtp();
+
+
+                verifyMobileNumber(mCountryCode + mMobileNumber);
+
             }
         });
-
-
-
 
 
         edtCustomerCountryCode.setExcludedCountries(getString(R.string.info_exclude_countries));
@@ -205,7 +202,7 @@ public class NumEmailFragment extends Fragment {
             @Override
             public void onCcpDialogOpen(Dialog dialog) {
                 //your code
-                TextView title =(TextView)  dialog.findViewById(R.id.textView_title);
+                TextView title = (TextView) dialog.findViewById(R.id.textView_title);
                 title.setText(getString(R.string.info_cc_reg));
             }
 
@@ -289,7 +286,7 @@ public class NumEmailFragment extends Fragment {
                         e.printStackTrace();
                     }
                 } else {
-                    //Log.e("TAG", "onResponse: failed called");
+
                     Toast.makeText(getActivity(), getString(R.string.error_phone_verification_failed), Toast.LENGTH_LONG).show();
                 }
             }
@@ -297,7 +294,7 @@ public class NumEmailFragment extends Fragment {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 hideProgress();
-                //Log.e("tag", t.getMessage().toString());
+
             }
         });
     }
@@ -350,7 +347,7 @@ public class NumEmailFragment extends Fragment {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 hideProgress();
-                //Log.e("tag", t.getMessage().toString());
+
             }
         });
 
@@ -376,7 +373,7 @@ public class NumEmailFragment extends Fragment {
             @Override
             public void onResponse(Call<CountryCodeResponse> call, Response<CountryCodeResponse> response) {
                 hideProgress();
-                //Log.e(TAG, "onResponse: " + new Gson().toJson(response));
+
                 if (response.isSuccessful()) {
                     if (response.body().getMessage().equalsIgnoreCase("success")) {
                         mListCountry = new ArrayList<>();
@@ -394,7 +391,7 @@ public class NumEmailFragment extends Fragment {
     }
 
     private void disableSelectCountry() {
-        Log.e(TAG, "disableSelectCountry: " + mCountryName);
+
         int pos = -1;
         for (int i = 0; i < mListCountry.size(); i++) {
             pos = pos + 1;
@@ -405,7 +402,7 @@ public class NumEmailFragment extends Fragment {
             if (result.equalsIgnoreCase(mCountryName)) {
                 String country = " ( " + mListCountry.get(i).getCountrycode() + " )  " + mListCountry.get(i).getCountryname();
                 mCountyId = mListCountry.get(i).getId();
-                //Log.e(TAG, "disableSelectCountry: " + mCountyId);
+
                 break;
             }
         }
@@ -417,13 +414,8 @@ public class NumEmailFragment extends Fragment {
         showProgress(getString(R.string.info_sending_otp));
         JsonObject param = new JsonObject();
         param.addProperty("mobileNumber", mMobileNumber);
-        if (BuildConfig.DEBUG){
-            param.addProperty("hashKey", "Ovjaes9qCGm");
-        }else {
-            param.addProperty("hashKey", "Xhf2+h0fqyI");
-        }
-
-
+        String hashCode = Helper.getHashCode();
+        param.addProperty("hashKey", hashCode);
         param.addProperty("phoneCode", mCountryCode);
 
 
@@ -452,7 +444,7 @@ public class NumEmailFragment extends Fragment {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e(TAG, "onFailure: " + t.getMessage());
+
                 hideProgress();
 
             }

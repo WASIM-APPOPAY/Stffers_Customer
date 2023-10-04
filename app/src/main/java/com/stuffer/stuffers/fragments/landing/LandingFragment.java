@@ -1,8 +1,10 @@
 package com.stuffer.stuffers.fragments.landing;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
@@ -26,6 +28,7 @@ import com.stuffer.stuffers.activity.wallet.MobileRechargeActivity;
 import com.stuffer.stuffers.activity.wallet.P2PTransferActivity;
 import com.stuffer.stuffers.activity.wallet.SignInActivity;
 import com.stuffer.stuffers.activity.wallet.TabsActivity;
+import com.stuffer.stuffers.communicator.StartActivityListener;
 import com.stuffer.stuffers.my_camera.MyCameraActivity;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
@@ -36,6 +39,7 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
     private LinearLayout llResturant, llTransfer, llScan, llLinkCard, llRecharge, llDiscount, llTrain;
     private ImageView ivReward;
     private LinearLayout llShop;
+    private StartActivityListener mListener;
 
     public LandingFragment() {
         // Required empty public constructor
@@ -94,9 +98,7 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
                 if (TextUtils.isEmpty(userData)) {
                     goToLoginScreen(3);
                 } else {
-                    Intent mIntent = new Intent(getActivity(), P2PTransferActivity.class);
-                    mIntent.putExtra(AppoConstants.WHERE, 3);
-                    startActivityForResult(mIntent, 100);
+                    mListener.OnStartActivityRequest(3);
                 }
 
                 break;
@@ -160,5 +162,12 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
 
                 break;
         }
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mListener=(StartActivityListener)context;
+
     }
 }

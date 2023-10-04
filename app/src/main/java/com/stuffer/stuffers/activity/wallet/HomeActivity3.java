@@ -59,6 +59,7 @@ import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.loan.L_HomeActivity;
 import com.stuffer.stuffers.activity.loan.L_IntroActivity;
 import com.stuffer.stuffers.api.ApiUtils;
+import com.stuffer.stuffers.api.Constants;
 import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.api.MainLoanInterface;
 import com.stuffer.stuffers.commonChat.chat.BaseActivity;
@@ -79,6 +80,7 @@ import com.stuffer.stuffers.commonChat.interfaces.UserGroupSelectionDismissListe
 import com.stuffer.stuffers.communicator.CashTransferListener;
 import com.stuffer.stuffers.communicator.LinkAccountListener;
 import com.stuffer.stuffers.communicator.ShopListener;
+import com.stuffer.stuffers.communicator.StartActivityListener;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomRegister;
 import com.stuffer.stuffers.fragments.landing.HomeLandingFragment;
 import com.stuffer.stuffers.fragments.landing.LandingFragment;
@@ -111,7 +113,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class HomeActivity3 extends BaseActivity implements View.OnClickListener, ChatItemClickListener, ProceedRequest, UserGroupSelectionDismissListener, CashTransferListener, LinkAccountListener {
+public class HomeActivity3 extends BaseActivity implements View.OnClickListener, ChatItemClickListener, ProceedRequest, UserGroupSelectionDismissListener, CashTransferListener, LinkAccountListener, StartActivityListener {
     private static final String TAG = "HomeActivity3";
     private static final int REQUEST_CODE_CHAT_FORWARD = 99;
     private static String CONFIRM_TAG = "confirmtag";
@@ -271,7 +273,6 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
             }
             Phonenumber.PhoneNumber numberProto = phoneUtil.parse("+" + id, "");
             isAccountExist(numberProto.getCountryCode(), numberProto.getNationalNumber());
-
         } catch (NumberParseException e) {
             System.err.println("NumberParseException was thrown: " + e.toString());
         }
@@ -280,8 +281,8 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
 
     private void isAccountExist(int countryCode, long nationalNumber) {
 
-        String url = "https://prodapi.appopay.com/api/users/checkUserExist?" + "customerType=CUSTOMER" + "&phoneCode=" + "" + countryCode + "&mobileNumber=" + "" + nationalNumber + "&";
-        Log.e(TAG, "isAccountExist: " + url);
+        String url = Constants.APPOPAY_BASE_URL + "api/users/checkUserExist?" + "customerType=CUSTOMER" + "&phoneCode=" + "" + countryCode + "&mobileNumber=" + "" + nationalNumber + "&";
+
         AndroidNetworking.get(url)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -302,7 +303,7 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
 
                     @Override
                     public void onError(ANError anError) {
-                        Log.e(TAG, "onError: " + anError.getErrorDetail());
+
                     }
                 });
 
@@ -399,7 +400,7 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
             case 201:
                 if (resultCode == RESULT_OK && data.getExtras() != null) {
                     try {
-                        Log.e(TAG, "onActivityResult: called");
+
                         String stringExtra = data.getStringExtra(AppoConstants.IMAGE_PATH);
 
                         File file2 = new File(stringExtra);
@@ -419,10 +420,10 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
                     }
                 }
             case 100:
-                Log.e(TAG, "onActivityResult: 100 called");
+
                 if (resultCode == Activity.RESULT_OK) {
                     mShare = data.getStringExtra("link");
-                    Log.e(TAG, "onActivityResult: " + mShare);
+
                     userSelectDialogFragment = UserSelectDialogFragment.newUserSelectInstance(myUsers);
                     FragmentManager manager = getSupportFragmentManager();
                     Fragment frag = manager.findFragmentByTag(USER_SELECT_TAG);
@@ -605,7 +606,7 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
         apiServiceLoan.getIsUserLogin_Or_Profile(mParam, authHeader).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                //Log.e(TAG, "onResponse: " + response);
+
                 /*{
                             "message":"fail", "error":true, "AccountBalace":{
                         },"base64QRImage":""
@@ -627,8 +628,8 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 hideLoading();
-                Log.e(TAG, "onFailure: " + t.getLocalizedMessage());
-                Log.e(TAG, "onFailure: " + t.getMessage());
+
+
             }
         });
     }
@@ -683,7 +684,7 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
                     Chat newChat = new Chat(newMessage, newMessage.getSenderId().equals(userMe.getId()));
                     mTemp = newChat;
 
-                    //Log.e(TAG, "onChildAdded: "+new Gson().toJson(newChat) );
+
                     if (!newChat.isGroup()) {
                         newChat.setChatName(getNameById(newChat.getUserId()));
 //                            for (User user : myUsers) {
@@ -845,24 +846,30 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
     }
 
     public static void showProfileAvatar(String avatar) {
-        //Log.e(TAG, "showProfileAvatar: called");
+
         String idPath = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_IDPATH);
-        if (!StringUtils.isEmpty(idPath)) {
-            if (idPath.startsWith("http"))
-                Glide.with(AppoPayApplication.getInstance()).load(idPath).fitCenter().into(ivUser);
-            else
+        if (!StringUtils.isEmpty(avatar)) {
+            if (avatar.startsWith("http"))
+                Glide.with(AppoPayApplication.getInstance()).load(avatar).fitCenter().into(ivUser);
+
+        } else {
+            if (!StringUtils.isEmpty(idPath)) {
                 Glide.with(AppoPayApplication.getInstance()).load(new File(idPath)).fitCenter().into(ivUser);
+            }
         }
     }
 
     public static void showProfileAvatarLogin(String avatar) {
 
         String idPath = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_IDPATH);
-        if (!StringUtils.isEmpty(idPath)) {
-            if (idPath.startsWith("http"))
-                Glide.with(AppoPayApplication.getInstance()).load(idPath).fitCenter().into(ivUser);
-            else
+        if (!StringUtils.isEmpty(avatar)) {
+            if (avatar.startsWith("http"))
+                Glide.with(AppoPayApplication.getInstance()).load(avatar).fitCenter().into(ivUser);
+
+        } else {
+            if (!StringUtils.isEmpty(idPath)) {
                 Glide.with(AppoPayApplication.getInstance()).load(new File(idPath)).fitCenter().into(ivUser);
+            }
         }
         /*Glide.with(AppoPayApplication.getInstance()).load(avatar).fitCenter().placeholder(R.drawable.user_chat).listener(new RequestListener<Drawable>() {
             @Override
@@ -874,7 +881,7 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
             @Override
             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                 DataVaultManager.getInstance(AppoPayApplication.getInstance()).saveIdImagePath(avatar);
-                Log.e(TAG, "onResourceReady:called ");
+
 
                 return false;
             }
@@ -887,7 +894,7 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
             if (!stateChanges.getFrom().isSubscribed() && stateChanges.getTo().isSubscribed()) {
                 usersRef.child(userMe.getId()).child("userPlayerId").setValue(stateChanges.getTo().getUserId());
                 helper.setMyPlayerId(stateChanges.getTo().getUserId());
-                //Log.e("TAG", "updateFcmToken: 1"+ stateChanges.getTo().getUserId());
+
             }
         });
         //{"id":"a8c2cfd1-021c-489b-8e57-e8fb2496036f","recipients":1,"external_id":null}
@@ -898,12 +905,12 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
             usersRef.child(userMe.getId()).child("userPlayerId").setValue(status.getUserId());
             helper.setMyPlayerId(status.getUserId());
 
-            //Log.e("TAG", "updateFcmToken: 1"+ status.getUserId());
+
         }
     }
 
     public void upDateBalance() {
-        Log.e(TAG, "upDateBalance: called");
+
         try {
             String currantBalance = Helper.getCurrantBalance();
             DecimalFormat df2 = new DecimalFormat("#.00");
@@ -959,4 +966,12 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
     }
 
 
+    @Override
+    public void OnStartActivityRequest(int requestCode) {
+        if (requestCode == 3) {
+            Intent mIntent = new Intent(HomeActivity3.this, P2PTransferActivity.class);
+            mIntent.putExtra(AppoConstants.WHERE, 3);
+            startActivityForResult(mIntent, 100);
+        }
+    }
 }

@@ -81,7 +81,7 @@ public class ProfileDetailsActivity extends AppCompatActivity {
             if (!StringUtils.isEmpty(vaultValue)) {
                 try {
                     mIndex = new JSONObject(vaultValue);
-                    ////Log.e("TAG", "onCreate: " + mIndex.toString());
+
                     JSONObject result = mIndex.getJSONObject("result");
                     tvUserName.setText("User Name : " + result.getString(AppoConstants.FIRSTNAME) + " " + result.getString(AppoConstants.LASTNAME));
                     tvPhone.setText("Mobile Number : " + result.getString(AppoConstants.MOBILENUMBER));
@@ -131,12 +131,12 @@ public class ProfileDetailsActivity extends AppCompatActivity {
             for (int i = 0; i < jsonCountryStateResult.length(); i++) {
                 JSONObject index = jsonCountryStateResult.getJSONObject(i);
                 if (index.getString(AppoConstants.ID).equals(countryId)) {
-//                    Log.e(TAG, "getState: Country Name :: " + index.getString(AppoConstants.COUNTRYNAME));
+
                     JSONArray jsonStateResult = index.getJSONArray(AppoConstants.STATES);
                     for (int j = 0; j < jsonStateResult.length(); j++) {
                         JSONObject indexState = jsonStateResult.getJSONObject(j);
                         if (indexState.getString(AppoConstants.ID).equals(stateId)) {
-//                            Log.e(TAG, "getState: State Name :: " + indexState.getString(AppoConstants.STATENAME));
+
                             tvState.setText("Province/State : "+indexState.getString(AppoConstants.STATENAME));
                             tvState.setVisibility(View.VISIBLE);
                             break;
@@ -169,7 +169,7 @@ public class ProfileDetailsActivity extends AppCompatActivity {
                         dialog.dismiss();
                         if (response.isSuccessful()) {
                             //String res = new Gson().toJson(response.body());
-                            ////Log.e(TAG, "onResponse: getprofile :" + res);
+
                             JsonObject body = response.body();
                             String res=body.toString();
 
@@ -190,7 +190,7 @@ public class ProfileDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<JsonObject> call, Throwable t) {
                         dialog.dismiss();
-                        ////Log.e(TAG, "onFailure: " + t.getMessage().toString());
+
                     }
                 });
 

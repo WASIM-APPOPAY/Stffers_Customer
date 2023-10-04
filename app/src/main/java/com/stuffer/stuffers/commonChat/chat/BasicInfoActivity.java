@@ -102,12 +102,6 @@ public class BasicInfoActivity extends AppCompatActivity {
         BasicInfoActivity.this.finish();*/
 
 
-
-
-
-
-
-
     }
 
 

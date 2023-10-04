@@ -46,6 +46,8 @@ public class ForgotPasswordFragment extends Fragment {
     private boolean mShowUser = false;
     private Dialog dialogError;
     private MyTextView tvPasswordPolicy;
+    private MyTextView tvForgot, tvReset;
+    private String mReset;
 
 
     public ForgotPasswordFragment() {
@@ -58,19 +60,26 @@ public class ForgotPasswordFragment extends Fragment {
         if (getArguments() != null) {
             mMobileNumber = getArguments().getString(AppoConstants.MOBILENUMBER);
             mAreaCode = getArguments().getString(AppoConstants.PHONECODE);
+            mReset = getArguments().getString("reset");
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View mView = inflater.inflate(R.layout.fragment_forgot_password, container, false);
+        tvForgot = mView.findViewById(R.id.tvForgot);
+        tvReset = mView.findViewById(R.id.tvReset);
         edtNewPassword = (MyEditText) mView.findViewById(R.id.edtNewPassword);
         edtConfirmPassword = (MyEditText) mView.findViewById(R.id.edtConfirmPassword);
         btnSubmit = (MyButton) mView.findViewById(R.id.btnSubmit);
         ll1 = (LinearLayout) mView.findViewById(R.id.ll1);
         tvPasswordPolicy = (MyTextView) mView.findViewById(R.id.tvPasswordPolicy);
+        if (mReset.equalsIgnoreCase("yes")) {
+            tvReset.setVisibility(View.VISIBLE);
+        } else {
+            tvForgot.setVisibility(View.VISIBLE);
+        }
 
 
         mainAPIInterface = ApiUtils.getAPIService();
@@ -128,11 +137,10 @@ public class ForgotPasswordFragment extends Fragment {
             return;
         }
 
-        if (!PasswordUtil.PASSWORD_PATTERN.matcher(edtConfirmPassword.getText().toString().trim()).matches()){
+        if (!PasswordUtil.PASSWORD_PATTERN.matcher(edtConfirmPassword.getText().toString().trim()).matches()) {
             edtConfirmPassword.setError("please follow the pattern below");
             return;
         }
-
 
 
         if (!edtNewPassword.getText().toString().trim().equals(edtConfirmPassword.getText().toString().trim())) {
@@ -143,8 +151,53 @@ public class ForgotPasswordFragment extends Fragment {
             return;
         }
 
-        processRequest1();
 
+        if (mReset.equalsIgnoreCase("yes")) {
+            Log.e(TAG, "verify: reset called");
+            processRequest2();
+        } else {
+            Log.e(TAG, "verify: forgot called");
+            processRequest1();
+        }
+
+
+    }
+
+    private void processRequest2() {
+        dialog = new ProgressDialog(getContext());
+        dialog.setMessage(getString(R.string.info_please_wait));
+        dialog.show();
+        mainAPIInterface.getReset_Password(mAreaCode, mMobileNumber, edtConfirmPassword.getText().toString().trim()).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                dialog.dismiss();
+                Log.e(TAG, "onResponse: " + response.body());
+
+                if (response.isSuccessful()) {
+                    String res = new Gson().toJson(response.body());
+                    try {
+                        JSONObject object = new JSONObject(res);
+                        if (object.getString(AppoConstants.MESSAGE).equalsIgnoreCase(AppoConstants.SUCCESS)) {
+                            Toast.makeText(getContext(), object.getString(AppoConstants.RESULT), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getContext(), SignInActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getContext(), object.getString(AppoConstants.MESSAGE), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                dialog.dismiss();
+                //Log.e(TAG, "onFailure: " + t.getMessage());
+            }
+        });
 
     }
 
@@ -180,14 +233,14 @@ public class ForgotPasswordFragment extends Fragment {
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
-                   }
+                    }
                 }
 
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e(TAG, "onFailure: "+t.getMessage() );
+                Log.e(TAG, "onFailure: " + t.getMessage());
                 dialog.dismiss();
             }
         });

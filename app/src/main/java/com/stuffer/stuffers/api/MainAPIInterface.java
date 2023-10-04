@@ -132,6 +132,11 @@ public interface MainAPIInterface<R extends Retrofit> {
     @GET(com.stuffer.stuffers.api.Constants.GET_FINDUSER)
     Call<JsonObject> getFindUserSecurityQuestion(@Path("mobilenumber") String mobile, @Path("areacode") String areacode1);
 
+    ///api/users/password/update/v2/86/15652957083/CUSTOMER/dengpf16
+    @GET(Constants.POST_RESET_PASSWORD)
+    Call<JsonObject> getReset_Password(@Path("areacode") String areacode, @Path("mobile_no") String mobile, @Path("password") String password);
+
+
     @Headers({
             "Accept: application/json",
             "Content-Type: application/json",
@@ -282,8 +287,7 @@ public interface MainAPIInterface<R extends Retrofit> {
     Call<ProductResponse> getProductResponse(@Body JsonObject body);
 
     @GET(com.stuffer.stuffers.api.Constants.POST_PRODUCT1)
-    Call<ProductResponse> getProductResponse(@Query("productType") String productType,@Query("countryCode") String countryCode);
-
+    Call<ProductResponse> getProductResponse(@Query("productType") String productType, @Query("countryCode") String countryCode);
 
 
     @Headers({
@@ -931,10 +935,10 @@ public interface MainAPIInterface<R extends Retrofit> {
     Call<JsonObject> getMerchantBusinessTypes(@Query("businessType") String businessType, @Query("subBusinessType") String subBusinessType);
 
     @GET(Constants.GET_ALL_RESTAURANT)
-    Call<AllRestaurant> getAllRestaurant(@Query("page") int page , @Query("size") int size);
+    Call<AllRestaurant> getAllRestaurant(@Query("page") int page, @Query("size") int size);
 
     @GET(Constants.GET_RESTAURANT_ITEMS)
-    Call<RestaurantItems> getAllRestaurantItems(@Query("userId") String userId );
+    Call<RestaurantItems> getAllRestaurantItems(@Query("userId") String userId);
 
 
 }

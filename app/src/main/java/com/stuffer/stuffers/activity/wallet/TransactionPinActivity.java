@@ -50,8 +50,9 @@ public class TransactionPinActivity extends AppCompatActivity implements Fragmen
             //Log.e(TAG, "onCreate: not called");
         }
 
-        smsListener();
         initBroadCast();
+        smsListener();
+
         registerReceiver(appSMSBroadcastReceiver, intentFilter);
     }
 
@@ -129,9 +130,8 @@ public class TransactionPinActivity extends AppCompatActivity implements Fragmen
         appSMSBroadcastReceiver.setOnSmsReceiveListener(new AppSMSBroadcastReceiver.OnSmsReceiveListener() {
             @Override
             public void onReceive(String messageCode) {
-                Log.e(TAG, "onReceive: " + messageCode);
-                Toast.makeText(TransactionPinActivity.this, messageCode, Toast.LENGTH_SHORT).show();
-
+                //Log.e(TAG, "onReceive: " + messageCode);
+                //Toast.makeText(TransactionPinActivity.this, messageCode, Toast.LENGTH_SHORT).show();
                 Pattern otpPattern = Pattern.compile("(|^)\\d{6}");
                 Matcher matcher = otpPattern.matcher(messageCode);
                 Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.mainContainer);

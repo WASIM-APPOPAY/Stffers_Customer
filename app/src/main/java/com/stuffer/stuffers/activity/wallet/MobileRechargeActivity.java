@@ -370,9 +370,9 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
             edtphone_number.setError(getString(R.string.error_enter_valid_phone_number));
             edtphone_number.requestFocus();
         } /*else if (!edtAmount.getText().toString().trim().matches(AMOUNT_REGEX)) {
-           ////Log.e(TAG, "verifyInput: invalid format :: "+edtAmount.getText().toString().trim());
+
         }*/ else {
-            ////Log.e(TAG, "verifyInput: valid format");
+
             //show wallet dialog
             closeKeyboard();
             showPaymentTypeDialog();
@@ -451,7 +451,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
             }
         } else if (requestCode == AppoConstants.PICK_CONTACT) {
             if (resultCode == Activity.RESULT_OK) {
-                //  Log.e(TAG, "onActivityResult: Pick Contact NUmber :: " + data.getStringExtra(AppoConstants.INFO));
+
                 String mMobileNumber = data.getStringExtra(AppoConstants.INFO);
                 edtphone_number.setText(mMobileNumber);
                 try {
@@ -463,8 +463,8 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
                     int countryCode = numberProto.getCountryCode();
                     long nationalNumber = numberProto.getNationalNumber();
                     edtphone_number.setText(String.valueOf(nationalNumber));
-                    //  Log.e("code", "code " + countryCode);
-                    //  Log.e("code", "national number " + nationalNumber);
+
+
                 } catch (NumberParseException e) {
                     System.err.println("NumberParseException was thrown: " + e.toString());
                 }
@@ -485,7 +485,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    ////Log.e(TAG, "onResponse: conversion : " + new Gson().toJson(response.body()));
+
                     String src = new Gson().toJson(response.body());
                     try {
                         JSONObject jsonConversion = new JSONObject(src);
@@ -738,7 +738,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
             sentParams.addProperty(AppoConstants.SENDERNAME, senderName);
             sentParams.addProperty(AppoConstants.TRANSACTIONPIN, userTransactionPin);
             sentParams.addProperty(AppoConstants.USERID, objResult.getString(AppoConstants.ID));
-            // Log.e(TAG, "makePayment: " + sentParams.toString());
+
             makeRechargePayment(sentParams);
 
         } catch (JSONException e) {
@@ -759,7 +759,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    ////Log.e(TAG, "onResponse: " + new Gson().toJson(response.body()));
+
                     String res = new Gson().toJson(response.body());
                     try {
                         JSONObject json = new JSONObject(res);
@@ -788,7 +788,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-                ////Log.e(TAG, "onFailure: " + t.getMessage().toString());
+
             }
         });
 

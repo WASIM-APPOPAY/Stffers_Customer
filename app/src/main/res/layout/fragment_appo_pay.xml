@@ -171,7 +171,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
-                        android:digits="0123456789."
+                        android:digits="0123456789"
                         android:drawableLeft="@drawable/ic_attach_money_recharge"
                         android:gravity="center_vertical"
                         android:hint="@string/info_hint_enter_amount"
@@ -192,13 +192,13 @@
                     android:visibility="gone" />
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_margin="8dp"
                     android:background="@drawable/edit_text_rounded2"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <com.stuffer.stuffers.views.MyTextView
                         android:layout_width="match_parent"
@@ -231,14 +231,14 @@
                     android:visibility="gone" />
 
                 <LinearLayout
-                    android:visibility="gone"
-
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:layout_marginEnd="8dp"
                     android:background="@drawable/edit_text_rounded2"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <com.stuffer.stuffers.views.MyTextView
                         android:layout_width="match_parent"
@@ -264,8 +264,6 @@
 
 
             </LinearLayout>
-
-
 
 
         </LinearLayout>

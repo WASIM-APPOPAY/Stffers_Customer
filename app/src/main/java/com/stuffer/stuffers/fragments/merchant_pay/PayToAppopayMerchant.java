@@ -170,8 +170,20 @@ public class PayToAppopayMerchant extends Fragment {
                     return;
                 }
                 try {
-                    float twoDecimal = (float) Helper.getTwoDecimal(Float.parseFloat(edAmount.getText().toString().trim()) * conversionRates);
-                    tvAmountCredit.setText(String.valueOf(twoDecimal));
+                    String inputAmount=edAmount.getText().toString().trim();
+                    if (inputAmount.length()>0){
+                        if (String.valueOf(inputAmount.charAt(inputAmount.length() - 1)).equalsIgnoreCase(".")) {
+                            //String temp = String.valueOf(inputAmount.charAt(inputAmount.length() - 1));
+                            //Log.e(TAG, "onTextChanged: no need to do anything" );
+
+                        }else {
+                            float twoDecimal = (float) Helper.getTwoDecimal(Float.parseFloat(edAmount.getText().toString().trim()) * conversionRates);
+                            tvAmountCredit.setText(String.valueOf(twoDecimal));
+                        }
+
+
+                    }
+
                 } catch (Exception e) {
                     if (edAmount.getText().toString().trim().isEmpty()) {
                         ////Log.e(TAG, "onTextChanged: no toast");

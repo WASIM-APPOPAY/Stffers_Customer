@@ -97,7 +97,7 @@ public class L_IntroActivity extends AppCompatActivity {
         helper = new ChatHelper(this);
         userMe = helper.getLoggedInUser();
         String id = userMe.getId();
-        Log.e(TAG, "onCreate: " + id);
+        //Log.e(TAG, "onCreate: " + id);
 
         getDetails();
 
@@ -119,7 +119,7 @@ public class L_IntroActivity extends AppCompatActivity {
         apiServiceLoan.getIsUserLogin_Or_Profile(mParam, authHeader).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                //Log.e(TAG, "onResponse: " + response);
+                ////Log.e(TAG, "onResponse: " + response);
                         /*{
                             "message":"fail", "error":true, "AccountBalace":{
                         },"base64QRImage":""
@@ -127,7 +127,7 @@ public class L_IntroActivity extends AppCompatActivity {
 
                 if (response.code() == 200) {
                     if (response.body().getAsJsonPrimitive(AppoConstants.MESSAGE).getAsString().equalsIgnoreCase("fail")) {
-                        Log.e(TAG, "onResponse: true called");
+                        //Log.e(TAG, "onResponse: true called");
                     }
                 }
 
@@ -136,8 +136,8 @@ public class L_IntroActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
 
-                Log.e(TAG, "onFailure: " + t.getLocalizedMessage());
-                Log.e(TAG, "onFailure: " + t.getMessage());
+                //Log.e(TAG, "onFailure: " + t.getLocalizedMessage());
+                //Log.e(TAG, "onFailure: " + t.getMessage());
             }
         });
     }

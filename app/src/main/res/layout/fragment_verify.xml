@@ -202,6 +202,17 @@
             app:backgroundTint="@color/colorPrimary"
             app:fabCustomSize="60dp" />
 
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_margin="@dimen/dp_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
+
+
+
+
     </LinearLayout>
 
 

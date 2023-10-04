@@ -440,7 +440,7 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 777 && resultCode == Activity.RESULT_OK) {
             stringExtraPath = data.getStringExtra(AppoConstants.IMAGE_PATH);
-            Log.e(TAG, "onActivityResult: " + stringExtraPath);
+           // Log.e(TAG, "onActivityResult: " + stringExtraPath);
 
             imageId.setVisibility(View.VISIBLE);
             DataVaultManager.getInstance(getActivity()).saveIdImagePath(stringExtraPath);

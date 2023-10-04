@@ -112,7 +112,7 @@ public class WalletActivity extends AppCompatActivity implements RecyclerViewRow
             @Override
             public void onFailure(Call<CurrencyResponse> call, Throwable t) {
                 dialog.dismiss();
-                //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+
             }
         });
 
@@ -122,7 +122,7 @@ public class WalletActivity extends AppCompatActivity implements RecyclerViewRow
         mListAccount = new ArrayList<>();
         String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
 
-        //Log.e(TAG, "readUserAccounts: " + vaultValue);
+
 
         try {
             JSONObject root = new JSONObject(vaultValue);
@@ -135,10 +135,10 @@ public class WalletActivity extends AppCompatActivity implements RecyclerViewRow
                 model.setAccountnumber(index.getString(AppoConstants.ACCOUNTNUMBER));
                 model.setAccountEncrypt(Helper.getAccountNumber(index.getString(AppoConstants.ACCOUNTNUMBER)));
                 if (index.has(AppoConstants.ACCOUNTSTATUS)) {
-                    //Log.e(TAG, "readUserAccounts: AccountStatus : " + index.getString(AppoConstants.ACCOUNTSTATUS));
+
                     model.setAccountstatus(index.getString(AppoConstants.ACCOUNTSTATUS));
                 } else {
-                    //Log.e(TAG, "readUserAccounts: AccountStatus : " + "null");
+
                     model.setAccountstatus("");
                 }
                 model.setCurrencyid(index.getString(AppoConstants.CURRENCYID));
@@ -171,7 +171,7 @@ public class WalletActivity extends AppCompatActivity implements RecyclerViewRow
 
                 tvAccountNos.setText(mListAccount.get(0).getAccountEncrypt());
 
-                //Log.e(TAG, "readUserAccounts: ==============" + finalString);
+
 
                 tvFullName.setText(Helper.getSenderName());
             }
@@ -233,7 +233,7 @@ public class WalletActivity extends AppCompatActivity implements RecyclerViewRow
 
     @Override
     public void onRowItemClick(int pos) {
-        //Log.e(TAG, "onRowItemClick: position " + pos);
+
         Intent intent = new Intent();
         intent.putExtra(AppoConstants.ACCOUNTNUMBER, mListAccount.get(pos).getAccountnumber());
         intent.putExtra(AppoConstants.ACCOUNTSTATUS, mListAccount.get(pos).getAccountstatus());

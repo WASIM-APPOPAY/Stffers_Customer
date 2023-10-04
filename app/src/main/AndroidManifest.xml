@@ -3,8 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.stuffer.stuffers"
     tools:ignore="ImpliedTouchscreenHardware,MissingLeanbackLauncher">
-
+    <!--D:\Hash_Sms>sh sms_retriever_hash_v9.sh - package "com.stuffer.stuffers" - keystore C:\Users\User\.android/debug.keystore-->
     <uses-sdk tools:overrideLibrary="com.google.zxing.client.android,com.aseem.versatileprogressbar" />
+     <!--<uses-permission android:name="android.permission.RECEIVE_SMS" android:protectionLevel="signature"/>-->
+
     <!--
           The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -27,13 +29,12 @@
         android:largeScreens="true"
         android:normalScreens="true"
         android:resizeable="false"
-        android:smallScreens="true" /> <!-- <uses-permission android:name="android.permission.RECEIVE_SMS"/> -->
+        android:smallScreens="true" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.INTERNET" /> <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -59,7 +60,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:replace="android:allowBackup">
+        tools:replace="android:allowBackup"
+        tools:ignore="UnusedAttribute">
         <activity
             android:name=".activity.loan.L_SignUpActivity"
             android:exported="false" />
@@ -123,16 +125,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FianceTab.WalletNewBankActivity"
-            android:exported="true">
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
-        </activity>
         <activity
             android:name=".activity.FianceTab.DominaActivity"
             android:exported="false" />
@@ -140,6 +136,15 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
+
+        <receiver
+            android:name=".myService.AppSMSBroadcastReceiver"
+            android:exported="false"
+            android:permission="com.google.android.gms.auth.api.phone.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".activity.wallet.GiftCardActivity"
@@ -377,7 +382,6 @@
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activity.wallet.SignupAcitivity"
-            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize|adjustPan"
             tools:ignore="LockedOrientationActivity">
@@ -525,7 +529,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".commonChat.chat.BasicInfoActivity"
-            android:exported="true"
             android:screenOrientation="portrait">
 
             <!--
@@ -557,7 +560,7 @@
             android:name=".activity.cashSends.SendCashActivity"
             android:screenOrientation="portrait" />
         <!--
-<service
+        <service
             android:name=".fragments.bottom.chatnotification.AppopayFirebaseMessaging"
             android:enabled="true"
             android:exported="true"
@@ -569,8 +572,7 @@
         -->
         <receiver
             android:name=".myService.NotificationReceiver"
-            android:enabled="true"
-            android:exported="true" />
+            android:enabled="true" />
 
         <service
             android:name=".myService.UploadAndSendService"

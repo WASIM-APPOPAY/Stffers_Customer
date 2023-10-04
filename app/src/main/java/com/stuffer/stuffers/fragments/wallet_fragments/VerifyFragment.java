@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +45,7 @@ import retrofit2.Response;
 
 public class VerifyFragment extends Fragment {
     private static final String TAG = "VerifyFragment";
-    String mParamNameCode, mParamCountryCode, mParamMobile, mParamEmail, mParamAdd,mParamZip,mParamCity,mParamStateId;
+    String mParamNameCode, mParamCountryCode, mParamMobile, mParamEmail, mParamAdd, mParamZip, mParamCity, mParamStateId;
     View mView;
     private Timer newTimer;
     private MyTextView txtTimer, tvHeadingVerify, tvOtpHeading;
@@ -59,6 +60,7 @@ public class VerifyFragment extends Fragment {
     MainAPIInterface mainAPIInterface;
     private boolean mVerify = true;
     private String strOtp;
+    private ProgressBar progress;
 
     public VerifyFragment() {
         // Required empty public constructor
@@ -74,9 +76,9 @@ public class VerifyFragment extends Fragment {
             mParamMobile = getArguments().getString(AppoConstants.MOBILENUMBER);
             mParamEmail = getArguments().getString(AppoConstants.EMIAL_ID);
             mParamAdd = getArguments().getString(AppoConstants.ADDRESS);
-            mParamStateId=getArguments().getString(AppoConstants.STATEID);
-            mParamZip=getArguments().getString(AppoConstants.ZIPCODE2);
-            mParamCity=getArguments().getString(AppoConstants.CITY);
+            mParamStateId = getArguments().getString(AppoConstants.STATEID);
+            mParamZip = getArguments().getString(AppoConstants.ZIPCODE2);
+            mParamCity = getArguments().getString(AppoConstants.CITY);
         }
     }
 
@@ -89,6 +91,7 @@ public class VerifyFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_verify, container, false);
         txtTimer = mView.findViewById(R.id.txtTimer);
         llReOtp = mView.findViewById(R.id.llReOtp);
+        progress = mView.findViewById(R.id.progress);
         llVerificationOtp = mView.findViewById(R.id.llVerificationOtp);
         tvHeadingVerify = mView.findViewById(R.id.tvHeadingVerify);
         tvOtpHeading = mView.findViewById(R.id.tvOtpHeading);
@@ -115,7 +118,7 @@ public class VerifyFragment extends Fragment {
             public void onCcpDialogOpen(Dialog dialog) {
 
                 //your code
-                TextView title =(TextView)  dialog.findViewById(R.id.textView_title);
+                TextView title = (TextView) dialog.findViewById(R.id.textView_title);
                 title.setText(getString(R.string.info_cc_reg));
                 dialog.dismiss();
             }
@@ -157,6 +160,7 @@ public class VerifyFragment extends Fragment {
             public void onClick(View view) {
                 llVerificationOtp.setVisibility(View.VISIBLE);
                 llReOtp.setVisibility(View.GONE);
+                progress.setVisibility(View.VISIBLE);
                 requestForOtp();
             }
         });
@@ -173,8 +177,9 @@ public class VerifyFragment extends Fragment {
                         hideProgress();
                         if (response.isSuccessful()) {
                             if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
-                                Helper.showLongMessage(getActivity(), getString(R.string.info_verified));
+                                //Helper.showLongMessage(getActivity(), getString(R.string.info_verified));
                                 mVerifiedListener.onVerified(mParamNameCode, mParamCountryCode, mParamMobile);
+                                progress.setVisibility(View.GONE);
                             } else {
                                 if (response.body().get("result").getAsString().equalsIgnoreCase("failed")) {
                                     Helper.showErrorMessage(getActivity(), response.body().get("message").getAsString());
@@ -209,11 +214,8 @@ public class VerifyFragment extends Fragment {
         showProgress(getString(R.string.info_sending_otp));
         JsonObject param = new JsonObject();
         param.addProperty("mobileNumber", mParamMobile);
-        if (BuildConfig.DEBUG){
-            param.addProperty("hashKey", "Ovjaes9qCGm");
-        }else {
-            param.addProperty("hashKey", "Xhf2+h0fqyI");
-        }
+        String hashCode = Helper.getHashCode();
+        param.addProperty("hashKey", hashCode);
         param.addProperty("phoneCode", mParamCountryCode);
 
 
@@ -236,14 +238,13 @@ public class VerifyFragment extends Fragment {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e(TAG, "onFailure: " + t.getMessage());
+
                 hideProgress();
 
             }
         });
 
     }
-
 
 
     private void startTimer() {

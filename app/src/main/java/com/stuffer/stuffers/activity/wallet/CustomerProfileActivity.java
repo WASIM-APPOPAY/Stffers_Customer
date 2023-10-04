@@ -138,6 +138,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        Log.e(TAG, "onCreate: "+Helper.getTransactionPin() );
         setContentView(R.layout.profile_activity);
         apiServiceUNIONPay = ApiUtils.getApiServiceUNIONPay();
 
@@ -268,10 +269,10 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         apiServiceUNIONPay.getSavedCardUnion(walletAccountNumber).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.e(TAG, "onResponse: " + response);
+
                 if (response.isSuccessful()) {
                     String s1 = new Gson().toJson(response.body());
-                    Log.e(TAG, "onResponse: " + s1);
+
                     try {
                         JSONObject mRoot = new JSONObject(s1);
                         if (mRoot.getInt("status") == 200 && mRoot.getString("message").equalsIgnoreCase("success")) {
@@ -314,7 +315,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e(TAG, "onFailure: " + t.getMessage());
+
             }
         });
 
@@ -562,7 +563,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
                             String mQrCode1 = resultQRCODE.substring(resultQRCODE.indexOf(",") + 1);
                             final byte[] decodedBytes = Base64.decode(mQrCode1, Base64.DEFAULT);
                             Glide.with(CustomerProfileActivity.this).load(decodedBytes).into(customerQrCodeQrCode);
-                            //Log.e(TAG, "onResponse: called" );
+
                             frameLayout.setVisibility(View.VISIBLE);
                             //later enable
                             //getSavedCard();
@@ -581,7 +582,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 hideDialog();
-                Log.e(TAG, "onFailure: " + t.getMessage());
+
                 Toast.makeText(CustomerProfileActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -591,7 +592,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
     private void initViews() {
         String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        //Log.e(TAG, "initViews: " + android_id);
+
         customerQrCodeQrCode = findViewById(R.id.customerQrCodeQrCode);
         frameLayout = findViewById(R.id.frameLayout);
         //txtUpdateProfile = (MyTextView) findViewById(R.id.txtUpdateProfile);
@@ -695,11 +696,11 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == AppoConstants.QUICK_PASS_REQUEST) {
             if (resultCode == RESULT_OK) {
-                ////  Log.e(TAG, "onActivityResult: success called");
+
                 AppoPayApplication.UPDATE_WALLET = true;
                 onUpdateProfile();
             } else {
-                ////  Log.e(TAG, "onActivityResult: cancel called");
+
                 AppoPayApplication.UPDATE_WALLET = false;
             }
         }
@@ -726,7 +727,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         if (!StringUtils.isEmpty(vaultValue)) {
             try {
                 mIndex = new JSONObject(vaultValue);
-                //////Log.e("TAG", "onCreate: " + mIndex.toString());
+
                 JSONObject result = mIndex.getJSONObject("result");
                 tvUserName.setText(result.getString(AppoConstants.FIRSTNAME) + " " + result.getString(AppoConstants.LASTNAME));
                 tvUserMobile.setText(result.getString(AppoConstants.MOBILENUMBER));
@@ -773,7 +774,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
                     dialog.dismiss();
                     if (response.isSuccessful()) {
                         //String res = new Gson().toJson(response.body());
-                        Log.e(TAG, "onResponse: getprofile :");
+
                         Helper.setUserDetailsNull();
                         JsonObject body = response.body();
                         String res = body.toString();
@@ -794,7 +795,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable t) {
                     dialog.dismiss();
-                    //////Log.e(TAG, "onFailure: " + t.getMessage().toString());
+
                 }
             });
 
@@ -823,7 +824,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
             @Override
             public void onFailure(Call<CurrencyResponse> call, Throwable t) {
                 dialog.dismiss();
-                //////Log.e(TAG, "onFailure: " + t.getMessage().toString());
+
             }
         });
 
@@ -843,12 +844,12 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
                 model.setAccountnumber(index.getString(AppoConstants.ACCOUNTNUMBER));
                 String mIncryptAccount = getAccountNumber(index.getString(AppoConstants.ACCOUNTNUMBER));
                 model.setAccountEncrypt(mIncryptAccount);
-                //////Log.e(TAG, "readUserAccounts: encrypt ::  " + mIncryptAccount);
+
                 if (index.has(AppoConstants.ACCOUNTSTATUS)) {
-                    //////Log.e(TAG, "readUserAccounts: AccountStatus : " + index.getString(AppoConstants.ACCOUNTSTATUS));
+
                     model.setAccountstatus(index.getString(AppoConstants.ACCOUNTSTATUS));
                 } else {
-                    //////Log.e(TAG, "readUserAccounts: AccountStatus : " + "null");
+
                     model.setAccountstatus("");
                 }
                 model.setCurrencyid(index.getString(AppoConstants.CURRENCYID));
@@ -907,11 +908,11 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
                 strTemp = strTemp + temp;
             }
         }
-        ////////Log.e(TAG, "getAccountNumber: atLast :: " + strTemp);
+
         StringBuilder builder = new StringBuilder();
         builder.append(strTemp);
         builder = builder.reverse();
-        ////////Log.e(TAG, "getAccountNumber: after reverse ::  " + builder.toString());
+
         return String.valueOf(builder);
     }
 
@@ -1011,7 +1012,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         public void onReceive(Context context, Intent intent) {
             boolean booleanExtra = intent.getBooleanExtra(AppoConstants.HAS_DISCOUNT, false);
             if (booleanExtra) {
-                // Log.e(TAG, "onReceive: " + intent.getStringExtra(AppoConstants.DISCOUNT));
+
                 String stringExtra = intent.getStringExtra(AppoConstants.DISCOUNT);
                 try {
                     JSONObject mJson = new JSONObject(stringExtra);

@@ -25,6 +25,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.gson.Gson;
@@ -38,13 +41,17 @@ import com.stuffer.stuffers.activity.forgopassword.ForgotPasswordActvivity;
 import com.stuffer.stuffers.activity.restaurant.E_ShopActivity;
 import com.stuffer.stuffers.activity.restaurant.E_StoreDiscountActivity;
 import com.stuffer.stuffers.api.ApiUtils;
+import com.stuffer.stuffers.api.Constants;
 import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.commonChat.chat.TransferChatActivity;
 import com.stuffer.stuffers.commonChat.chatModel.Chat;
+import com.stuffer.stuffers.commonChat.chatModel.User;
+import com.stuffer.stuffers.commonChat.chatUtils.ChatHelper;
 import com.stuffer.stuffers.communicator.AreaSelectListener;
 import com.stuffer.stuffers.communicator.OnTransactionPinSuccess;
 import com.stuffer.stuffers.communicator.TransactionPinListener;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomPasswordPolicy;
+import com.stuffer.stuffers.fragments.bottom_fragment.BottomRegister;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomTransactionPin;
 import com.stuffer.stuffers.fragments.dialog.AreaCodeDialog;
 import com.stuffer.stuffers.models.output.MappingResponse2;
@@ -61,6 +68,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import io.michaelrocks.libphonenumber.android.NumberParseException;
+import io.michaelrocks.libphonenumber.android.PhoneNumberUtil;
+import io.michaelrocks.libphonenumber.android.Phonenumber;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -103,11 +113,16 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
     private Chat chat;
     private BottomTransactionPin mBottomTransDialog;
     private ProgressDialog mProgress;
+    private ChatHelper helper;
+    private User userMe;
+    private PhoneNumberUtil phoneUtil;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signin);
+        helper = new ChatHelper(this);
+        userMe = helper.getLoggedInUser();
         if (getIntent().getExtras() != null) {
             mType = getIntent().getIntExtra(AppoConstants.WHERE, 0);
             if (mType == 5) {
@@ -176,7 +191,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                     edtPassword.setError(getString(R.string.info_enter_password));
                 } else {
                     if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
-                        //////Log.e(TAG, "onClick: RETURN CALLED");
+
                         return;
                     }
                     mLastClickTime = SystemClock.elapsedRealtime();
@@ -195,9 +210,9 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent mIntent = new Intent(SignInActivity.this, Registration.class);
-                startActivity(mIntent);
-                finish();
+
+                isAppoPayAccountExist(userMe.getId(), userMe.getName());
+
 
             }
         });
@@ -255,6 +270,59 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                 getAreaCodes();
             }
         });
+
+
+    }
+
+    private void isAppoPayAccountExist(String id, String name) {
+        try {
+            if (phoneUtil == null) {
+                phoneUtil = PhoneNumberUtil.createInstance(SignInActivity.this);
+            }
+            Phonenumber.PhoneNumber numberProto = phoneUtil.parse("+" + id, "");
+            isAccountExist(numberProto.getCountryCode(), numberProto.getNationalNumber());
+        } catch (NumberParseException e) {
+            System.err.println("NumberParseException was thrown: " + e.toString());
+        }
+
+    }
+
+
+    private void isAccountExist(int countryCode, long nationalNumber) {
+        showLoading();
+
+        String url = Constants.APPOPAY_BASE_URL + "api/users/checkUserExist?" + "customerType=CUSTOMER" + "&phoneCode=" + "" + countryCode + "&mobileNumber=" + "" + nationalNumber + "&";
+
+        AndroidNetworking.get(url)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        hideLoading();
+                        try {
+                            if (response.getString("message").equalsIgnoreCase("success")) {
+                                //Log.e(TAG, "onResponse: " + response);
+                                Toast.makeText(SignInActivity.this, "Already account exist!", Toast.LENGTH_SHORT).show();
+                                /*Intent mIntent = new Intent(SignInActivity.this, Registration.class);
+                                startActivity(mIntent);
+                                finish();*/
+                            } else {
+                                Intent mIntent = new Intent(SignInActivity.this, Registration.class);
+                                startActivity(mIntent);
+                                finish();
+
+                            }
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        hideLoading();
+                        Toast.makeText(SignInActivity.this, "" + anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
 
     }
@@ -319,7 +387,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                     } else if (response.code() == 503) {
                         Toast.makeText(SignInActivity.this, getString(R.string.info_503), Toast.LENGTH_SHORT).show();
                     } else {
-                        //Log.e(TAG, "onResponse: mapping :: " + response);
+
                         Toast.makeText(SignInActivity.this, getString(R.string.info_user_not_exist), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -331,10 +399,8 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
 
                 RequestBody body = call.request().body();
                 String s = new Gson().toJson(body);
-                Log.e(TAG, "onFailure: " + s);
-                Log.e(TAG, "onFailure: " + t.getMessage());
 
-                //Log.e("tag", t.getMessage().toString());
+
             }
         });
 
@@ -347,39 +413,18 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         dialog.setMessage(getString(R.string.info_please_wait_dots));
         dialog.show();
         String strUniqueNumber = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_UNIQUE_NUMBER);
-        Log.e(TAG, "getAccessToken: " + strUniqueNumber);
+
         String userName = "devglan-client";
         String password = "devglan-secret";
         String base = userName + ":" + password;
         String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
         String loginPassword = edtPassword.getText().toString().trim();
-
-        /*mainAPIInterface.getAuthorization(authHeader, strUniqueNumber, loginPassword, "password").enqueue(new Callback<AuthorizationResponse>() {
-            @Override
-            public void onResponse(Call<AuthorizationResponse> call, Response<AuthorizationResponse> response) {
-                dialog.dismiss();
-                if (response.isSuccessful()) {
-                    String accessToken = response.body().getAccessToken();
-                    DataVaultManager.getInstance(SignInActivity.this).saveUserAccessToken(accessToken);
-                    //generateOtp();
-                    getSignInDetails();
-                } else {
-                    Toast.makeText(SignInActivity.this, getString(R.string.error_account_verification), Toast.LENGTH_SHORT).show();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<AuthorizationResponse> call, Throwable t) {
-                dialog.dismiss();
-            }
-        });*/
         mainAPIInterface.getAuthorization2(authHeader, strUniqueNumber, loginPassword, "password").enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    //Log.e(TAG, "onResponse: "+response.body().toString());
+
 
                     if (response.body().has("access_token")) {
                         String access_token = response.body().get("access_token").getAsString();
@@ -393,13 +438,8 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                         }
                     }
 
-                    /*String accessToken = response.body().getAccessToken();
-                    DataVaultManager.getInstance(SignInActivity.this).saveUserAccessToken(accessToken);
-
-                    getSignInDetails();*/
                 } else {
                     Toast.makeText(SignInActivity.this, getString(R.string.error_account_verification), Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "onResponse: " + new Gson().toJson(response.body()));
 
 
                 }
@@ -477,7 +517,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                         JSONObject mPrev = new JSONObject(body.toString());
                         if (mPrev.getString("message").equalsIgnoreCase("success")) {
                             String jsonUserDetails = mPrev.toString();
-                            ////Log.e(TAG, "onResponse: " + jsonUserDetails);
+
                             Helper.setUserDetailsNull();
                             DataVaultManager.getInstance(SignInActivity.this).saveUserDetails(jsonUserDetails);
 
@@ -496,8 +536,18 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                                     try {
                                         if (result.getString(AppoConstants.AVATAR).startsWith("http")) {
                                             HomeActivity3.showProfileAvatarLogin(result.getString(AppoConstants.AVATAR));
+                                            goToScreen(mType);
+
+                                        } else if (result.getBoolean("isPasswordOutdated")) {
+                                            Intent intent = new Intent(SignInActivity.this, ForgotPasswordActvivity.class);
+                                            intent.putExtra("expire", "data");
+                                            startActivity(intent);
+                                            finish();
+                                        } else {
+                                            goToScreen(mType);
                                         }
-                                        goToScreen(mType);
+
+
                                     } catch (Exception e) {
                                         goToScreen(mType);
                                     }
@@ -522,7 +572,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-////                Log.e("tag", t.getMessage().toString());
+
             }
         });
     }
@@ -614,14 +664,13 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
 
     @Override
     public void onPinCreated() {
-        if (mBottomTransDialog != null)
-            mBottomTransDialog.dismiss();
+        if (mBottomTransDialog != null) mBottomTransDialog.dismiss();
         String base64 = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_BASE_64);
         if (!StringUtils.isEmpty(base64)) {
-            ////Log.e(TAG, "onPinCreated: not empty" );
+
             uploadUserAvatar(base64);
         } else {
-            ////Log.e(TAG, "onPinCreated: empty" );
+
             goToScreen(mType);
         }
 
@@ -670,14 +719,6 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                 }
                 goToScreen(mType);
 
-                /*if (response.code() == 200) {
-                    //Log.e(TAG, "onResponse: " + response);
-                    String res = new Gson().toJson(response.body());
-                    JSONObject
-
-                } else {
-                    Toast.makeText(SignInActivity.this, "Error : " + response.code(), Toast.LENGTH_SHORT).show();
-                }*/
 
             }
 
@@ -692,7 +733,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
 
     @Override
     public void onPinConfirm(String pin) {
-        //Log.e(TAG, "onPinConfirm: " + pin);
+
         String accesstoken = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_ACCESSTOKEN);
         String bearer_ = Helper.getAppendAccessToken("bearer ", accesstoken);
         int userId = Helper.getUserId();
@@ -708,7 +749,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                         JSONObject mPrev = new JSONObject(body.toString());
                         if (mPrev.getString("message").equalsIgnoreCase("success")) {
                             String jsonUserDetails = mPrev.toString();
-                            //Log.e(TAG, "onResponse: " + jsonUserDetails);
+
                             Helper.setUserDetailsNull();
                             DataVaultManager.getInstance(SignInActivity.this).saveUserDetails(jsonUserDetails);
                             JSONObject result;
@@ -746,9 +787,5 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         });
 
 
-       /* Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(mPinTag);
-        if (currentFragment instanceof BottomTransactionPin) {
-            ((BottomTransactionPin) currentFragment).updatePin(pin);
-        }*/
     }
 }

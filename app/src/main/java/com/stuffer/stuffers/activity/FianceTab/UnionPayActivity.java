@@ -158,7 +158,7 @@ public class UnionPayActivity extends AppCompatActivity implements UnionPayListe
 
     @Override
     public void onOpenNewAccountRequest() {
-        Log.e(TAG, "onOpenNewAccountRequest: called");
+        //Log.e(TAG, "onOpenNewAccountRequest: called");
         UnionOpenAccountFragment unionOpenAccountFragment = new UnionOpenAccountFragment();
         toolbarTitle.setText(getString(R.string.info_verify_kyc));
         initFragments(unionOpenAccountFragment, "open_ac");
@@ -275,7 +275,7 @@ public class UnionPayActivity extends AppCompatActivity implements UnionPayListe
     @Override
     public void onConfirm() {
         Intent intentBank = new Intent();
-        setResult(RESULT_OK,intentBank);
+        setResult(RESULT_OK, intentBank);
         finish();
     }
 }

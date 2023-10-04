@@ -107,7 +107,7 @@ public class BottomChatFragment extends BaseFragment implements View.OnClickList
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ArrayList<Chat> savedChats = helper.getChats("chats_" + groupChats);
         String s = new Gson().toJson(savedChats);
-        Log.e(TAG, "onViewCreated: "+s );
+
         //Collections.reverse(savedChats);
         chatDataList.addAll(savedChats);
         chatAdapter = new ChatAdapter(getActivity(), chatDataList);
@@ -128,7 +128,7 @@ public class BottomChatFragment extends BaseFragment implements View.OnClickList
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "onFailure: called");
+
                         e.printStackTrace();
                     }
                 });
@@ -136,7 +136,7 @@ public class BottomChatFragment extends BaseFragment implements View.OnClickList
         }
     }
     public void addMessage(Chat chat) {
-        Log.e(TAG, "addMessage: called" );
+
         if (mContext != null && chatAdapter != null) {
             int pos = chatDataList.indexOf(chat);
             if (pos == -1) {
@@ -174,7 +174,7 @@ public class BottomChatFragment extends BaseFragment implements View.OnClickList
                     Chat newChat = new Chat(newMessage, newMessage.getSenderId().equals(userMe.getId()));
 
 
-                    //Log.e(TAG, "onChildAdded: "+new Gson().toJson(newChat) );
+
                     if (!newChat.isGroup()) {
                         newChat.setChatName(getNameById(newChat.getUserId()));
 //                            for (User user : myUsers) {

@@ -52,8 +52,8 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         String[] descriptionData ={ ""+getString(R.string.info_step_one),""+getString(R.string.info_step_two),""+getString(R.string.info_step_three)};
 
         stateProgressBar.setStateDescriptionData(descriptionData);
-        smsListener();
         initBroadCast();
+        smsListener();
         registerReceiver(appSMSBroadcastReceiver, intentFilter);
         NumEmailFragment mNumEmailFragment = new NumEmailFragment();
         intiFragment(mNumEmailFragment);
@@ -159,10 +159,10 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         try {
             Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.containerSignUp);
             if (currentFragment instanceof NumEmailFragment) {
-                Log.d("message", "home fragment");
+
                 finish();
             } else {
-                Log.d("message", "popping backstack");
+
                 getSupportFragmentManager().popBackStack();
                 Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.containerSignUp);
                 if (fragmentById instanceof VerifyFragment) {
@@ -194,8 +194,8 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         appSMSBroadcastReceiver.setOnSmsReceiveListener(new AppSMSBroadcastReceiver.OnSmsReceiveListener() {
             @Override
             public void onReceive(String messageCode) {
-                Log.e(TAG, "onReceive: " + messageCode);
-                Toast.makeText(Registration.this, messageCode, Toast.LENGTH_SHORT).show();
+                //Log.e(TAG, "onReceive: " + messageCode);
+                //Toast.makeText(Registration.this, messageCode, Toast.LENGTH_SHORT).show();
 
                 Pattern otpPattern = Pattern.compile("(|^)\\d{6}");
                 Matcher matcher = otpPattern.matcher(messageCode);
@@ -212,22 +212,19 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
     }
 
     private void smsListener() {
-        SmsRetrieverClient client = SmsRetriever.getClient(this);
+        SmsRetrieverClient client = SmsRetriever.getClient(Registration.this);
         client.startSmsRetriever();
     }
 
 
 
-    /*@Override
-    protected void onResume() {
-        super.onResume();
-        registerReceiver(appSMSBroadcastReceiver, intentFilter);
-    }*/
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(appSMSBroadcastReceiver);
+        appSMSBroadcastReceiver=null;
     }
 
     @Override
@@ -238,11 +235,7 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         }
     }
 
-    /*@Override
-    protected void onPause() {
-        super.onPause();
-        unregisterReceiver(appSMSBroadcastReceiver);
-    }*/
+
 
 
 }

@@ -119,6 +119,7 @@ public class WalletTransferFragment2 extends Fragment {
     private double exchange;
     private String toCurrency;
     private float mCreditAmount = (float) 0.00;
+    private float fundamount;
 
 
     public WalletTransferFragment2() {
@@ -174,20 +175,37 @@ public class WalletTransferFragment2 extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 try {
-                    String inputAmount = edAmount.getText().toString().trim();
-                    if (inputAmount.length() > 0) {
-                        float tranaferAmount = Float.parseFloat(inputAmount);
-                        //float transfer = (float) (tranaferAmount * conversionRates);
-                        float transfer = (float) (tranaferAmount / exchange);
-                        float twoDecimal = (float) Helper.getTwoDecimal(transfer);
-                        mCreditAmount = (float) (twoDecimal + 0.00);
 
-                        DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
-                        formatter.applyPattern("#,###,###,###.00");
-                        String formattedString = formatter.format(twoDecimal);
-                        tvAmountCredit.setText(String.valueOf(formattedString) + " " + toCurrency.toUpperCase());
-                        btnTransfer.setEnabled(true);
-                        btnTransfer.setClickable(true);
+                    String inputAmount = edAmount.getText().toString().trim();
+                    DecimalFormat decimalFormat = new DecimalFormat();
+                    if (inputAmount.length() > 0) {
+                        if (String.valueOf(inputAmount.charAt(inputAmount.length() - 1)).equalsIgnoreCase(".")) {
+                            ////Log.e(TAG, "onTextChanged: no need to do anything" );
+
+                        } else {
+                            //Log.e(TAG, "onTextChanged: input :  " + inputAmount);
+                            String repl = inputAmount.replace(" ", "");
+                            String replace = repl.replace(",", "");
+                            /*if (replace.contains(" ")){
+                                //Log.e(TAG, "onTextChanged: true" );
+                            }else {
+                                //Log.e(TAG, "onTextChanged: false" );
+                            }*/
+                            //Log.e(TAG, "onTextChanged: replace : " + replace);
+
+                            float tranaferAmount = decimalFormat.parse(replace).floatValue();
+                            float transfer = (float) (tranaferAmount / exchange);
+                            float twoDecimal = (float) Helper.getTwoDecimal(transfer);
+                            mCreditAmount = (float) (twoDecimal + 0.00);
+                            //Log.e(TAG, "onTextChanged: credit "+mCreditAmount );
+                            DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+                            formatter.applyPattern("#,###,###,###.00");
+                            String formattedString = formatter.format(twoDecimal);
+                            tvAmountCredit.setText(String.valueOf(formattedString) + " " + toCurrency.toUpperCase());
+                            btnTransfer.setEnabled(true);
+                            btnTransfer.setClickable(true);
+
+                        }
                     } else {
                         float twoDecimal = (float) Helper.getTwoDecimal(0);
                         tvAmountCredit.setText(String.valueOf(twoDecimal));
@@ -433,7 +451,11 @@ public class WalletTransferFragment2 extends Fragment {
         }
 
         try {
-            Helper.getTwoDecimal(Float.parseFloat(edAmount.getText().toString().trim()) * 1);
+            DecimalFormat decimalFormat = new DecimalFormat();
+            String trim = edAmount.getText().toString().trim();
+            String replace = trim.replace(",", "");
+            float v = decimalFormat.parse(replace).floatValue();
+            //Helper.getTwoDecimal(Float.parseFloat(replace) * 1);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -445,10 +467,19 @@ public class WalletTransferFragment2 extends Fragment {
             return;
         }
 
-        if (Float.parseFloat(mListAccount.get(mFromPosition).getCurrentbalance()) >= Float.parseFloat(edAmount.getText().toString().trim())) {
-            showBottomPinDialog();
-        } else {
-            showBalanceErrorDailog();
+        try {
+            DecimalFormat decimalFormat = new DecimalFormat();
+            String trim = edAmount.getText().toString().trim();
+            String replace = trim.replace(",", "");
+            float v = decimalFormat.parse(replace).floatValue();
+
+            if (Float.parseFloat(mListAccount.get(mFromPosition).getCurrentbalance()) >= v) {
+                showBottomPinDialog();
+            } else {
+                showBalanceErrorDailog();
+            }
+        } catch (Exception e) {
+
         }
 
 
@@ -576,7 +607,14 @@ public class WalletTransferFragment2 extends Fragment {
             float processingCommission = Float.parseFloat(jsonResult.getString(AppoConstants.PROCESSINGFEES));
             float flatbankcomission = Float.parseFloat(jsonResult.getString(AppoConstants.FLATBANKCOMMISSION));
             float flatprocessingcomission = Float.parseFloat(jsonResult.getString(AppoConstants.FLATPROCESSINGFEES));
-            float fundamount = Float.parseFloat(edAmount.getText().toString().trim());
+            String trim = edAmount.getText().toString().trim();
+            String replace = trim.replace(",", "");
+            DecimalFormat decimalFormat = new DecimalFormat();
+
+            float v = decimalFormat.parse(replace).floatValue();
+
+
+            fundamount = v;
             float taxPercentage = Float.parseFloat(jsonResult.getString(AppoConstants.TAXPERCENTAGE));
             String taxon = jsonResult.getString(AppoConstants.TAXON);
             bankfees = 0;
@@ -602,6 +640,8 @@ public class WalletTransferFragment2 extends Fragment {
 
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+
         }
     }
 
@@ -646,7 +686,7 @@ public class WalletTransferFragment2 extends Fragment {
         params.addProperty(AppoConstants.AMOUNT, mCreditAmount);
         params.addProperty(AppoConstants.CHARGES, String.valueOf(bankfees));
         params.addProperty(AppoConstants.CONVERSIONRATE, exchange);
-        params.addProperty(AppoConstants.ENTEREDAMOUNT, edAmount.getText().toString().trim());
+        params.addProperty(AppoConstants.ENTEREDAMOUNT, fundamount);
         params.addProperty(AppoConstants.FEES, String.valueOf(processingfees));
         params.addProperty(AppoConstants.FROMCURRENCY, Integer.parseInt(mListAccount.get(mFromPosition).getCurrencyid()));
         params.addProperty(AppoConstants.FROMCURRENCYCODE, mListAccount.get(mFromPosition).getCurrencyCode());
@@ -701,10 +741,13 @@ public class WalletTransferFragment2 extends Fragment {
                         if (responsePayment.getString(AppoConstants.RESULT).equalsIgnoreCase("-1")) {
                             showCommonError(getString(R.string.error_invalid_transaction_pin));
 
+                        } else if (responsePayment.getString(AppoConstants.RESULT).equalsIgnoreCase("failed")) {
+                            //{"result":"failed","message":"Invalid Transaction PIN","status":500}
+                            showCommonError(responsePayment.getString(AppoConstants.MESSAGE));
                         } else if (responsePayment.getString(AppoConstants.RESULT).equalsIgnoreCase("-2")) {
                             showCommonError(getString(R.string.error_account_balance));
 
-                        } else {
+                        } else if (responsePayment.getString(AppoConstants.MESSAGE).equalsIgnoreCase(AppoConstants.SUCCESS)) {
 
                             showPayDialogLikeUnion(responsePayment.getString(AppoConstants.RESULT));
                         }
@@ -791,7 +834,9 @@ public class WalletTransferFragment2 extends Fragment {
         //tvAmountPay.setText(" Amount : " + edAmount.getText().toString().trim());
         tvReceiverAmt.setText("Receiver Amount : " + tvAmountCredit.getText().toString().trim());
         tvReceiverAmt.setTextColor(Color.parseColor("#334CFF"));
-        float cost = amountaftertax_fees - Float.parseFloat(edAmount.getText().toString().trim());
+
+        //float cost = amountaftertax_fees - Float.parseFloat(edAmount.getText().toString().trim());
+        float cost = amountaftertax_fees - fundamount;
         float twoDecimal = Helper.getTwoDecimal(cost);
         String param1 = "Processing Fees : " + processingfees + "\n" + " Taxes : " + taxes + "\n" + "Transaction Cost : " + twoDecimal;
         tvCost.setText(param1);
@@ -803,13 +848,14 @@ public class WalletTransferFragment2 extends Fragment {
         for (int i = 0; i < resultCurrency.size(); i++) {
             if (currencyId.equals(String.valueOf(resultCurrency.get(i).getId()))) {
                 mCurrencyId = resultCurrency.get(i).getCurrencyCode();
-                //Log.e(TAG, "showPayDialogLikeUnion: "+mCurrencyId );
+
                 break;
             }
         }
-        String format = String.format("%.2f", Float.parseFloat(edAmount.getText().toString()));
+        //String format = String.format("%.2f", Float.parseFloat());
+
         //float twoDecimal1 = Helper.getTwoDecimal(Float.parseFloat(edAmount.getText().toString()));
-        tvAmountPay.setText(" Amount : " + format + " " + mCurrencyId.toUpperCase());
+        tvAmountPay.setText(" Amount : " + fundamount + " " + mCurrencyId.toUpperCase());
         tvCurrencyPay.setText("Currency : " + mCurrencyId);
         tvTransactionTime.setText("Transaction Time : " + getDateTime());
         tvVoucherPay.setText("Transaction No : " + param);
@@ -931,7 +977,6 @@ public class WalletTransferFragment2 extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 198) {
 
-            Log.e(TAG, "onActivityResult: called 198 ");
 
         }
     }

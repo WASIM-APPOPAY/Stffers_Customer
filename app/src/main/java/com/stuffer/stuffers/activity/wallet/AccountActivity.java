@@ -138,7 +138,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
         tvCvvU = (MyTextView) findViewById(R.id.tvCvvU);
 
         String transactionPin = Helper.getTransactionPin();
-        //Log.e(TAG, "onCreate: "+transactionPin );
+        ////Log.e(TAG, "onCreate: "+transactionPin );
         tvCardTypeU = (MyTextView) findViewById(R.id.tvCardTypeU);
         ivUninonPay = (ImageView) findViewById(R.id.ivUninonPay);
         tvCardHeaderU = (MyTextViewBold) findViewById(R.id.tvCardHeaderU);
@@ -261,7 +261,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
             @Override
             public void onFailure(Call<CurrencyResponse> call, Throwable t) {
                 dialog.dismiss();
-                ////Log.e(TAG, "onFailure: " + t.getMessage().toString());
+                //////Log.e(TAG, "onFailure: " + t.getMessage().toString());
             }
         });
 
@@ -282,7 +282,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
                 AccountModel model = new AccountModel();
                 model.setAccountnumber(index.getString(AppoConstants.ACCOUNTNUMBER));
                 String mIncryptAccount = getAccountNumber(index.getString(AppoConstants.ACCOUNTNUMBER));
-                Log.e(TAG, "readUserAccounts: " + mIncryptAccount);
+                //Log.e(TAG, "readUserAccounts: " + mIncryptAccount);
                 model.setAccountEncrypt(mIncryptAccount);
                 if (index.has(AppoConstants.ACCOUNTSTATUS)) {
                     model.setAccountstatus(index.getString(AppoConstants.ACCOUNTSTATUS));
@@ -303,7 +303,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
                 tvTopTap.setVisibility(View.VISIBLE);
                 ivFrameTop.setVisibility(View.VISIBLE);
                 String accountEncrypt = mListAccount.get(0).getAccountEncrypt();
-                //Log.e(TAG, "readUserAccounts: " + accountEncrypt);
+                ////Log.e(TAG, "readUserAccounts: " + accountEncrypt);
                 //tvAccountNos.setText(accountEncrypt);
                 mUserName = Helper.getSenderName();
                 tvFullName.setText(mUserName);
@@ -362,7 +362,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
             mRootObject.put("msgInfo", mMsgInfo);
             mRootObject.put("trxInfo", mTrxInfo);
             showLoading();
-            //Log.e(TAG, "getCardImage: " + mRootObject);
+            ////Log.e(TAG, "getCardImage: " + mRootObject);
             JsonObject mRoot = new JsonParser().parse(mRootObject.toString()).getAsJsonObject();
 
             apiServiceUNIONPay.getJWSTokenImage(mRoot, "/scis/switch/cardfacedownloading", UnionConstant.CONTENT_TYPE)
@@ -375,7 +375,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
                                 try {
                                     JSONObject mResponse = new JSONObject(responseString);
                                     if (mResponse.getInt("status") == 200) {
-                                        ////Log.e(TAG, "onResponse: called");
+                                        //////Log.e(TAG, "onResponse: called");
                                         if (mResponse.getString("message").equalsIgnoreCase("success")) {
                                             String mResult = mResponse.getString("result");
                                             makeRequestCardDownloadRequest(mResult);
@@ -399,7 +399,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
 
                         @Override
                         public void onFailure(Call<JsonObject> call, Throwable t) {
-                            //Log.e(TAG, "onFailure: JWS " + t.getMessage());
+                            ////Log.e(TAG, "onFailure: JWS " + t.getMessage());
                             hideLoading();
                         }
                     });
@@ -417,7 +417,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
         apiServiceUNIONPay.getCardImage(mRoot, "/scis/switch/cardfacedownloading", mResult, UnionConstant.CONTENT_TYPE).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                //Log.e(TAG, "onResponse: "+response );
+                ////Log.e(TAG, "onResponse: "+response );
                 hideLoading();
                 String s = new Gson().toJson(response.body());
                 try {
@@ -457,7 +457,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                //Log.e(TAG, "onFailure: CardFace" + t.getMessage());
+                ////Log.e(TAG, "onFailure: CardFace" + t.getMessage());
                 hideLoading();
             }
         });
@@ -484,7 +484,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
         apiServiceUNIONPay.getSavedCardUnion(accountnumber).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                // Log.e(TAG, "onResponse: " + response);
+                //// Log.e(TAG, "onResponse: " + response);
                 hideLoading();
                 if (response.isSuccessful()) {
                     String s1 = new Gson().toJson(response.body());
@@ -508,7 +508,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
                             getCardImage(cardFaceID);
                         }
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
                         fBottomCvv.setVisibility(View.GONE);
                         ivFrameTop.setVisibility(View.VISIBLE);
                         tvCardNumber1.setText("" + encrypt);
@@ -531,7 +531,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 hideLoading();
-                //Log.e(TAG, "onFailure: " + t.getMessage());
+                ////Log.e(TAG, "onFailure: " + t.getMessage());
                 mCount = mCount + 1;
                 getAllCard();
             }
@@ -664,8 +664,8 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
                         e.printStackTrace();
                     }
 
-                    /*////Log.e(TAG, "onResponse: response 1 : " + new Gson().toJson(response.body()));
-                    ////Log.e(TAG, "onResponse: response 2 : " + new Gson().toJson(response));*/
+                    ///*////Log.e(TAG, "onResponse: response 1 : " + new Gson().toJson(response.body()));
+                    //////Log.e(TAG, "onResponse: response 2 : " + new Gson().toJson(response));*/
                 } else {
                     if (response.code() == 401) {
                         DataVaultManager.getInstance(AccountActivity.this).saveUserDetails("");
@@ -675,7 +675,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
                         startActivity(intent);
                         finish();
                     } else if (response.code() == 400) {
-                        ////Log.e(TAG, "onResponse: bad request");
+                        //////Log.e(TAG, "onResponse: bad request");
                     }
                 }
 
@@ -684,7 +684,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-                ////Log.e(TAG, "onFailure: " + t.getMessage().toString());
+                //////Log.e(TAG, "onFailure: " + t.getMessage().toString());
             }
         });
 
@@ -703,7 +703,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
                 dialog.dismiss();
                 if (response.isSuccessful()) {
                     //String res = new Gson().toJson(response.body());
-                    //////Log.e(TAG, "onResponse: getprofile :" + res);
+                    ////////Log.e(TAG, "onResponse: getprofile :" + res);
                     JsonObject body = response.body();
                     String res = body.toString();
                     DataVaultManager.getInstance(AccountActivity.this).saveUserDetails(res);
@@ -724,7 +724,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
-                ////Log.e(TAG, "onFailure: " + t.getMessage().toString());
+                //////Log.e(TAG, "onFailure: " + t.getMessage().toString());
             }
         });
     }

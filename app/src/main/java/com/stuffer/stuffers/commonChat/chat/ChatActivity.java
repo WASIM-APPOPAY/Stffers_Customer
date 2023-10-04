@@ -243,16 +243,16 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             String playerId = dataSnapshot.getValue(String.class);
             if (playerId != null) {
-                Log.e("chat", "onDataChange: called");
+                //Log.e("chat", "onDataChange: called");
                 userPlayerIds.add(playerId);
             } else {
-                Log.e("chat", "onDataChange: null");
+                //Log.e("chat", "onDataChange: null");
             }
         }
 
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
-            Log.e("chat", "onCancelled: called" + databaseError.getMessage());
+            //Log.e("chat", "onCancelled: called" + databaseError.getMessage());
         }
     };
 
@@ -380,9 +380,9 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
             }
             Phonenumber.PhoneNumber numberProto = phoneUtil.parse("+" + mMobileNumber, "");
             mCCode = String.valueOf(numberProto.getCountryCode());
-            Log.e("TAG", "onActivityResult: " + mCCode);
+            //Log.e("TAG", "onActivityResult: " + mCCode);
             mMNumber = String.valueOf(numberProto.getNationalNumber());
-            Log.e("TAG", "onActivityResult: " + mMNumber);
+            //Log.e("TAG", "onActivityResult: " + mMNumber);
 
         } catch (NumberParseException e) {
             System.err.println("NumberParseException was thrown: " + e.toString());
@@ -501,30 +501,30 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
                 userPlayerIds.remove(myPlayerId);
             }
             try {
-                Log.e("TAG", "notifyMessage: called");
+                //Log.e("TAG", "notifyMessage: called");
                 //String headings = userMe.getId() + " " + getString(R.string.new_message_sent);
                 String headings = (chat.isGroup() && group != null) ? group.getName() : userMe.getId();
-                Log.e("TAG", "notifyMessage: "+headings );
+                //Log.e("TAG", "notifyMessage: "+headings );
                 
 
                 OneSignal.postNotification(new JSONObject("{'headings': {'en':'" + headings + "'}, 'contents': {'en':'" + message.getBody() + "'}, 'include_player_ids': " + userPlayerIds.toString() + ",'data': " + new Gson().toJson(message) + ",'android_group':" + message.getChatId() + " }"),
                         new OneSignal.PostNotificationResponseHandler() {
                             @Override
                             public void onSuccess(JSONObject response) {
-                                Log.i("OneSignalExample", "postNotification Success: " + response.toString());
+                                //Log.i("OneSignalExample", "postNotification Success: " + response.toString());
                             }
 
                             @Override
                             public void onFailure(JSONObject response) {
-                                Log.e("OneSignalExample", "postNotification Failure: " + response.toString());
+                                //Log.e("OneSignalExample", "postNotification Failure: " + response.toString());
                             }
                         });
             } catch (Exception e) {
-                Log.e("TAG", "notifyMessage: exception called");
+                //Log.e("TAG", "notifyMessage: exception called");
                 e.printStackTrace();
             }
         } else {
-            Log.e("TAG", "notifyMessage: empty ");
+            //Log.e("TAG", "notifyMessage: empty ");
         }
     }
 
@@ -633,7 +633,7 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
             int y = (int) event.getY();
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    Log.i("TAG", "touched down");
+                    //Log.i("TAG", "touched down");
                     if (newMessage.getText().toString().trim().isEmpty()) {
                         if (recordWaitHandler == null)
                             recordWaitHandler = new Handler();
@@ -642,7 +642,7 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
                     }
                     break;
                 case MotionEvent.ACTION_MOVE:
-                    Log.i("TAG", "moving: (" + displayWidth + ", " + x + ")");
+                    //Log.i("TAG", "moving: (" + displayWidth + ", " + x + ")");
                     if (mRecorder != null && newMessage.getText().toString().trim().isEmpty()) {
                         if (Math.abs(event.getX()) / displayWidth > 0.35f) {
                             recordingStop(false);
@@ -651,7 +651,7 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
                     }
                     break;
                 case MotionEvent.ACTION_UP:
-                    Log.i("TAG", "touched up");
+                    //Log.i("TAG", "touched up");
                     if (recordWaitHandler != null && newMessage.getText().toString().trim().isEmpty())
                         recordWaitHandler.removeCallbacks(recordRunnable);
                     if (mRecorder != null && newMessage.getText().toString().trim().isEmpty()) {
@@ -1096,11 +1096,13 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
                 break;
             case R.id.chatToolbarContent:
                 if (toolbarContent.getVisibility() == VISIBLE) {
-                    if (isChatAllowed())
-                        Log.e("tag", "onClick: ");
+                    if (isChatAllowed()) {
+                        //Log.e("tag", "onClick: ");
                         //       startActivity(ChatDetailActivity.newIntent(this, chat, dataList, user, group));
-                    else
+                    }
+                    else {
                         ChatHelper.presentToast(mContext, getString(R.string.removed_from_group), false);
+                    }
                 }
                 break;
             case R.id.attachment_contact:
@@ -1478,9 +1480,9 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
                                 }
                             }
                         } catch (FileNotFoundException e) {
-                            Log.e(ChatActivity.class.getSimpleName(), "Vcard for the contact " + lookupKey + " not found", e);
+                            //Log.e(ChatActivity.class.getSimpleName(), "Vcard for the contact " + lookupKey + " not found", e);
                         } catch (IOException e) {
-                            Log.e(ChatActivity.class.getSimpleName(), "Problem creating stream from the assetFileDescriptor.", e);
+                            //Log.e(ChatActivity.class.getSimpleName(), "Problem creating stream from the assetFileDescriptor.", e);
                         } finally {
                             cursor.close();
                         }
@@ -1817,7 +1819,7 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
         if (!ChatHelper.CHAT_CAB) {//Prepare selection if not in selection mode
             prepareToSelect();
             String s = new Gson().toJson(message);
-            Log.e("TAG", "OnMessageLongClick: " + s);
+            //Log.e("TAG", "OnMessageLongClick: " + s);
             message.setSelected(true);
             messageAdapter.notifyItemChanged(position);
             countSelected++;
@@ -1852,7 +1854,7 @@ public class ChatActivity extends BaseActivity implements OnMessageItemClick, Me
         Intent intent = new Intent(context, ChatActivity.class);
         intent.putExtra(MOBILE_NUMBER, chat.getUserId());
         if (share.isEmpty()) {
-            Log.e("TAG", "newIntent: nothing to share" );
+           //// Log.e("TAG", "newIntent: nothing to share" );
         } else {
             intent.putExtra("share", share);
         }

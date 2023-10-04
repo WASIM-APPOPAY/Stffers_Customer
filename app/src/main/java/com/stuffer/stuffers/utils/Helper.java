@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat;
 
 import com.google.gson.Gson;
 import com.stuffer.stuffers.AppoPayApplication;
+import com.stuffer.stuffers.BuildConfig;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.wallet.ProductItemDetailActivity;
 import com.stuffer.stuffers.activity.wallet.SubTabsActivity;
@@ -37,6 +38,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -3315,6 +3317,33 @@ public class Helper {
         mArrayList.add(new CustomArea("55", "Brazil", "data:image/png;base64,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"));
         return mArrayList;*/
 
+    }
+
+    public static String getHashCode() {
+        String smsHash;
+        if (BuildConfig.DEBUG) {
+            smsHash = "fOZuIutuAAQ";
+        } else {
+            smsHash = "Y8Eb8n2uulT";
+        }
+        //smsHash = "fOZuIutuAAQ";
+        return smsHash;
+    }
+/**
+*
+C:\Users\User\AppData\Local\Android\Sdk\platform-tools> adb install -r -d "D:\Hash_Sms\ClientDemoOne.apk"
+Performing Streamed Install
+Success
+* * */
+    boolean verifyInstallerId(Context context) {
+        // A list with valid installers package name
+        List<String> validInstallers = new ArrayList<>(Arrays.asList("com.android.vending", "com.google.android.feedback"));
+
+        // The package name of the app that has installed your app
+        final String installer = context.getPackageManager().getInstallerPackageName(context.getPackageName());
+
+        // true if your app has been downloaded from Play Store
+        return installer != null && validInstallers.contains(installer);
     }
 }
 

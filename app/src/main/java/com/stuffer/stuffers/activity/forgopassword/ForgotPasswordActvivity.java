@@ -3,6 +3,7 @@ package com.stuffer.stuffers.activity.forgopassword;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,8 +26,10 @@ import com.stuffer.stuffers.fragments.forgot_password.ForgotPasswordFragment;
 import com.stuffer.stuffers.fragments.forgot_password.VerifyMobileFragment;
 import com.stuffer.stuffers.fragments.transactionpin.TransactionPinUpdateFragment;
 import com.stuffer.stuffers.myService.AppSMSBroadcastReceiver;
+import com.stuffer.stuffers.utils.AppSignatureHelper;
 import com.stuffer.stuffers.utils.AppoConstants;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,12 +38,20 @@ public class ForgotPasswordActvivity extends AppCompatActivity implements Fragme
     private IntentFilter intentFilter;
     private AppSMSBroadcastReceiver appSMSBroadcastReceiver;
     private static final String TAG = "ForgotPasswordActvivity";
+    private TextView toolbarTitle;
+    boolean isReset = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password_actvivity);
         setupActionBar();
+        if (getIntent().hasExtra("expire")) {
+
+            toolbarTitle.setText("Reset Password");
+            isReset = true;
+        }
+
         if (savedInstanceState == null) {
             VerifyMobileFragment verifyMobileFragment = new VerifyMobileFragment();
             initFragments(verifyMobileFragment);
@@ -52,35 +63,41 @@ public class ForgotPasswordActvivity extends AppCompatActivity implements Fragme
             forgotPasswordFragment.setArguments(bundle);
             initFragments(forgotPasswordFragment);*/
         }
-        smsListener();
+        /*AppSignatureHelper appSignatureHelper = new AppSignatureHelper(this);
+        ArrayList<String> appSignatures = appSignatureHelper.getAppSignatures();
+        String s = appSignatures.get(0);
+        Log.e(TAG, "onCreate: " + s);*/
+
         initBroadCast();
+        smsListener();
         registerReceiver(appSMSBroadcastReceiver, intentFilter);
-
-
 
 
     }
 
+
     @Override
     public void onAreaSelected(int pos) {
         Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.mainContainer);
-        if (fragmentById instanceof VerifyMobileFragment){
-            ((VerifyMobileFragment)fragmentById).updateAreaCode(pos);
+        if (fragmentById instanceof VerifyMobileFragment) {
+            ((VerifyMobileFragment) fragmentById).updateAreaCode(pos);
         }
 
     }
 
     private void initBroadCast() {
-        intentFilter = new IntentFilter("com.google.android.gms.auth.api.phone.SMS_RETRIEVED");
+        intentFilter = new IntentFilter();
+        //intentFilter.addAction(SmsRetriever.SMS_RETRIEVED_ACTION);
+        intentFilter.addAction("com.google.android.gms.auth.api.phone.SMS_RETRIEVED");
+
         appSMSBroadcastReceiver = new AppSMSBroadcastReceiver();
         appSMSBroadcastReceiver.setOnSmsReceiveListener(new AppSMSBroadcastReceiver.OnSmsReceiveListener() {
             @Override
             public void onReceive(String messageCode) {
-                Log.e(TAG, "onReceive: " + messageCode);
-                Toast.makeText(ForgotPasswordActvivity.this, messageCode, Toast.LENGTH_SHORT).show();
-
-                Pattern otpPattern=Pattern.compile("(|^)\\d{6}");
-                Matcher matcher=otpPattern.matcher(messageCode);
+                //Log.e(TAG, "onReceive: " + messageCode);
+                //Toast.makeText(ForgotPasswordActvivity.this, messageCode, Toast.LENGTH_SHORT).show();
+                Pattern otpPattern = Pattern.compile("(|^)\\d{6}");
+                Matcher matcher = otpPattern.matcher(messageCode);
                 Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.mainContainer);
                 if (fragmentById instanceof VerifyMobileFragment) {
                     if (matcher.find()) {
@@ -94,7 +111,7 @@ public class ForgotPasswordActvivity extends AppCompatActivity implements Fragme
     }
 
     private void smsListener() {
-        SmsRetrieverClient client = SmsRetriever.getClient(this);
+        SmsRetrieverClient client = SmsRetriever.getClient(ForgotPasswordActvivity.this);
         client.startSmsRetriever();
     }
 
@@ -103,7 +120,7 @@ public class ForgotPasswordActvivity extends AppCompatActivity implements Fragme
         setSupportActionBar(toolbar);
         ImageView menu_icon = toolbar.findViewById(R.id.menu_icon);
         menu_icon.setVisibility(View.GONE);
-        TextView toolbarTitle = toolbar.findViewById(R.id.toolbarTitle);
+        toolbarTitle = toolbar.findViewById(R.id.toolbarTitle);
         toolbarTitle.setVisibility(View.VISIBLE);
         toolbarTitle.setText(getString(R.string.info_forgot_password2));
         ActionBar bar = getSupportActionBar();
@@ -112,6 +129,14 @@ public class ForgotPasswordActvivity extends AppCompatActivity implements Fragme
         bar.setDisplayShowHomeEnabled(true);
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setHomeButtonEnabled(true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        unregisterReceiver(appSMSBroadcastReceiver);
+        appSMSBroadcastReceiver = null;
     }
 
     @Override
@@ -135,9 +160,15 @@ public class ForgotPasswordActvivity extends AppCompatActivity implements Fragme
     @Override
     public void onFragmentReplaceClick(Bundle bundle) {
         ForgotPasswordFragment forgotPasswordFragment = new ForgotPasswordFragment();
+        if (isReset) {
+            bundle.putString("reset", "yes");
+        } else {
+            bundle.putString("reset", "no");
+        }
         forgotPasswordFragment.setArguments(bundle);
         initFragments(forgotPasswordFragment);
     }
+
     public void initFragments(Fragment params) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();

@@ -32,7 +32,7 @@
             android:id="@+id/edQrAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:digits="0123456789."
+            android:digits="0123456789"
             android:drawableLeft="@drawable/ic_attach_money_recharge"
             android:drawablePadding="10dp"
             android:gravity="center_vertical"

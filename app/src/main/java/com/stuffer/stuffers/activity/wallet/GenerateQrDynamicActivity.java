@@ -10,6 +10,8 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
@@ -78,7 +80,7 @@ public class GenerateQrDynamicActivity extends AppCompatActivity implements View
         try {
 
             String vaultValue1 = DataVaultManager.getInstance(GenerateQrDynamicActivity.this).getVaultValue(KEY_CCODE);
-            Log.e(TAG, "onCreate: "+vaultValue1 );
+
             if (!StringUtils.isEmpty(vaultValue1)) {
                 countryCodePicker.setCountryForNameCode(vaultValue1);
             } else {
@@ -90,6 +92,22 @@ public class GenerateQrDynamicActivity extends AppCompatActivity implements View
         }
 
         countryCodePicker.setDialogEventsListener(mLis);
+        edQrAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
     }
 
@@ -160,8 +178,8 @@ public class GenerateQrDynamicActivity extends AppCompatActivity implements View
     @Override
     public void onPinConfirm(String transactionPin) {
         String mTransactionPin = Helper.getTransactionPin();
-        Log.e(TAG, "onPinConfirm: Store :: "+mTransactionPin );
-        Log.e(TAG, "onPinConfirm: Input :: "+transactionPin );
+
+
         if (mTransactionPin.equalsIgnoreCase(transactionPin)) {
             if (mBottomPinFragment != null) {
                 mBottomPinFragment.dismiss();
@@ -197,8 +215,8 @@ public class GenerateQrDynamicActivity extends AppCompatActivity implements View
         apiService.getCustomerDynamicQrCode(customerId, amount, isImage).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                //Log.e(TAG, "onResponse: "+response.body() );
-                //Log.e(TAG, "onResponse: "+response );
+
+
                 hideProgress();
                 String s = new Gson().toJson(response.body());
                 try {
@@ -227,7 +245,7 @@ public class GenerateQrDynamicActivity extends AppCompatActivity implements View
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e(TAG, "onFailure: " + t.getMessage());
+
                 hideProgress();
             }
         });

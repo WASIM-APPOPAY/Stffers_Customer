@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import androidx.multidex.MultiDex;
 
@@ -16,6 +17,7 @@ import com.stuffer.stuffers.communicator.ScreenTimeoutListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.stuffer.stuffers.myService.MyOnesignalNotificationOpenedHandler;
+import com.stuffer.stuffers.utils.AppSignatureHelper;
 import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.google.GoogleEmojiProvider;
 
@@ -28,6 +30,7 @@ import okhttp3.OkHttpClient;
 //import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 public class AppoPayApplication extends Application {
+    private static final String TAG = "AppoPayApplication";
     public static  boolean UPDATE_WALLET = false;
     private static AppoPayApplication mInstance;
     Context context;
@@ -69,6 +72,11 @@ public class AppoPayApplication extends Application {
         OneSignal.setAppId(ONESIGNAL_APP_ID);
         EmojiManager.install(new GoogleEmojiProvider());
         ToastApp.initToastUtils(this);
+        AppSignatureHelper appSignatureHelper=new AppSignatureHelper(this);
+        for (String signature : appSignatureHelper.getAppSignatures()) {
+            Log.e(TAG, "onCreate: " + signature );
+        }
+        //Y8Eb8n2uulT
 
 /*
 HceApiService.initialize(

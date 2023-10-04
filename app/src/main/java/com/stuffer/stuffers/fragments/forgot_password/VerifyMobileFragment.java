@@ -152,7 +152,7 @@ public class VerifyMobileFragment extends Fragment {
             @Override
             public void onCcpDialogOpen(Dialog dialog) {
                 //your code
-                TextView title =(TextView)  dialog.findViewById(R.id.textView_title);
+                TextView title = (TextView) dialog.findViewById(R.id.textView_title);
                 title.setText(getString(R.string.info_cc_reg));
             }
 
@@ -203,12 +203,10 @@ public class VerifyMobileFragment extends Fragment {
         dialog.show();
         JsonObject param = new JsonObject();
 
+        String smsHash = Helper.getHashCode();
 
-        if (BuildConfig.DEBUG) {
-            param.addProperty("hashKey", "Ovjaes9qCGm");
-        } else {
-            param.addProperty("hashKey", "Xhf2+h0fqyI");
-        }
+        param.addProperty("hashKey", smsHash);
+
         param.addProperty("mobileNumber", edtCustomerMobileNumber.getText().toString().trim());
         param.addProperty("phoneCode", strCustomerCountryCode);
 
@@ -309,12 +307,9 @@ public class VerifyMobileFragment extends Fragment {
         dialog.show();
 
         JsonObject param = new JsonObject();
-        //param.addProperty("phone_number", "+" + strCustomerCountryCode + mDominicaAreaCode + edtCustomerMobileNumber.getText().toString().trim());
-        if (BuildConfig.DEBUG) {
-            param.addProperty("hashKey", "Ovjaes9qCGm");
-        } else {
-            param.addProperty("hashKey", "Xhf2+h0fqyI");
-        }
+        String smsHash = Helper.getHashCode();
+
+        param.addProperty("hashKey", smsHash);
         param.addProperty("mobileNumber", edtCustomerMobileNumber.getText().toString().trim());
         param.addProperty("phoneCode", strCustomerCountryCode);
 
@@ -380,7 +375,7 @@ public class VerifyMobileFragment extends Fragment {
                         dialog.dismiss();
                         if (response.isSuccessful()) {
                             if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
-                                Helper.showLongMessage(getActivity(), "Successfully Verified!...");
+                                //Helper.showLongMessage(getActivity(), "Successfully Verified!...");
                                 String phWithCode = strCustomerCountryCode + mDominicaAreaCode + strCustomerPhone;
                                 Bundle bundle = new Bundle();
                                 bundle.putString(AppoConstants.PHONECODE, strCustomerCountryCode);

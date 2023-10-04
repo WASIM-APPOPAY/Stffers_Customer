@@ -277,7 +277,7 @@ public class UrlsActivity extends AppCompatActivity {
 
 
         if (chatHelper.getLoggedInUser() != null) {
-            Intent i = new Intent(UrlsActivity.this, HomeActivity2.class);
+            Intent i = new Intent(UrlsActivity.this, HomeActivity3.class);
             startActivity(i);
             finish();
         } else {

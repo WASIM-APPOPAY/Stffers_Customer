@@ -58,43 +58,36 @@ public class L_SignUpActivity extends AppCompatActivity {
         elcountry = findViewById(R.id.elcountry);
 
 
+        setValues();
+        //getCityList();
+        getCountryList();
+
+
+    }
+
+    private void setValues() {
         DeviceUuidFactory mDeviceUuidFactory = new DeviceUuidFactory(L_SignUpActivity.this);
         UUID deviceUuid = mDeviceUuidFactory.getDeviceUuid();
-        Log.e(TAG, "onCreate: " + deviceUuid);
-        //String senderName = Helper.getSenderName();
+        //Log.e(TAG, "onCreate: " + deviceUuid);
+        String senderName = Helper.getSenderName();
         //Log.e(TAG, "onCreate: " + Helper.getUserDetails());
         //Log.e(TAG, "onCreate: " + senderName);
         String firstName = Helper.getFirstName();
         String lastName = Helper.getLastName();
         String email = Helper.getEmail();
         String address = Helper.getAddress();
-        //getCityList();
-        getCountryList();
+
+        elname1.setText(firstName);
+        //elname2.setText(middlename);
+        elname3.setText(lastName);
+        elmail.setText(email);
+        eladdress.setText(address);
+
+
 
 
     }
-    /*curl --location 'https://prodapi.appopay.com/api/wallet/topup/v2' \
-            --header 'Content-Type: application/json' \
-            --data '{
-            "amount": "5.0",
-            "carrier": "Movistar",
-            "charges": 0.0,
-            "fees": 0.0,
-            "taxes": 0.35,
-            "fromcurrency": "1",
-            "fromcurrencycode": "INR",
-            "originalAmount": 5.35,
-            "payamount": 5.35,
-            "productcode": "8011",
-            "recieverareacode": "507",
-            "recievermobilernumber": "63516303",
-            "senderaccountnumber": "399905710004896549945",
-            "senderareacode": "91",
-            "sendermobilenumber": "9836683269",
-            "sendername": "MD WASIM",
-            "transactionpin": "222222",
-            "userid": "684"
-}'*/
+
     private void getCityList() {
         String param1 = "2017011900003";
         String param2 = "das123";
@@ -106,6 +99,7 @@ public class L_SignUpActivity extends AppCompatActivity {
         String phoneCode = Helper.getPhoneCode();
         mParam.addProperty("CountryCode", phoneCode);
         mParam.addProperty("Language", "en");
+
 
 
         apiServiceLoan.getCityList(mParam, authHeader).enqueue(new Callback<JsonObject>() {

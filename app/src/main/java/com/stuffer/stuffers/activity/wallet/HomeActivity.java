@@ -245,8 +245,6 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
         });
 
 
-
-
         layoutLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -289,7 +287,6 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
                 }, 250);
             }
         });
-
 
 
         layoutOverview.setVisibility(View.GONE);
@@ -346,7 +343,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
 
             reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
         } else {
-            ////Log.e(TAG, "onCreate: user id not exists");
+
 
         }
 
@@ -501,6 +498,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
 
         builder.show();
     }
+
     private void logoutUserRequest() {
         try {
             FirebaseAuth.getInstance().signOut();
@@ -557,8 +555,6 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
     }
 
 
-
-
     @Override
     public void onNavigationItemChanged(@NotNull BottomifyNavigationView.NavigationItem navigationItem) {
 
@@ -577,7 +573,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
                     bundle.putString(AppoConstants.INFO, "0");
                     fragment.setArguments(bundle);
                 }*/
-                BottomChatFragment fragment=new BottomChatFragment();
+                BottomChatFragment fragment = new BottomChatFragment();
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -728,9 +724,9 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //Log.e(TAG, "onActivityResult: called");
+
         if (requestCode == AppoConstants.QR_SCAN_CODE_REQUEST) {
-            // Log.e(TAG, "onActivityResult: if called");
+
             if (resultCode == Activity.RESULT_OK) {
                 allowParam = true;
             } else {
@@ -772,7 +768,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
                 if (currentFragment instanceof HomeFragment) {
                     // ((HomeFragment) currentFragment).updateUserProfile(mUserName,mEmail,mMobileNo,mDob,mCountryId,mStateId,mCityName,mTransPin,mScreenPin,mAddress,mZipCode);
                 } else {
-                    //Log.e(TAG, "onFromDateSelected: Something went wrong");
+
                 }
 
             } else {
@@ -798,7 +794,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
             }
         } else if (resultCode == RESULT_OK && data.getExtras() != null) {
             try {
-                Log.e(TAG, "onActivityResult: called");
+
                 String stringExtra = data.getStringExtra(AppoConstants.IMAGE_PATH);
                 //File file=new File(stringExtra);
                 File file2 = new File(stringExtra);
@@ -806,7 +802,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
                 byte[] imgData = new byte[(int) file2.length()];
                 imageInFile.read(imgData);
                 String imageDataString = encodeImage(imgData);
-                //Log.e(TAG, "onActivityResult: " + imageDataString);
+
                 Glide.with(HomeActivity.this).load(new File(stringExtra)).fitCenter().into(ivUser);
                 DataVaultManager.getInstance(HomeActivity.this).saveIdImagePath(stringExtra);
                 uploadUserAvatar(imageDataString);
@@ -817,7 +813,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
                 e.printStackTrace();
             }
         } else {
-            // Log.e(TAG, "onActivityResult: else bottom called" );
+
             bottomify_nav.setActiveNavigationIndex(0);
             allowParam = false;
         }
@@ -833,6 +829,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
         mProgress.dismiss();
         mProgress = null;
     }
+
     public void uploadUserAvatar(String avatar) {
         showLoading();
         int userId = Helper.getUserId();
@@ -854,7 +851,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
                             DataVaultManager.getInstance(HomeActivity.this).saveUserDetails(jsonUserDetails);
                             JSONObject jsonObject = mPrev.getJSONObject(AppoConstants.RESULT);
                             String avatar = jsonObject.getString("avatar");
-                            //Log.e(TAG, "onResponse: avatar::" + avatar);
+
                             drawer_layout.openDrawer(GravityCompat.START);
                             DataVaultManager.getInstance(HomeActivity.this).saveIdImagePath(avatar);
                             Toast.makeText(HomeActivity.this, "avatar updated successfully", Toast.LENGTH_SHORT).show();
@@ -865,7 +862,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
                 }
 
                 /*if (response.code() == 200) {
-                    Log.e(TAG, "onResponse: " + response);
+
                     String res = new Gson().toJson(response.body());
                     JSONObject
 
@@ -893,7 +890,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
         if (currentFragment instanceof ChatFragment) {
             ((ChatFragment) currentFragment).onActivityResult(requestCode, resultCode, data);
         } else {
-            ////Log.e(TAG, "onFromDateSelected: Something went wrong");
+
         }
     }
 
@@ -903,7 +900,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
         if (currentFragment instanceof HomeFragment) {
             ((HomeFragment) currentFragment).updateWalletBalance();
         } else {
-            //  Log.e(TAG, "onFromDateSelected: Something went wrong");
+
         }
     }
 
@@ -960,7 +957,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
 
     @Override
     public void onSideBalanceRequestUpdate(String param) {
-        ////Log.e(TAG, "onSideBalanceRequestUpdate: called");
+
         try {
             DecimalFormat df2 = new DecimalFormat("#.00");
             Double doubleV = Double.parseDouble(param);
@@ -980,7 +977,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
 
         String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
         if (StringUtils.isEmpty(vaultValue)) {
-            ////Log.e(TAG, "readCountNotifications: called");
+
             DataVaultManager.getInstance(HomeActivity.this).saveUserDetails("");
             DataVaultManager.getInstance(HomeActivity.this).saveUserAccessToken("");
             return;
@@ -1000,7 +997,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
             NotificationHelper notificationHelper = new NotificationHelper(url, bearer_, param, new NotificationHelper.NoticeReadListener() {
                 @Override
                 public void noOfUnRead(JSONObject response, String countNotification) {
-                    //  Log.e(TAG, "noOfUnRead: COUNT :: " + countNotification);
+
                     DataVaultManager.getInstance(HomeActivity.this).saveNotificationCount(countNotification);
                     tvTotalNoti.setText(countNotification);
                     updateDevice();
@@ -1008,7 +1005,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
 
                 @Override
                 public void onErrorOccur(String error) {
-                    //  Log.e(TAG, "onErrorOccur: CODE :: " + error);
+
                     if (error.equals("401")) {
                         DataVaultManager.getInstance(HomeActivity.this).saveUserDetails("");
                         DataVaultManager.getInstance(HomeActivity.this).saveUserAccessToken("");
@@ -1038,7 +1035,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
             String phoneCode = Helper.getPhoneCode();
             Long senderMobileNumber = Helper.getSenderMobileNumber();
             mJSON.put("mobile_number", phoneCode + senderMobileNumber);
-            //Log.e(TAG, "updateDevice: called" + mJSON);
+
             //RegisterDevice mRegister = new RegisterDevice("https://labapi.appopay.com/api/users/registerdevice", mJSON);
             RegisterDevice mRegister = new RegisterDevice("https://prodapi.appopay.com/api/users/registerdevice", mJSON);
             mRegister.execute();
@@ -1160,7 +1157,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
                     dialog.dismiss();
                     if (response.isSuccessful()) {
                         //String res = new Gson().toJson(response.body());
-                        ////Log.e(TAG, "onResponse: getprofile :" + res);
+
                         JsonObject body = response.body();
                         String res = body.toString();
                         DataVaultManager.getInstance(HomeActivity.this).saveUserDetails(res);
@@ -1180,7 +1177,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable t) {
                     dialog.dismiss();
-                    ////Log.e(TAG, "onFailure: " + t.getMessage().toString());
+
                 }
             });
 
@@ -1221,9 +1218,9 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
 
     @Override
     public void onPinConfirm(String pin) {
-        //Log.e(TAG, "onPinConfirm: "+pin );
+
         //String transactionPin = Helper.getTransactionPin();
-        //Log.e(TAG, "onPinConfirm: "+transactionPin );
+
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.mainContainer);
         if (currentFragment instanceof WalletTransferFragment2) {
             ((WalletTransferFragment2) currentFragment).getCommission(pin);
@@ -1240,7 +1237,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
             ((HomeFragment) currentFragment).showBottomSonyPlayStation();
         }*/
 
-        Log.e(TAG, "onRowItemClick: called.....");
+
         Intent intent = new Intent(HomeActivity.this, LunexGiftActivity.class);
         startActivity(intent);
 
@@ -1262,7 +1259,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
 
     @Override
     public void onPinCreated() {
-        //Log.e(TAG, "onPinCreated: called" );
+
         /*Intent intentFinance = new Intent(HomeActivity.this, FinanceActivity.class);
         startActivityForResult(intentFinance, 1003);*/
 

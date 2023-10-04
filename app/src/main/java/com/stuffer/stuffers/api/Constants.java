@@ -96,6 +96,9 @@ public class Constants {
     //https://appopay.com/api/users/resetpassword
     public static final String POST_FORGOT_PASSWORD = "api/users/resetpassword";
 
+    public static final String POST_RESET_PASSWORD = "api/users/password/update/v2/{areacode}/{mobile_no}/CUSTOMER/{password}";
+
+
     public static final String GET_ALL_GIFTCARD_LIST = "v2/getProductListForTopupAndEgift";
     public static final String POST_SENT_LUNEX_GIFT_CARD = "api/wallet/giftCardTopUp";//change
     //https://appopay.com/api/customers/uploadFile
@@ -248,13 +251,13 @@ public class Constants {
     public static final String USERAVATAR = "api/users/avatar/update";
     public static final String TERM_AND_CONDITIONS = "api/term-condition";
     public static final String GET_MERCHANT_SHOPTYPE = "api/seller/{shopType}";
-    public static final String GET_TRANSACTION_PIN="api/users/update-trx-pin/{userId}/{pin}";
+    public static final String GET_TRANSACTION_PIN = "api/users/update-trx-pin/{userId}/{pin}";
     public static final String GET_MAPPING2 = "api/users/mobileMapping";
     public static final String GET_MAPPING3 = "api/users/mobilemapping/{areacode}/{mobilenumber}/{usertype}";
 
     public static final String GET_MERCHANT_BUSINESSTYPES = "api/seller/businessTypes";
-    public static final String GET_ALL_RESTAURANT ="api/odrRestaurant/pageRestaurant?";
+    public static final String GET_ALL_RESTAURANT = "api/odrRestaurant/pageRestaurant?";
     public static final String GET_RESTAURANT_ITEMS = "api/odrGoods/listAll?";
-    public static final String IS_USER_REGISTER_OR_PROFILE="/api/wSignUp/MyProfile";
+    public static final String IS_USER_REGISTER_OR_PROFILE = "/api/wSignUp/MyProfile";
     public static final String LOAN_CITY_LIST = "/api/wMasters/CityList";
 }

@@ -459,7 +459,7 @@ public class TransactionListActivity extends AppCompatActivity implements Recycl
 
     @Override
     public void onSeeRequest(int pos) {
-        Log.e(TAG, "onSeeRequest: called");
+        //Log.e(TAG, "onSeeRequest: called");
         TransactionList2 transactionList2 = mListFinal.get(pos);
         showPayDialogLikeUnion(transactionList2);
 
