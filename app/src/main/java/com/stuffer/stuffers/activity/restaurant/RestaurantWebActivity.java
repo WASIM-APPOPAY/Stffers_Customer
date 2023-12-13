@@ -1,5 +1,31 @@
 package com.stuffer.stuffers.activity.restaurant;
 
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_ACCESSTOKEN;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
+
+import com.stuffer.stuffers.AppoPayApplication;
+import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.utils.DataVaultManager;
+import com.stuffer.stuffers.utils.Helper;
+import com.stuffer.stuffers.views.MyTextViewBold;
+
+import im.delight.android.webview.AdvancedWebView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
@@ -30,20 +56,22 @@ public class RestaurantWebActivity extends AppCompatActivity {
 
         // Setting a webViewClient
         WebViewClient mWebViewClient = new WebViewClient();
-
         webView.setWebViewClient(mWebViewClient);
 
-        // Loading a URL
 
-
-        //webView.loadUrl("https://www.google.com");
-        // WebSettings webSettings = webView.getSettings();
-        //webSettings.setJavaScriptEnabled(true);
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        String url = "https://delicious.appopay.com/h5/#/restaurants?areacode=86&phonenumber=15615634153";
+
+        /*String accesstoken = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_ACCESSTOKEN);
+        String url = "https://delicious.appopay.com/h5/#/restaurants?token="+accesstoken;*/
+        //String accesstoken = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_ACCESSTOKEN);
+        //String url = "https://delicious.appopay.com/h5/#/restaurants";
+        String merchantid=getIntent().getStringExtra("merchantid");
+        String url="https://delicious.appopay.com/h5/#/goods?merchantUserId="+merchantid;
+        Log.e("TAG", "onCreate: "+url );
         webView.loadUrl(url);
+
     }
 
     @Override
@@ -78,3 +106,10 @@ public class RestaurantWebActivity extends AppCompatActivity {
         }
     }
 }
+
+
+
+
+
+
+

@@ -178,6 +178,7 @@ public class VerifyFragment extends Fragment {
                         if (response.isSuccessful()) {
                             if (response.body().get("status").getAsString().equalsIgnoreCase("200")) {
                                 //Helper.showLongMessage(getActivity(), getString(R.string.info_verified));
+                                Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
                                 mVerifiedListener.onVerified(mParamNameCode, mParamCountryCode, mParamMobile);
                                 progress.setVisibility(View.GONE);
                             } else {

@@ -147,12 +147,12 @@
                             android:textColor="@color/Tex"
                             android:textColorHint="@color/textSub"
                             android:textSize="14sp"
-                            app:ccp_areaCodeDetectedCountry="true"
+                            app:ccp_areaCodeDetectedCountry="false"
                             app:ccp_autoDetectCountry="false"
                             app:ccp_defaultPhoneCode="507"
                             app:ccp_excludedCountries=""
                             app:ccp_showFlag="false"
-                            app:ccp_showFullName="false"
+                            app:ccp_showFullName="true"
                             app:ccp_showNameCode="false" />
 
                         <com.stuffer.stuffers.views.MyTextViewBold
@@ -237,10 +237,10 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <RadioGroup
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <RadioButton
                             android:layout_width="wrap_content"
@@ -262,7 +262,7 @@
                         android:visibility="gone" />
 
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:id="@+id/linear4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -273,22 +273,24 @@
 
                         <com.stuffer.stuffers.views.MyTextView
                             android:id="@+id/tvPwdPolicy"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
                             android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+
+                            android:gravity="center"
                             android:padding="10dp"
-                            android:text="Password policy info"
+                            android:text="@string/password_policy_info"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <com.stuffer.stuffers.views.MyTextView
                             android:id="@+id/tvForgotPassword"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
                             android:layout_gravity="center"
+
+                            android:layout_weight="1"
 
 
                             android:gravity="right"
@@ -298,7 +300,7 @@
                             android:textSize="16sp" />
 
 
-                    </RelativeLayout>
+                    </LinearLayout>
 
 
                     <com.stuffer.stuffers.views.MyTextView

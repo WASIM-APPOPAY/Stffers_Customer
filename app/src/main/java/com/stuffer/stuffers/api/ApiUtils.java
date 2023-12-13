@@ -15,7 +15,8 @@ public class ApiUtils {
     // public static final String BASE_URL = BuildConfig.BASE_URL;
     public static final String BASE_URL = Constants.APPOPAY_BASE_URL;
     public static final String BASE_URL_NODE = Constants.APPOPAY_BASE_NODE_URL;
-    public static final String BASE_URL_CERCA24 = Constants.CERCA24;
+    //public static final String BASE_URL_CERCA24 = Constants.CERCA24;
+    public static final String BASE_URL_CERCA24 = Constants.APPOPAY_BASE_URL;
     public static final String BASE_UNION = Constants.BASE_UNION_PAY;
     public static final String BASE_UNION_PAY = Constants.UNION_PAY;
     public static final String BASE_OCR=Constants.BASE_OCR;

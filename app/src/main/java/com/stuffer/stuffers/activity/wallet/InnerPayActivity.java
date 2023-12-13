@@ -181,7 +181,7 @@ public class InnerPayActivity extends AppCompatActivity implements TransactionPi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //Log.e(TAG, "onActivityResult: result called" );
+        Log.e(TAG, "onActivityResult: result called" );
         redirectHomePay();
     }
 

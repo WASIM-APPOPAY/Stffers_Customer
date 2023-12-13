@@ -1,5 +1,6 @@
 package com.stuffer.stuffers.my_camera;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -42,6 +43,7 @@ import com.priyankvasa.android.cameraviewex.CameraView;
 import com.priyankvasa.android.cameraviewex.ErrorLevel;
 import com.priyankvasa.android.cameraviewex.Image;
 import com.priyankvasa.android.cameraviewex.Modes;
+import com.stuffer.stuffers.communicator.PictureListener;
 
 
 import org.jetbrains.annotations.NotNull;
@@ -65,6 +67,7 @@ public class CameraFragment extends Fragment {
     private RequestManager glideManager;
 
     private final Matrix matrix = new Matrix();
+    private PictureListener mPictureListener;
 
     @Nullable
     @Override
@@ -165,6 +168,8 @@ public class CameraFragment extends Fragment {
             return Unit.INSTANCE;
         });
 
+
+
         camera.addPictureTakenListener((Image image) -> {
             byte[] jpegData;
 
@@ -187,13 +192,13 @@ public class CameraFragment extends Fragment {
             );
 
             jpegData = jpegDataStream.toByteArray();
-            Log.e(TAG, "setupCamera: " + Arrays.toString(jpegData));
+            // Log.e(TAG, "setupCamera: " + Arrays.toString(jpegData));
 
 
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
             Bitmap bm = BitmapFactory.decodeByteArray(jpegData, 0, jpegData.length, options);
-            Log.e(TAG, "showFramePreview: " + jpegData.length);
+            //Log.e(TAG, "showFramePreview: " + jpegData.length);
 
             String filename = "pippo.png";
             File sd = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
@@ -212,7 +217,14 @@ public class CameraFragment extends Fragment {
             }
 
 
-            showCapturePreview(image);
+            //showCapturePreview(image);
+
+            Activity activity = getActivity();
+            if (activity != null) activity.runOnUiThread(() -> {
+                mPictureListener.onPictureSelect(dest.getAbsolutePath());
+                    }
+            );
+
             return Unit.INSTANCE;
         });
 
@@ -299,7 +311,7 @@ public class CameraFragment extends Fragment {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         Bitmap bm = BitmapFactory.decodeByteArray(jpegData, 0, jpegData.length, options);
-        Log.e(TAG, "showFramePreview: " + jpegData.length);
+        //Log.e(TAG, "showFramePreview: " + jpegData.length);
 
 
         if (bm == null) return;
@@ -330,5 +342,11 @@ public class CameraFragment extends Fragment {
                 matrix,
                 true
         );
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mPictureListener = (PictureListener) context;
     }
 }

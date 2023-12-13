@@ -314,14 +314,14 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
             if (mListAccount.size() > 0) {
                 GiftCardAdapter giftCardAdapter = new GiftCardAdapter(AccountActivity.this, mUserName, mListAccount, mListWalletNumber);
                 rvGiftCards.setAdapter(giftCardAdapter);
-                new Handler().postDelayed(new Runnable() {
+                /*new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mTotal = mListAccount.size();
                         getAllCard();
 
                     }
-                }, 300);
+                }, 300);*/
             }
 
 

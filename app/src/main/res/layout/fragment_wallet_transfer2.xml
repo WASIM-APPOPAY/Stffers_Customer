@@ -365,6 +365,9 @@
                 android:background="@color/grey_light_secondary" />
 
             <LinearLayout
+                android:id="@+id/linearTransfer"
+                android:clickable="true"
+                android:focusable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -382,7 +385,7 @@
                     android:src="@drawable/icon_transfer_money" />
 
                 <com.stuffer.stuffers.views.MyTextView
-                    android:id="@+id/btnTransfer"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"

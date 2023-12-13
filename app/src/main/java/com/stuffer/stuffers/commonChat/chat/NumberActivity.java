@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.hbb20.CountryCodePicker;
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.activity.wallet.SignInActivity;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.views.MyEditText;
@@ -22,6 +24,7 @@ import com.stuffer.stuffers.views.MyTextView;
 import com.stuffer.stuffers.views.MyTextViewBold;
 
 public class NumberActivity extends AppCompatActivity {
+    private static final String TAG = "NumberActivity";
     private AlertDialog dialogEdit;
 
 
@@ -31,6 +34,8 @@ public class NumberActivity extends AppCompatActivity {
 
     private CountryCodePicker edtCustomerCountryCode;
     private String selectedCountryCode;
+    private MyTextViewBold tvCountryCode;
+    private String selectedCountryNameCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +43,21 @@ public class NumberActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_number);
+
+        tvCountryCode = findViewById(R.id.tvCountryCode);
         edtCustomerCountryCode = findViewById(R.id.edtCustomerCountryCode);
         edtMobile = (MyEditText) findViewById(R.id.edtMobile);
         tvSent = (MyTextView) findViewById(R.id.tvSent);
         selectedCountryCode = edtCustomerCountryCode.getSelectedCountryCode();
+        edtCustomerCountryCode.setDialogEventsListener(mLis);
         edtCustomerCountryCode.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
             public void onCountrySelected() {
                 selectedCountryCode = edtCustomerCountryCode.getSelectedCountryCode();
+
+                selectedCountryNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
+                tvCountryCode.setText(selectedCountryCode + " (" + selectedCountryNameCode + ")");
+                edtCustomerCountryCode.setVisibility(View.GONE);
             }
         });
         tvSent.setOnClickListener(new View.OnClickListener() {
@@ -66,25 +78,57 @@ public class NumberActivity extends AppCompatActivity {
             }
         });
 
-        edtCustomerCountryCode.setDialogEventsListener(new CountryCodePicker.DialogEventsListener() {
+        tvCountryCode.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCcpDialogOpen(Dialog dialog) {
-                //your code
-                TextView title = (TextView) dialog.findViewById(R.id.textView_title);
-                title.setText(getString(R.string.info_cc_reg));
-            }
+            public void onClick(View view) {
+                Log.e(TAG, "onClick: called");
+                //edtCustomerCountryCode.setVisibility(View.VISIBLE);
+                showCountry();
 
-            @Override
-            public void onCcpDialogDismiss(DialogInterface dialogInterface) {
-                //your code
-            }
-
-            @Override
-            public void onCcpDialogCancel(DialogInterface dialogInterface) {
-                //your code
             }
         });
+
+
     }
+
+    private void showCountry() {
+
+        /*new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                selectedCountryCode = edtCustomerCountryCode.getSelectedCountryCode();
+                String selectedCountryName = edtCustomerCountryCode.getSelectedCountryName();
+                tvCountryCode.setText(selectedCountryName +" "+selectedCountryCode);
+                edtCustomerCountryCode.setVisibility(View.GONE);
+            }
+        };*/
+
+        //edtCustomerCountryCode.setDialogEventsListener(mLis);
+
+        edtCustomerCountryCode.launchCountrySelectionDialog();
+
+
+    }
+
+    CountryCodePicker.DialogEventsListener mLis = new CountryCodePicker.DialogEventsListener() {
+        @Override
+        public void onCcpDialogOpen(Dialog dialog) {
+            Log.e(TAG, "onCcpDialogOpen: called");
+            edtCustomerCountryCode.setVisibility(View.VISIBLE);
+
+        }
+
+        @Override
+        public void onCcpDialogDismiss(DialogInterface dialogInterface) {
+            edtCustomerCountryCode.setVisibility(View.GONE);
+
+        }
+
+        @Override
+        public void onCcpDialogCancel(DialogInterface dialogInterface) {
+            edtCustomerCountryCode.setVisibility(View.GONE);
+        }
+    };
 
     public void showEdit() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -117,6 +161,7 @@ public class NumberActivity extends AppCompatActivity {
 
     private void nextScreen() {
         dialogEdit.dismiss();
+
         String selectedCountryNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
         DataVaultManager.getInstance(NumberActivity.this).saveCCODE(selectedCountryNameCode);
         Intent intent = new Intent(NumberActivity.this, VerificationActivity.class);

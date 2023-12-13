@@ -1,6 +1,7 @@
 package com.stuffer.stuffers.utils;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import com.google.gson.Gson;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.BuildConfig;
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.activity.wallet.HomeActivity3;
 import com.stuffer.stuffers.activity.wallet.ProductItemDetailActivity;
 import com.stuffer.stuffers.activity.wallet.SubTabsActivity;
 import com.stuffer.stuffers.commonChat.chatUtils.SharedPreferenceHelper;
@@ -174,48 +176,8 @@ public class Helper {
 
     private static AlertDialog dialogCommon;
 
-    public static final String AREA_CODE_JSON2 = "[\n" +
-            "  {\n" +
-            "    \"areacode\": \"507\",\n" +
-            "    \"areacode_with_name\": \"(+507) PANAMA\"\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"areacode\": \"1\",\n" +
-            "    \"areacode_with_name\": \"(+1) United States of America\"\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"areacode\": \"57\",\n" +
-            "    \"areacode_with_name\": \"(+57) COLOMBIA\"\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"areacode\": \"506\",\n" +
-            "    \"areacode_with_name\": \"(+506) COSTA RICA\"\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"areacode\": \"52\",\n" +
-            "    \"areacode_with_name\": \"(+52) MEXICO\"\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"areacode\": \"809\",\n" +
-            "    \"areacode_with_name\": \"(+809) DOMINICAN REPUBLIC\"\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"areacode\": \"1246\",\n" +
-            "    \"areacode_with_name\": \"(+1246) BARBADOS\"\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"areacode\": \"592\",\n" +
-            "    \"areacode_with_name\": \"(+592) GUYANA\"\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"areacode\": \"1758\",\n" +
-            "    \"areacode_with_name\": \"(+1758) SAINT LUCIA\"\n" +
-            "  },\n" +
-            "  {\n" +
-            "    \"areacode\": \"505\",\n" +
-            "    \"areacode_with_name\": \"(+505) NICARAGUA\"\n" +
-            "  }\n" +
-            "]";
+
+    private static ProgressDialog mProgress;
     private SharedPreferenceHelper sharedPreferenceHelper;
     private Gson gson;
 
@@ -3329,7 +3291,10 @@ public class Helper {
         //smsHash = "fOZuIutuAAQ";
         return smsHash;
     }
-/**
+
+
+
+    /**
 *
 C:\Users\User\AppData\Local\Android\Sdk\platform-tools> adb install -r -d "D:\Hash_Sms\ClientDemoOne.apk"
 Performing Streamed Install
@@ -3344,6 +3309,17 @@ Success
 
         // true if your app has been downloaded from Play Store
         return installer != null && validInstallers.contains(installer);
+    }
+
+    public static void showLoading(String message,Context mCtx) {
+        mProgress = new ProgressDialog(mCtx);
+        mProgress.setMessage(message);
+        mProgress.show();
+    }
+
+    public static void hideLoading() {
+        mProgress.dismiss();
+        mProgress = null;
     }
 }
 

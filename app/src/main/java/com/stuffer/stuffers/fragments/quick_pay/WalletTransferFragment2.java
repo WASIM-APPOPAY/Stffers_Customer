@@ -94,7 +94,7 @@ public class WalletTransferFragment2 extends Fragment {
     private ArrayList<String> mListTemp;
     private List<CurrencyResult> resultCurrency;
     private ATMEditText edAmount;
-    private MyTextView btnTransfer;
+    private LinearLayout linearTransfer;
     private int mFromPosition;
     private String reciveraccountnumber;
     private Dialog dialogTransfer;
@@ -152,7 +152,7 @@ public class WalletTransferFragment2 extends Fragment {
         tvAmountCredit = (MyTextView) view.findViewById(R.id.tvAmountCredit);
         tvExchange = (MyTextView) view.findViewById(R.id.tvExchange);
         tvConversionRates = (MyTextView) view.findViewById(R.id.tvConversionRates);
-        btnTransfer = (MyTextView) view.findViewById(R.id.btnTransfer);
+        linearTransfer = (LinearLayout) view.findViewById(R.id.linearTransfer);
         String senderName = Helper.getSenderName();
         tvName.setText(senderName);
         String currantBalance = Helper.getCurrantBalance();
@@ -180,30 +180,22 @@ public class WalletTransferFragment2 extends Fragment {
                     DecimalFormat decimalFormat = new DecimalFormat();
                     if (inputAmount.length() > 0) {
                         if (String.valueOf(inputAmount.charAt(inputAmount.length() - 1)).equalsIgnoreCase(".")) {
-                            ////Log.e(TAG, "onTextChanged: no need to do anything" );
-
+                            //Log.e(TAG, "onTextChanged: no need to do anything" );
                         } else {
-                            //Log.e(TAG, "onTextChanged: input :  " + inputAmount);
                             String repl = inputAmount.replace(" ", "");
                             String replace = repl.replace(",", "");
-                            /*if (replace.contains(" ")){
-                                //Log.e(TAG, "onTextChanged: true" );
-                            }else {
-                                //Log.e(TAG, "onTextChanged: false" );
-                            }*/
-                            //Log.e(TAG, "onTextChanged: replace : " + replace);
+
 
                             float tranaferAmount = decimalFormat.parse(replace).floatValue();
                             float transfer = (float) (tranaferAmount / exchange);
                             float twoDecimal = (float) Helper.getTwoDecimal(transfer);
                             mCreditAmount = (float) (twoDecimal + 0.00);
-                            //Log.e(TAG, "onTextChanged: credit "+mCreditAmount );
                             DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
                             formatter.applyPattern("#,###,###,###.00");
                             String formattedString = formatter.format(twoDecimal);
                             tvAmountCredit.setText(String.valueOf(formattedString) + " " + toCurrency.toUpperCase());
-                            btnTransfer.setEnabled(true);
-                            btnTransfer.setClickable(true);
+                            linearTransfer.setEnabled(true);
+                            linearTransfer.setClickable(true);
 
                         }
                     } else {
@@ -217,8 +209,8 @@ public class WalletTransferFragment2 extends Fragment {
 
                     } else {
                         Toast.makeText(getContext(), getString(R.string.info_invalid_format), Toast.LENGTH_SHORT).show();
-                        btnTransfer.setEnabled(false);
-                        btnTransfer.setClickable(false);
+                        linearTransfer.setEnabled(false);
+                        linearTransfer.setClickable(false);
                     }
                 }
 
@@ -231,7 +223,7 @@ public class WalletTransferFragment2 extends Fragment {
             }
         });
 
-        btnTransfer.setOnClickListener(new View.OnClickListener() {
+        linearTransfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 verifyDetails();
@@ -239,7 +231,7 @@ public class WalletTransferFragment2 extends Fragment {
             }
         });
         String senderAvatar = Helper.getSenderAvatar();
-        if (!StringUtils.isEmpty(senderAvatar)) {
+        if (!StringUtils.isEmpty(senderAvatar) && !senderAvatar.equalsIgnoreCase("null")) {
             Glide.with(getActivity()).load(senderAvatar).placeholder(R.drawable.user_chat).centerCrop().into(ivSender);
         }
 
@@ -250,17 +242,6 @@ public class WalletTransferFragment2 extends Fragment {
 
 
         return view;
-    }
-
-
-    private void showLoading(String message) {
-        mProgressDialog = new ProgressDialog(getActivity());
-        mProgressDialog.setMessage(message);
-        mProgressDialog.show();
-    }
-
-    private void hideLoading() {
-        mProgressDialog.dismiss();
     }
 
 
@@ -281,7 +262,7 @@ public class WalletTransferFragment2 extends Fragment {
             String avatar = obj.getString(AppoConstants.AVATAR);
             toCurrency = obj.getString(AppoConstants.TOCURRENCY);
 
-            if (!StringUtils.isEmpty(avatar)) {
+            if (!StringUtils.isEmpty(avatar) && !avatar.equalsIgnoreCase("null")) {
                 Glide.with(getActivity()).load(avatar).placeholder(R.drawable.user_chat).centerCrop().into(ivReceiver);
             }
             tvName1.setText(recname);
@@ -852,9 +833,6 @@ public class WalletTransferFragment2 extends Fragment {
                 break;
             }
         }
-        //String format = String.format("%.2f", Float.parseFloat());
-
-        //float twoDecimal1 = Helper.getTwoDecimal(Float.parseFloat(edAmount.getText().toString()));
         tvAmountPay.setText(" Amount : " + fundamount + " " + mCurrencyId.toUpperCase());
         tvCurrencyPay.setText("Currency : " + mCurrencyId);
         tvTransactionTime.setText("Transaction Time : " + getDateTime());
@@ -864,8 +842,6 @@ public class WalletTransferFragment2 extends Fragment {
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*mDialog.dismiss();
-                getActivity().onBackPressed();*/
                 redirectHome();
             }
         });
@@ -950,12 +926,12 @@ public class WalletTransferFragment2 extends Fragment {
     }
 
     private void openScreenshot(File imageFile) {
-        Intent intent = new Intent();
+        /*Intent intent = new Intent();
         String absolutePath = imageFile.getAbsolutePath();
         intent.putExtra("link", absolutePath);
         getActivity().setResult(Activity.RESULT_OK, intent);
-        getActivity().finish();
-        /*Intent intentShareFile = new Intent();
+        getActivity().finish();*/
+        Intent intentShareFile = new Intent();
         intentShareFile.setAction(Intent.ACTION_SEND);
         Uri uriForFile = FileProvider.getUriForFile(getActivity().getApplicationContext(), "com.stuffer.stuffers.fileprovider", imageFile);
         intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -968,17 +944,20 @@ public class WalletTransferFragment2 extends Fragment {
             String packageName = resolveInfo.activityInfo.packageName;
             getActivity().grantUriPermission(packageName, uriForFile, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
-        startActivityForResult(chooser, 198);*/
+        startActivityForResult(chooser, 198);
 
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 198) {
+        Intent intent = new Intent();
+        getActivity().setResult(Activity.RESULT_OK, intent);
+        getActivity().finish();
 
-
-        }
+        /*if (requestCode == 198) {
+            getActivity().finish();
+        }*/
     }
 
 

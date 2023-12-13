@@ -1,5 +1,7 @@
 package com.stuffer.stuffers.fragments.wallet_fragments;
 
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_CCODE;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -38,8 +40,10 @@ import com.hbb20.CountryCodePicker;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.BuildConfig;
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.activity.wallet.CustomerProfileActivity;
 import com.stuffer.stuffers.activity.wallet.HomeActivity3;
 import com.stuffer.stuffers.activity.wallet.MobileNumberRegistrationActivity;
+import com.stuffer.stuffers.activity.wallet.SignInActivity;
 import com.stuffer.stuffers.adapter.address.AutoCompleteAdapter;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
@@ -52,6 +56,7 @@ import com.stuffer.stuffers.models.Country.CountryCodeResponse;
 import com.stuffer.stuffers.models.Country.Result;
 import com.stuffer.stuffers.models.Country.State;
 import com.stuffer.stuffers.utils.AppoConstants;
+import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
@@ -135,9 +140,23 @@ public class NumEmailFragment extends Fragment {
             edtCustomerMobileNumber.setText("" + nationalNumber);
             edtCustomerCountryCode.setCountryForPhoneCode(numberProto.getCountryCode());
 
+            try {
+                String vaultValue1 = DataVaultManager.getInstance(getActivity()).getVaultValue(KEY_CCODE);
+                if (!StringUtils.isEmpty(vaultValue1)) {
+                    edtCustomerCountryCode.setCountryForNameCode(vaultValue1);
+                } else {
+                    edtCustomerCountryCode.setCountryForPhoneCode(edtCustomerCountryCode.getDefaultCountryCodeAsInt());
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         } catch (NumberParseException e) {
             System.err.println("NumberParseException was thrown: " + e.toString());
         }
+
+
 
         btnClearAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,6 +247,8 @@ public class NumEmailFragment extends Fragment {
         edtCustomerCountryCode.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
             public void onCountrySelected() {
+                //String selectedCountryNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
+                //DataVaultManager.getInstance(getActivity()).saveCCODE(selectedCountryNameCode);
                 mCountryName = edtCustomerCountryCode.getSelectedCountryName();
                 tvState.setText("");
 
@@ -238,6 +259,7 @@ public class NumEmailFragment extends Fragment {
         ivState.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (mListCountry != null && mListCountry.size() > 0) {
                     StateDialogFragment stateDialogFragment = new StateDialogFragment();
                     Bundle bundle = new Bundle();
@@ -245,6 +267,8 @@ public class NumEmailFragment extends Fragment {
                     stateDialogFragment.setArguments(bundle);
                     stateDialogFragment.setCancelable(false);
                     stateDialogFragment.show(getChildFragmentManager(), stateDialogFragment.getTag());
+                }else {
+                    Toast.makeText(getActivity(), "Please Select Your Country Code...", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -373,7 +397,7 @@ public class NumEmailFragment extends Fragment {
             @Override
             public void onResponse(Call<CountryCodeResponse> call, Response<CountryCodeResponse> response) {
                 hideProgress();
-
+                    mListCountry=new ArrayList<>();
                 if (response.isSuccessful()) {
                     if (response.body().getMessage().equalsIgnoreCase("success")) {
                         mListCountry = new ArrayList<>();

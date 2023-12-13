@@ -63,6 +63,7 @@ import com.stuffer.stuffers.models.output.UserProfileOutput;
 import com.stuffer.stuffers.models.output.YourAppointmentOutputModel;
 import com.stuffer.stuffers.models.output.YourOrderOutputModel;
 import com.google.gson.JsonObject;
+import com.stuffer.stuffers.models.restaurant.MRestaurent;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -936,6 +937,9 @@ public interface MainAPIInterface<R extends Retrofit> {
 
     @GET(Constants.GET_ALL_RESTAURANT)
     Call<AllRestaurant> getAllRestaurant(@Query("page") int page, @Query("size") int size);
+
+    @GET(Constants.GET_LIST_RESTAURANT)
+    Call<MRestaurent> getListRestaurant();
 
     @GET(Constants.GET_RESTAURANT_ITEMS)
     Call<RestaurantItems> getAllRestaurantItems(@Query("userId") String userId);

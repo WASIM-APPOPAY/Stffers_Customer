@@ -8,11 +8,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
-import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,7 +34,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.androidnetworking.AndroidNetworking;
 import com.bumptech.glide.Glide;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.MyContextWrapper;
@@ -55,7 +54,7 @@ import com.stuffer.stuffers.commonChat.chat.BottomChatFragment;
 import com.stuffer.stuffers.communicator.AreaSelectListener;
 import com.stuffer.stuffers.communicator.FinanceListener;
 import com.stuffer.stuffers.communicator.InnerScanListener;
-import com.stuffer.stuffers.communicator.LinkAccountListener;
+import com.stuffer.stuffers.communicator.CommonListener;
 import com.stuffer.stuffers.communicator.LoginRequestListener;
 import com.stuffer.stuffers.communicator.MoneyTransferListener;
 import com.stuffer.stuffers.communicator.OnTransactionPinSuccess;
@@ -94,6 +93,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.JsonObject;
+import com.stuffer.stuffers.views.MyTextViewBold;
 import com.volcaniccoder.bottomify.BottomifyNavigationView;
 import com.volcaniccoder.bottomify.OnNavigationItemChangeListener;
 
@@ -127,7 +127,7 @@ import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_ID1;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_LANGUAGE;
 
 
-public class HomeActivity extends AppCompatActivity implements OnNavigationItemChangeListener, LoginRequestListener, ProfileUpdateRequest, StartActivityListener, ScanRequestListener, SideWalletListener, ScreenTimeoutListener, UserAccountTransferListener, RecyclerViewRowItemClickListener2, MoneyTransferListener, TransactionPinListener, RecyclerViewRowItemCLickListener, UpdateProfileRequest, OnTransactionPinSuccess, UnionPayCardListener, InnerScanListener, LinkAccountListener, AreaSelectListener, FinanceListener {
+public class HomeActivity extends AppCompatActivity implements OnNavigationItemChangeListener, LoginRequestListener, ProfileUpdateRequest, StartActivityListener, ScanRequestListener, SideWalletListener, ScreenTimeoutListener, UserAccountTransferListener, RecyclerViewRowItemClickListener2, MoneyTransferListener, TransactionPinListener, RecyclerViewRowItemCLickListener, UpdateProfileRequest, OnTransactionPinSuccess, UnionPayCardListener, InnerScanListener, CommonListener, AreaSelectListener, FinanceListener {
     BottomifyNavigationView bottomify_nav;
     private DrawerLayout drawer_layout;
     ExpandableLayout layoutExpand;
@@ -153,11 +153,14 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
     private FrameLayout frameLayout;
     private CircleImageView ivUser;
     private ProgressDialog mProgress;
+    private ArrayList<MyTextViewBold> mBottomList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mainAPIInterface = ApiUtils.getAPIService();
         ivUser = findViewById(R.id.ivUser);
         frameLayout = findViewById(R.id.frameLayout);
@@ -180,6 +183,10 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
         layoutOverview = (LinearLayout) findViewById(R.id.layoutOverview);
         layoutLinkBank = findViewById(R.id.layoutLinkBank);
         tvVersion = (MyTextView) findViewById(R.id.tvVersion);
+
+
+
+
         LinearLayout layoutKyc = (LinearLayout) findViewById(R.id.layoutKyc);
         ((AppoPayApplication) getApplication()).registerSessionListener(this);
         layoutKyc.setOnClickListener(new View.OnClickListener() {
@@ -1297,7 +1304,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
     }
 
     @Override
-    public void onLinkAccountConfirm() {
+    public void onCommonConfirm() {
         if (mBottomLinkAc != null)
             mBottomLinkAc.dismiss();
 

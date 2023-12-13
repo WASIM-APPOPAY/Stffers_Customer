@@ -89,7 +89,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
 
     private JSONArray resultConversion;
     private JSONObject jsonCommission;
-    private float bankfees, newamount, processingfees, finalamount, finalAmount1 = 0, chargesAmount = 0;
+    private float mCharges, newamount, mFees, finalamount, mOrgPayAmt = 0, mTaxes = 0;
     //private String AMOUNT_REGEX = "[0-9.]";
     private String AMOUNT_REGEX = "/^([0-9]+(\\.[0-9])?)/";
     private ImageView ivContactList;
@@ -630,18 +630,18 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
             float fundamount = newAmountParam;
             float taxpercentage = Float.parseFloat(result.getString(AppoConstants.TAXPERCENTAGE));
 
-            bankfees = getTwoDecimal(bankcomission * fundamount);
-            newamount = fundamount + bankfees;
-            processingfees = getTwoDecimal(fundamount * processingcomission);
-            finalamount = newamount + processingfees;
-            bankfees = getTwoDecimal(bankfees + flatbankcomission);
-            processingfees = getTwoDecimal(processingfees + flatprocessingcomission);
+            mCharges = getTwoDecimal(bankcomission * fundamount);
+            newamount = fundamount + mCharges;
+            mFees = getTwoDecimal(fundamount * processingcomission);
+            finalamount = newamount + mFees;
+            mCharges = getTwoDecimal(mCharges + flatbankcomission);
+            mFees = getTwoDecimal(mFees + flatprocessingcomission);
             float flatfees = getTwoDecimal(flatbankcomission + flatprocessingcomission);
             finalamount = (finalamount + flatfees);
-            chargesAmount = getTwoDecimal(fundamount * (taxpercentage / 100.0f));
-            finalAmount1 = 0;
-            finalAmount1 = fundamount + chargesAmount + bankfees;
-            finalAmount1 = getTwoDecimal(finalAmount1);
+            mTaxes = getTwoDecimal(fundamount * (taxpercentage / 100.0f));
+            mOrgPayAmt = 0;
+            mOrgPayAmt = fundamount + mTaxes + mCharges;
+            mOrgPayAmt = getTwoDecimal(mOrgPayAmt);
             showYouAboutToPay(newAmountParam);
 
 
@@ -667,7 +667,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
         MyTextView tvInfo = dialogLayout.findViewById(R.id.tvInfo);
         MyButton btnYes = dialogLayout.findViewById(R.id.btnYes);
         MyButton btnNo = dialogLayout.findViewById(R.id.btnNo);
-        String boldText = "<font color=''><b>" + finalAmount1 + "</b></font>" + " " + "<font color=''><b>" + senderCurrencyCode + "</b></font>";
+        String boldText = "<font color=''><b>" + mOrgPayAmt + "</b></font>" + " " + "<font color=''><b>" + senderCurrencyCode + "</b></font>";
         //String paymentAmount = getString(R.string.recharge_partial_pay1) + " " + finalamount + " " + senderCurrencyCode + " " + getString(R.string.recharge_partial_pay2);
         String paymentAmount = getString(R.string.recharge_partial_pay1) + " " + boldText + " " + getString(R.string.recharge_partial_pay2);
 
@@ -703,16 +703,16 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
         sentParams.addProperty(AppoConstants.CARRIER, mListProduct.get(mCarrierPosition).getProductName());
         sentParams.addProperty(AppoConstants.CCEXP, (String) null);
         sentParams.addProperty(AppoConstants.CCNUMBER, (String) null);
-        sentParams.addProperty(AppoConstants.CHARGES, bankfees);
+        sentParams.addProperty(AppoConstants.CHARGES, mCharges);
         sentParams.addProperty(AppoConstants.CVV, (String) null);
-        sentParams.addProperty(AppoConstants.FEES, processingfees);
-        sentParams.addProperty(AppoConstants.TAXES, chargesAmount);
+        sentParams.addProperty(AppoConstants.FEES, mFees);
+        sentParams.addProperty(AppoConstants.TAXES, mTaxes);
 
         sentParams.addProperty(AppoConstants.FROMCURRENCY, currencyId);
         sentParams.addProperty(AppoConstants.FROMCURRENCYCODE, senderCurrencyCode);
         sentParams.addProperty(AppoConstants.FULLNAME, (String) null);
-        sentParams.addProperty(AppoConstants.ORIGINALAMOUNT, finalAmount1);
-        sentParams.addProperty(AppoConstants.PAYAMOUNT, finalAmount1);
+        sentParams.addProperty(AppoConstants.ORIGINALAMOUNT, mOrgPayAmt);
+        sentParams.addProperty(AppoConstants.PAYAMOUNT, mOrgPayAmt);
         sentParams.addProperty(AppoConstants.PRODUCTCODE, mListProduct.get(mCarrierPosition).getProductCode());
         String code = "";
         code = mAraaCode;
@@ -766,7 +766,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
                         if (json.getString(AppoConstants.RESULT).equalsIgnoreCase(AppoConstants.SUCCESS)) {
                             showSuccessDialog();
                         } else {
-                            showErrorDialog(json.getString(AppoConstants.RESULT));
+                            showErrorDialog(json.getString(AppoConstants.MESSAGE));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

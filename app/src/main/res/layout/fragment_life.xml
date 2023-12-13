@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".fragments.landing.LifeFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal">
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:id="@+id/allView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="All" />
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:id="@+id/shopView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="Shop" />
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:id="@+id/foodView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="Food" />
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:id="@+id/entertainmentView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="Entertainment" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_weight="1"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+</LinearLayout>

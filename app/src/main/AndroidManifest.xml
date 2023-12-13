@@ -2,11 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.stuffer.stuffers"
-    tools:ignore="ImpliedTouchscreenHardware,MissingLeanbackLauncher">
-    <!--D:\Hash_Sms>sh sms_retriever_hash_v9.sh - package "com.stuffer.stuffers" - keystore C:\Users\User\.android/debug.keystore-->
+    tools:ignore="ImpliedTouchscreenHardware,MissingLeanbackLauncher"> <!-- D:\Hash_Sms>sh sms_retriever_hash_v9.sh - package "com.stuffer.stuffers" - keystore C:\Users\User\.android/debug.keystore -->
     <uses-sdk tools:overrideLibrary="com.google.zxing.client.android,com.aseem.versatileprogressbar" />
-     <!--<uses-permission android:name="android.permission.RECEIVE_SMS" android:protectionLevel="signature"/>-->
-
+    <!-- <uses-permission android:name="android.permission.RECEIVE_SMS" android:protectionLevel="signature"/> -->
     <!--
           The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -30,6 +28,7 @@
         android:normalScreens="true"
         android:resizeable="false"
         android:smallScreens="true" />
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -44,7 +43,6 @@
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-
     <uses-permission
         android:name="com.google.android.gms.permission.AD_ID"
         tools:node="remove" />
@@ -60,8 +58,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:replace="android:allowBackup"
-        tools:ignore="UnusedAttribute">
+        tools:ignore="UnusedAttribute"
+        tools:replace="android:allowBackup">
+        <activity
+            android:name=".activity.shop_mall.ItemDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.loan.L_IdentityProofActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.loan.L_SignUpActivity"
             android:exported="false" />
@@ -127,8 +131,6 @@
             android:name=".activity.FianceTab.WalletNewBankActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
-
         <activity
             android:name=".activity.FianceTab.DominaActivity"
             android:exported="false" />

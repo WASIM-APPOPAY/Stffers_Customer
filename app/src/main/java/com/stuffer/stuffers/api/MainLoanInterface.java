@@ -20,4 +20,12 @@ public interface MainLoanInterface<R extends Retrofit> {
             @Body JsonObject param,
             @Header("Authorization") String header
     );
+
+    @POST(Constants.LOAN_RIGESTER)
+    Call<JsonObject> getLoanRegister(
+            @Body JsonObject param,
+            @Header("Authorization") String header
+    );
+
+
 }

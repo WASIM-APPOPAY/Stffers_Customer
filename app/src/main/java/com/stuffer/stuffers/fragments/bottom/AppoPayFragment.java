@@ -1148,12 +1148,13 @@ public class AppoPayFragment extends Fragment {
     public void onConfirm(String pin) {
         if (bottotmPinFragment != null) bottotmPinFragment.dismiss();
         //getCommissions(pin);
-        String transactionPin = Helper.getTransactionPin();
+        /*String transactionPin = Helper.getTransactionPin();
         if (transactionPin.equalsIgnoreCase(pin)) {
             showYouAboutToPay();
         } else {
             Toast.makeText(getActivity(), "Invalid Transaction Pin", Toast.LENGTH_SHORT).show();
-        }
+        }*/
+        showYouAboutToPay();
     }
 
 }

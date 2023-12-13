@@ -254,10 +254,16 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
     public void onLanguageSelect(String lan) {
         mBottomLanguage.dismiss();
         DataVaultManager.getInstance(SplashActivity.this).saveLanguage(lan);
-        Intent intent = new Intent(SplashActivity.this, SplashActivity.class);
+        /*Intent intent = new Intent(SplashActivity.this, SplashActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        finish();
+        finish();*/
+        tvCheck.setChecked(true);
+        Intent intent = new Intent(SplashActivity.this, UrlsActivity.class);
+        intent.putExtra(AppoConstants.TITLE, getString(R.string.info_terms_and_condition1));
+        intent.putExtra(AppoConstants.NAME, Constants.TERM_AND_CONDITIONS);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     @Override

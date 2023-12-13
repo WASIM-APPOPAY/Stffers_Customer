@@ -3,6 +3,7 @@ package com.stuffer.stuffers.commonChat.chat;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.commonChat.chatAdapters.MenuUsersRecyclerAdapter;
 import com.stuffer.stuffers.commonChat.chatModel.User;
@@ -87,6 +89,7 @@ public class UserSelectDialogFragment extends BaseFullDialogFragment {
     }
 
     public static UserSelectDialogFragment newUserSelectInstance(ArrayList<User> myUsers) {
+        //Log.e("TAG", "newUserSelectInstance: "+new Gson().toJson(myUsers));
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("users", myUsers);
 

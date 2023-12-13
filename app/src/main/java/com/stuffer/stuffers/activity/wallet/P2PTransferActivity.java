@@ -303,18 +303,6 @@ public class P2PTransferActivity extends AppCompatActivity implements UserAccoun
                     @Override
                     public void onResponse(JSONObject response) {
                         hideLoading();
-                        /*
-            WalletTransferFragment2 walletTransferFragment = new WalletTransferFragment2();
-            Bundle bundle = new Bundle();
-            bundle.putInt(AppoConstants.WHERE, mType);
-            bundle.putString(AppoConstants.SENTUSER, mIndexUser);
-            bundle.putBoolean("hasAmount", hasAmount);
-            bundle.putString("amount", amount);
-            bundle.putParcelableArrayList(AppoConstants.SENTCURRENCY, (ArrayList<? extends Parcelable>) mCurrencyResponse);
-            bundle.putString(AppoConstants.SENTBASECONVERSION, mBaseConversion);
-            walletTransferFragment.setArguments(bundle);
-            initFragment(walletTransferFragment);
-                         */
                         try {
                             if (response.getString(AppoConstants.MESSAGE).equalsIgnoreCase(AppoConstants.SUCCESS)) {
                                 if (!response.getBoolean(AppoConstants.ERROR)) {

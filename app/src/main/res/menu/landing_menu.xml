@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_home"
+        android:checked="true"
+        android:icon="@drawable/ic_home"
+        android:title="@string/info_home" />
+
+
+    <item
+        android:id="@+id/action_life"
+        android:icon="@drawable/hlanding2"
+        android:title="UnionPay" />
+
+
+    <item
+        android:id="@+id/action_msg"
+        android:icon="@drawable/hlanding3"
+        android:title="@string/info_transfer"
+        app:iconTint="#052F73" />
+
+
+    <item
+        android:id="@+id/action_finance"
+        android:icon="@drawable/hlanding4"
+        android:title="@string/info_chat" />
+
+    <item
+        android:id="@+id/action_me"
+        android:icon="@drawable/hlanding5"
+        android:title="@string/info_chat" />
+
+
+</menu>

@@ -179,8 +179,15 @@ public class GenerateQrDynamicActivity extends AppCompatActivity implements View
     public void onPinConfirm(String transactionPin) {
         String mTransactionPin = Helper.getTransactionPin();
 
+        if (mBottomPinFragment != null) {
+            mBottomPinFragment.dismiss();
+        }
+        showProgress();
+        String customerAccountId = Helper.getCustomerAccountId();
+        getDynamicQrCode(customerAccountId, edQrAmount.getText().toString().trim(), "true");
 
-        if (mTransactionPin.equalsIgnoreCase(transactionPin)) {
+
+        /*if (mTransactionPin.equalsIgnoreCase(transactionPin)) {
             if (mBottomPinFragment != null) {
                 mBottomPinFragment.dismiss();
             }
@@ -192,7 +199,7 @@ public class GenerateQrDynamicActivity extends AppCompatActivity implements View
                 mBottomPinFragment.dismiss();
             }
             Toast.makeText(this, "Invalid Transaction Pin", Toast.LENGTH_SHORT).show();
-        }
+        }*/
     }
 
     @Override

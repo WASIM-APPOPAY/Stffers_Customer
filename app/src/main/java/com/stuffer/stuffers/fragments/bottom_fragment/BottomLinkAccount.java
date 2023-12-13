@@ -6,10 +6,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import android.text.Html;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,8 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.stuffer.stuffers.R;
-import com.stuffer.stuffers.communicator.LinkAccountListener;
-import com.stuffer.stuffers.communicator.UnionPayCardListener;
+import com.stuffer.stuffers.communicator.CommonListener;
 import com.stuffer.stuffers.views.MyButton;
 import com.stuffer.stuffers.views.MyTextView;
 import com.stuffer.stuffers.views.MyTextViewBold;
@@ -32,7 +29,7 @@ public class BottomLinkAccount extends BottomSheetDialogFragment implements View
     private MyButton btnCommonOk;
     private BottomSheetBehavior mBehaviour;
     private MyButton btnApply, btnClose;
-    LinkAccountListener mLinkAccountListener;
+    CommonListener mLinkAccountListener;
 
     public BottomLinkAccount() {
         // Required empty public constructor
@@ -57,7 +54,7 @@ public class BottomLinkAccount extends BottomSheetDialogFragment implements View
         if (view.getId() == R.id.btnApply) {
              /*Intent intentUnion = new Intent(getActivity(), UnionPayActivity.class);
              startActivity(intentUnion);*/
-            mLinkAccountListener.onLinkAccountConfirm();
+            mLinkAccountListener.onCommonConfirm();
         } else if (view.getId() == R.id.btnClose) {
             dismiss();
         }
@@ -122,6 +119,6 @@ public class BottomLinkAccount extends BottomSheetDialogFragment implements View
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        mLinkAccountListener = (LinkAccountListener) context;
+        mLinkAccountListener = (CommonListener) context;
     }
 }

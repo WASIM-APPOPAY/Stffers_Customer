@@ -5,12 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.communicator.PictureListener;
+import com.stuffer.stuffers.utils.AppoConstants;
 
-public class MyCameraActivity extends AppCompatActivity {
+public class MyCameraActivity extends AppCompatActivity implements PictureListener {
     private final String[] permissions = {Manifest.permission.CAMERA};
     //https://www.youtube.com/watch?v=5WXbgXd8A9Q&ab_channel=TheCodeCity
 
@@ -32,4 +35,11 @@ public class MyCameraActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onPictureSelect(String path) {
+        Intent mIntent=new Intent();
+        mIntent.putExtra(AppoConstants.IMAGE_PATH,path);
+        setResult(RESULT_OK,mIntent);
+        finish();
+    }
 }

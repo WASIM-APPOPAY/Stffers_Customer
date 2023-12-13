@@ -42,13 +42,13 @@ public class ShopItemDetailsFragment extends Fragment implements ShopItemListene
     private ItemDetailsListener mItemDetailsListener;
 
     public ShopItemDetailsFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View mView = inflater.inflate(R.layout.fragment_shop_item_details, container, false);
         apiServiceShop = ApiUtils.getAPIServiceShop();
         Bundle arguments = this.getArguments();
@@ -63,7 +63,7 @@ public class ShopItemDetailsFragment extends Fragment implements ShopItemListene
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) {
-                    //mPage++;
+
                     getCategoryItems(categoryId);
                 }
 
@@ -80,9 +80,9 @@ public class ShopItemDetailsFragment extends Fragment implements ShopItemListene
         apiServiceShop.getShopCategoryItemsDetails(String.valueOf(mPage), "10", "", "", "", categoryId, "", "", "", "", "", "", "").enqueue(new Callback<ItemDetails>() {
             @Override
             public void onResponse(Call<ItemDetails> call, Response<ItemDetails> response) {
-                //Log.e(TAG, "onResponse: " + response.body().getData().getCount());
+
                 if (!response.body().getError()) {
-                    //mListItem = ;
+
                     List<ItemDetails.Data.Items> items = response.body().getData().getItems();
                     mListItem.addAll(items);
                     setAdapter();
@@ -91,7 +91,7 @@ public class ShopItemDetailsFragment extends Fragment implements ShopItemListene
 
             @Override
             public void onFailure(Call<ItemDetails> call, Throwable t) {
-                //Log.e(TAG, "onFailure: " + t.getMessage());
+
 
             }
         });
@@ -104,7 +104,7 @@ public class ShopItemDetailsFragment extends Fragment implements ShopItemListene
 
     @Override
     public void onShopItemClick(String param) {
-        //Log.e(TAG, "onShopItemClick: " + param);
+
         mItemDetailsListener.onItemDetailsReceived(param);
     }
 

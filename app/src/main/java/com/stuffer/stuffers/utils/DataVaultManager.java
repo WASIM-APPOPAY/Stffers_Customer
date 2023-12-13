@@ -45,6 +45,7 @@ public class DataVaultManager {
     public static final String KEY_USER_ID1 = "userid1";
     public static final String KEY_IDPATH = "idpath";
     public static final String TANDC="tandc";
+    public static final String NotificationKey="notification_key";
 
     private static PrivateDataVault vault;
     private static DataVaultManager dataVaultManager;
@@ -229,6 +230,12 @@ public class DataVaultManager {
     public void saveCCODE(String selectedCountryNameCode) {
         checkVaultStatus();
         vault.setString(KEY_CCODE, selectedCountryNameCode);
+        vault.lock();
+    }
+
+    public void saveNotificationKey(String value) {
+        checkVaultStatus();
+        vault.setString(NotificationKey, value);
         vault.lock();
     }
 }

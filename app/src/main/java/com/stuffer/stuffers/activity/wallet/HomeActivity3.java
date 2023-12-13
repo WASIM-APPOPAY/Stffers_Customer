@@ -1,12 +1,11 @@
 package com.stuffer.stuffers.activity.wallet;
 
-import static com.stuffer.stuffers.activity.wallet.HomeActivity2.startResultForAccountActivity;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_CCODE;
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_LANGUAGE;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
@@ -27,6 +26,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -47,7 +47,6 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.hbb20.CountryCodePicker;
@@ -55,6 +54,7 @@ import com.onesignal.OSDeviceState;
 import com.onesignal.OneSignal;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.BuildConfig;
+import com.stuffer.stuffers.MyContextWrapper;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.loan.L_HomeActivity;
 import com.stuffer.stuffers.activity.loan.L_IntroActivity;
@@ -74,16 +74,16 @@ import com.stuffer.stuffers.commonChat.chatModel.User;
 import com.stuffer.stuffers.commonChat.chatUtils.ChatHelper;
 import com.stuffer.stuffers.commonChat.chatUtils.ConfirmationDialogFragment;
 import com.stuffer.stuffers.commonChat.interfaces.ChatItemClickListener;
-import com.stuffer.stuffers.commonChat.interfaces.MoreListener;
 import com.stuffer.stuffers.commonChat.interfaces.ProceedRequest;
 import com.stuffer.stuffers.commonChat.interfaces.UserGroupSelectionDismissListener;
 import com.stuffer.stuffers.communicator.CashTransferListener;
-import com.stuffer.stuffers.communicator.LinkAccountListener;
-import com.stuffer.stuffers.communicator.ShopListener;
+import com.stuffer.stuffers.communicator.CommonListener;
+import com.stuffer.stuffers.communicator.LanguageListener;
 import com.stuffer.stuffers.communicator.StartActivityListener;
+import com.stuffer.stuffers.fragments.bottom_fragment.BottomLanguage;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomRegister;
-import com.stuffer.stuffers.fragments.landing.HomeLandingFragment;
 import com.stuffer.stuffers.fragments.landing.LandingFragment;
+import com.stuffer.stuffers.fragments.landing.LifeFragment;
 import com.stuffer.stuffers.myService.FetchMyUsersService;
 import com.stuffer.stuffers.my_camera.CameraActivity;
 import com.stuffer.stuffers.utils.AppoConstants;
@@ -93,6 +93,7 @@ import com.stuffer.stuffers.views.MyTextView;
 import com.stuffer.stuffers.views.MyTextViewBold;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -111,9 +112,8 @@ import io.michaelrocks.libphonenumber.android.Phonenumber;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
-public class HomeActivity3 extends BaseActivity implements View.OnClickListener, ChatItemClickListener, ProceedRequest, UserGroupSelectionDismissListener, CashTransferListener, LinkAccountListener, StartActivityListener {
+public class HomeActivity3 extends BaseActivity implements View.OnClickListener, ChatItemClickListener, ProceedRequest, UserGroupSelectionDismissListener, CashTransferListener, CommonListener, StartActivityListener, LanguageListener {
     private static final String TAG = "HomeActivity3";
     private static final int REQUEST_CODE_CHAT_FORWARD = 99;
     private static String CONFIRM_TAG = "confirmtag";
@@ -135,15 +135,33 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
     private MyTextViewBold tvUserName;
     private LinearLayout layoutMyCards;
     public static Activity mCtx;
-    private LinearLayout layoutAccount, llHome, llMe, llFinance;
+    private LinearLayout layoutAccount, llHome, llMe, llFinance, llLife;
     private LinearLayout layoutProfile;
-    private LinearLayout layoutSetting;
+    private LinearLayout layoutSetting, layoutLanguage;
     private ImageView menu_icon;
     private DrawerLayout drawer_layout;
     private ProgressDialog mProgress;
     protected Context mContext;
     private DatabaseReference myInboxRef;
     private MainLoanInterface apiServiceLoan;
+    CountryCodePicker.DialogEventsListener mLis = new CountryCodePicker.DialogEventsListener() {
+        @Override
+        public void onCcpDialogOpen(Dialog dialog) {
+            dialog.dismiss();
+        }
+
+        @Override
+        public void onCcpDialogDismiss(DialogInterface dialogInterface) {
+
+        }
+
+        @Override
+        public void onCcpDialogCancel(DialogInterface dialogInterface) {
+
+        }
+    };
+    private ArrayList<MyTextViewBold> mBottomList;
+    private BottomLanguage mBottomLanguage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,15 +181,26 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
         layoutAccount = (LinearLayout) findViewById(R.id.layoutAccount);
         layoutProfile = (LinearLayout) findViewById(R.id.layoutProfile);
         layoutSetting = (LinearLayout) findViewById(R.id.layoutSetting);
+        layoutLanguage = (LinearLayout) findViewById(R.id.layoutLanguage);
         llHome = (LinearLayout) findViewById(R.id.llHome);
+        llLife = (LinearLayout) findViewById(R.id.llLife);
         llMe = (LinearLayout) findViewById(R.id.llMe);
         llFinance = (LinearLayout) findViewById(R.id.llFinance);
+        mBottomList = new ArrayList<>();
+        mBottomList.add(findViewById(R.id.bottom_title_landing1));
+        mBottomList.add(findViewById(R.id.bottom_title_landing2));
+        mBottomList.add(findViewById(R.id.bottom_title_landing3));
+        mBottomList.add(findViewById(R.id.bottom_title_landing4));
+        mBottomList.add(findViewById(R.id.bottom_title_landing5));
+
+        mBottomList.get(0).setTextColor(Color.parseColor("#ED7014"));
 
         layoutMyCards.setOnClickListener(this);
         layoutAccount.setOnClickListener(this);
         layoutProfile.setOnClickListener(this);
         layoutSetting.setOnClickListener(this);
         llHome.setOnClickListener(this);
+        llLife.setOnClickListener(this);
         llMe.setOnClickListener(this);
         llFinance.setOnClickListener(this);
 
@@ -218,6 +247,20 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
                 onLogoutClick();
             }
         });
+
+        layoutLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showLanDialogue();
+            }
+        });
+    }
+
+    private void showLanDialogue() {
+        mBottomLanguage = new BottomLanguage();
+        mBottomLanguage.show(getSupportFragmentManager(), mBottomLanguage.getTag());
+        mBottomLanguage.setCancelable(false);
+
     }
 
     private void onLogoutClick() {
@@ -232,6 +275,7 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
     }
 
     private void logoutUserRequest() {
+        tvSideBalance.setText("$" + "00.00");
         DataVaultManager.getInstance(HomeActivity3.this).saveUserAccessToken("");
         DataVaultManager.getInstance(HomeActivity3.this).saveUserDetails("");
         DataVaultManager.getInstance(HomeActivity3.this).saveCardToken("");
@@ -281,6 +325,19 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
 
     private void isAccountExist(int countryCode, long nationalNumber) {
 
+
+        /*mBottomRegister = new BottomRegister();
+        Bundle mBundle = new Bundle();
+        mBundle.putString(BottomRegister.COMMON_CLOSE, "CLOSE");
+        mBundle.putString(BottomRegister.COMMON_APPLY, "APPLY");
+        mBundle.putString(BottomRegister.COMMON_HEADING, "Register Now");
+        mBundle.putString(BottomRegister.COMMON_BODY, "");
+        mBundle.putString(BottomRegister.COMMON_FROM, "AppReg");
+
+        mBottomRegister.show(getSupportFragmentManager(), mBottomRegister.getTag());
+        mBottomRegister.setCancelable(false);*/
+
+
         String url = Constants.APPOPAY_BASE_URL + "api/users/checkUserExist?" + "customerType=CUSTOMER" + "&phoneCode=" + "" + countryCode + "&mobileNumber=" + "" + nationalNumber + "&";
 
         AndroidNetworking.get(url)
@@ -288,11 +345,31 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
+
                         try {
                             if (response.getString("message").equalsIgnoreCase("success")) {
+                                JSONObject jsonObject = response.getJSONObject(AppoConstants.RESULT);
+                                JSONObject jsonObject1 = jsonObject.getJSONObject(AppoConstants.CUSTOMERDETAILS);
+                                JSONArray jsonArray = jsonObject1.getJSONArray(AppoConstants.CUSTOMERACCOUNT);
+                                JSONObject jsonObject2 = jsonArray.getJSONObject(0);
+                                String currentBalance = jsonObject2.getString(AppoConstants.CURRENTBALANCE);
+                                float twoDecimal = Helper.getTwoDecimal(Float.parseFloat(currentBalance));
+                                Helper.setUserDetailsNull();
+                                DataVaultManager.getInstance(HomeActivity3.this).saveUserDetails(response.toString());
+                                tvSideBalance.setText("");
+                                tvSideBalance.setText("$" + twoDecimal);
+
+
 
                             } else {
                                 mBottomRegister = new BottomRegister();
+                                Bundle mBundle = new Bundle();
+                                mBundle.putString(BottomRegister.COMMON_CLOSE, "CLOSE");
+                                mBundle.putString(BottomRegister.COMMON_APPLY, "APPLY");
+                                mBundle.putString(BottomRegister.COMMON_HEADING, "Register Now");
+                                mBundle.putString(BottomRegister.COMMON_BODY, "");
+                                mBundle.putString(BottomRegister.COMMON_FROM, "AppReg");
+
                                 mBottomRegister.show(getSupportFragmentManager(), mBottomRegister.getTag());
                                 mBottomRegister.setCancelable(false);
                             }
@@ -347,25 +424,9 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
         }
     }
 
-    CountryCodePicker.DialogEventsListener mLis = new CountryCodePicker.DialogEventsListener() {
-        @Override
-        public void onCcpDialogOpen(Dialog dialog) {
-            dialog.dismiss();
-        }
-
-        @Override
-        public void onCcpDialogDismiss(DialogInterface dialogInterface) {
-
-        }
-
-        @Override
-        public void onCcpDialogCancel(DialogInterface dialogInterface) {
-
-        }
-    };
 
     @Override
-    public void onLinkAccountConfirm() {
+    public void onCommonConfirm() {
         mBottomRegister.dismiss();
         Intent intent = new Intent(HomeActivity3.this, Registration.class);
         startActivity(intent);
@@ -390,6 +451,7 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
                         manager.beginTransaction().remove(frag).commit();
                     }
                     userSelectDialogFragment.show(manager, USER_SELECT_TAG);
+
                 }
                 break;
             case 200:
@@ -420,9 +482,9 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
                     }
                 }
             case 100:
-
+                //Log.e(TAG, "onActivityResult: called");
                 if (resultCode == Activity.RESULT_OK) {
-                    mShare = data.getStringExtra("link");
+                    /*mShare = data.getStringExtra("link");
 
                     userSelectDialogFragment = UserSelectDialogFragment.newUserSelectInstance(myUsers);
                     FragmentManager manager = getSupportFragmentManager();
@@ -430,7 +492,13 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
                     if (frag != null) {
                         manager.beginTransaction().remove(frag).commit();
                     }
-                    userSelectDialogFragment.show(manager, USER_SELECT_TAG);
+                    userSelectDialogFragment.show(manager, USER_SELECT_TAG);*/
+
+                    try {
+                        isAccountExist(Integer.parseInt(Helper.getPhoneCode()), Helper.getSenderMobileNumber());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
 
@@ -505,13 +573,21 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
 
 
         if (view.getId() == R.id.llMsg) {
+            setActiveInActive(2);
             BottomChatFragment mBottomChatFragment = new BottomChatFragment();
             initFragment(mBottomChatFragment);
         } else if (view.getId() == R.id.llHome) {
+            setActiveInActive(0);
             LandingFragment mLandingFragment = new LandingFragment();
             //HomeLandingFragment mLandingFragment = new HomeLandingFragment();
             initFragment(mLandingFragment);
+        } else if (view.getId() == R.id.llLife) {
+            setActiveInActive(1);
+            LifeFragment mFragment = new LifeFragment();
+            initFragment(mFragment);
+
         } else if (view.getId() == R.id.llMe) {
+            setActiveInActive(4);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -526,6 +602,7 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
                 }
             }, 200);
         } else if (view.getId() == R.id.llFinance) {
+            setActiveInActive(3);
             /*Intent intentFinance = new Intent(HomeActivity3.this, L_IntroActivity.class);
             startActivity(intentFinance);*/
             getDetails();
@@ -593,6 +670,16 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
 
     }
 
+    private void setActiveInActive(int i) {
+        for (int j = 0; j < mBottomList.size(); j++) {
+            if (i == j) {
+                mBottomList.get(j).setTextColor(Color.parseColor("#ED7014"));
+            } else {
+                mBottomList.get(j).setTextColor(Color.parseColor("#000000"));
+            }
+        }
+    }
+
     private void getDetails() {
         showLoading();
         String param1 = "2017011900003";
@@ -600,17 +687,16 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
         String param3 = "en.corecoop.net";
         String base = param1 + "|" + param2 + "|" + param3;
         String authHeader = "Basic " + Base64.encodeToString(base.getBytes(), Base64.NO_WRAP);
+
         JsonObject mParam = new JsonObject();
-        mParam.addProperty("MobileNo", "919836683269");
+        mParam.addProperty("MobileNo", userMe.getId());
+
 
         apiServiceLoan.getIsUserLogin_Or_Profile(mParam, authHeader).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Log.e(TAG, "onResponse: " + response.body());
 
-                /*{
-                            "message":"fail", "error":true, "AccountBalace":{
-                        },"base64QRImage":""
-                        }*/
 
                 hideLoading();
                 if (response.code() == 200) {
@@ -627,6 +713,8 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
+                //Log.e(TAG, "onFailure: called");
+                Log.e(TAG, "onFailure: " + t.getMessage());
                 hideLoading();
 
 
@@ -648,6 +736,7 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onChatItemClick(Chat chat, int position, View userImage) {
+        //Log.e(TAG, "onChatItemClick: called" );
         openChat(ChatActivity.newIntent(HomeActivity3.this, messageForwardList, chat, mShare), userImage);
     }
 
@@ -894,18 +983,15 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
             if (!stateChanges.getFrom().isSubscribed() && stateChanges.getTo().isSubscribed()) {
                 usersRef.child(userMe.getId()).child("userPlayerId").setValue(stateChanges.getTo().getUserId());
                 helper.setMyPlayerId(stateChanges.getTo().getUserId());
+                DataVaultManager.getInstance(AppoPayApplication.getInstance()).saveNotificationKey(stateChanges.getTo().getUserId());
 
             }
         });
-        //{"id":"a8c2cfd1-021c-489b-8e57-e8fb2496036f","recipients":1,"external_id":null}
-        //1d60d3334-1cb0-4dce-a7c5-0ee35b727ce0 //vivo
-
         OSDeviceState status = OneSignal.getDeviceState();
         if (status != null && status.isSubscribed() && status.getUserId() != null) {
             usersRef.child(userMe.getId()).child("userPlayerId").setValue(status.getUserId());
             helper.setMyPlayerId(status.getUserId());
-
-
+            DataVaultManager.getInstance(AppoPayApplication.getInstance()).saveNotificationKey(status.getUserId());
         }
     }
 
@@ -918,6 +1004,7 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
             String format = df2.format(doubleV);
             tvSideBalance.setText("$0");
             tvSideBalance.setText("$" + format);
+
         } catch (Exception e) {
             //tvSideBalance.setText("$0");
             tvSideBalance.setText("$" + "0.00");
@@ -973,5 +1060,25 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
             mIntent.putExtra(AppoConstants.WHERE, 3);
             startActivityForResult(mIntent, 100);
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        String userLanguage = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_LANGUAGE);
+        if (StringUtils.isEmpty(userLanguage)) {
+            //userLanguage = "es";
+            userLanguage = "en";
+        }
+        super.attachBaseContext(MyContextWrapper.wrap(newBase, userLanguage));
+    }
+
+    @Override
+    public void onLanguageSelect(String lan) {
+        mBottomLanguage.dismiss();
+        DataVaultManager.getInstance(HomeActivity3.this).saveLanguage(lan);
+        Intent intent = new Intent(HomeActivity3.this, HomeActivity3.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }

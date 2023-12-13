@@ -26,7 +26,7 @@ public class RetrofitClient {
     private static Retrofit retrofitUnionCard = null;
     protected static Retrofit retrofitOpen = null;
     private static Retrofit retrofitOCR = null;
-    private static Retrofit retrofitLoan=null;
+    private static Retrofit retrofitLoan = null;
 
 
     static Gson gson = new GsonBuilder()
@@ -57,7 +57,7 @@ public class RetrofitClient {
             OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             //interceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            //interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             okHttpClientBuilder.addInterceptor(interceptor);
             if (Build.VERSION.SDK_INT < 29) {
                 okHttpClientBuilder.sslSocketFactory(sslContext.getSocketFactory());
@@ -71,6 +71,7 @@ public class RetrofitClient {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
     }
 
     //https://stackoverflow.com/questions/45143069/how-to-draw-rectangle-on-a-camera-preview-in-android
@@ -157,7 +158,7 @@ public class RetrofitClient {
     public static OkHttpClient getClientShopItems() {
         OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        interceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
         okHttpClientBuilder.addInterceptor(interceptor);
         okHttpClientBuilder.connectTimeout(3000, TimeUnit.MILLISECONDS);
         okHttpClientBuilder.readTimeout(15000, TimeUnit.MILLISECONDS);
@@ -190,9 +191,6 @@ public class RetrofitClient {
 
 
 
-/*TAG LENGTH VALUE
-00020101021102040004263400223999057104INR1933296140104abcd520441115303inr5502015603500570155803IND5923Wasim Software Solution61071234567621930116test_bill_number021098366832690316test_store_label0418test_loyaltyNumber0520test_reference_label0619test_customer_label0705370000824test_purpose_transaction09151001621218151395010000110101i64480002ZH0123Wasim Software Solution0203IND0304abcd650200802400083999057107081234567863043CC6
-*/
 
 
 

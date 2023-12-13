@@ -303,9 +303,9 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                             if (response.getString("message").equalsIgnoreCase("success")) {
                                 //Log.e(TAG, "onResponse: " + response);
                                 Toast.makeText(SignInActivity.this, "Already account exist!", Toast.LENGTH_SHORT).show();
-                                /*Intent mIntent = new Intent(SignInActivity.this, Registration.class);
-                                startActivity(mIntent);
-                                finish();*/
+                               // Intent mIntent = new Intent(SignInActivity.this, Registration.class);
+                                //startActivity(mIntent);
+                                //finish();
                             } else {
                                 Intent mIntent = new Intent(SignInActivity.this, Registration.class);
                                 startActivity(mIntent);
@@ -521,6 +521,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                             Helper.setUserDetailsNull();
                             DataVaultManager.getInstance(SignInActivity.this).saveUserDetails(jsonUserDetails);
 
+
                             DataVaultManager.getInstance(SignInActivity.this).saveCCODE(selectedCountryNameCode);
                             JSONObject result;
                             try {
@@ -667,7 +668,6 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         if (mBottomTransDialog != null) mBottomTransDialog.dismiss();
         String base64 = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_BASE_64);
         if (!StringUtils.isEmpty(base64)) {
-
             uploadUserAvatar(base64);
         } else {
 

@@ -80,6 +80,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <!--<com.volcaniccoder.bottomify.BottomifyNavigationView
+                android:id="@+id/bottomify_nav"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:orientation="horizontal"
+                app:active_color="@color/colorPrimary"
+                app:animation_duration="300"
+                app:item_padding="4dp"
+                app:item_text_size="10sp"
+                app:menu="@menu/landing_menu"
+                app:passive_color="@color/colorAccent"
+                app:pressed_color="@color/colorPrimary"
+                app:scale_percent="6" />-->
 
             <include layout="@layout/landing_bottom" />
 

@@ -16,7 +16,6 @@
         android:layout_marginRight="20dp">
 
         <ImageView
-            android:tint="@color/colorPrimary"
             android:id="@+id/saloonUstara"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -24,6 +23,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="30dp"
+            android:tint="@color/colorPrimary"
             app:srcCompat="@mipmap/ic_send_money" />
 
 
@@ -36,13 +36,13 @@
 
 
         <ImageView
-            android:tint="@color/colorPrimary"
             android:id="@+id/saloonScizer"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentRight="true"
             android:layout_marginTop="30dp"
             android:layout_marginRight="10dp"
+            android:tint="@color/colorPrimary"
             app:srcCompat="@mipmap/ic_recive_money" />
 
     </RelativeLayout>
@@ -95,14 +95,14 @@
                 app:ccp_showNameCode="false" />
 
             <com.stuffer.stuffers.views.MyEditText
-                android:enabled="false"
                 android:id="@+id/edtCustomerMobileNumber"
                 android:layout_width="0dp"
-
                 android:layout_height="50dp"
+
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="#0000"
+                android:enabled="false"
                 android:gravity="left|center"
                 android:hint="@string/info_enter_phone_number"
                 android:inputType="number"
@@ -155,7 +155,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Verify your phone number, we have sent an OTP to the request mobile number. "
+            android:text="Verifying your mobile number, we have sent an OTP to the request mobile number. "
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -202,15 +202,21 @@
             app:backgroundTint="@color/colorPrimary"
             app:fabCustomSize="60dp" />
 
-        <ProgressBar
-            android:id="@+id/progress"
-            android:layout_margin="@dimen/dp_10"
+        <com.stuffer.stuffers.views.MyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            />
+            android:text="we are verifying your mobile....."
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textSize="16sp"
+            android:visibility="gone" />
 
-
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dp_10" />
 
 
     </LinearLayout>

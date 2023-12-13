@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/bg_common2"
+    android:orientation="vertical"
     tools:context=".commonChat.chat.VerificationActivity">
 
     <LinearLayout
@@ -24,28 +24,33 @@
         <com.stuffer.stuffers.views.MyTextViewBold
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:layout_marginTop="20sp"
+            android:background="@drawable/edit_text_rounded"
             android:gravity="center"
-            android:text="@string/info_enter_otp2"
-            android:textColor="@color/colorPrimary"
-            android:textSize="25sp"
+            android:padding="@dimen/dp_5"
+            android:text="@string/info_verified1"
+            android:textColor="@color/black"
+            android:textSize="18sp"
             android:textStyle="italic" />
 
         <com.stuffer.stuffers.views.MyTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:background="@drawable/edit_text_rounded"
             android:gravity="center"
-            android:textSize="@dimen/dp_16"
-            android:text="@string/info_we_send"
-            android:textAppearance="?attr/textAppearanceBody1" />
+            android:padding="@dimen/dp_5"
+            android:text="@string/info_verified2"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textSize="@dimen/dp_16" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="10dp"
             android:gravity="center"
             android:orientation="horizontal"
@@ -63,10 +68,10 @@
                 android:background="@drawable/otp_edittext"
                 android:inputType="number"
                 android:maxLength="1"
-                android:textCursorDrawable="@null"
-
                 android:textAlignment="center"
-                android:textColor="@color/trueBlack" />
+
+                android:textColor="@color/trueBlack"
+                android:textCursorDrawable="@null" />
 
             <EditText
                 android:id="@+id/otp_edit_text2"
@@ -77,9 +82,9 @@
                 android:background="@drawable/otp_edittext"
                 android:inputType="number"
                 android:maxLength="1"
-                android:textCursorDrawable="@null"
                 android:textAlignment="center"
-                android:textColor="@color/trueBlack" />
+                android:textColor="@color/trueBlack"
+                android:textCursorDrawable="@null" />
 
             <EditText
                 android:id="@+id/otp_edit_text3"
@@ -90,9 +95,9 @@
                 android:background="@drawable/otp_edittext"
                 android:inputType="number"
                 android:maxLength="1"
-                android:textCursorDrawable="@null"
                 android:textAlignment="center"
-                android:textColor="@color/trueBlack" />
+                android:textColor="@color/trueBlack"
+                android:textCursorDrawable="@null" />
 
             <EditText
                 android:id="@+id/otp_edit_text4"
@@ -104,9 +109,9 @@
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:maxLength="1"
-                android:textCursorDrawable="@null"
                 android:textAlignment="center"
-                android:textColor="@color/trueBlack" />
+                android:textColor="@color/trueBlack"
+                android:textCursorDrawable="@null" />
 
             <EditText
                 android:id="@+id/otp_edit_text5"
@@ -118,9 +123,9 @@
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:maxLength="1"
-                android:textCursorDrawable="@null"
                 android:textAlignment="center"
-                android:textColor="@color/trueBlack" />
+                android:textColor="@color/trueBlack"
+                android:textCursorDrawable="@null" />
 
             <EditText
                 android:id="@+id/otp_edit_text6"
@@ -131,23 +136,48 @@
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:maxLength="1"
-                android:textCursorDrawable="@null"
                 android:textAlignment="center"
-                android:textColor="@color/trueBlack" />
+                android:textColor="@color/trueBlack"
+                android:textCursorDrawable="@null" />
         </LinearLayout>
 
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:id="@+id/reSend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="@string/info_verified3"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="italic" />
 
         <com.stuffer.stuffers.views.MyTextViewBold
             android:id="@+id/retryTimer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
 
             android:gravity="center"
             android:text="@string/otp_resend_in_13_sec"
             android:textColor="@color/colorPrimary"
             android:textSize="25sp"
             android:textStyle="italic" />
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/signinline"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/blue_rounded_bg3"
+            android:elevation="1.5dp"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="@string/info_resend"
+            android:textAllCaps="true"
+            android:textColor="#fff"
+            android:textSize="16sp" />
+
 
         <com.stuffer.stuffers.views.MyTextView
             android:id="@+id/tvAgree"

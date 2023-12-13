@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,6 +54,12 @@ public class StateDialogFragment extends DialogFragment {
         rvState.setLayoutManager(new LinearLayoutManager(getContext()));
         stateAdapter = new StateAdapter(getActivity(), mState);
         rvState.setAdapter(stateAdapter);
+        if (mState.size()>0){
+
+        }else {
+            Toast.makeText(getActivity(), "Please Select Your Country Code...", Toast.LENGTH_SHORT).show();
+
+        }
         edSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

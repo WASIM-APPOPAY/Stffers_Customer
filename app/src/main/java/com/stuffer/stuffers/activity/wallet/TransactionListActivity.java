@@ -3,10 +3,13 @@ package com.stuffer.stuffers.activity.wallet;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,6 +28,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -439,11 +443,10 @@ public class TransactionListActivity extends AppCompatActivity implements Recycl
         switch (requestCode) {
             case (REQUEST_CODE_CHAT_FORWARD):
                 if (resultCode == Activity.RESULT_OK) {
-                    //show forward dialog to choose users
+
                     messageForwardList.clear();
                     ArrayList<Message> temp = data.getParcelableArrayListExtra("FORWARD_LIST");
-                    String s = new Gson().toJson(temp);
-                    //Log.e(TAG, "onActivityResult: "+s );
+                    //String s = new Gson().toJson(temp);
                     messageForwardList.addAll(temp);
                     userSelectDialogFragment = UserSelectDialogFragment.newUserSelectInstance(myUsers);
                     FragmentManager manager = getSupportFragmentManager();
@@ -567,8 +570,8 @@ public class TransactionListActivity extends AppCompatActivity implements Recycl
                     fos.write(bitmapdata);
                     fos.flush();
                     fos.close();
-                    //openScreenshot(mFileSSort);
-                    share();
+                    openScreenshot(mFileSSort);
+                    // share();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -579,6 +582,26 @@ public class TransactionListActivity extends AppCompatActivity implements Recycl
 
 
     }
+
+    private void openScreenshot(File imageFile) {
+
+        Intent intentShareFile = new Intent();
+        intentShareFile.setAction(Intent.ACTION_SEND);
+        Uri uriForFile = FileProvider.getUriForFile(getApplicationContext(), "com.stuffer.stuffers.fileprovider", imageFile);
+        intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intentShareFile.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        intentShareFile.setType("image/jpeg");
+        intentShareFile.putExtra(Intent.EXTRA_STREAM, uriForFile);
+        Intent chooser = Intent.createChooser(intentShareFile, "Share File");
+        List<ResolveInfo> resInfoList = getPackageManager().queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY);
+        for (ResolveInfo resolveInfo : resInfoList) {
+            String packageName = resolveInfo.activityInfo.packageName;
+            grantUriPermission(packageName, uriForFile, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
+        startActivityForResult(chooser, 198);
+
+    }
+
 
     private Bitmap getScreenShot(View view) {
         Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);

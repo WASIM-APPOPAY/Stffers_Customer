@@ -1,13 +1,14 @@
 package com.stuffer.stuffers.api;
 
 
-
+import com.stuffer.stuffers.models.all_restaurant.RestaurentModels;
 import com.stuffer.stuffers.models.shop_model.ItemDetails;
 import com.stuffer.stuffers.models.shop_model.ShopItem;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface MainShopAPIInterface<R extends Retrofit> {
@@ -49,6 +50,17 @@ public interface MainShopAPIInterface<R extends Retrofit> {
                                                   @Query("soldOut") String mSoldOut,
                                                   @Query("discounted") String mDiscounted);
 
+    @POST(Constants.ALL_ITEM)
+    Call<RestaurentModels> getRestaurentAllItems(@Query("pageNumber") String mpage, @Query("pageSize") String mQuery);
+
+    @POST(Constants.ALL_ITEM_FOOD)
+    Call<RestaurentModels> getRestaurentAllItemsFood(@Query("pageNumber") String mpage, @Query("pageSize") String mQuery);
+
+    @POST(Constants.ALL_ITEM_SHOP)
+    Call<RestaurentModels> getRestaurentAllItemsShop(@Query("pageNumber") String mpage, @Query("pageSize") String mQuery);
+
+    @POST(Constants.ALL_ITEM_ENTERTAINMENT)
+    Call<RestaurentModels> getRestaurentAllItemsEntertainment(@Query("pageNumber") String mpage, @Query("pageSize") String mQuery);
 
 
 }

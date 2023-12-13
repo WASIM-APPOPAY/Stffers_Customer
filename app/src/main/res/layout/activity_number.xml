@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/bg_common2"
+    android:orientation="vertical"
     tools:context=".commonChat.chat.NumberActivity">
 
     <LinearLayout
@@ -67,7 +67,18 @@
                     android:src="@drawable/icon_mobile_phone"
                     app:tint="@color/white" />
 
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:id="@+id/tvCountryCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="5dp"
+                    android:text="Select"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
                 <com.hbb20.CountryCodePicker
+
                     android:id="@+id/edtCustomerCountryCode"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
@@ -75,16 +86,13 @@
                     android:background="#0000"
                     android:gravity="center"
                     android:inputType="number"
-
                     android:textColor="@color/colorPrimary"
                     android:textColorHint="@color/colorPrimary"
                     android:textSize="14sp"
-                    app:ccp_areaCodeDetectedCountry="true"
-                    app:ccp_autoDetectCountry="true"
-                    app:ccp_defaultPhoneCode="507"
-                    app:ccp_excludedCountries=""
+                    android:visibility="gone"
+                    app:ccpDialog_showTitle="true"
+                    app:ccp_clickable="false"
                     app:ccp_showFlag="false"
-
                     app:ccp_showFullName="false"
                     app:ccp_showNameCode="false" />
 

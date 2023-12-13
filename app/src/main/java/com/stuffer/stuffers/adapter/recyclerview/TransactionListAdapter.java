@@ -70,6 +70,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             ivView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     mSeeListener.onSeeRequest(getAdapterPosition());
                 }
             });

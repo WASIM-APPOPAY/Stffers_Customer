@@ -8,7 +8,11 @@ android {
     compileSdk 33
 
     defaultConfig {
+
         applicationId "com.stuffer.stuffers"
+        buildConfigField "long","param1","2017011900003"
+        buildConfigField "String","param2","\"das123\""
+        buildConfigField "String","param3","\"en.corecoop.net\""
         //buildToolsVersion "30.0.3"
         minSdk 21
         targetSdk 33
@@ -48,7 +52,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'),
                     'proguard-rules.pro'
             //signingConfig signingConfigs.release
+
+
         }
+
 
 
 

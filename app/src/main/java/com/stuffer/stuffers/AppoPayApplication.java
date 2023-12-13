@@ -31,7 +31,7 @@ import okhttp3.OkHttpClient;
 
 public class AppoPayApplication extends Application {
     private static final String TAG = "AppoPayApplication";
-    public static  boolean UPDATE_WALLET = false;
+    public static boolean UPDATE_WALLET = false;
     private static AppoPayApplication mInstance;
     Context context;
     public SharedPreferences preferences;
@@ -72,21 +72,10 @@ public class AppoPayApplication extends Application {
         OneSignal.setAppId(ONESIGNAL_APP_ID);
         EmojiManager.install(new GoogleEmojiProvider());
         ToastApp.initToastUtils(this);
-        AppSignatureHelper appSignatureHelper=new AppSignatureHelper(this);
+        /*AppSignatureHelper appSignatureHelper=new AppSignatureHelper(this);
         for (String signature : appSignatureHelper.getAppSignatures()) {
             Log.e(TAG, "onCreate: " + signature );
-        }
-        //Y8Eb8n2uulT
-
-/*
-HceApiService.initialize(
-                mInstance,
-                Environment.WALLET_ID
-                );
-*/
-
-
-
+        }*/
     }
 
     @Override
@@ -125,7 +114,6 @@ HceApiService.initialize(
     }
 
 
-
     public static OkHttpClient getOkHttpClient(long timeOut) {
         return new OkHttpClient().newBuilder()
                 .connectTimeout(timeOut, TimeUnit.SECONDS)
@@ -134,6 +122,7 @@ HceApiService.initialize(
                 //.sslSocketFactory(CustomSSLSocketFactory.create(AppoPayApplication.getInstance(), R.raw.appopay_com))
                 .build();
     }
+
     public static OkHttpClient getOkHttpClient2(long timeOut) {
         return new OkHttpClient().newBuilder()
                 .connectTimeout(timeOut, TimeUnit.SECONDS)

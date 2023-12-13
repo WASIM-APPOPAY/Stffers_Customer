@@ -138,7 +138,7 @@ public class BankFragment extends Fragment {
             @Override
             public void onCcpDialogOpen(Dialog dialog) {
                 //your code
-                TextView title =(TextView)  dialog.findViewById(R.id.textView_title);
+                TextView title = (TextView) dialog.findViewById(R.id.textView_title);
                 title.setText(getString(R.string.info_cc_reg));
             }
 
@@ -244,7 +244,7 @@ public class BankFragment extends Fragment {
             }
         });
         String senderAvatar = Helper.getSenderAvatar();
-        if (!StringUtils.isEmpty(senderAvatar)) {
+        if (!StringUtils.isEmpty(senderAvatar) && !senderAvatar.equalsIgnoreCase("null")) {
             Glide.with(getActivity()).load(senderAvatar).placeholder(R.drawable.user_chat).centerCrop().into(circularSender);
         }
         onLoadCurrentDetails();
@@ -298,7 +298,7 @@ public class BankFragment extends Fragment {
                         } else {
                             String receiverAvatar = Helper.getReceiverAvatar(new JSONObject(res));
                             if (!StringUtils.isEmpty(receiverAvatar)) {
-                                if (!StringUtils.isEmpty(receiverAvatar)) {
+                                if (!StringUtils.isEmpty(receiverAvatar) && !receiverAvatar.equalsIgnoreCase("null")) {
                                     Glide.with(getActivity()).load(receiverAvatar).placeholder(R.drawable.user_chat).centerCrop().into(circularSender);
                                 }
                             }

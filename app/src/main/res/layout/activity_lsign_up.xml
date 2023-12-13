@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="center_vertical"
-
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -41,7 +40,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
         android:layout_weight="1"
         android:fillViewport="true">
 
@@ -55,8 +56,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@drawable/bg_strok"
+                android:orientation="vertical"
 
-                android:orientation="vertical">
+                android:padding="5dp">
 
                 <com.stuffer.stuffers.views.MyTextViewBold
                     android:layout_width="wrap_content"
@@ -80,7 +82,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@drawable/bg_strok"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <com.stuffer.stuffers.views.MyTextViewBold
                     android:layout_width="wrap_content"
@@ -104,7 +107,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@drawable/bg_strok"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <com.stuffer.stuffers.views.MyTextViewBold
                     android:layout_width="wrap_content"
@@ -127,7 +131,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@drawable/bg_strok"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <com.stuffer.stuffers.views.MyTextViewBold
                     android:layout_width="wrap_content"
@@ -150,7 +155,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@drawable/bg_strok"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <com.stuffer.stuffers.views.MyTextViewBold
                     android:layout_width="wrap_content"
@@ -173,7 +179,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@drawable/bg_strok"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <com.stuffer.stuffers.views.MyTextViewBold
                     android:layout_width="wrap_content"
@@ -234,7 +241,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@drawable/bg_strok"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <com.stuffer.stuffers.views.MyTextViewBold
 
@@ -258,7 +266,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@drawable/bg_strok"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <com.stuffer.stuffers.views.MyTextViewBold
                     android:layout_width="wrap_content"
@@ -290,8 +299,8 @@
         android:background="@drawable/round_dark_continue_button_loan"
         android:clickable="true"
         android:focusable="true"
-        android:text="Sign up"
         android:letterSpacing="0.4"
+        android:text="Sign up"
         android:textColor="@color/black" />
 
 </LinearLayout>

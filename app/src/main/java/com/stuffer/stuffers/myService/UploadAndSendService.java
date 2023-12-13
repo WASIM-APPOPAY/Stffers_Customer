@@ -95,6 +95,8 @@ public class UploadAndSendService extends Service {
         storageReference = mStorageReference.child("Photos").child(fileUri.getLastPathSegment());*/
         StorageReference mStorageReference = FirebaseStorage.getInstance().getReference();
         StorageReference storageReference = mStorageReference.child(getString(R.string.app_name)).child(AttachmentTypes.getTypeName(attachmentType)).child(fileName);
+        String path = storageReference.getPath();
+        //Log.e("TAG", "upload: "+path );
         //final StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(getString(R.string.app_name)).child(AttachmentTypes.getTypeName(attachmentType)).child(fileName);
         storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
             //If file is already uploaded
@@ -109,7 +111,7 @@ public class UploadAndSendService extends Service {
             FirebaseUploader firebaseUploader = new FirebaseUploader(new FirebaseUploader.UploadListener() {
                 @Override
                 public void onUploadFail(String message1) {
-                    Log.e("DatabaseException", message1);
+                    //Log.e("DatabaseException", message1);
                     Toast.makeText(UploadAndSendService.this, R.string.upload_fail, Toast.LENGTH_SHORT).show();
                     removePreparedMessage();
                     stopSelf();
@@ -145,6 +147,7 @@ public class UploadAndSendService extends Service {
         DatabaseReference chatRef = firebaseDatabase.getReference(ChatHelper.REF_CHAT);
         DatabaseReference inboxRef = firebaseDatabase.getReference(ChatHelper.REF_INBOX);
         message.setAttachment(attachment);
+        //message.setBody();
         //message.setDateTimeStamp(String.valueOf(System.currentTimeMillis()));
         message.setSent(true);
         //Add message in chat child
@@ -158,7 +161,9 @@ public class UploadAndSendService extends Service {
             inboxRef.child(message.getSenderId()).child(message.getRecipientId()).setValue(message);
             inboxRef.child(message.getRecipientId()).child(message.getSenderId()).setValue(message);
         }
+
         notifyMessage(message.getSenderId(), message);
+
         stopSelf();
     }
 
@@ -187,28 +192,33 @@ public class UploadAndSendService extends Service {
     }
 
     private void notifyMessage(String userMeId, Message message) {
+        //Log.e("TAG", "notifyMessage: called in service" );
+        //Log.e("TAG", "notifyMessage: player me id"+userMeId );
+        //Log.e("TAG", "notifyMessage: user player id"+userPlayerIds );
         if (userPlayerIds != null && !userPlayerIds.isEmpty()) {
             try {
 //                String headings = userMeId + " " + getString(R.string.new_message_sent);
                 //String headings = userMeId;
                 Chat chat = new Chat(message, message.getSenderId().equals(userMeId));
                 String headings = chat.isGroup() ? chat.getChatName() : userMeId;
+              //  String s = new Gson().toJson(new JSONObject("{'headings': {'en':'" + headings + "'}, 'contents': {'en':'" + message.getBody() + "'}, 'include_player_ids': " + userPlayerIds.toString() + ",'data': " + new Gson().toJson(message) + ",'android_group':" + message.getChatId() + " }"));
+                //Log.e("TAG", "notifyMessage: "+s );
 
-              OneSignal.postNotification(new JSONObject("{'headings': {'en':'" + headings + "'}, 'contents': {'en':'" + message.getBody() + "'}, 'include_player_ids': " + userPlayerIds.toString() + ",'data': " + new Gson().toJson(message) + ",'android_group':" + message.getChatId() + " }"),
+                OneSignal.postNotification(new JSONObject("{'headings': {'en':'" + headings + "'}, 'contents': {'en':'" + message.getBody() + "'}, 'include_player_ids': " + userPlayerIds.toString() + ",'data': " + new Gson().toJson(message) + ",'android_group':" + message.getChatId() + " }"),
                         new OneSignal.PostNotificationResponseHandler() {
                             @Override
                             public void onSuccess(JSONObject response) {
-                                Log.i("OneSignalExample", "postNotification Success: " + response.toString());
+                                //Log.e("OneSignalExample", "postNotification Success: " + response.toString());
                             }
 
                             @Override
                             public void onFailure(JSONObject response) {
-                                Log.e("OneSignalExample", "postNotification Failure: " + response.toString());
+                                //Log.e("OneSignalExample", "postNotification Failure: " + response.toString());
                             }
                         });
 
             } catch (Exception e) {
-                e.printStackTrace();
+            //    e.printStackTrace();
             }
         }
     }

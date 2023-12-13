@@ -941,12 +941,12 @@ public class MyCameraFragment extends Fragment implements ActivityCompat.OnReque
      */
     @SuppressWarnings("MissingPermission")
     private void openCamera(int width, int height) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!hasPermissionsGranted(CAMERA_PERMISSION)) {
                 requestCameraPermission();
                 return;
             }
-        }
+        }*/
         setupCameraOutputs(width, height);
         configureTransform(width, height);
         Activity activity = getActivity();

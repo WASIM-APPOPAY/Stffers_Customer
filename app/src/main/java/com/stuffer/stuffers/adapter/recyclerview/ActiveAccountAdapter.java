@@ -1,6 +1,7 @@
 package com.stuffer.stuffers.adapter.recyclerview;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +87,12 @@ public class ActiveAccountAdapter extends RecyclerView.Adapter<ActiveAccountAdap
             tvAccounts.setText(mListAccount.get(getAdapterPosition()).getAccountnumber());
 
                 if (!StringUtils.isEmpty(avatar)) {
-                    Glide.with(mContext).load(avatar).placeholder(R.mipmap.ic_profile).centerCrop().into(ivReceiver);
+                    if (avatar.equalsIgnoreCase("null")){
+
+                    }else {
+                       // Log.e("TAG", "bind: called" );
+                        Glide.with(mContext).load(avatar).placeholder(R.mipmap.ic_profile).centerCrop().into(ivReceiver);
+                    }
                 }
 
 

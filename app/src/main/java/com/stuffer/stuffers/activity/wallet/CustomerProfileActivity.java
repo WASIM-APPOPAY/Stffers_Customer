@@ -231,7 +231,6 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
 
         countryCodePicker.setDialogEventsListener(mLis);
         try {
-
             String vaultValue1 = DataVaultManager.getInstance(CustomerProfileActivity.this).getVaultValue(KEY_CCODE);
             if (!StringUtils.isEmpty(vaultValue1)) {
                 countryCodePicker.setCountryForNameCode(vaultValue1);

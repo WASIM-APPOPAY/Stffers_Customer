@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -379,7 +380,7 @@ public class MessageActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<MyResponse> call, Throwable t) {
-                            //Log.e(TAG, "onFailure: " + t.getMessage().toString());
+                            Log.e(TAG, "onFailure: " + t.getMessage().toString());
                         }
                     });
                 }
@@ -387,7 +388,7 @@ public class MessageActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                //Log.e(TAG, "onCancelled: " + databaseError.getDetails().toString());
+                Log.e(TAG, "onCancelled: " + databaseError.getDetails().toString());
 
             }
         });

@@ -1,9 +1,11 @@
 package com.stuffer.stuffers.activity.wallet;
 
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_LANGUAGE;
 import static com.stuffer.stuffers.utils.DataVaultManager.TANDC;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -34,6 +36,8 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
+import com.stuffer.stuffers.AppoPayApplication;
+import com.stuffer.stuffers.MyContextWrapper;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.api.Constants;
 import com.stuffer.stuffers.commonChat.chat.NumberActivity;
@@ -344,7 +348,7 @@ public class UrlsActivity extends AppCompatActivity {
         TextView toolbarTitle = toolbar.findViewById(R.id.toolbarTitle);
         toolbarTitle.setVisibility(View.VISIBLE);
 
-        toolbarTitle.setText(mTitle);
+        toolbarTitle.setText(getString(R.string.info_terms_and_condition1));
 
         ActionBar bar = getSupportActionBar();
         bar.setDisplayUseLogoEnabled(false);
@@ -367,5 +371,14 @@ public class UrlsActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        String userLanguage = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_LANGUAGE);
+        if (StringUtils.isEmpty(userLanguage)) {
+            //userLanguage = "es";
+            userLanguage = "en";
+        }
+        super.attachBaseContext(MyContextWrapper.wrap(newBase, userLanguage));
     }
 }

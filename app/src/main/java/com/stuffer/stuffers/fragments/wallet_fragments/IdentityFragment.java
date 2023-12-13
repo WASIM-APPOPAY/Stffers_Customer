@@ -186,12 +186,13 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
         } else if (view.getId() == R.id.tvIdType) {
             getSelectedId();
         } else if (view.getId() == R.id.layoutScan) {
+            openCameraActivity();
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 checkCameraPermissionTop();
             } else {
                 openCameraActivity();
-            }
+            }*/
         } else if (view.getId() == R.id.ivPolicy) {
             BottomPasswordPolicy bottomPasswordPolicy = new BottomPasswordPolicy();
             bottomPasswordPolicy.show(getChildFragmentManager(), bottomPasswordPolicy.getTag());

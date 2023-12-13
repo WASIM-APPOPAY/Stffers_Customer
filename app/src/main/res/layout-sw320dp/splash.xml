@@ -32,7 +32,7 @@
 
                 android:layout_marginStart="25dp"
                 android:layout_marginEnd="25dp"
-                android:src="@drawable/logo2" />
+                android:src="@drawable/logoo" />
 
             <com.stuffer.stuffers.views.MyTextView
                 android:layout_width="match_parent"
@@ -74,6 +74,7 @@
             </FrameLayout>
 
             <com.stuffer.stuffers.views.MyTextViewBold
+                android:visibility="gone"
                 android:id="@+id/tvTapInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -86,6 +87,18 @@
 
 
                 />
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="wrap_content"
+                android:id="@+id/tvLanguage"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:text="@string/info_select_language"
+                android:textColor="#FB8310"
+                android:textSize="18sp"
+                app:drawableEndCompat="@drawable/ic_down_language" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -119,18 +132,7 @@
 
             </LinearLayout>
 
-            <com.stuffer.stuffers.views.MyTextViewBold
-                android:id="@+id/tvLanguage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center_vertical"
-                android:text="@string/info_select_language"
-                android:textColor="#FB8310"
-                android:textSize="18sp"
-                app:drawableEndCompat="@drawable/ic_down_language" />
+
 
         </LinearLayout>
 

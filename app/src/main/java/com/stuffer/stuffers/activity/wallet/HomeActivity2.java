@@ -17,10 +17,8 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -82,7 +80,7 @@ import com.stuffer.stuffers.commonChat.interfaces.MoreListener;
 import com.stuffer.stuffers.commonChat.interfaces.ProceedRequest;
 import com.stuffer.stuffers.commonChat.interfaces.UserGroupSelectionDismissListener;
 import com.stuffer.stuffers.communicator.CashTransferListener;
-import com.stuffer.stuffers.communicator.LinkAccountListener;
+import com.stuffer.stuffers.communicator.CommonListener;
 import com.stuffer.stuffers.communicator.ShopListener;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomRegister;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomSendType;
@@ -117,7 +115,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeActivity2 extends BaseActivity implements View.OnClickListener, ChatItemClickListener, ProceedRequest, MoreListener, ShopListener, UserGroupSelectionDismissListener, CashTransferListener, LinkAccountListener {
+public class HomeActivity2 extends BaseActivity implements View.OnClickListener, ChatItemClickListener, ProceedRequest, MoreListener, ShopListener, UserGroupSelectionDismissListener, CashTransferListener, CommonListener {
     private static final String TAG = "HomeActivity";
     private static final int REQUEST_CODE_CHAT_FORWARD = 99;
     private static String CONFIRM_TAG = "confirmtag";
@@ -1350,7 +1348,7 @@ public class HomeActivity2 extends BaseActivity implements View.OnClickListener,
     }
 
     @Override
-    public void onLinkAccountConfirm() {
+    public void onCommonConfirm() {
         mBottomRegister.dismiss();
         Intent intent = new Intent(HomeActivity2.this, Registration.class);
         startActivity(intent);

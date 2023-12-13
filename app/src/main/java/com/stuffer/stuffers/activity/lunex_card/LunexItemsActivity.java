@@ -152,7 +152,7 @@ public class LunexItemsActivity extends AppCompatActivity implements CustomCount
 
     private void setListOfAreas() {
         mListArea = new ArrayList<>();
-        String data = Helper.AREA_CODE_JSON2;
+        String data = "Helper.AREA_CODE_JSON2";
         try {
             JSONArray rowAreas = new JSONArray(data);
             for (int i = 0; i < rowAreas.length(); i++) {
