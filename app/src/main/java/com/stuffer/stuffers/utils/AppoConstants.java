@@ -254,6 +254,9 @@ public class AppoConstants {
     public static final String WHERE = "where";
     public static final String ERROR = "error";
     public static final String URL = "url";
+    public static final String OTPSECRREN="otpscreen";
+    public static final String OTPSUCCESS="otpsuccess";
+
     //public static final String APPROVESTATUS = "approveStatus";
     //public static final String PENDING = "pending";
 

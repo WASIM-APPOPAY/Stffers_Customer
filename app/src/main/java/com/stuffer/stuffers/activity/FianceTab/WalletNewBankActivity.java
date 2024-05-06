@@ -87,7 +87,7 @@ public class WalletNewBankActivity extends AppCompatActivity implements OptionSe
     }
 
     @Override
-    public void onConfirm() {
+    public void onConfirm(int param) {
 
     }
 }

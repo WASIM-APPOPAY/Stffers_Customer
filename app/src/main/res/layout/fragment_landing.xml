@@ -8,6 +8,7 @@
     android:orientation="vertical"
     tools:context=".fragments.landing.LandingFragment">
 
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
@@ -22,12 +23,13 @@
             <include layout="@layout/landing1_layout" />
 
             <ImageView
-
                 android:layout_width="match_parent"
+
                 android:layout_height="@dimen/dp_80"
                 android:layout_gravity="center"
                 android:padding="@dimen/dp_0_5"
-                android:src="@drawable/teedy_bear" />
+                android:src="@drawable/teedy_bear"
+                android:visibility="gone" />
 
 
             <!--<LinearLayout
@@ -100,395 +102,419 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:text="Restaurant"
-                    android:textColor="@color/colorPrimaryDark"
                     android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="@color/common_text_color"
                     android:textSize="20sp" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/restaurentView"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounder_top_corner_landing"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp_8">
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/restaurentView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_margin="10dp"
-                android:src="@drawable/lbanner1" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-
-                android:background="@color/colorPrimaryDark"
-                android:orientation="horizontal">
-
-                <com.stuffer.stuffers.views.MyTextViewBold
-                    android:id="@+id/allView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:singleLine="true"
-                    android:text="All" />
-
-                <com.stuffer.stuffers.views.MyTextViewBold
-                    android:id="@+id/shopView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:singleLine="true"
-                    android:text="Shop" />
-
-                <com.stuffer.stuffers.views.MyTextViewBold
-                    android:id="@+id/foodView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:singleLine="true"
-                    android:text="Food" />
-
-                <com.stuffer.stuffers.views.MyTextViewBold
-                    android:id="@+id/entertainmentView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:singleLine="true"
-                    android:text="Entertainment" />
-
-            </LinearLayout>
-
-            <FrameLayout
-
-                android:id="@+id/container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <ImageView
-                    android:id="@+id/ivReward"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:padding="5dp"
-                    android:src="@drawable/lbanner2" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:padding="5dp"
-                    android:src="@drawable/lbanner3" />
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="4">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="130dp"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="#FDD4AC">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/lbanner1" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="5dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
 
-                        <ImageView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:padding="@dimen/dp_8"
-                            android:src="@drawable/landing11" />
+
+                        android:orientation="horizontal">
 
                         <com.stuffer.stuffers.views.MyTextViewBold
+                            android:layout_marginStart="20dp"
+                            android:id="@+id/allView"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="Current+"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="@dimen/dp_8"
+                            android:gravity="center|center_vertical"
+                            android:minWidth="@dimen/dp_50"
+                            android:textAlignment="center"
+                            android:singleLine="true"
+                            android:text="All" />
 
                         <com.stuffer.stuffers.views.MyTextViewBold
+                            android:id="@+id/shopView"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Good salary income"
-                            android:textColor="@color/black"
-                            android:textSize="12sp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="8dp"
+                            android:textAlignment="center"
+                            android:gravity="center|center_vertical"
+                            android:minWidth="50dp"
 
-                            />
+
+                            android:singleLine="true"
+                            android:text="Shop" />
+
+                        <com.stuffer.stuffers.views.MyTextViewBold
+                            android:id="@+id/foodView"
+                            android:layout_width="wrap_content"
+                            android:gravity="center|center_vertical"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="8dp"
+                            android:textAlignment="center"
+                            android:minWidth="@dimen/dp_60"
+
+
+                            android:singleLine="true"
+                            android:text="Food" />
+
+                        <com.stuffer.stuffers.views.MyTextViewBold
+                            android:id="@+id/entertainmentView"
+                            android:gravity="center|center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                             android:textAlignment="center"
+                            android:minWidth="@dimen/dp_80"
+                            android:padding="5dp"
+                            android:singleLine="true"
+                            android:text="Entertainment" />
 
                     </LinearLayout>
 
-                </androidx.cardview.widget.CardView>
+                    <FrameLayout
+                        android:layout_marginTop="@dimen/dp_10"
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="130dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="15dp"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="#FDD4AC">
+                        android:id="@+id/container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
                     <LinearLayout
-                        android:id="@+id/llDiscount"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="5dp"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
                         <ImageView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:padding="@dimen/dp_8"
-                            android:src="@drawable/landing12" />
+                            android:id="@+id/ivReward"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:padding="5dp"
+                            android:src="@drawable/lbanner2" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:src="@drawable/lbanner3" />
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="130dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="#FDD4AC">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_margin="5dp"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:padding="@dimen/dp_8"
+                                    android:src="@drawable/landing11" />
+
+                                <com.stuffer.stuffers.views.MyTextViewBold
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="Current+"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp" />
+
+                                <com.stuffer.stuffers.views.MyTextViewBold
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="Good salary income"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp"
+
+                                    />
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="130dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="#FDD4AC">
+
+                            <LinearLayout
+                                android:id="@+id/llDiscount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_margin="5dp"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:padding="@dimen/dp_8"
+                                    android:src="@drawable/landing12" />
+
+                                <com.stuffer.stuffers.views.MyTextViewBold
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:text="Discount day"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
+
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="130dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="#FDD4AC">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_margin="5dp"
+
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:padding="@dimen/dp_8"
+                                    android:src="@drawable/landing13" />
+
+                                <com.stuffer.stuffers.views.MyTextViewBold
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="Family"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
+
+                                <com.stuffer.stuffers.views.MyTextViewBold
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="Benfits"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:src="@drawable/spin" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                         <com.stuffer.stuffers.views.MyTextViewBold
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text="Discount day"
+                            android:layout_alignParentLeft="true"
+                            android:padding="5dp"
+                            android:text="Local area"
+                            android:textColor="@color/black"
+                            android:textSize="20sp" />
+
+                        <com.stuffer.stuffers.views.MyTextViewBold
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:padding="5dp"
+                            android:text="More"
+                            android:textColor="@color/black"
+                            android:textSize="20sp" />
+
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_margin="@dimen/dp_10"
+                            android:layout_weight="1"
+                            android:src="@drawable/lbanner4" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_margin="@dimen/dp_10"
+                            android:layout_weight="1"
+                            android:src="@drawable/lbanner5" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_margin="@dimen/dp_10"
+                            android:layout_weight="1"
+                            android:src="@drawable/lbanner6" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_margin="@dimen/dp_10"
+                            android:layout_weight="1"
+                            android:src="@drawable/lbanner7" />
+
+                    </LinearLayout>
+
+
+                    <RelativeLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.stuffer.stuffers.views.MyTextViewBold
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Hot Card Recommendation"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <com.stuffer.stuffers.views.MyTextViewBold
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:padding="5dp"
+                            android:text="List"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
 
-                    </LinearLayout>
+                    </RelativeLayout>
 
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="130dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="#FDD4AC">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/lbanner8" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="5dp"
-
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:padding="@dimen/dp_8"
-                            android:src="@drawable/landing13" />
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_margin="@dimen/dp_10"
+                            android:layout_weight="1"
+                            android:src="@drawable/lbanner9" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_margin="@dimen/dp_10"
+                            android:layout_weight="1"
+                            android:src="@drawable/lbanner10" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                         <com.stuffer.stuffers.views.MyTextViewBold
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="Family"
+                            android:padding="5dp"
+                            android:text="Hotcakes"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <com.stuffer.stuffers.views.MyTextViewBold
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="Benfits"
+                            android:layout_alignParentRight="true"
+                            android:padding="5dp"
+                            android:text="More Pictures"
                             android:textColor="@color/black"
-                            android:textSize="12sp" />
+                            android:textSize="16sp" />
 
-                    </LinearLayout>
 
-                </androidx.cardview.widget.CardView>
+                    </RelativeLayout>
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:padding="5dp"
-                    android:src="@drawable/spin" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_margin="10dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/lbanner11" />
 
+                </LinearLayout>
             </LinearLayout>
-
-            <RelativeLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.stuffer.stuffers.views.MyTextViewBold
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:padding="5dp"
-                    android:text="Local area"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
-
-                <com.stuffer.stuffers.views.MyTextViewBold
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:padding="5dp"
-                    android:text="More"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
-
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_margin="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:src="@drawable/lbanner4" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_margin="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:src="@drawable/lbanner5" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_margin="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:src="@drawable/lbanner6" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_margin="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:src="@drawable/lbanner7" />
-
-            </LinearLayout>
-
-
-            <RelativeLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.stuffer.stuffers.views.MyTextViewBold
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:text="Hot Card Recommendation"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <com.stuffer.stuffers.views.MyTextViewBold
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:padding="5dp"
-                    android:text="List"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-
-            </RelativeLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_margin="10dp"
-                android:src="@drawable/lbanner8" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_margin="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:src="@drawable/lbanner9" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_margin="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:src="@drawable/lbanner10" />
-
-            </LinearLayout>
-
-            <RelativeLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.stuffer.stuffers.views.MyTextViewBold
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:text="Hotcakes"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <com.stuffer.stuffers.views.MyTextViewBold
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:padding="5dp"
-                    android:text="More Pictures"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-
-            </RelativeLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_margin="10dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/lbanner11" />
 
 
         </LinearLayout>

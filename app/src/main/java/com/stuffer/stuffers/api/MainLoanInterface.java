@@ -27,5 +27,23 @@ public interface MainLoanInterface<R extends Retrofit> {
             @Header("Authorization") String header
     );
 
+    @POST(Constants.LOAN_SET_PROFILE)
+    Call<JsonObject> setLoanProfilePhoto(
+            @Body JsonObject param,
+            @Header("Authorization") String header
+    );
+
+    @POST(Constants.LOAN_SET_ID)
+    Call<JsonObject> setLoanIdCard(
+            @Body JsonObject param,
+            @Header("Authorization") String header
+    );
+
+    @POST(Constants.LOAN_SET_PAYSLIP)
+    Call<JsonObject> setLoanPaySlip(
+            @Body JsonObject param,
+            @Header("Authorization") String header
+    );
+
 
 }

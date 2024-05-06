@@ -121,7 +121,7 @@ public class TransactionListActivity extends AppCompatActivity implements Recycl
         mAccountNumber = getIntent().getStringExtra(AppoConstants.ACCOUNTNUMBER);
         mEncryptAccountNumber = getIntent().getStringExtra(AppoConstants.ENCRYPTACCOUNTNUMBER);
         setupActionBar();
-        swAccountNumber.setText("Account Number :  " + mEncryptAccountNumber);
+        swAccountNumber.setText("A/c No : "+mEncryptAccountNumber);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -134,9 +134,9 @@ public class TransactionListActivity extends AppCompatActivity implements Recycl
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    swAccountNumber.setText("A/C Number :  " + mAccountNumber);
+                    swAccountNumber.setText("A/c No : "+ mAccountNumber);
                 } else {
-                    swAccountNumber.setText("A/C Number :  " + mEncryptAccountNumber);
+                    swAccountNumber.setText("A/c No : "+ mEncryptAccountNumber);
                 }
             }
         });
@@ -315,26 +315,18 @@ public class TransactionListActivity extends AppCompatActivity implements Recycl
     }
 
 
+
+
     private void setupActionBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        ImageView menu_icon = toolbar.findViewById(R.id.menu_icon);
-        menu_icon.setVisibility(View.GONE);
-
-
-        TextView toolbarTitle = toolbar.findViewById(R.id.toolbarTitle);
-        toolbarTitle.setVisibility(View.VISIBLE);
-
-        toolbarTitle.setText(getString(R.string.info_transaction_list));
-
-        ActionBar bar = getSupportActionBar();
-        bar.setDisplayUseLogoEnabled(false);
-        bar.setDisplayShowTitleEnabled(true);
-        bar.setDisplayShowHomeEnabled(true);
-        bar.setDisplayHomeAsUpEnabled(true);
-        bar.setHomeButtonEnabled(true);
-
+        MyTextViewBold common_toolbar_title = (MyTextViewBold) findViewById(R.id.common_toolbar_title);
+        common_toolbar_title.setText(getString(R.string.info_transaction_list));
+        ImageView iv_common_back = (ImageView) findViewById(R.id.iv_common_back);
+        iv_common_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override

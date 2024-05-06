@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.stuffer.stuffers.communicator.FragmentReplaceListener;
 import com.stuffer.stuffers.fragments.dialog.AreaCodeDialog;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.Helper;
+import com.stuffer.stuffers.views.MyCountryText;
 import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -61,6 +63,7 @@ public class VerifyMobileFragment extends Fragment {
     private ArrayList<String> mAreaList;
     private AreaCodeDialog mAreaDialog;
     private ProgressBar progress;
+    private MyCountryText tvCountryCode;
 
     public VerifyMobileFragment() {
         // Required empty public constructor
@@ -73,6 +76,7 @@ public class VerifyMobileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_verify_mobile, container, false);
         send_customer_otp = view.findViewById(R.id.send_customer_otp);
+        tvCountryCode=view.findViewById(R.id.tvCountryCode);
         progress = view.findViewById(R.id.progress);
         confirm_otp = view.findViewById(R.id.confirm_otp);
         tvAreaCodeDo = (MyTextViewBold) view.findViewById(R.id.tvAreaCodeDo);
@@ -100,6 +104,8 @@ public class VerifyMobileFragment extends Fragment {
                 }
             }
         });
+
+
 
         btnResendOtp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +154,23 @@ public class VerifyMobileFragment extends Fragment {
                 }
             }
         });
+
+        strCustomerCountryCode = edtCustomerCountryCode.getSelectedCountryCode();
+        edtCustomerCountryCode.setDialogEventsListener(mLis);
+
+        edtCustomerCountryCode.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                strCustomerCountryCode = edtCustomerCountryCode.getSelectedCountryCode();
+                selectedCountryNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
+                tvCountryCode.setText(strCustomerCountryCode + " (" + selectedCountryNameCode + ")");
+                edtCustomerCountryCode.setVisibility(View.GONE);
+            }
+        });
+
+
+
+
         edtCustomerCountryCode.setDialogEventsListener(new CountryCodePicker.DialogEventsListener() {
             @Override
             public void onCcpDialogOpen(Dialog dialog) {
@@ -166,6 +189,17 @@ public class VerifyMobileFragment extends Fragment {
                 //your code
             }
         });
+
+        tvCountryCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //edtCustomerCountryCode.setVisibility(View.VISIBLE);
+                showCountry();
+
+            }
+        });
+
         tvAreaCodeDo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,8 +207,37 @@ public class VerifyMobileFragment extends Fragment {
             }
         });
 
+
+
         return view;
     }
+
+    private void showCountry() {
+
+
+        edtCustomerCountryCode.launchCountrySelectionDialog();
+
+
+    }
+
+    CountryCodePicker.DialogEventsListener mLis = new CountryCodePicker.DialogEventsListener() {
+        @Override
+        public void onCcpDialogOpen(Dialog dialog) {
+            edtCustomerCountryCode.setVisibility(View.VISIBLE);
+
+        }
+
+        @Override
+        public void onCcpDialogDismiss(DialogInterface dialogInterface) {
+            edtCustomerCountryCode.setVisibility(View.GONE);
+
+        }
+
+        @Override
+        public void onCcpDialogCancel(DialogInterface dialogInterface) {
+            edtCustomerCountryCode.setVisibility(View.GONE);
+        }
+    };
 
     private void getAreaCodes() {
         mAreaList = new ArrayList<String>();

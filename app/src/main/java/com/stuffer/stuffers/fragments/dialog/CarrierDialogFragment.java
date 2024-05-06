@@ -19,6 +19,7 @@ import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.views.MyButton;
 import com.stuffer.stuffers.views.MyRadioButton;
 import com.stuffer.stuffers.views.MyTextView;
+import com.stuffer.stuffers.views.MyTextViewBold;
 
 import java.util.ArrayList;
 
@@ -27,7 +28,7 @@ public class CarrierDialogFragment extends DialogFragment {
     private RecyclerView rvCarrier;
     private MyButton btnClose;
     private ArrayList<String> mListCarrier;
-    private MyTextView tvTitle;
+    private MyTextViewBold tvTitle;
     private String mTitle;
 
     @Nullable
@@ -36,7 +37,7 @@ public class CarrierDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.layout_dialog_carrier, container, false);
         rvCarrier = (RecyclerView) view.findViewById(R.id.rvCarrier);
         btnClose = (MyButton) view.findViewById(R.id.btnClose);
-        tvTitle = (MyTextView)view.findViewById(R.id.tvTitle);
+        tvTitle = (MyTextViewBold) view.findViewById(R.id.tvTitle);
 
         Bundle arguments = this.getArguments();
         mListCarrier = arguments.getStringArrayList(AppoConstants.INFO);

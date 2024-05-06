@@ -43,7 +43,7 @@ import java.util.Collections;
 public class BottomChatFragment extends BaseFragment implements View.OnClickListener {
 
 
-    private FloatingActionButton addConversation;
+    private ImageView    addConversation;
     private ChatHelper helper;
     User loggedInUser;
     private static final String TAG = "BottomChatFragment";

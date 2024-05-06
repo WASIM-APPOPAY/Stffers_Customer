@@ -1,81 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_common2"
+    android:background="@color/common_bg_color"
     android:orientation="vertical"
     tools:context=".commonChat.chat.NumberActivity">
 
-    <LinearLayout
+    <include layout="@layout/common_toolbar" />
+
+    <FrameLayout
+        android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="@dimen/dp_30"
             android:padding="@dimen/dp_15"
             android:src="@drawable/appopay_new_logo2" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/image"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
 
         <com.stuffer.stuffers.views.MyTextViewBold
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="Verify Code"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp" />
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:gravity="center"
             android:text="@string/info_phone_number_verification"
             android:textColor="@color/black"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
+
 
         <com.stuffer.stuffers.views.MyTextViewBold
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:gravity="center"
             android:text="@string/info_we_will_send_you_a_otp"
             android:textAppearance="?attr/textAppearanceBody1"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/common_color"
             android:textSize="@dimen/dp_16" />
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="?attr/actionBarSize"
             android:layout_marginStart="25sp"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="25sp">
+            android:layout_marginEnd="25sp"
+            android:background="@drawable/common_border_rectangle">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-
-
-                android:background="@drawable/bg_border_round"
+                android:layout_margin="2dp"
+                android:background="@drawable/edit_text_rounded"
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/ivFlag"
                     android:layout_width="45sp"
                     android:layout_height="45sp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="5dp"
-                    android:background="@drawable/bg_circle_link"
-                    android:padding="10dp"
-                    android:src="@drawable/icon_mobile_phone"
-                    app:tint="@color/white" />
+                    android:padding="@dimen/dp_3"
+                    android:visibility="gone" />
 
-                <com.stuffer.stuffers.views.MyTextViewBold
+                <com.stuffer.stuffers.views.MyCountryText
                     android:id="@+id/tvCountryCode"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="?attr/selectableItemBackground"
+                    android:drawableEnd="@drawable/ic_down_language"
+                    android:drawablePadding="-5dp"
+                    android:gravity="center"
                     android:padding="5dp"
-                    android:text="Select"
+                    android:text="@string/select_ncountry"
+                    android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <com.hbb20.CountryCodePicker
 
@@ -107,7 +130,7 @@
                     <com.stuffer.stuffers.views.MyEditText
                         android:id="@+id/edtMobile"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="#0000"
                         android:drawablePadding="12dp"
                         android:gravity="left"
@@ -128,16 +151,16 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginStart="25sp"
+
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="25sp"
+
             android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/bg_border_round"
+                android:background="@drawable/edit_text_rounded"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -183,12 +206,14 @@
 
         <com.stuffer.stuffers.views.MyTextView
             android:id="@+id/tvSent"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
+            android:layout_marginStart="25sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="25sp"
 
-            android:background="@drawable/blue_rounded_bg"
+            android:background="@drawable/view_normal_blue2"
             android:elevation="1.5dp"
             android:gravity="center"
             android:padding="12dp"
@@ -199,4 +224,4 @@
     </LinearLayout>
 
     <!--<include layout="@layout/bootm_layout" />-->
-</LinearLayout>
+</RelativeLayout>

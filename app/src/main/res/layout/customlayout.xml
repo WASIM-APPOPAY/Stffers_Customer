@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_common2">
+    android:background="@color/common_bg_landing_color">
 
     <LinearLayout
 
@@ -11,9 +11,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="110dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -37,7 +38,7 @@
                         android:id="@+id/ivUser"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/user_chat" />
+                        android:src="@drawable/user_2" />
 
                     <ImageView
 
@@ -65,43 +66,41 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Sebastian Deo"
-                        android:textColor="@color/color_white" />
+                        android:textSize="@dimen/dp_18"
+                        android:textColor="@color/common_text_color"
+                        android:textStyle="bold" />
 
                     <com.stuffer.stuffers.views.MyTextView
                         android:id="@+id/tvDrawerNo"
                         android:layout_width="wrap_content"
-
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:text="4029209"
-                        android:textColor="@color/color_white"
+                        android:textSize="16sp"
+                        android:textColor="@color/common_text_color"
+                        android:textStyle="bold"
 
 
                         />
 
-                    <com.stuffer.stuffers.views.MyTextViewBold
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="AVC NUMBER"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                    <com.stuffer.stuffers.views.MyTextViewBold
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:layout_marginTop="5dp"
-                        android:text="1245877 91245512"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
 
                 </LinearLayout>
 
             </RelativeLayout>
 
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="AVC NUMBER: 1245877 91245512"
+                android:textColor="@color/black"
 
-        </RelativeLayout>
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
 
         <include layout="@layout/layout_below_profile" />
 
@@ -115,7 +114,7 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/bg_circle"
+                android:background="@drawable/bg_circle_landing"
                 android:padding="10dp"
                 android:src="@drawable/ic_account_circle_drawer"
                 app:tint="#FFFFFF" />
@@ -148,9 +147,9 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/bg_circle"
+                android:background="@drawable/bg_circle_landing"
                 android:padding="10dp"
-                android:src="@drawable/ic_user_drawable"
+                android:src="@drawable/scan_qr2"
                 app:tint="#FFFFFF" />
 
             <com.stuffer.stuffers.views.MyTextView
@@ -183,7 +182,7 @@
 
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/bg_circle"
+                android:background="@drawable/bg_circle_landing"
                 android:padding="10dp"
                 android:src="@drawable/ic_sent_money_drawable"
                 app:tint="@color/white" />
@@ -218,7 +217,7 @@
 
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/bg_circle"
+                android:background="@drawable/bg_circle_landing"
                 android:padding="10dp"
                 android:src="@drawable/ic_settings_drawable"
                 app:tint="@color/white" />
@@ -252,7 +251,7 @@
 
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/bg_circle"
+                android:background="@drawable/bg_circle_landing"
                 android:padding="10dp"
                 android:src="@drawable/ic_language1"
                 app:tint="@color/white" />
@@ -263,8 +262,8 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="3dp"
                 android:padding="8dp"
-                android:textAllCaps="false"
                 android:text="@string/info_select_language"
+                android:textAllCaps="false"
                 android:textColor="@color/icon_color"
                 android:textSize="16sp" />
 
@@ -287,7 +286,7 @@
 
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/bg_circle"
+                android:background="@drawable/bg_circle_landing"
                 android:padding="10dp"
                 android:src="@drawable/ic_logout_drawable"
                 app:tint="@color/white" />
@@ -384,18 +383,19 @@
             android:padding="10dp">
 
             <ImageView
+
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/bg_circle"
+                android:background="@drawable/bg_circle_landing"
                 android:padding="10dp"
                 android:src="@drawable/ic_logout_drawable"
-                android:visibility="invisible" />
+                android:visibility="gone" />
 
             <com.stuffer.stuffers.views.MyTextView
                 android:id="@+id/tvVersion"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+
                 android:layout_marginTop="3dp"
                 android:layout_weight="1"
                 android:padding="8dp"
@@ -408,9 +408,10 @@
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/grey_light_secondary" />
+            android:layout_gravity="center"
+            android:layout_width="150dp"
+            android:layout_height="5dp"
+            android:background="@color/common_text_color" />
 
     </LinearLayout>
 

@@ -10,11 +10,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,6 +38,7 @@ import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -60,7 +64,10 @@ public class VerifyFragment extends Fragment {
     MainAPIInterface mainAPIInterface;
     private boolean mVerify = true;
     private String strOtp;
+    private EditText otp_edit_text1, otp_edit_text2, otp_edit_text3, otp_edit_text4, otp_edit_text5, otp_edit_text6;
+    private ArrayList<EditText> mListEditText;
     private ProgressBar progress;
+    private MyTextView tvVerifyOtpCommon;
 
     public VerifyFragment() {
         // Required empty public constructor
@@ -98,7 +105,16 @@ public class VerifyFragment extends Fragment {
         edtCustomerCountryCode = mView.findViewById(R.id.edtCustomerCountryCode);
         edtOtpNumber = mView.findViewById(R.id.edtOtpNumber);
         edtCustomerMobileNumber = mView.findViewById(R.id.edtCustomerMobileNumber);
-        floatingConfirm = mView.findViewById(R.id.floatingConfirm);
+        otp_edit_text1 = mView.findViewById(R.id.otp_edit_text1);
+        otp_edit_text2 = mView.findViewById(R.id.otp_edit_text2);
+        otp_edit_text3 = mView.findViewById(R.id.otp_edit_text3);
+        otp_edit_text4 = mView.findViewById(R.id.otp_edit_text4);
+        otp_edit_text5 = mView.findViewById(R.id.otp_edit_text5);
+        otp_edit_text6 = mView.findViewById(R.id.otp_edit_text6);
+        tvVerifyOtpCommon=mView.findViewById(R.id.tvVerifyOtpCommon);
+        setInfo();
+        setOtpBoxFocus();
+        //floatingConfirm = mView.findViewById(R.id.floatingConfirm);
         floatingReOtp = mView.findViewById(R.id.floatingReOtp);
 
         String heading1 = "<font color='#00baf2'>" + "Verify your phone number, we have sent an OTP to this " + "</font>";
@@ -139,7 +155,7 @@ public class VerifyFragment extends Fragment {
         edtCustomerMobileNumber.setClickable(false);
 
         startTimer();
-        floatingConfirm.setOnClickListener(new View.OnClickListener() {
+        /*floatingConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 strOtp = edtOtpNumber.getText().toString();
@@ -153,7 +169,7 @@ public class VerifyFragment extends Fragment {
                 }
                 //mVerifiedListener.onVerified(mParamNameCode, mParamCountryCode, mParamMobile);
             }
-        });
+        });*/
 
         floatingReOtp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,7 +182,139 @@ public class VerifyFragment extends Fragment {
         });
         return mView;
     }
+    private void setOtpBoxFocus() {
+        /*
+        for (int i = 0; i < smsCode.length(); i++) {
+                                mList.get(i).setText("" + smsCode.charAt(i));
+                            }
+         */
+        otp_edit_text1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (otp_edit_text1.getText().toString().trim().length() == 1) {
+                    otp_edit_text2.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        otp_edit_text2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (otp_edit_text2.getText().toString().trim().length() == 1) {
+                    otp_edit_text3.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        otp_edit_text3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (otp_edit_text3.getText().toString().trim().length() == 1) {
+                    otp_edit_text4.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        otp_edit_text4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (otp_edit_text4.getText().toString().trim().length() == 1) {
+                    otp_edit_text5.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        otp_edit_text5.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (otp_edit_text5.getText().toString().trim().length() == 1) {
+                    otp_edit_text6.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+    }
+    private void setInfo() {
+        mListEditText = new ArrayList<>();
+        mListEditText.add(otp_edit_text1);
+        mListEditText.add(otp_edit_text2);
+        mListEditText.add(otp_edit_text3);
+        mListEditText.add(otp_edit_text4);
+        mListEditText.add(otp_edit_text5);
+        mListEditText.add(otp_edit_text6);
+
+        tvVerifyOtpCommon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                /*boolean allow = true;
+                for (int i = 0; i < mListEditText.size(); i++) {
+                    if (mListEditText.get(i).getText().toString().trim().isEmpty()) {
+                        allow = false;
+
+                    }
+                }
+                if (allow) {
+                    getConfirmation();
+                } else {
+                    Helper.showErrorMessage(getActivity(), "Please enter otp");
+                }*/
+                mVerifiedListener.onVerified(mParamNameCode, mParamCountryCode, mParamMobile);
+                progress.setVisibility(View.GONE);
+
+            }
+        });
+
+    }
 
     public void getConfirmation() {
         showProgress(getString(R.string.info_verifying_otp));

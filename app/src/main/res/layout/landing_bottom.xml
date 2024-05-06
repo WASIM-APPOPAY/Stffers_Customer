@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounder_top_corner_landing_bottom"
     android:orientation="vertical">
 
     <LinearLayout
@@ -27,9 +28,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:padding="@dimen/dp_8"
+                android:id="@+id/ivLanding1"
 
-
-                android:src="@drawable/hlandin1" />
+                android:src="@drawable/landing_home" />
+            <!--android:src="@drawable/hlandin1" />-->
 
             <com.stuffer.stuffers.views.MyTextViewBold
                 android:id="@+id/bottom_title_landing1"
@@ -55,9 +57,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:padding="@dimen/dp_8"
+                android:id="@+id/ivLanding2"
 
 
-                android:src="@drawable/hlanding2" />
+                android:src="@drawable/landing_life_cycle" />
+            <!--android:src="@drawable/hlanding2" />-->
 
             <com.stuffer.stuffers.views.MyTextViewBold
                 android:id="@+id/bottom_title_landing2"
@@ -88,8 +92,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:padding="@dimen/dp_8"
+                android:id="@+id/ivLanding3"
 
-                android:src="@drawable/hlanding3" />
+                android:src="@drawable/landing_typing" />
+            <!--android:src="@drawable/hlanding3" />-->
 
             <com.stuffer.stuffers.views.MyTextViewBold
                 android:id="@+id/bottom_title_landing3"
@@ -120,7 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:padding="@dimen/dp_8"
-
+                android:id="@+id/ivLanding4"
                 android:src="@drawable/hlanding4" />
 
             <com.stuffer.stuffers.views.MyTextViewBold
@@ -144,17 +150,19 @@
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:gravity="center"
+            android:gravity="center|center_vertical"
             android:orientation="vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="48dp"
                 android:padding="@dimen/dp_8"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/ivLanding5"
+                android:src="@drawable/landing_user" />
+            <!--android:src="@drawable/hlanding5"
 
-
-                android:src="@drawable/hlanding5"
-                app:tint="@color/black" />
+             />-->
 
             <com.stuffer.stuffers.views.MyTextViewBold
                 android:id="@+id/bottom_title_landing5"

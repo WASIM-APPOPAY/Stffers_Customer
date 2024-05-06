@@ -9,7 +9,7 @@
     <string name="profile_update_error1">You have not update your profile , please update your profile.</string>
     <string name="account_see_error">Your login details does not exists, please login to perform any action.</string>
 
-    <string name="recharge_payment_mode">Please select payment mode</string>
+    <string name="recharge_payment_mode">Please select payment mode.</string>
     <string name="recharge_payment_balance_error">Your account doesn\'t have enough balance to buy topup</string>
     <string name="recharge_partial_pay1">You are about to pay </string>
     <string name="recharge_partial_pay2"> purchase of topup . Please confirm ?</string>
@@ -403,10 +403,6 @@
     <string name="info_calls">CALLS</string>
 
 
-
-
-
-
     <string name="info_featured_products">Featured Products</string>
     <string name="info_top_of_the_day">Top of the day</string>
     <string name="info_featured_brands">Featured Brands</string>
@@ -418,7 +414,7 @@
     <string name="info_source_directly_from_brands">Source directly from brands.</string>
     <string name="info_help_center">HELP CENTER</string>
     <string name="info_message_us">MESSAGE US</string>
-    <string name="info_transaction_pin">Transaction Pin</string>
+    <string name="info_transaction_pin">Transaction PIN</string>
     <string name="info_anser_error">Your answer is incorrect</string>
     <string name="info_forgot_password2">Forgot Password</string>
     <string name="info_forgot_error">Please Contact support team for create new password.</string>
@@ -989,7 +985,6 @@ data.</string>
     <string name="sub_laptops_a15">router</string>
 
 
-
     <string name="info_your_personel">Your personal Appopay ID, QR, \nShow this QR to receive money</string>
     <string name="info_your_personel1">Your personal Appopay ID, QR, \nShow this QR to cash out</string>
     <string name="info_your_personel2">Your personal Appopay ID, QR, \nShow this QR to pay Gas Bill </string>
@@ -1073,7 +1068,10 @@ data.</string>
     <string name="info_verified2">If your mobile was not verified automatically,\nplease enter your six digit pin.</string>
     <string name="info_verified3">If you did not receive your six-digit pin,please click resend below.</string>
     <string name="info_resend">resend</string>
-
-
+    <string name="select_ncountry">Select\nCountry</string>
+    <string name="resend_code">
+         <u>Resend code</u>.
+    </string>
+    <!--<string name="required_at_least_one_non_numeric">"Required at least one non-alphanumeric character(!@#$%^amp&amp;*()_+=[]{}|)"</string>-->
 
 </resources>

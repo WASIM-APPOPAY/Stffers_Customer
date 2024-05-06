@@ -1,45 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/common_bg_color"
     android:orientation="vertical"
-    android:background="@drawable/bg_common2"
     tools:context=".commonChat.chat.BasicInfoActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:padding="8dp"
-
-            android:src="@drawable/ic_keyboard_arrow_left_white_24dp" />
-
-        <com.stuffer.stuffers.views.MyTextViewBold
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:text="AppOpay Personal"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-
-            />
-
-
-        <!--<ImageView
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:padding="8dp"
-            android:src="" />-->
-
-    </LinearLayout>
+    <include layout="@layout/common_toolbar" />
 
 
     <ScrollView
@@ -55,124 +24,178 @@
             android:padding="24dp">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:padding="@dimen/dp_20"
-                android:src="@drawable/appopay_new_logo2" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:src="@drawable/logo2" />
 
             <com.stuffer.stuffers.views.MyTextViewBold
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="10dp"
                 android:letterSpacing="0.1"
                 android:lineSpacingExtra="6.7sp"
 
                 android:text="@string/phone_number"
-                android:textColor="@color/colorPrimary"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="18sp"
                 android:textStyle="normal" />
 
-            <com.stuffer.stuffers.views.MyEditText
-                android:id="@+id/userPhone"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/common_border_rectangle"
+                android:orientation="horizontal">
 
-                android:background="@null"
-                android:fontFamily="sans-serif"
-                android:inputType="none"
-                android:letterSpacing="0.05"
-                android:lineSpacingExtra="3.3sp"
-                android:maxLines="1"
-                android:minHeight="40dp"
-                android:textColor="#727272"
-                android:textSize="16sp"
-                android:textStyle="normal" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_rounded">
+
+                    <ImageView
+
+                        android:id="@+id/ivFlag"
+                        android:layout_width="45sp"
+                        android:layout_height="45sp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="5dp"
+                        android:padding="@dimen/dp_3" />
+
+                    <com.stuffer.stuffers.views.MyEditText
+                        android:id="@+id/userPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:layout_margin="1dp"
+                        android:layout_toRightOf="@id/ivFlag"
+                        android:background="@null"
+                        android:fontFamily="sans-serif"
+                        android:inputType="none"
+                        android:letterSpacing="0.05"
+                        android:lineSpacingExtra="3.3sp"
+                        android:maxLines="1"
+                        android:minHeight="40dp"
+                        android:padding="@dimen/dp_5"
+                        android:textColor="#727272"
+                        android:textSize="16sp"
+                        android:textStyle="normal" />
+                </RelativeLayout>
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:background="#2F606060" />
+                android:background="#2F606060"
+                android:visibility="gone" />
 
             <com.stuffer.stuffers.views.MyTextViewBold
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:layout_marginBottom="2dp"
                 android:fontFamily="sans-serif-light"
                 android:letterSpacing="0.1"
                 android:lineSpacingExtra="6.7sp"
                 android:text="@string/fname"
-                android:textColor="@color/colorPrimary"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="18sp"
                 android:textStyle="normal" />
 
-            <com.stuffer.stuffers.views.MyEditText
-                android:id="@+id/userNameEditFirst"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/common_border_rectangle"
+                android:orientation="vertical">
 
-                android:background="@null"
-                android:fontFamily="sans-serif"
-                android:hint="@string/enter_first_your_name"
-                android:inputType="text"
-                android:letterSpacing="0.05"
-                android:lineSpacingExtra="3.3sp"
-                android:maxLines="1"
-                android:minHeight="40dp"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="normal" />
+                <com.stuffer.stuffers.views.MyEditText
+                    android:id="@+id/userNameEditFirst"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_margin="1dp"
+
+                    android:background="@drawable/edit_text_rounded"
+                    android:fontFamily="sans-serif"
+                    android:hint="@string/enter_first_your_name"
+                    android:inputType="text"
+                    android:letterSpacing="0.05"
+                    android:lineSpacingExtra="3.3sp"
+                    android:maxLines="1"
+                    android:minHeight="40dp"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:background="#2F606060" />
+                android:background="#2F606060"
+                android:visibility="gone" />
 
             <com.stuffer.stuffers.views.MyTextViewBold
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:layout_marginBottom="2dp"
                 android:fontFamily="sans-serif-light"
                 android:letterSpacing="0.1"
                 android:lineSpacingExtra="6.7sp"
                 android:text="@string/lname"
-                android:textColor="@color/colorPrimary"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="18sp"
 
                 android:textStyle="normal" />
 
-            <com.stuffer.stuffers.views.MyEditText
-                android:id="@+id/userNameEditLast"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:fontFamily="sans-serif"
-                android:hint="@string/enter_your_last_name"
-                android:inputType="text"
-                android:letterSpacing="0.05"
-                android:lineSpacingExtra="3.3sp"
-                android:maxLines="1"
-                android:minHeight="40dp"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="normal" />
+                android:layout_marginTop="10dp"
+                android:background="@drawable/common_border_rectangle"
+                android:orientation="vertical">
+
+                <com.stuffer.stuffers.views.MyEditText
+                    android:id="@+id/userNameEditLast"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_margin="1dp"
+                    android:background="@drawable/edit_text_rounded"
+                    android:fontFamily="sans-serif"
+                    android:hint="@string/enter_your_last_name"
+                    android:inputType="text"
+                    android:letterSpacing="0.05"
+                    android:lineSpacingExtra="3.3sp"
+                    android:maxLines="1"
+                    android:minHeight="40dp"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:background="#2F606060" />
+                android:background="#2F606060"
+                android:visibility="gone" />
+
 
             <com.stuffer.stuffers.views.MyTextView
                 android:id="@+id/tvSave"
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="center"
-                android:background="@drawable/blue_rounded_bg"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/view_normal_blue2"
                 android:elevation="1.5dp"
                 android:gravity="center"
                 android:padding="12dp"

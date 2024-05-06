@@ -28,7 +28,7 @@ public class BottomNotCard extends BottomSheetDialogFragment implements View.OnC
     MyTextView tvCommonContent;
     private MyButton btnCommonOk;
     private BottomSheetBehavior mBehaviour;
-    private MyButton btnApply;
+    private MyTextView btnApply;
     UnionPayCardListener mUnionPayCardListener;
 
     @NonNull
@@ -46,11 +46,11 @@ public class BottomNotCard extends BottomSheetDialogFragment implements View.OnC
     }
 
     private void findIds(View mView) {
-        btnApply = (MyButton) mView.findViewById(R.id.btnApply);
+        btnApply = (MyTextView) mView.findViewById(R.id.btnApply);
         tvCommonContent = (MyTextView) mView.findViewById(R.id.tvCommonContent);
         btnApply.setOnClickListener(this);
         //Dear customer you have not apply for UnionPay Wallet card,please click on Apply to processed.
-        String info = "Dear customer you have not apply for UnionPay Virtual Wallet card,please click on " + "<font color='#FF0000'>" + "APPLY" + "</font>" + " to processed.";
+        String info = "Dear customer you have not applied for Visa Card and UnionPay Virtual Wallet card,please click on " + "<font color='#FF9201'>" + "APPLY" + "</font>" + " to processed.";
         tvCommonContent.setText(Html.fromHtml(info));
     }
 

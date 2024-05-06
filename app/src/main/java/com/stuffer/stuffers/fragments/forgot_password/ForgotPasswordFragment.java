@@ -2,6 +2,7 @@ package com.stuffer.stuffers.fragments.forgot_password;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.stuffer.stuffers.AppoPayApplication;
@@ -19,6 +21,7 @@ import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.wallet.SignInActivity;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
+import com.stuffer.stuffers.communicator.FragmentReplaceListener;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.PasswordUtil;
 import com.stuffer.stuffers.views.MyButton;
@@ -48,6 +51,8 @@ public class ForgotPasswordFragment extends Fragment {
     private MyTextView tvPasswordPolicy;
     private MyTextView tvForgot, tvReset;
     private String mReset;
+    private MyTextView tvNote;
+    private FragmentReplaceListener mReplaceListener;
 
 
     public ForgotPasswordFragment() {
@@ -75,6 +80,7 @@ public class ForgotPasswordFragment extends Fragment {
         btnSubmit = (MyButton) mView.findViewById(R.id.btnSubmit);
         ll1 = (LinearLayout) mView.findViewById(R.id.ll1);
         tvPasswordPolicy = (MyTextView) mView.findViewById(R.id.tvPasswordPolicy);
+        tvNote = (MyTextView) mView.findViewById(R.id.tvNote);
         if (mReset.equalsIgnoreCase("yes")) {
             tvReset.setVisibility(View.VISIBLE);
         } else {
@@ -95,6 +101,7 @@ public class ForgotPasswordFragment extends Fragment {
             }
         });
         tvPasswordPolicy.setText(Html.fromHtml(PasswordUtil.REGEX_PASSWORD_POLICY));
+        tvNote.setText(Html.fromHtml(PasswordUtil.NOTE_PASSWORD));
 
         return mView;
     }
@@ -112,7 +119,7 @@ public class ForgotPasswordFragment extends Fragment {
 
 
     public void verify() {
-        if (edtNewPassword.getText().toString().trim().isEmpty()) {
+        /*if (edtNewPassword.getText().toString().trim().isEmpty()) {
             edtNewPassword.setError(getString(R.string.info_new_password));
             edtNewPassword.setFocusable(true);
             edtNewPassword.requestFocus();
@@ -158,6 +165,13 @@ public class ForgotPasswordFragment extends Fragment {
         } else {
             Log.e(TAG, "verify: forgot called");
             processRequest1();
+        }*/
+        Bundle bundle = new Bundle();
+
+        bundle.putBoolean(AppoConstants.OTPSUCCESS, true);
+
+        if (mReplaceListener != null) {
+            mReplaceListener.onFragmentReplaceClick(bundle);
         }
 
 
@@ -224,10 +238,19 @@ public class ForgotPasswordFragment extends Fragment {
                     try {
                         JSONObject object = new JSONObject(res);
                         if (object.getString(AppoConstants.RESULT).equalsIgnoreCase("1")) {
-                            Toast.makeText(getContext(), getString(R.string.info_forgot_password_success), Toast.LENGTH_SHORT).show();
+                            /*Toast.makeText(getContext(), getString(R.string.info_forgot_password_success), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getContext(), SignInActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
+                            startActivity(intent);*/
+
+                            /*Bundle bundle = new Bundle();
+
+                            bundle.putBoolean(AppoConstants.OTPSECRREN, true);
+
+                            if (mReplaceListener != null) {
+                                mReplaceListener.onFragmentReplaceClick(bundle);
+                            }*/
+
                         } else {
                             Toast.makeText(getContext(), "change password request failed", Toast.LENGTH_SHORT).show();
                         }
@@ -247,6 +270,17 @@ public class ForgotPasswordFragment extends Fragment {
 
 
     }
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            mReplaceListener = (FragmentReplaceListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Parent should implement FragmentReplaceListener");
+        }
+
+    }
+
 
 
 }

@@ -2,11 +2,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/rounder_bottom_corner"
     android:gravity="center"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="@dimen/dp_5">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,24 +19,31 @@
 
             android:id="@+id/llRecharge"
             android:layout_width="70dp"
-            android:gravity="center"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
+            <FrameLayout
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:src="@drawable/recharge"
-                app:tint="@color/white" />
+                android:background="@drawable/bg_circle_white">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:padding="8dp"
+                    android:src="@drawable/recharge"
+                    app:tint="@color/common_color" />
+            </FrameLayout>
 
             <com.stuffer.stuffers.views.MyTextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:lines="2"
                 android:text="Recharge"
-
 
                 android:textColor="@color/black"
                 android:textSize="12sp" />
@@ -46,20 +53,27 @@
         <LinearLayout
             android:id="@+id/llQuick"
             android:layout_width="70dp"
-            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="5dp"
+            android:gravity="center"
 
             android:orientation="vertical">
 
-            <ImageView
-
-
+            <FrameLayout
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/ic_quick_pass"
-                app:tint="@color/white" />
+                android:background="@drawable/bg_circle_white">
+
+                <ImageView
+
+
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_quick_pass"
+                    app:tint="@color/common_color" />
+            </FrameLayout>
 
             <com.stuffer.stuffers.views.MyTextViewBold
                 android:layout_width="match_parent"
@@ -75,17 +89,24 @@
         <LinearLayout
             android:id="@+id/llScan"
             android:layout_width="70dp"
-            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:background="?attr/selectableItemBackground"
+            android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
+            <FrameLayout
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/code_scan"
-                app:tint="@color/white" />
+                android:background="@drawable/bg_circle_white">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="10dp"
+                    android:src="@drawable/code_scan"
+                    app:tint="@color/common_color" />
+            </FrameLayout>
 
             <com.stuffer.stuffers.views.MyTextViewBold
                 android:layout_width="wrap_content"
@@ -93,6 +114,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:lines="2"
+
                 android:text="scan"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
@@ -102,18 +124,25 @@
         <LinearLayout
             android:id="@+id/llLinkCard"
             android:layout_width="70dp"
-            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-
             android:background="?attr/selectableItemBackground"
+
+            android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
+            <FrameLayout
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/credit_card"
-                app:tint="@color/white" />
+                android:background="@drawable/bg_circle_white">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_credit_card_drawable"
+                    app:tint="@color/common_color" />
+            </FrameLayout>
 
             <com.stuffer.stuffers.views.MyTextViewBold
                 android:layout_width="wrap_content"

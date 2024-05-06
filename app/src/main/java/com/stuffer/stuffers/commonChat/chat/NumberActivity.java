@@ -3,22 +3,27 @@ package com.stuffer.stuffers.commonChat.chat;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.hbb20.CountryCodePicker;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.wallet.SignInActivity;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
+import com.stuffer.stuffers.views.MyCountryText;
 import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
 import com.stuffer.stuffers.views.MyTextViewBold;
@@ -34,8 +39,9 @@ public class NumberActivity extends AppCompatActivity {
 
     private CountryCodePicker edtCustomerCountryCode;
     private String selectedCountryCode;
-    private MyTextViewBold tvCountryCode;
+    private MyCountryText tvCountryCode;
     private String selectedCountryNameCode;
+    private ImageView ivFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +49,10 @@ public class NumberActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_number);
+        setupActionBar();
 
         tvCountryCode = findViewById(R.id.tvCountryCode);
+        ivFlag=findViewById(R.id.ivFlag);
         edtCustomerCountryCode = findViewById(R.id.edtCustomerCountryCode);
         edtMobile = (MyEditText) findViewById(R.id.edtMobile);
         tvSent = (MyTextView) findViewById(R.id.tvSent);
@@ -56,8 +64,14 @@ public class NumberActivity extends AppCompatActivity {
                 selectedCountryCode = edtCustomerCountryCode.getSelectedCountryCode();
 
                 selectedCountryNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
-                tvCountryCode.setText(selectedCountryCode + " (" + selectedCountryNameCode + ")");
+                //tvCountryCode.setText("+"+selectedCountryCode + " (" + selectedCountryNameCode + ")");
+                tvCountryCode.setText("+"+selectedCountryCode );
                 edtCustomerCountryCode.setVisibility(View.GONE);
+                ImageView imageViewFlag = edtCustomerCountryCode.getImageViewFlag();
+                Bitmap bitmap = ((BitmapDrawable) imageViewFlag.getDrawable()).getBitmap();
+                ivFlag.setImageBitmap(bitmap);
+                ivFlag.setVisibility(View.VISIBLE);
+
             }
         });
         tvSent.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +145,7 @@ public class NumberActivity extends AppCompatActivity {
     };
 
     public void showEdit() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new MaterialAlertDialogBuilder(this,R.style.MyRounded_MaterialComponents_MaterialAlertDialog);
         LayoutInflater inflater = getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.verify_layout, null);
         MyTextViewBold btnEdit = dialogLayout.findViewById(R.id.btnEdit);
@@ -169,6 +183,17 @@ public class NumberActivity extends AppCompatActivity {
         intent.putExtra(AppoConstants.MOBILENUMBER, edtMobile.getText().toString().trim());
         startActivity(intent);
         finish();
+    }
 
+    private void setupActionBar() {
+        //MyTextViewBold common_toolbar_title = (MyTextViewBold) findViewById(R.id.common_toolbar_title);
+        //common_toolbar_title.setText(mTitle);
+        ImageView iv_common_back = (ImageView) findViewById(R.id.iv_common_back);
+        iv_common_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 }

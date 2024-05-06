@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="20dp"
+            android:visibility="visible">
 
             <ImageView
                 android:id="@+id/saloonUstara"
@@ -50,6 +51,7 @@
                 app:srcCompat="@mipmap/ic_recive_money" />
 
         </RelativeLayout>
+
 
 
         <com.stuffer.stuffers.views.MyTextView
@@ -86,8 +88,8 @@
                 android:text="@string/info_verify_your_phone_number"
                 android:textColor="@color/textSub"
                 android:textSize="15sp"
-                android:visibility="gone"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
 
             <LinearLayout
@@ -108,12 +110,28 @@
                     android:textColor="@color/Tex"
                     android:textColorHint="@color/textSub"
                     android:textSize="14sp"
+                    android:visibility="gone"
                     app:ccp_areaCodeDetectedCountry="true"
                     app:ccp_countryPreference="PA"
                     app:ccp_defaultPhoneCode="507"
                     app:ccp_showFlag="false"
                     app:ccp_showFullName="false"
                     app:ccp_showNameCode="false" />
+
+                <com.stuffer.stuffers.views.MyCountryText
+                    android:id="@+id/tvCountryCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
+
+                    android:padding="5dp"
+                    android:text="@string/select_ncountry"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
                 <com.stuffer.stuffers.views.MyTextViewBold
                     android:id="@+id/tvAreaCodeDo"
                     android:layout_width="wrap_content"
@@ -122,11 +140,11 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center"
-                    android:textSize="14sp"
                     android:padding="5dp"
                     android:text="Area Code"
                     android:textAppearance="?attr/textAppearanceBody1"
                     android:textColor="@color/black"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:visibility="gone"
 
@@ -298,16 +316,17 @@
                 android:adjustViewBounds="true"
                 android:padding="10dp"
                 android:src="@drawable/appopay_resize_logo" />
-            <ProgressBar
-                android:visibility="gone"
-                android:id="@+id/progress"
-                android:layout_gravity="center"
-                app:indicatorColor="@color/black"
-                android:progressTint="@color/colorPrimary"
-                android:foregroundTint="@color/colorPrimary"
 
+            <ProgressBar
+                android:id="@+id/progress"
                 android:layout_width="50dp"
-                android:layout_height="50dp"/>
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:foregroundTint="@color/colorPrimary"
+                android:progressTint="@color/colorPrimary"
+
+                android:visibility="gone"
+                app:indicatorColor="@color/black" />
 
         </LinearLayout>
 
@@ -368,9 +387,6 @@
 
             android:scaleType="centerCrop"
             android:src="@drawable/wallet_card140" />
-
-
-
 
 
     </LinearLayout>

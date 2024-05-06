@@ -11,9 +11,10 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="60dp"
+
+            android:layout_width="80dp"
             android:layout_height="60dp"
-            android:src="@drawable/appopay_gift_card" />
+            android:src="@drawable/logo2" />
 
         <com.stuffer.stuffers.views.MyTextView
             android:id="@+id/tvHeader"
@@ -51,25 +52,36 @@
             android:textSize="16sp"
             android:visibility="gone" />
 
-        <com.stuffer.stuffers.views.MyButton
-            android:id="@+id/btnNo"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:text=" no "
-            android:textColor="@color/white"
-            android:theme="@style/MaterialButton" />
+            android:orientation="horizontal">
 
-        <com.stuffer.stuffers.views.MyButton
-            android:id="@+id/btnYes"
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/btnNo"
+                android:layout_width="80dp"
+                android:layout_height="45dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/view_normal_blue2"
+                android:gravity="center"
+                android:text=" no "
+                android:textAllCaps="true"
+                android:textColor="@color/white" />
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text=" yes "
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/btnYes"
+                android:layout_width="80dp"
+                android:layout_height="45dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/view_normal_blue2"
+                android:gravity="center"
+                android:text=" yes "
+                android:textAllCaps="true"
+                android:textColor="@color/white" />
 
-            android:textColor="@color/white"
-            android:theme="@style/MaterialButton" />
+
+        </RelativeLayout>
 
 
     </LinearLayout>

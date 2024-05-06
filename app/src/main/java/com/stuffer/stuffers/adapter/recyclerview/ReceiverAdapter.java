@@ -13,6 +13,7 @@ import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.communicator.ReceiverListener;
 import com.stuffer.stuffers.models.Product.Amount;
 import com.stuffer.stuffers.views.MyTextView;
+import com.stuffer.stuffers.views.MyTextViewBold;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class ReceiverAdapter extends RecyclerView.Adapter<ReceiverAdapter.Receiv
 
     public class ReceiverHolder extends RecyclerView.ViewHolder {
         CardView cardview;
-        MyTextView tvDestinationAmt;
+        MyTextViewBold tvDestinationAmt;
 
         public ReceiverHolder(@NonNull View itemView) {
             super(itemView);

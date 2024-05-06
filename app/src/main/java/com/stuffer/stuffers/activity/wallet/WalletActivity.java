@@ -30,6 +30,7 @@ import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.views.MyButton;
 import com.stuffer.stuffers.views.MyTextView;
+import com.stuffer.stuffers.views.MyTextViewBold;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -197,26 +198,18 @@ public class WalletActivity extends AppCompatActivity implements RecyclerViewRow
         return res;
     }
 
+
+
     private void setupActionBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        ImageView menu_icon = toolbar.findViewById(R.id.menu_icon);
-        menu_icon.setVisibility(View.GONE);
-
-
-        TextView toolbarTitle = toolbar.findViewById(R.id.toolbarTitle);
-        toolbarTitle.setVisibility(View.VISIBLE);
-
-        toolbarTitle.setText("Wallet Account");
-
-        ActionBar bar = getSupportActionBar();
-        bar.setDisplayUseLogoEnabled(false);
-        bar.setDisplayShowTitleEnabled(true);
-        bar.setDisplayShowHomeEnabled(true);
-        bar.setDisplayHomeAsUpEnabled(true);
-        bar.setHomeButtonEnabled(true);
-
+        MyTextViewBold common_toolbar_title = (MyTextViewBold) findViewById(R.id.common_toolbar_title);
+        common_toolbar_title.setText("Wallet Account");
+        ImageView iv_common_back = (ImageView) findViewById(R.id.iv_common_back);
+        iv_common_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override

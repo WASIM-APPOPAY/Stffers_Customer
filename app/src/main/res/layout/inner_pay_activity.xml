@@ -3,17 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_common2"
-
+    android:background="@color/common_bg_color"
     android:orientation="vertical">
 
+    <include layout="@layout/common_toolbar2" />
 
-    <include layout="@layout/toolbar" />
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/innerPayContainer"
-    />
+    <FrameLayout
+        android:id="@+id/innerPayContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <include layout="@layout/common_bg_bottom" />
 
 
 </LinearLayout>

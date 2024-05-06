@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/common_bg">
+    android:background="@color/common_bg_color">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,7 +11,6 @@
         android:orientation="vertical">
 
         <ScrollView
-
             android:id="@+id/MainForm"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -24,30 +23,28 @@
 
 
             <LinearLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:orientation="vertical">
-
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="50dp"
                     android:src="@drawable/logo2" />
 
                 <ImageView
-
                     android:id="@+id/head"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="50dp"
                     android:layout_marginRight="50dp"
-
                     android:src="@drawable/appopay_new_logo2"
-                    android:textColor="@color/Tex" />
+                    android:textColor="@color/Tex"
+                    android:visibility="gone" />
+
 
                 <LinearLayout
 
@@ -64,10 +61,12 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:padding="8dp"
                         android:text="@string/info_hello"
-                        android:textColor="@color/white"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textColor="@color/common_color"
                         android:textSize="@dimen/sp_22"
                         android:textStyle="bold" />
 
@@ -114,274 +113,272 @@
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/grey_light_secondary"
-                        android:visibility="gone" />
-
 
                     <LinearLayout
-
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/edit_text_rounded"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:drawableLeft="@mipmap/ic_mobile"
-                            android:padding="10dp"
-                            android:visibility="gone" />
-
-                        <com.hbb20.CountryCodePicker
-                            android:id="@+id/edtCustomerCountryCode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:background="#0000"
-                            android:gravity="center"
-                            android:inputType="number"
-                            android:textColor="@color/Tex"
-                            android:textColorHint="@color/textSub"
-                            android:textSize="14sp"
-                            app:ccp_areaCodeDetectedCountry="false"
-                            app:ccp_autoDetectCountry="false"
-                            app:ccp_defaultPhoneCode="507"
-                            app:ccp_excludedCountries=""
-                            app:ccp_showFlag="false"
-                            app:ccp_showFullName="true"
-                            app:ccp_showNameCode="false" />
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
 
                         <com.stuffer.stuffers.views.MyTextViewBold
-                            android:id="@+id/tvAreaCodeDo"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:background="?attr/selectableItemBackground"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:gravity="center"
-                            android:padding="5dp"
-                            android:text="Area Code"
-                            android:textAppearance="?attr/textAppearanceBody1"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:visibility="gone"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="Phone No"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
 
-
-                            />
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/email1"
+                        <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@drawable/common_border_rectangle"
+                            android:elevation="1.5dp">
 
-                            android:textColor="@color/colortext"
-                            android:textColorHint="@color/colorhint">
-
-                            <com.stuffer.stuffers.views.MyEditText
-                                android:id="@+id/edtMobile"
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="#0000"
-                                android:drawablePadding="12dp"
-                                android:gravity="left"
-                                android:hint="@string/info_hint_mobile"
-                                android:inputType="phone"
-                                android:lines="1"
-                                android:padding="10dp"
-                                android:textColor="@color/Tex"
-                                android:textColorHint="@color/textSub"
-                                android:textSize="16sp" />
-                        </com.google.android.material.textfield.TextInputLayout>
-                    </LinearLayout>
+
+                                android:layout_height="?attr/actionBarSize"
+                                android:layout_margin="1dp"
+                                android:background="@drawable/edit_text_rounded"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:drawableLeft="@mipmap/ic_mobile"
+                                    android:padding="10dp"
+                                    android:visibility="gone" />
+
+                                <ImageView
+                                    android:id="@+id/ivFlag"
+                                    android:layout_width="45sp"
+                                    android:layout_height="45sp"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="5dp"
+                                    android:padding="@dimen/dp_3" />
 
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/grey_light_secondary"
-                        android:visibility="gone" />
+                                <com.hbb20.CountryCodePicker
+                                    android:id="@+id/edtCustomerCountryCode"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:background="#0000"
+                                    android:gravity="center"
+                                    android:inputType="number"
+                                    android:textColor="@color/Tex"
+                                    android:textColorHint="@color/textSub"
+                                    android:textSize="14sp"
+                                    app:ccp_areaCodeDetectedCountry="false"
+                                    app:ccp_defaultPhoneCode="507"
+                                    app:ccp_excludedCountries=""
+                                    app:ccp_showFlag="false"
+
+                                    app:ccp_showNameCode="false"
 
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:background="@drawable/edit_text_rounded"
-                        android:textColor="@color/colortext"
-                        android:textColorHint="@color/colorhint"
-                        app:passwordToggleEnabled="true">
+                                    />
+
+                                <com.stuffer.stuffers.views.MyTextViewBold
+                                    android:id="@+id/tvAreaCodeDo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:background="?attr/selectableItemBackground"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:gravity="center"
+                                    android:padding="5dp"
+                                    android:text="Area Code"
+                                    android:textAppearance="?attr/textAppearanceBody1"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    android:visibility="gone"
 
 
-                        <com.stuffer.stuffers.views.MyEditText
-                            android:id="@+id/edtPassword"
+                                    />
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/email1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+
+                                    android:textColor="@color/colortext"
+                                    android:textColorHint="@color/colorhint">
+
+                                    <com.stuffer.stuffers.views.MyEditText
+                                        android:id="@+id/edtMobile"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="#0000"
+                                        android:drawablePadding="12dp"
+                                        android:gravity="left"
+                                        android:hint="@string/info_hint_mobile"
+                                        android:inputType="phone"
+                                        android:lines="1"
+                                        android:padding="10dp"
+                                        android:textColor="@color/Tex"
+                                        android:textColorHint="@color/textSub"
+                                        android:textSize="16sp" />
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+                        </FrameLayout>
+
+
+                        <com.stuffer.stuffers.views.MyTextViewBold
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="Password"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp" />
+
+                        <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="#0000"
-                            android:drawablePadding="16dp"
-                            android:drawableTint="#03A9F4"
-                            android:hint="@string/info_hint_password"
-                            android:inputType="textPassword"
-                            android:padding="10dp"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/textSub"
-                            android:textSize="16sp"
+                            android:background="@drawable/common_border_rectangle"
+                            android:elevation="1.5dp">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/password"
+                                android:layout_width="match_parent"
+                                android:layout_height="?attr/actionBarSize"
+                                android:layout_margin="1dp"
+                                android:background="@drawable/edit_text_rounded"
+                                android:textColor="@color/colortext"
+                                android:textColorHint="@color/colorhint"
+                                app:passwordToggleEnabled="true"
+                                app:passwordToggleTint="@color/common_color">
 
 
-                            />
-                    </com.google.android.material.textfield.TextInputLayout>
+                                <com.stuffer.stuffers.views.MyEditText
+                                    android:id="@+id/edtPassword"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="#0000"
+                                    android:drawablePadding="16dp"
+                                    android:drawableTint="#03A9F4"
+                                    android:hint="Enter Password"
+                                    android:inputType="textPassword"
+                                    android:padding="10dp"
+                                    android:textColor="@color/black"
+                                    android:textColorHint="@color/textSub"
+                                    android:textSize="16sp"
 
-                    <RadioGroup
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
 
-                        <RadioButton
-                            android:layout_width="wrap_content"
+                                    />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </FrameLayout>
+
+                        <RadioGroup
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Customer" />
+                            android:orientation="horizontal"
+                            android:visibility="gone">
 
-                        <RadioButton
-                            android:layout_width="wrap_content"
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Customer" />
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Loan" />
+
+
+                        </RadioGroup>
+
+                        <LinearLayout
+                            android:id="@+id/linear4"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Loan" />
+
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="10dp"
+                            android:orientation="horizontal">
+
+                            <com.stuffer.stuffers.views.MyTextView
+                                android:id="@+id/tvPwdPolicy"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="@string/password_policy_info"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+
+                            <com.stuffer.stuffers.views.MyTextView
+                                android:id="@+id/tvForgotPassword"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+
+                                android:layout_weight="1"
+
+                                android:gravity="right"
+                                android:padding="10dp"
+                                android:text="@string/info_forgot_password"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
 
 
-                    </RadioGroup>
+                        </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/grey_light_secondary"
-                        android:visibility="gone" />
-
-
-                    <LinearLayout
-                        android:id="@+id/linear4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp"
-                        android:orientation="horizontal">
 
                         <com.stuffer.stuffers.views.MyTextView
-                            android:id="@+id/tvPwdPolicy"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="1"
+                            android:id="@+id/signin1"
+                            android:layout_width="match_parent"
+                            android:layout_height="?attr/actionBarSize"
+                            android:layout_above="@+id/signinline"
 
+                            android:layout_marginTop="12dp"
+
+                            android:layout_marginBottom="16dp"
+                            android:background="@drawable/view_normal_blue2"
+                            android:elevation="1.5dp"
                             android:gravity="center"
-                            android:padding="10dp"
-                            android:text="@string/password_policy_info"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:padding="12dp"
+                            android:text="@string/info_sign_in"
+                            android:textColor="#fff"
+                            android:textSize="18sp" />
+
+                        <Button
+                            android:id="@+id/tvEmailTest"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:text="Test Email"
+                            android:visibility="gone" />
 
                         <com.stuffer.stuffers.views.MyTextView
-                            android:id="@+id/tvForgotPassword"
-                            android:layout_width="0dp"
+                            android:id="@+id/signin11"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-
-                            android:layout_weight="1"
-
-
-                            android:gravity="right"
-                            android:padding="10dp"
-                            android:text="@string/info_forgot_password"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:layout_above="@+id/signinline"
+                            android:layout_marginLeft="60dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginRight="60dp"
+                            android:layout_marginBottom="16dp"
+                            android:background="@drawable/blue_rounded_bg"
+                            android:elevation="1.5dp"
+                            android:gravity="center"
+                            android:padding="12dp"
+                            android:text="Click me"
+                            android:textColor="#fff"
+                            android:textSize="16sp"
+                            android:visibility="gone" />
 
 
                     </LinearLayout>
 
-
-                    <com.stuffer.stuffers.views.MyTextView
-                        android:id="@+id/signin1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_above="@+id/signinline"
-                        android:layout_marginLeft="60dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginRight="60dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/blue_rounded_bg3"
-                        android:elevation="1.5dp"
-                        android:gravity="center"
-                        android:padding="12dp"
-                        android:text="@string/info_sign_in"
-                        android:textColor="#fff"
-                        android:textSize="16sp" />
-
-                    <Button
-                        android:id="@+id/tvEmailTest"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
-                        android:text="Test Email"
-                        android:visibility="gone" />
-
-                    <com.stuffer.stuffers.views.MyTextView
-                        android:id="@+id/signin11"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_above="@+id/signinline"
-                        android:layout_marginLeft="60dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginRight="60dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/blue_rounded_bg"
-                        android:elevation="1.5dp"
-                        android:gravity="center"
-                        android:padding="12dp"
-                        android:text="Click me"
-                        android:textColor="#fff"
-                        android:textSize="16sp"
-                        android:visibility="gone" />
-
-
-                    <LinearLayout
-                        android:id="@+id/signinline"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <com.stuffer.stuffers.views.MyTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="3dp"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="@string/info_not_member"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-
-                            />
-
-                        <com.stuffer.stuffers.views.MyTextView
-                            android:id="@+id/signup"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="3dp"
-
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="@string/info_register_now"
-                            android:textColor="#FF03A9F4"
-
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>
@@ -397,78 +394,53 @@
             android:layout_marginEnd="15dp"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/ivBankLogo"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:src="@drawable/bank_logo2"
-                android:visibility="gone" />
+
+            <include layout="@layout/common_bg_bottom" />
 
             <LinearLayout
-
+                android:id="@+id/signinline"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                android:layout_marginBottom="2dp"
-                android:orientation="horizontal"
-                android:weightSum="4">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:adjustViewBounds="true"
+                <com.stuffer.stuffers.views.MyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+                    android:gravity="center"
                     android:padding="10dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/bottom_logo_union" />
+                    android:text="@string/info_not_member"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:adjustViewBounds="true"
-                    android:padding="15dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/bottom_logo_2" />
+                    />
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:adjustViewBounds="true"
-                    android:padding="5dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_quick_pass" />
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/signup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
 
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/info_register_now"
+                    android:textColor="@color/common_color"
 
-                <!--<ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/appopay_new_card_logo2" />-->
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/wallet_card140" />
-
-                <!--
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:adjustViewBounds="true"
-                    android:padding="2dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/visa_mastercard_china" />-->
-
-
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
             </LinearLayout>
+
+
+            <View
+                android:layout_width="@dimen/dp_200"
+                android:layout_height="7dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                android:background="@color/common_bottom_line_color" />
         </LinearLayout>
+
 
     </LinearLayout>
 

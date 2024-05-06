@@ -4,162 +4,172 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/common_bg_color"
     android:orientation="vertical"
-    android:background="@drawable/bg_common2"
     tools:context=".activity.wallet.GenerateQrDynamicActivity">
 
-    <include
-        layout="@layout/toolbar" />
+    <include layout="@layout/common_toolbar2" />
 
 
     <LinearLayout
+        android:layout_weight="1"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@drawable/edit_text_rounded2"
-        android:orientation="vertical">
-
-        <com.stuffer.stuffers.views.MyTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="8dp"
-            android:text="Enter Payable Amount"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-        <com.earthling.atminput.ATMEditText
-            android:id="@+id/edQrAmount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:digits="0123456789"
-            android:drawableLeft="@drawable/ic_attach_money_recharge"
-            android:drawablePadding="10dp"
-            android:gravity="center_vertical"
-            android:hint="amount"
-            android:imeOptions="actionDone|flagNoExtractUi"
-            android:inputType="number"
-            android:minHeight="45dp"
-            android:paddingStart="8dp"
-            android:textColorHint="@color/darker_gray"
-            app:drawableTint="@color/colorPrimary" />
-
-        <!--<com.stuffer.stuffers.views.MyEditText
-            android:id="@+id/edQrAmount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:digits="0123456789."
-            android:drawableLeft="@drawable/ic_attach_money_recharge"
-            android:gravity="center_vertical"
-            android:hint="Enter Amount"
-            android:imeOptions="actionDone|flagNoExtractUi"
-            android:inputType="numberDecimal"
-            android:minHeight="45dp"
-            android:paddingLeft="8dp"
-
-            />-->
-
-    </LinearLayout>
-
-    <com.stuffer.stuffers.views.MyButton
-        android:id="@+id/btnQrCreate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/blue_rounded_bg"
-        android:padding="18dp"
-        android:text="Generate Qr Code"
-        android:textColor="@color/white" />
-
-    <FrameLayout
-        android:visibility="gone"
-        android:id="@+id/frameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp">
-
+        android:layout_height="wrap_content">
         <LinearLayout
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_gravity="center"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
             android:background="@drawable/edit_text_rounded"
             android:orientation="vertical">
 
-
-            <ImageView
-                android:id="@+id/user_qr_image"
+            <com.stuffer.stuffers.views.MyTextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:padding="10dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="8dp"
+                android:text="Enter Payable Amount"
+                android:textColor="@color/common_text_color"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
+            <com.earthling.atminput.ATMEditText
+                android:id="@+id/edQrAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:digits="0123456789"
+                android:drawableLeft="@drawable/ic_attach_money_recharge"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:hint="amount"
+                android:imeOptions="actionDone|flagNoExtractUi"
+                android:inputType="number"
+                android:minHeight="45dp"
+                android:paddingStart="8dp"
+                android:textColorHint="@color/darker_gray"
+                app:drawableTint="@color/common_text_color" />
+
+            <!--<com.stuffer.stuffers.views.MyEditText
+                android:id="@+id/edQrAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:digits="0123456789."
+                android:drawableLeft="@drawable/ic_attach_money_recharge"
+                android:gravity="center_vertical"
+                android:hint="Enter Amount"
+                android:imeOptions="actionDone|flagNoExtractUi"
+                android:inputType="numberDecimal"
+                android:minHeight="45dp"
+                android:paddingLeft="8dp"
+
+                />-->
 
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnQrCreate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/appopay_new_logo" />
-    </FrameLayout>
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/dp_15"
+            android:layout_marginBottom="@dimen/dp_10"
 
-    <TextView
-        android:gravity="center"
-        android:visibility="gone"
-        android:id="@+id/tvUserName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textAppearance="?attr/textAppearanceBody1"
-        />
+            android:background="@drawable/view_normal_blue2"
+            android:padding="18dp"
+            android:text="Generate Qr Code"
+            android:textColor="@color/white" />
 
-    <com.stuffer.stuffers.views.MyTextView
-        android:id="@+id/tvInfo"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:text="Your personal AppOpay QR ID,\nShow this QR to verify your identity."
-        android:textColor="@color/Black"
-        android:textSize="12sp"
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:visibility="gone">
 
-        />
-    <FrameLayout
-
-        android:id="@+id/frameCountry"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="false"
-        android:focusable="false">
-
-        <com.hbb20.CountryCodePicker
-            android:id="@+id/countryCodePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:gravity="center_vertical"
-            app:ccp_autoDetectCountry="false"
-            app:ccp_defaultPhoneCode="507"
-            app:ccp_showFlag="true"
-            app:ccp_showFullName="true"
-            app:ccp_showPhoneCode="true" />
+            <LinearLayout
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:background="@drawable/edit_text_rounded"
+                android:orientation="vertical">
 
 
+                <ImageView
+                    android:id="@+id/user_qr_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:padding="10dp" />
 
-    </FrameLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/appopay_new_logo" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:id="@+id/tvInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:text="Your personal AppOpay QR ID,\nShow this QR to verify your identity."
+            android:textColor="@color/Black"
+            android:textSize="12sp"
+            android:visibility="gone"
+
+            />
+
+        <FrameLayout
+
+            android:id="@+id/frameCountry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            android:visibility="gone">
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/countryCodePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                app:ccp_autoDetectCountry="false"
+                app:ccp_defaultPhoneCode="507"
+                app:ccp_showFlag="true"
+                app:ccp_showFullName="true"
+                app:ccp_showPhoneCode="true" />
 
 
+        </FrameLayout>
+
+    </LinearLayout>
+    <include layout="@layout/common_bg_bottom_with_line"/>
 
 
 </LinearLayout>

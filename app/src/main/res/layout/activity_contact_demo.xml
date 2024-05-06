@@ -4,55 +4,71 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_common2"
+    android:background="@color/common_bg_color"
     android:orientation="vertical"
     tools:context=".activity.contact.ContactDemoActivity">
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/bg_circle_white">
 
             <ImageView
+
                 android:id="@+id/ivContactList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center_vertical"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="15dp"
-                android:src="@drawable/ic_arrow_conatct"
-                app:tint="@color/white" />
+                android:src="@drawable/navigate_top_arrow" />
+        </FrameLayout>
 
-            <com.stuffer.stuffers.views.MyEditText
-                android:id="@+id/edSearch"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/bg_border_address"
-                android:hint="Search your contact"
-                android:padding="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+        <com.stuffer.stuffers.views.MyEditText
+            android:id="@+id/edSearch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="Search your contact"
+            android:padding="10dp"
 
-            <com.stuffer.stuffers.views.MyButton
-                android:id="@+id/btnConfirm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Confirm"
-                android:textColor="#00416d"
-                android:theme="@style/MaterialButton2" />
+            android:textColor="@color/common_text_color"
+            android:textColorHint="@color/search_gray" />
 
-        </LinearLayout>
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/view_normal_blue2"
+            android:text="Confirm"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="@dimen/dp_10"
         android:id="@+id/rvContacts"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <include layout="@layout/common_bg_bottom" />
 
 
 </LinearLayout>

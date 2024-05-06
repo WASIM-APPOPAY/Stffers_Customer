@@ -79,8 +79,9 @@ public class AllAdapter extends RecyclerView.Adapter<AllAdapter.AllHolder> {
             description.setText(mItems.get(getAbsoluteAdapterPosition()).getDescription());
             Double cost = mItems.get(getAbsoluteAdapterPosition()).getPrice();
             price.setText("$" + String.valueOf(cost));
-            price.setTextColor(Color.parseColor(LifeFragment.mSelectedColor));
-            title.setTextColor(Color.parseColor("#4169E1"));
+            //price.setTextColor(Color.parseColor(LifeFragment.mSelectedColor));
+            price.setTextColor(Color.parseColor("#484947"));
+            title.setTextColor(Color.parseColor("#484947"));
 
         }
     }

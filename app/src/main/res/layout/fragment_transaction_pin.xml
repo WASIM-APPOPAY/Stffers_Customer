@@ -100,9 +100,22 @@
                 android:layout_height="70dp"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
+                <com.stuffer.stuffers.views.MyCountryText
+                    android:id="@+id/tvCountryCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
 
+                    android:padding="5dp"
+                    android:text="@string/select_ncountry"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
 
                 <com.hbb20.CountryCodePicker
+                    android:visibility="gone"
                     android:id="@+id/edtCustomerCountryCode"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

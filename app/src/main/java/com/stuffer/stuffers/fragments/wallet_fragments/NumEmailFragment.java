@@ -82,7 +82,7 @@ import retrofit2.Response;
 public class NumEmailFragment extends Fragment {
     private static final String TAG = "NumEmailFragment";
 
-    private FloatingActionButton floatingOtpNext;
+    private MyTextView floatingOtpNext;
     private OtpRequestListener mOtpRequestListener;
     private MyEditText edtCustomerMobileNumber, edtEmail;
     //private AutoCompleteTextView placesAutocomplete;
@@ -157,7 +157,6 @@ public class NumEmailFragment extends Fragment {
         }
 
 
-
         btnClearAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -177,7 +176,7 @@ public class NumEmailFragment extends Fragment {
                 mNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
                 mCountryName = edtCustomerCountryCode.getSelectedCountryName();
                 mEmail = edtEmail.getText().toString().trim();
-                if (edtCustomerMobileNumber.getText().toString().trim().isEmpty()) {
+                /*if (edtCustomerMobileNumber.getText().toString().trim().isEmpty()) {
                     edtCustomerMobileNumber.setError(getString(R.string.info_enter_mobile_number));
                     edtCustomerMobileNumber.requestFocus();
                     edtCustomerMobileNumber.setFocusable(true);
@@ -203,14 +202,14 @@ public class NumEmailFragment extends Fragment {
                 if (tvCity.getText().toString().trim().isEmpty()) {
                     Helper.showErrorMessage(getActivity(), getString(R.string.info_city_name));
                     return;
-                }
+                }*/
 
 
-                //mOtpRequestListener.onOtpRequest("IN", "91", "9830450542", "mdwasim508@gmail.com", "bankra mondal para killa math kolkata 711403, West Bengal","27",100,"711403","kolkata");
+                mOtpRequestListener.onOtpRequest("IN", "91", "9830450542", "mdwasim508@gmail.com", "bankra mondal para killa math kolkata 711403, West Bengal","27",100,"711403","kolkata");
                 //requestForOtp();
 
 
-                verifyMobileNumber(mCountryCode + mMobileNumber);
+                //verifyMobileNumber(mCountryCode + mMobileNumber);
 
             }
         });
@@ -267,7 +266,7 @@ public class NumEmailFragment extends Fragment {
                     stateDialogFragment.setArguments(bundle);
                     stateDialogFragment.setCancelable(false);
                     stateDialogFragment.show(getChildFragmentManager(), stateDialogFragment.getTag());
-                }else {
+                } else {
                     Toast.makeText(getActivity(), "Please Select Your Country Code...", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -343,11 +342,20 @@ public class NumEmailFragment extends Fragment {
                         JSONObject jsonObject = new JSONObject(str);
                         if (jsonObject.get("message").equals(AppoConstants.SUCCESS) && !jsonObject.getBoolean("result")) {
 
-                            //createNewUser();
-                            //getCountryList();
-                            //Toast.makeText(getActivity(), "Everything Ok", Toast.LENGTH_SHORT).show();
+
                             requestForOtp();
+
+                            /*String zip;
+                            if (StringUtils.isEmpty(tvZip.getText().toString().trim())) {
+                                zip = "-1";
+                            } else {
+                                zip = tvZip.getText().toString().trim();
+                            }
+                            mOtpRequestListener.onOtpRequest(mNameCode, mCountryCode, mMobileNumber, mEmail, mAddress, String.valueOf(mCountyId), mStateId, zip, tvCity.getText().toString().trim());*/
+
+
                         } else {
+
                             Toast.makeText(getActivity(), getString(R.string.error_email_already_exists), Toast.LENGTH_SHORT).show();
                             BottomAlreadyFragment fragmentBottomAlready = new BottomAlreadyFragment();
                             Bundle mBundle = new Bundle();
@@ -358,6 +366,7 @@ public class NumEmailFragment extends Fragment {
                             fragmentBottomAlready.setArguments(mBundle);
                             fragmentBottomAlready.show(getChildFragmentManager(), fragmentBottomAlready.getTag());
                             fragmentBottomAlready.setCancelable(false);
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -397,7 +406,7 @@ public class NumEmailFragment extends Fragment {
             @Override
             public void onResponse(Call<CountryCodeResponse> call, Response<CountryCodeResponse> response) {
                 hideProgress();
-                    mListCountry=new ArrayList<>();
+                mListCountry = new ArrayList<>();
                 if (response.isSuccessful()) {
                     if (response.body().getMessage().equalsIgnoreCase("success")) {
                         mListCountry = new ArrayList<>();

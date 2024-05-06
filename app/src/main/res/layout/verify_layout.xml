@@ -10,21 +10,38 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:text="@string/info_you_enter_a_phone_number"
-        android:textAppearance="?textAppearanceBody1"
-        android:textSize="18sp"
-        />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="18sp" />
+    
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/oval"
+            android:src="@drawable/user"
+            android:padding="@dimen/dp_5"
+            />
 
-    <com.stuffer.stuffers.views.MyTextView
-        android:id="@+id/tvMobileNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="+507 00000000"
-        android:textAppearance="?textAppearanceBody1"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
+        <com.stuffer.stuffers.views.MyTextView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/tvMobileNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        />
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="+507 00000000"
+            android:textAppearance="?textAppearanceBody1"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+
+            />
+
+    </LinearLayout>
 
     <com.stuffer.stuffers.views.MyTextView
         android:layout_width="wrap_content"

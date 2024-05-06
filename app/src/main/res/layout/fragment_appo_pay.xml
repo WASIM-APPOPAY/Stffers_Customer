@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:orientation="vertical"
     tools:context=".fragments.bottom.AppoPayFragment">
 
@@ -49,7 +50,8 @@
                             android:id="@+id/tvHeader"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/colorPrimary"
+                            android:text="MOHAMMAD WASIM"
+                            android:textColor="@color/common_text_color"
                             android:textSize="16sp" />
 
                         <com.stuffer.stuffers.views.MyTextView
@@ -57,6 +59,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
+                            android:text="+91 9836683269"
                             android:textSize="14sp" />
 
                         <com.stuffer.stuffers.views.MyTextView
@@ -64,6 +67,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
+                            android:text="wasim@gmail.com"
                             android:textSize="14sp" />
 
                         <com.stuffer.stuffers.views.MyTextView
@@ -71,6 +75,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
+                            android:text="MID : 100202478542755"
                             android:textSize="14sp" />
 
                         <LinearLayout
@@ -126,7 +131,7 @@
                         android:layout_height="wrap_content"
                         android:padding="8dp"
                         android:text="@string/info_from_account"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/common_text_color"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -162,7 +167,7 @@
                         android:layout_marginTop="10dp"
                         android:padding="8dp"
                         android:text="@string/info_amount_to_be_transfer"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/common_text_color"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 

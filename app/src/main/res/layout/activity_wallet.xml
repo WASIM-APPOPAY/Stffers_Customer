@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg_common2"
+    android:background="@color/common_bg_color"
     tools:context=".activity.wallet.WalletActivity">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/common_toolbar2" />
 
     <ScrollView
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -104,6 +105,8 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <include layout="@layout/common_bg_bottom"/>
 
 
 </LinearLayout>

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -116,7 +117,8 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
     private MyTextView tvCvvU;
     private MyTextViewBold tvTopTap;
     private int mType = 0;
-
+    private AppCompatTextView tvDemoName;
+    private FrameLayout demoFrame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +128,8 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
 
             mType = getIntent().getIntExtra(AppoConstants.WHERE, 0);
         }
+        demoFrame=findViewById(R.id.demoFrame);
+        tvDemoName = findViewById(R.id.tvDemoName);
         mainAPIInterface = ApiUtils.getAPIService();
         apiServiceUNIONPay = ApiUtils.getApiServiceUNIONPay();
         btnCreate = (MyButton) findViewById(R.id.btnCreate);
@@ -309,6 +313,9 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
                 tvFullName.setText(mUserName);
                 tvCardNumber1.setText("" + mListAccount.get(0).getAccountEncrypt());
                 tvName1.setText(mUserName);
+
+                demoFrame.setVisibility(View.VISIBLE);
+                tvDemoName.setText(mUserName);
             }
             //need to unCooment Below
             if (mListAccount.size() > 0) {
@@ -574,26 +581,18 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
         return Helper.getCurrency(param, result);
     }
 
+
+
     private void setupActionBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        ImageView menu_icon = toolbar.findViewById(R.id.menu_icon);
-        menu_icon.setVisibility(View.GONE);
-
-
-        TextView toolbarTitle = toolbar.findViewById(R.id.toolbarTitle);
-        toolbarTitle.setVisibility(View.VISIBLE);
-
-        toolbarTitle.setText(getString(R.string.info_account_destails));
-
-        ActionBar bar = getSupportActionBar();
-        bar.setDisplayUseLogoEnabled(false);
-        bar.setDisplayShowTitleEnabled(true);
-        bar.setDisplayShowHomeEnabled(true);
-        bar.setDisplayHomeAsUpEnabled(true);
-        bar.setHomeButtonEnabled(true);
-
+        MyTextViewBold common_toolbar_title = (MyTextViewBold) findViewById(R.id.common_toolbar_title);
+        common_toolbar_title.setText(getString(R.string.info_account_destails));
+        ImageView iv_common_back = (ImageView) findViewById(R.id.iv_common_back);
+        iv_common_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override

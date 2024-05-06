@@ -23,6 +23,7 @@ import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.utils.TimeUtils;
 import com.stuffer.stuffers.views.MyTextView;
+import com.stuffer.stuffers.views.MyTextViewBold;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -199,7 +200,7 @@ public class ProfileDetailsActivity extends AppCompatActivity {
             }
         }
 
-    private void setupActionBar () {
+    /*private void setupActionBar () {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -219,6 +220,18 @@ public class ProfileDetailsActivity extends AppCompatActivity {
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setHomeButtonEnabled(true);
 
+    }*/
+
+    private void setupActionBar() {
+        MyTextViewBold common_toolbar_title = (MyTextViewBold) findViewById(R.id.common_toolbar_title);
+        common_toolbar_title.setText("Profile Details");
+        ImageView iv_common_back = (ImageView) findViewById(R.id.iv_common_back);
+        iv_common_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
         @Override

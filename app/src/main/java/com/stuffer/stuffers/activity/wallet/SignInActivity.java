@@ -2,6 +2,7 @@ package com.stuffer.stuffers.activity.wallet;
 
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_ACCESSTOKEN;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_BASE_64;
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_CCODE;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_UNIQUE_NUMBER;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_LANGUAGE;
 
@@ -11,6 +12,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Base64;
@@ -37,6 +40,7 @@ import com.hbb20.CountryCodePicker;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.MyContextWrapper;
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.activity.FianceTab.UnionPayActivity;
 import com.stuffer.stuffers.activity.forgopassword.ForgotPasswordActvivity;
 import com.stuffer.stuffers.activity.restaurant.E_ShopActivity;
 import com.stuffer.stuffers.activity.restaurant.E_StoreDiscountActivity;
@@ -50,6 +54,8 @@ import com.stuffer.stuffers.commonChat.chatUtils.ChatHelper;
 import com.stuffer.stuffers.communicator.AreaSelectListener;
 import com.stuffer.stuffers.communicator.OnTransactionPinSuccess;
 import com.stuffer.stuffers.communicator.TransactionPinListener;
+import com.stuffer.stuffers.communicator.UnionPayCardListener;
+import com.stuffer.stuffers.fragments.bottom_fragment.BottomNotCard;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomPasswordPolicy;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomRegister;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomTransactionPin;
@@ -76,7 +82,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SignInActivity extends AppCompatActivity implements AreaSelectListener, OnTransactionPinSuccess, TransactionPinListener {
+public class SignInActivity extends AppCompatActivity implements AreaSelectListener, OnTransactionPinSuccess, TransactionPinListener, UnionPayCardListener {
     String mPinTag = "TransactionTag";
     MyTextView signup;
     MyTextView signin1, signin11;
@@ -116,6 +122,8 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
     private ChatHelper helper;
     private User userMe;
     private PhoneNumberUtil phoneUtil;
+    private BottomNotCard mBottomNotCard;
+    private ImageView ivFlag;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -175,6 +183,13 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                 //your code
             }
         });
+
+        ivFlag = findViewById(R.id.ivFlag);
+        String ccode = DataVaultManager.getInstance(this).getVaultValue(KEY_CCODE);
+        edtCustomerCountryCode.setCountryForNameCode(ccode);
+        ImageView imageViewFlag = edtCustomerCountryCode.getImageViewFlag();
+        Bitmap bitmap = ((BitmapDrawable) imageViewFlag.getDrawable()).getBitmap();
+        ivFlag.setImageBitmap(bitmap);
 
 
         signin1.setOnClickListener(new View.OnClickListener() {
@@ -261,6 +276,9 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                     mDominicaAreaCode = "";
                     tvAreaCodeDo.setVisibility(View.GONE);
                 }
+                ImageView imageViewFlag = edtCustomerCountryCode.getImageViewFlag();
+                Bitmap bitmap = ((BitmapDrawable) imageViewFlag.getDrawable()).getBitmap();
+                ivFlag.setImageBitmap(bitmap);
             }
         });
 
@@ -302,10 +320,10 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                         try {
                             if (response.getString("message").equalsIgnoreCase("success")) {
                                 //Log.e(TAG, "onResponse: " + response);
-                                Toast.makeText(SignInActivity.this, "Already account exist!", Toast.LENGTH_SHORT).show();
-                               // Intent mIntent = new Intent(SignInActivity.this, Registration.class);
-                                //startActivity(mIntent);
-                                //finish();
+                                //Toast.makeText(SignInActivity.this, "Already account exist!", Toast.LENGTH_SHORT).show();
+                                Intent mIntent = new Intent(SignInActivity.this, Registration.class);
+                                startActivity(mIntent);
+                                finish();
                             } else {
                                 Intent mIntent = new Intent(SignInActivity.this, Registration.class);
                                 startActivity(mIntent);
@@ -529,10 +547,15 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                                 JSONObject jsonObject = obj.getJSONObject(AppoConstants.RESULT);
                                 mUserId = jsonObject.getString(AppoConstants.ID);
                                 result = obj.getJSONObject(AppoConstants.RESULT);
+                                //String keydemo = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_DEMO);
+                                String keydemo = "";
                                 if (result.getString(AppoConstants.TRANSACTIONPIN).isEmpty() || result.getString(AppoConstants.TRANSACTIONPIN).equalsIgnoreCase("null")) {
                                     mBottomTransDialog = new BottomTransactionPin();
                                     mBottomTransDialog.show(getSupportFragmentManager(), mPinTag);
                                     mBottomTransDialog.setCancelable(false);
+                                } else if (StringUtils.isEmpty(keydemo)) {
+                                    showNoCardDialog();
+
                                 } else {
                                     try {
                                         if (result.getString(AppoConstants.AVATAR).startsWith("http")) {
@@ -576,6 +599,12 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
 
             }
         });
+    }
+
+    private void showNoCardDialog() {
+        mBottomNotCard = new BottomNotCard();
+        mBottomNotCard.show(getSupportFragmentManager(), mBottomNotCard.getTag());
+        mBottomNotCard.setCancelable(false);
     }
 
     public void goToScreen(int param) {
@@ -671,7 +700,10 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
             uploadUserAvatar(base64);
         } else {
 
-            goToScreen(mType);
+            //goToScreen(mType);
+
+            //String keydemo = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_DEMO);
+            showNoCardDialog();
         }
 
 
@@ -787,5 +819,14 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
         });
 
 
+    }
+
+    @Override
+    public void onCardRequest() {
+        if (mBottomNotCard != null)
+            mBottomNotCard.dismiss();
+        Intent intentUnion = new Intent(SignInActivity.this, UnionPayActivity.class);
+        startActivity(intentUnion);
+        finish();
     }
 }

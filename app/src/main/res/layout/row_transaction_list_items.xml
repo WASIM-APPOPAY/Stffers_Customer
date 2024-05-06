@@ -7,30 +7,34 @@
     android:layout_margin="5dp"
     android:clickable="true"
     android:focusable="true"
+
     android:foreground="?android:attr/selectableItemBackground"
     android:orientation="vertical"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="5dp">
+    app:cardCornerRadius="15dp"
+    app:cardElevation="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_border_address"
+        android:background="@drawable/common_border_rectangle"
         android:orientation="vertical"
         android:padding="5dp">
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+
             <ImageView
                 android:id="@+id/ivType"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:padding="5dp"
-
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="center|center_vertical"
+                android:background="@drawable/bg_circle_gray"
+                android:padding="10dp"
                 android:src="@mipmap/ic_recive_money" />
 
             <com.stuffer.stuffers.views.MyTextView
@@ -94,14 +98,15 @@
                 android:id="@+id/tvAmountCurrency"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:layout_weight="1"
                 android:gravity="end"
+                android:textColor="@color/black"
                 android:padding="8dp"
                 android:textSize="16sp" />
 
 
         </LinearLayout>
-
 
 
         <LinearLayout
@@ -110,33 +115,35 @@
             android:orientation="horizontal">
 
             <com.stuffer.stuffers.views.MyTextView
-                android:layout_gravity="center_vertical"
                 android:id="@+id/tvTransactionStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:padding="8dp"
                 android:text="Transaction Status"
                 android:textSize="16sp" />
 
             <com.stuffer.stuffers.views.MyTextView
-                android:layout_gravity="center_vertical"
                 android:id="@+id/tvTransactionInfo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:gravity="end"
                 android:padding="8dp"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
+
             <ImageView
+                android:id="@+id/ivView"
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
-                android:background="?attr/selectableItemBackground"
-                android:id="@+id/ivView"
                 android:padding="@dimen/dp_8"
                 android:src="@drawable/ic_remove_red_eye"
-                app:tint="#6310F6"
-                android:layout_width="@dimen/dp_50"
-                android:layout_height="match_parent"/>
+                app:tint="@color/common_color" />
 
 
         </LinearLayout>

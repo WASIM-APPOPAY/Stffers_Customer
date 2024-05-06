@@ -6,7 +6,8 @@
     android:focusable="true"
     android:id="@+id/cardview"
     android:layout_margin="5dp"
-    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="10dp"
+
     android:layout_height="wrap_content">
 
     <RelativeLayout
@@ -21,7 +22,7 @@
             android:layout_height="60dp"
             android:padding="8dp"
             android:src="@drawable/ic_smartphone_recharge"
-            app:tint="@color/colorPrimary" />
+            app:tint="@color/common_color" />
 
         <LinearLayout
 
@@ -30,15 +31,17 @@
             android:layout_toEndOf="@+id/ivIcons"
             android:orientation="vertical">
 
-            <com.stuffer.stuffers.views.MyTextView
+            <com.stuffer.stuffers.views.MyTextViewBold
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="Receiver Gets"
-                android:textSize="18sp"
+                android:textSize="22sp"
+                android:textColor="@color/common_text_color"
                 android:textStyle="bold" />
 
-            <com.stuffer.stuffers.views.MyTextView
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:textColor="@color/common_text_color"
                 android:id="@+id/tvDestinationAmt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

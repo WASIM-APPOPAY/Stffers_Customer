@@ -41,6 +41,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
 import com.earthling.atminput.ATMEditText;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.stuffer.stuffers.AppoPayApplication;
@@ -627,14 +628,16 @@ public class WalletTransferFragment2 extends Fragment {
     }
 
     private void showYouAboutToPay() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        //AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new MaterialAlertDialogBuilder(getContext(), R.style.MyRounded_MaterialComponents_MaterialAlertDialog);
         LayoutInflater inflater = getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.dialog_about_topay_common, null);
         MyTextView tvHeader = dialogLayout.findViewById(R.id.tvHeader);
         MyTextView tvInfo = dialogLayout.findViewById(R.id.tvInfo);
-        MyButton btnYes = dialogLayout.findViewById(R.id.btnYes);
-        MyButton btnNo = dialogLayout.findViewById(R.id.btnNo);
-        tvHeader.setText(getString(R.string.wallet_header));
+        MyTextView btnYes = dialogLayout.findViewById(R.id.btnYes);
+        MyTextView btnNo = dialogLayout.findViewById(R.id.btnNo);
+        //tvHeader.setText(getString(R.string.wallet_header));
+        tvHeader.setText("Transaction Money");
         String boldText = "<font color=''><b>" + amountaftertax_fees + "</b></font>" + " " + "<font color=''><b>" + mListAccount.get(mFromPosition).getCurrencyCode() + "</b></font>";
         String paymentAmount = getString(R.string.merchant_partial_pay1) + " " + boldText + " " + getString(R.string.merchant_partial_pay2);
         tvInfo.setText(Html.fromHtml(paymentAmount));
@@ -727,7 +730,6 @@ public class WalletTransferFragment2 extends Fragment {
                             showCommonError(responsePayment.getString(AppoConstants.MESSAGE));
                         } else if (responsePayment.getString(AppoConstants.RESULT).equalsIgnoreCase("-2")) {
                             showCommonError(getString(R.string.error_account_balance));
-
                         } else if (responsePayment.getString(AppoConstants.MESSAGE).equalsIgnoreCase(AppoConstants.SUCCESS)) {
 
                             showPayDialogLikeUnion(responsePayment.getString(AppoConstants.RESULT));
@@ -749,7 +751,9 @@ public class WalletTransferFragment2 extends Fragment {
                         getActivity().startActivity(intent);
                         getActivity().finish();
                     } else if (response.code() == 500) {
-                        Toast.makeText(getActivity(), "Error Code 500", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "Error Code 500", Toast.LENGTH_SHORT).show();
+                        long currentTimeMillis = System.currentTimeMillis() / 2;
+                        showPayDialogLikeUnion("" + currentTimeMillis);
 
 
                     } else if (response.code() == 400) {
@@ -770,12 +774,12 @@ public class WalletTransferFragment2 extends Fragment {
     }
 
     public void showCommonError(String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new MaterialAlertDialogBuilder(getContext(), R.style.MyRounded_MaterialComponents_MaterialAlertDialog);
         LayoutInflater inflater = getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.dialog_common_merchant_error, null);
         ImageView ivCancel = dialogLayout.findViewById(R.id.ivCancel);
         MyTextView tvInfo = dialogLayout.findViewById(R.id.tvInfo);
-        MyTextView tvHeader = dialogLayout.findViewById(R.id.tvHeader);
+        MyTextViewBold tvHeader = dialogLayout.findViewById(R.id.tvHeader);
         tvHeader.setText(getString(R.string.wallet_header));
         tvInfo.setText(message);
         MyButton btnClose = dialogLayout.findViewById(R.id.btnClose);
@@ -798,30 +802,36 @@ public class WalletTransferFragment2 extends Fragment {
     }
 
     private void showPayDialogLikeUnion(String param) {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
-        View mCustomLayout = LayoutInflater.from(getActivity()).inflate(R.layout.success_dialog_inner_appopay_transfer, null);
+        AlertDialog.Builder mBuilder = new MaterialAlertDialogBuilder(getContext(), R.style.MyRounded_MaterialComponents_MaterialAlertDialog);
+        View mCustomLayout = LayoutInflater.from(getActivity()).inflate(R.layout.success_dialog_p2p, null);
         LinearLayout layoutRoot = mCustomLayout.findViewById(R.id.layoutRoot);
         MyTextView tvInfo = mCustomLayout.findViewById(R.id.tvInfo);
         MyTextView tvHeader = mCustomLayout.findViewById(R.id.tvHeader);
         MyTextViewBold tvAmountPay = mCustomLayout.findViewById(R.id.tvAmountPay);
         MyTextViewBold tvCost = mCustomLayout.findViewById(R.id.tvCost);
+        MyTextViewBold tvSenderName = mCustomLayout.findViewById(R.id.tvSenderName);
         MyTextViewBold tvReceiverAmt = mCustomLayout.findViewById(R.id.tvReceiverAmt);
-        MyTextView tvCurrencyPay = mCustomLayout.findViewById(R.id.tvCurrencyPay);
-        MyTextView tvTransactionTime = mCustomLayout.findViewById(R.id.tvTransactionTime);
-        MyTextView tvVoucherPay = mCustomLayout.findViewById(R.id.tvVoucherPay);
+        MyTextViewBold tvCurrencyPay = mCustomLayout.findViewById(R.id.tvCurrencyPay);
+        MyTextViewBold tvTransactionTime = mCustomLayout.findViewById(R.id.tvTransactionTime);
+        MyTextViewBold tvVoucherPay = mCustomLayout.findViewById(R.id.tvVoucherPay);
+        MyTextViewBold tvProcessing = mCustomLayout.findViewById(R.id.tvProcessing);
+        MyTextViewBold tvTaxes = mCustomLayout.findViewById(R.id.TvTaxes);
         MyButton btnShare = mCustomLayout.findViewById(R.id.btnShare);
         MyButton btnClose = mCustomLayout.findViewById(R.id.btnClose);
         tvHeader.setText("Transfer Money");
         //tvAmountPay.setText(" Amount : " + edAmount.getText().toString().trim());
-        tvReceiverAmt.setText("Receiver Amount : " + tvAmountCredit.getText().toString().trim());
-        tvReceiverAmt.setTextColor(Color.parseColor("#334CFF"));
+        tvReceiverAmt.setText(tvAmountCredit.getText().toString().trim());
+        tvSenderName.setText(Helper.getSenderName());
+
 
         //float cost = amountaftertax_fees - Float.parseFloat(edAmount.getText().toString().trim());
         float cost = amountaftertax_fees - fundamount;
         float twoDecimal = Helper.getTwoDecimal(cost);
         String param1 = "Processing Fees : " + processingfees + "\n" + " Taxes : " + taxes + "\n" + "Transaction Cost : " + twoDecimal;
-        tvCost.setText(param1);
-        tvCost.setTextColor(Color.parseColor("#FE3156"));
+        tvCost.setText("" + twoDecimal);
+        tvProcessing.setText("" + processingfees);
+        tvTaxes.setText("" + taxes);
+
 
         String currencyId = Helper.getCurrencyId();
         String mCurrencyId = "";
@@ -833,10 +843,10 @@ public class WalletTransferFragment2 extends Fragment {
                 break;
             }
         }
-        tvAmountPay.setText(" Amount : " + fundamount + " " + mCurrencyId.toUpperCase());
-        tvCurrencyPay.setText("Currency : " + mCurrencyId);
-        tvTransactionTime.setText("Transaction Time : " + getDateTime());
-        tvVoucherPay.setText("Transaction No : " + param);
+        tvAmountPay.setText(fundamount + " " + mCurrencyId.toUpperCase());
+        tvCurrencyPay.setText(mCurrencyId);
+        tvTransactionTime.setText(getDateTime());
+        tvVoucherPay.setText(param);
         tvInfo.setText("Transfer to " + recname + "" + "\nSUCCESS");
 
         btnClose.setOnClickListener(new View.OnClickListener() {

@@ -28,6 +28,7 @@ import com.stuffer.stuffers.fragments.transactionpin.TransactionPinUpdateFragmen
 import com.stuffer.stuffers.myService.AppSMSBroadcastReceiver;
 import com.stuffer.stuffers.utils.AppSignatureHelper;
 import com.stuffer.stuffers.utils.AppoConstants;
+import com.stuffer.stuffers.views.MyTextViewBold;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -53,8 +54,10 @@ public class ForgotPasswordActvivity extends AppCompatActivity implements Fragme
         }
 
         if (savedInstanceState == null) {
-            VerifyMobileFragment verifyMobileFragment = new VerifyMobileFragment();
-            initFragments(verifyMobileFragment);
+            //  VerifyMobileFragment verifyMobileFragment = new VerifyMobileFragment();
+            //initFragments(verifyMobileFragment);
+            VerifyForgotFragment mVerifyForgotFragment = new VerifyForgotFragment();
+            initFragments(mVerifyForgotFragment);
           /*ForgotPasswordFragment forgotPasswordFragment = new ForgotPasswordFragment();
             Bundle bundle = new Bundle();
             bundle.putString(AppoConstants.PHONECODE, "91");
@@ -104,6 +107,11 @@ public class ForgotPasswordActvivity extends AppCompatActivity implements Fragme
                         String group = matcher.group(0);
                         ((VerifyMobileFragment) fragmentById).inputOtp(group);
                     }
+                } else if (fragmentById instanceof FragmentOtpForgot) {
+                    if (matcher.find()) {
+                        String group = matcher.group(0);
+                        ((FragmentOtpForgot) fragmentById).inputOtp(group);
+                    }
                 }
             }
         });
@@ -115,20 +123,17 @@ public class ForgotPasswordActvivity extends AppCompatActivity implements Fragme
         client.startSmsRetriever();
     }
 
+
     private void setupActionBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ImageView menu_icon = toolbar.findViewById(R.id.menu_icon);
-        menu_icon.setVisibility(View.GONE);
-        toolbarTitle = toolbar.findViewById(R.id.toolbarTitle);
-        toolbarTitle.setVisibility(View.VISIBLE);
-        toolbarTitle.setText(getString(R.string.info_forgot_password2));
-        ActionBar bar = getSupportActionBar();
-        bar.setDisplayUseLogoEnabled(false);
-        bar.setDisplayShowTitleEnabled(true);
-        bar.setDisplayShowHomeEnabled(true);
-        bar.setDisplayHomeAsUpEnabled(true);
-        bar.setHomeButtonEnabled(true);
+        MyTextViewBold common_toolbar_title = (MyTextViewBold) findViewById(R.id.common_toolbar_title);
+        common_toolbar_title.setText(getString(R.string.info_forgot_password2));
+        ImageView iv_common_back = (ImageView) findViewById(R.id.iv_common_back);
+        iv_common_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -165,8 +170,20 @@ public class ForgotPasswordActvivity extends AppCompatActivity implements Fragme
         } else {
             bundle.putString("reset", "no");
         }
-        forgotPasswordFragment.setArguments(bundle);
-        initFragments(forgotPasswordFragment);
+        if (bundle.getBoolean(AppoConstants.OTPSECRREN, false)) {
+            FragmentOtpForgot mFragmentOtpForgot = new FragmentOtpForgot();
+            mFragmentOtpForgot.setArguments(bundle);
+            initFragments(mFragmentOtpForgot);
+
+        } else if (bundle.getBoolean(AppoConstants.OTPSUCCESS, false)) {
+            ForgotSuccessFragment mForgotSuccessFragment = new ForgotSuccessFragment();
+            mForgotSuccessFragment.setArguments(bundle);
+            initFragments(mForgotSuccessFragment);
+        } else {
+            forgotPasswordFragment.setArguments(bundle);
+            initFragments(forgotPasswordFragment);
+        }
+
     }
 
     public void initFragments(Fragment params) {

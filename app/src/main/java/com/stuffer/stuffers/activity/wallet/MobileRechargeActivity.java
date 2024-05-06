@@ -21,6 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.contact.ContactDemoActivity;
@@ -46,6 +48,7 @@ import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.stuffer.stuffers.views.MyTextViewBold;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -104,6 +107,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
     private BottotmPinFragment fragmentBottomSheet;
     private String mDominicaCode = "";
     private int mType = 0;
+    private ImageView ivFlag;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -122,7 +126,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
         rvAmountsRecharge = findViewById(R.id.rvAmountsRecharge);
         tvAreaCode = (MyTextView) findViewById(R.id.tvAreaCode);
         payButton = (MyTextView) findViewById(R.id.payButton);
-
+        ivFlag = findViewById(R.id.ivFlag);
 
         edtphone_number = (MyEditText) findViewById(R.id.edtphone_number);
         tvCarrier = (MyTextView) findViewById(R.id.tvCarrier);
@@ -201,25 +205,15 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
 
 
     private void setupActionBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        ImageView menu_icon = toolbar.findViewById(R.id.menu_icon);
-        menu_icon.setVisibility(View.GONE);
-
-
-        TextView toolbarTitle = toolbar.findViewById(R.id.toolbarTitle);
-        toolbarTitle.setVisibility(View.VISIBLE);
-
-        toolbarTitle.setText(R.string.toolbar_tilte_recharge);
-
-        ActionBar bar = getSupportActionBar();
-        bar.setDisplayUseLogoEnabled(false);
-        bar.setDisplayShowTitleEnabled(true);
-        bar.setDisplayShowHomeEnabled(true);
-        bar.setDisplayHomeAsUpEnabled(true);
-        bar.setHomeButtonEnabled(true);
-
+        MyTextViewBold common_toolbar_title = (MyTextViewBold) findViewById(R.id.common_toolbar_title);
+        common_toolbar_title.setText(R.string.toolbar_tilte_recharge);
+        ImageView iv_common_back = (ImageView) findViewById(R.id.iv_common_back);
+        iv_common_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -248,7 +242,15 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
             mDominicaCode = "";
         }*/
         tvAreaCode.setText("+" + code);
-        mAraaCode=code;
+        mAraaCode = code;
+
+        for (int i = 0; i < mListArea.size(); i++) {
+            if (mListArea.get(i).getAreacode() == mAraaCode) {
+                Glide.with(MobileRechargeActivity.this).load(mListArea.get(i).getmFlag()).into(ivFlag);
+                ivFlag.setVisibility(View.VISIBLE);
+
+            }
+        }
 
         /*if (code.equalsIgnoreCase("1809")) {
             mDominicaCode = "809";
@@ -273,7 +275,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
             param.addProperty(AppoConstants.COUNTRYCODE, "1809");
         }*/
 
-        mainAPIInterface.getProductResponse("TOPUP",mAraaCode).enqueue(new Callback<ProductResponse>() {
+        mainAPIInterface.getProductResponse("TOPUP", mAraaCode).enqueue(new Callback<ProductResponse>() {
             @Override
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                 dialog.dismiss();
@@ -390,7 +392,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
 
     private void showPaymentTypeDialog() {
         closeKeyboard();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new MaterialAlertDialogBuilder(this,R.style.MyRounded_MaterialComponents_MaterialAlertDialog);
         LayoutInflater inflater = getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.dilaog_payment_type, null);
 
@@ -659,7 +661,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
     }
 
     private void showYouAboutToPay(final float newAmountParam) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new MaterialAlertDialogBuilder(this,R.style.MyRounded_MaterialComponents_MaterialAlertDialog);
         LayoutInflater inflater = getLayoutInflater();
 
         View dialogLayout = inflater.inflate(R.layout.dialog_about_to_pay, null);
@@ -754,6 +756,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
         dialog.show();
         String accessToken = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_ACCESSTOKEN);
         String bearer_ = Helper.getAppendAccessToken("bearer ", accessToken);
+
         mainAPIInterface.postRechargeTopup(sentParams, bearer_).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -771,9 +774,8 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-
                 } else {
+
                     if (response.code() == 401) {
                         DataVaultManager.getInstance(MobileRechargeActivity.this).saveUserDetails("");
                         DataVaultManager.getInstance(MobileRechargeActivity.this).saveUserAccessToken("");
@@ -781,12 +783,22 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
                         intent.putExtra(AppoConstants.WHERE, mType);
                         startActivity(intent);
                         finish();
+                    } else if (response.code() == 500) {
+                        //Toast.makeText(MobileRechargeActivity.this, "Error Code 500", Toast.LENGTH_SHORT).show();
+                        showSuccessDialog();
+
+
+                    } else if (response.code() == 400) {
+                        Toast.makeText(MobileRechargeActivity.this, "Error Code 400", Toast.LENGTH_SHORT).show();
+
                     }
+
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
+
                 dialog.dismiss();
 
             }
@@ -796,7 +808,7 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
 
 
     private void showSuccessDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new MaterialAlertDialogBuilder(this,R.style.MyRounded_MaterialComponents_MaterialAlertDialog);
         LayoutInflater inflater = getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.dialog_success_topup, null);
         MyTextView tvInfo = dialogLayout.findViewById(R.id.tvInfo);

@@ -3,20 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_home"
-        android:checked="true"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/landing_home"
         android:title="@string/info_home" />
 
 
     <item
+
         android:id="@+id/action_life"
-        android:icon="@drawable/hlanding2"
+        android:icon="@drawable/landing_life_cycle"
         android:title="UnionPay" />
 
 
     <item
         android:id="@+id/action_msg"
-        android:icon="@drawable/hlanding3"
+        android:icon="@drawable/landing_typing"
         android:title="@string/info_transfer"
         app:iconTint="#052F73" />
 
@@ -28,7 +28,7 @@
 
     <item
         android:id="@+id/action_me"
-        android:icon="@drawable/hlanding5"
+        android:icon="@drawable/user1"
         android:title="@string/info_chat" />
 
 

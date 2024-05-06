@@ -16,6 +16,9 @@ import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -47,6 +50,7 @@ import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.views.MyTextView;
+import com.stuffer.stuffers.views.MyTextViewBold;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
@@ -59,16 +63,20 @@ public class UrlsActivity extends AppCompatActivity {
     private static final int AFTER_13 = 2299;
     private MyTextView tvLongText;
     private String mTitle, mUrlName;
-    private ProgressDialog mProgress;
+    private static ProgressDialog mProgress;
     private CheckBox checkbox;
     private LinearLayout rLayout;
     private ChatHelper chatHelper;
+    private WebView webView;
+    private MyTextViewBold common_toolbar_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_urls);
         rLayout = findViewById(R.id.rLayout);
+        webView = findViewById(R.id.webView);
+
 
         checkbox = findViewById(R.id.checkbox);
         mTitle = getIntent().getStringExtra(AppoConstants.TITLE);
@@ -78,7 +86,7 @@ public class UrlsActivity extends AppCompatActivity {
         tvLongText = (MyTextView) findViewById(R.id.tvLongText);
         chatHelper = new ChatHelper(this);
         String vaultValue = DataVaultManager.getInstance(UrlsActivity.this).getVaultValue(TANDC);
-        if (!StringUtils.isEmpty(vaultValue)){
+        if (!StringUtils.isEmpty(vaultValue)) {
             checkbox.setChecked(true);
         }
         boolean checkPermission = checkPermission();
@@ -104,7 +112,13 @@ public class UrlsActivity extends AppCompatActivity {
             }
         });
 
-        getContent(Constants.APPOPAY_BASE_URL + mUrlName);
+        //getContent(Constants.APPOPAY_BASE_URL + mUrlName);
+        showLoading();
+        webView.loadUrl("https://tool.appopay.com/tac");
+        MyWebViewClient myWebViewClient = new MyWebViewClient();
+        webView.setWebViewClient(myWebViewClient);
+
+        webView.getSettings().setJavaScriptEnabled(true);
 
         checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -330,7 +344,7 @@ public class UrlsActivity extends AppCompatActivity {
         mProgress.show();
     }
 
-    public void hideLoading() {
+    public static void hideLoading() {
         if (mProgress != null) {
             mProgress.dismiss();
             mProgress = null;
@@ -338,40 +352,20 @@ public class UrlsActivity extends AppCompatActivity {
     }
 
     private void setupActionBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        ImageView menu_icon = toolbar.findViewById(R.id.menu_icon);
-        menu_icon.setVisibility(View.GONE);
-
-
-        TextView toolbarTitle = toolbar.findViewById(R.id.toolbarTitle);
-        toolbarTitle.setVisibility(View.VISIBLE);
-
-        toolbarTitle.setText(getString(R.string.info_terms_and_condition1));
-
-        ActionBar bar = getSupportActionBar();
-        bar.setDisplayUseLogoEnabled(false);
-        bar.setDisplayShowTitleEnabled(true);
-        bar.setDisplayShowHomeEnabled(true);
-        bar.setDisplayHomeAsUpEnabled(true);
-        bar.setHomeButtonEnabled(true);
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // action bar menu behaviour
-        switch (item.getItemId()) {
-            case android.R.id.home:
+        common_toolbar_title = (MyTextViewBold) findViewById(R.id.common_toolbar_title);
+        common_toolbar_title.setText(mTitle);
+        ImageView iv_common_back = (ImageView) findViewById(R.id.iv_common_back);
+        iv_common_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 finish();
-                return true;
+            }
+        });
 
 
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
+
+
     @Override
     protected void attachBaseContext(Context newBase) {
         String userLanguage = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_LANGUAGE);
@@ -380,5 +374,19 @@ public class UrlsActivity extends AppCompatActivity {
             userLanguage = "en";
         }
         super.attachBaseContext(MyContextWrapper.wrap(newBase, userLanguage));
+    }
+
+    public class MyWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return false;
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            hideLoading();
+        }
     }
 }

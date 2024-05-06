@@ -25,11 +25,11 @@ import java.util.ArrayList;
 
 public class InsuranceDialog extends DialogFragment {
     private RecyclerView rvCarrier;
-    private MyButton btnClose;
+    private MyTextView btnClose;
     private ArrayList<String> mListCarrier;
     private MyTextView tvTitle;
     private String mTitle;
-    private MyButton btnConfirm;
+    private MyTextView btnConfirm;
     private boolean allow = false;
     private CarrierSelectListener mListener;
     private int lastSelectedPosition = -1;
@@ -42,8 +42,8 @@ public class InsuranceDialog extends DialogFragment {
         rvCarrier = (RecyclerView) view.findViewById(R.id.rvCarrier);
 
         tvTitle = (MyTextView) view.findViewById(R.id.tvTitle);
-        btnClose = (MyButton) view.findViewById(R.id.btnClose);
-        btnConfirm = (MyButton) view.findViewById(R.id.btnConfirm);
+        btnClose = (MyTextView) view.findViewById(R.id.btnClose);
+        btnConfirm = (MyTextView) view.findViewById(R.id.btnConfirm);
 
         Bundle arguments = this.getArguments();
         mListCarrier = arguments.getStringArrayList(AppoConstants.INFO);

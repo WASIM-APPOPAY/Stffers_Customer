@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.stuffer.stuffers.views.MyButton;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.stuffer.stuffers.views.MyTextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,9 +31,10 @@ import java.util.Objects;
 public class BottotmPinFragment extends BottomSheetDialogFragment implements View.OnClickListener {
     private static final String TAG = "BottotmPinFragment";
     private MyButton btnKey1, btnKey2, btnKey3, btnKey4, btnKey5, btnKey6,
-            btnKey7, btnKey8, btnKey9, btnKey10, btnClear, btnConfirm;
+            btnKey7, btnKey8, btnKey9, btnKey10;
+    MyTextView btnClear, btnConfirm;
     ArrayList<MyButton> mListBtn;
-    ImageView ivDots1, ivDots2, ivDots3, ivDots4, ivDots5, ivDots6;
+    ImageView ivDots1, ivDots2, ivDots3, ivDots4, ivDots5, ivDots6, ivClosePin;
 
 
     private String codeString = "";
@@ -76,9 +79,10 @@ public class BottotmPinFragment extends BottomSheetDialogFragment implements Vie
         btnKey8 = (MyButton) mView.findViewById(R.id.btnKey8);
         btnKey9 = (MyButton) mView.findViewById(R.id.btnKey9);
         btnKey10 = (MyButton) mView.findViewById(R.id.btnKey10);
-        btnClear = (MyButton) mView.findViewById(R.id.btnClear);
-        btnConfirm = (MyButton) mView.findViewById(R.id.btnConfirm);
+        btnClear = (MyTextView) mView.findViewById(R.id.btnClear);
+        btnConfirm = (MyTextView) mView.findViewById(R.id.btnConfirm);
         btnCloseDialog = (MyButton) mView.findViewById(R.id.btnCloseDialog);
+        ivClosePin = (ImageView) mView.findViewById(R.id.ivClosePin);
 
         btnKey1.setOnClickListener(this);
         btnKey2.setOnClickListener(this);
@@ -93,6 +97,7 @@ public class BottotmPinFragment extends BottomSheetDialogFragment implements Vie
         btnConfirm.setOnClickListener(this);
         btnClear.setOnClickListener(this);
         btnCloseDialog.setOnClickListener(this);
+        ivClosePin.setOnClickListener(this);
 
         mListBtn.add(btnKey1);
         mListBtn.add(btnKey2);
@@ -130,8 +135,7 @@ public class BottotmPinFragment extends BottomSheetDialogFragment implements Vie
     public void onStart() {
         super.onStart();
         Dialog dialog = getDialog();
-        if (dialog != null)
-        {
+        if (dialog != null) {
             int width = ViewGroup.LayoutParams.MATCH_PARENT;
             int height = ViewGroup.LayoutParams.MATCH_PARENT;
             dialog.getWindow().setLayout(width, height);
@@ -260,11 +264,11 @@ public class BottotmPinFragment extends BottomSheetDialogFragment implements Vie
                 break;
             case R.id.btnConfirm:
                 //getRandomKeyFromRange();
-                if (codeString.isEmpty()){
+                if (codeString.isEmpty()) {
                     Toast.makeText(getActivity(), "Please enter transaction pin", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (codeString.length()<6){
+                if (codeString.length() < 6) {
                     Toast.makeText(getActivity(), "Transaction pin should be six digit", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -281,6 +285,9 @@ public class BottotmPinFragment extends BottomSheetDialogFragment implements Vie
             case R.id.btnCloseDialog:
                 dismiss();
                 break;
+            case R.id.ivClosePin:
+                dismiss();
+                break;
 
 
         }
@@ -288,13 +295,14 @@ public class BottotmPinFragment extends BottomSheetDialogFragment implements Vie
 
     private void setDotEnable() {
         for (int i = 0; i < codeString.length(); i++) {
-            dots.get(i).setImageResource(R.drawable.dot_enable);
+            dots.get(i).setImageResource(R.drawable.color_dots);
+            //dots.get(i).setColorFilter(ContextCompat.getColor(getContext(), R.color.common_color), android.graphics.PorterDuff.Mode.MULTIPLY);
         }
     }
 
     private void setDotDisable() {
         for (int i = 0; i < 6; i++) {
-            dots.get(i).setImageResource(R.drawable.dot_disable);
+            dots.get(i).setImageResource(R.drawable.gray_dots);
         }
         codeString = "";
     }
@@ -302,6 +310,6 @@ public class BottotmPinFragment extends BottomSheetDialogFragment implements Vie
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        mPinListenr=(TransactionPinListener)context;
+        mPinListenr = (TransactionPinListener) context;
     }
 }

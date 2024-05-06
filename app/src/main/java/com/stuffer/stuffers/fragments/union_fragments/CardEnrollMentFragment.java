@@ -4,16 +4,19 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.api.ApiUtils;
@@ -24,6 +27,7 @@ import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.utils.TimeUtils;
 import com.stuffer.stuffers.views.MyButton;
+import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
@@ -45,7 +49,7 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
     private static final String TAG = "CardEnrollMentFragment";
     private MyButton btnCardEnrollment;
     private String enrollMentUrl;
-    private TextInputEditText mTiedAccNo;
+    private MyEditText mTiedAccNo;
     private ProgressDialog mProgress;
     private JsonObject mRoot;
     private MainUAPIInterface apiServiceUNIONPay;
@@ -55,11 +59,12 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
     private String walletAccountNumber;
     private String phWithCode;
     private Dialog mDialogCard;
-    private TextInputEditText mTiedFname, mTiedLname;
+    private MyEditText mTiedFname, mTiedLname;
     private MyTextView tvCountryCodeU, tvMobNumU;
     private int mPrdNo;
     private String newNumber;
     private OnBankSubmit mConfirmLsitener;
+    private CheckBox checkbox;
 
     public CardEnrollMentFragment() {
         // Required empty public constructor
@@ -73,11 +78,12 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
         View mView = inflater.inflate(R.layout.fragment_card_enroll_ment, container, false);
         apiServiceUNIONPay = ApiUtils.getApiServiceUNIONPay();
         btnCardEnrollment = (MyButton) mView.findViewById(R.id.btnCardEnrollment);
-        mTiedAccNo = (TextInputEditText) mView.findViewById(R.id.mTiedAccNo);
-        mTiedFname = (TextInputEditText) mView.findViewById(R.id.mTiedFname);
-        mTiedLname = (TextInputEditText) mView.findViewById(R.id.mTiedLname);
+        mTiedAccNo = (MyEditText) mView.findViewById(R.id.mTiedAccNo);
+        mTiedFname = (MyEditText) mView.findViewById(R.id.mTiedFname);
+        mTiedLname = (MyEditText) mView.findViewById(R.id.mTiedLname);
         tvCountryCodeU = (MyTextView) mView.findViewById(R.id.tvCountryCodeU);
         tvMobNumU = (MyTextView) mView.findViewById(R.id.tvMobNumU);
+        checkbox = (CheckBox) mView.findViewById(R.id.checkbox);
 
 
         btnCardEnrollment.setOnClickListener(this);
@@ -99,11 +105,12 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
         mPrdNo = arguments.getInt(AppoConstants.PRDNUMBER, 0);
         newNumber = arguments.getString("newNumber");
         ////Log.e(TAG, "onCreateView: " + anInt);
-        if (mPrdNo == 1003) {
+        //later below will be enable
+        /*if (mPrdNo == 1003) {
             mTiedAccNo.setText(walletAccountNumber);
         } else {
             mTiedAccNo.setText("" + newNumber);
-        }
+        }*/
 
 
         return mView;
@@ -114,8 +121,22 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
     public void onClick(View view) {
 
         if (view.getId() == R.id.btnCardEnrollment) {
-            getCmvInfo();
-            //makeRequest();
+            //getCmvInfo();
+
+            if (checkbox.isChecked()) {
+                Helper.showLoading(getString(R.string.info_please_wait), getActivity());
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //showSuccessDialog("Card Enrollment", "Your UnionPay Card has been created Successfully");
+                        showSuccessDialog();
+                    }
+                }, 3000);
+            } else {
+                Toast.makeText(getActivity(), "Please accept term and conditions", Toast.LENGTH_SHORT).show();
+            }
+
+
         }
     }
 
@@ -150,7 +171,7 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
                         if (mResponse.getInt("status") == 200) {
                             if (mResponse.getString("message").equalsIgnoreCase("success")) {
                                 String mResult = mResponse.getString("result");
-                                Log.e(TAG, "onResponse: JWE Response"+mResponse);
+                                Log.e(TAG, "onResponse: JWE Response" + mResponse);
                                 makeRequest2(mResult);
                             }
                         } else {
@@ -199,7 +220,7 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
         mTrxInfo.addProperty("cvmInfo", mResult);
         mRoot.add("msgInfo", mMsgInfo);
         mRoot.add("trxInfo", mTrxInfo);
-         Log.e(TAG, "makeRequest: JWS === " + mRoot.toString());
+        Log.e(TAG, "makeRequest: JWS === " + mRoot.toString());
         sentRequest2(mRoot);
 
 
@@ -217,7 +238,7 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
 
                 if (response.isSuccessful()) {
                     String responseString = new Gson().toJson(response.body());
-                    Log.e(TAG, "onResponse: JWS Response :"+responseString);
+                    Log.e(TAG, "onResponse: JWS Response :" + responseString);
                     try {
                         JSONObject mResponse = new JSONObject(responseString);
                         if (mResponse.getInt("status") == 200) {
@@ -270,7 +291,7 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
                     try {
                         JSONObject mRoot = new JSONObject(s1);
                         if (mRoot.getInt("status") == 200 && mRoot.getString("message").equalsIgnoreCase("OK")) {
-                            showSuccessDialog("Card Enrollment", "Your UnionPay Card has been created Successfully");
+                            showSuccessDialog();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -309,21 +330,30 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
         Toast.makeText(getActivity(), "" + message, Toast.LENGTH_SHORT).show();
     }
 
-    private void showSuccessDialog(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+    private void showSuccessDialog() {
+        AlertDialog.Builder builder = new MaterialAlertDialogBuilder(getActivity(), R.style.MyRounded_MaterialComponents_MaterialAlertDialog);
         LayoutInflater inflater = getLayoutInflater();
 
-        View dialogLayout = inflater.inflate(R.layout.dialog_success_merchant, null);
+        View dialogLayout = inflater.inflate(R.layout.dialog_success_unionpay, null);
         MyTextView tvHeader = dialogLayout.findViewById(R.id.tvHeader);
-        tvHeader.setText(title);
-        MyTextView tvSuccess = dialogLayout.findViewById(R.id.tvSuccess);
-        tvSuccess.setText(message);
-        MyButton btnClose = dialogLayout.findViewById(R.id.btnClose);
+
+
+        MyTextView btnClose = dialogLayout.findViewById(R.id.btnClose);
+        btnClose.setVisibility(View.GONE);
+
+        MyTextView btnNext = dialogLayout.findViewById(R.id.btnNext);
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirectHome();
+            }
+        });
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 redirectHome();
+                //mDialogCard.dismiss();
             }
         });
 
@@ -336,9 +366,11 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
         mDialogCard.show();
     }
 
+
     private void redirectHome() {
+        Helper.hideLoading();
         mDialogCard.dismiss();
-        mConfirmLsitener.onConfirm();
+        mConfirmLsitener.onConfirm(1);
         //getActivity().finish();
 
     }

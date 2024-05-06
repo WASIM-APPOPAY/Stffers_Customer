@@ -11,11 +11,11 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="60dp"
+            android:layout_width="100dp"
             android:layout_height="60dp"
-            android:src="@drawable/appopay_gift_card" />
+            android:src="@drawable/logoo" />
 
-        <com.stuffer.stuffers.views.MyTextView
+        <com.stuffer.stuffers.views.MyTextViewBold
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -23,8 +23,8 @@
             android:id="@+id/tvTitle"
             android:text="@string/info_topup_payment"
             android:textAllCaps="true"
-            android:textColor="@color/colorPrimary"
-            android:textSize="18sp" />
+            android:textColor="@color/common_text_color"
+            android:textSize="20sp" />
 
 
     </LinearLayout>
@@ -34,6 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
+        android:textColor="@color/common_text_color"
         android:text="@string/recharge_payment_mode"
         android:textSize="16sp" />
 
@@ -59,7 +60,7 @@
             android:layout_marginEnd="10dp"
             android:text="@string/info_card"
             android:textColor="@color/white"
-            android:theme="@style/MaterialButton" />
+            android:background="@drawable/view_normal_blue2" />
 
         <com.stuffer.stuffers.views.MyButton
             android:id="@+id/btnWallet"
@@ -68,7 +69,7 @@
             android:gravity="center"
             android:text="@string/info_wallet"
             android:textColor="@color/white"
-            android:theme="@style/MaterialButton" />
+            android:background="@drawable/view_normal_blue2" />
 
 
     </LinearLayout>

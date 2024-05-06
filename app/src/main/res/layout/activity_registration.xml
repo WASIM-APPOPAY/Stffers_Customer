@@ -9,23 +9,22 @@
     <!--Progress Bar created-->
 
     <com.kofigyan.stateprogressbar.StateProgressBar
-        android:layout_marginTop="10dp"
         android:id="@+id/my_progress_bar_id"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
         app:spb_animateToCurrentProgressState="true"
         app:spb_checkStateCompleted="true"
-        app:spb_currentStateDescriptionColor="#0F9D58"
+        app:spb_currentStateDescriptionColor="@color/common_text_color"
         app:spb_currentStateNumber="one"
         app:spb_maxStateNumber="three"
 
         app:spb_stateBackgroundColor="#BDBDBD"
         app:spb_stateDescriptionColor="#808080"
-        app:spb_stateForegroundColor="#0F9D58"
+        app:spb_stateForegroundColor="@color/common_color"
         app:spb_stateNumberBackgroundColor="#808080"
-        app:spb_stateNumberForegroundColor="#eeeeee" />
-
+         />
 
 
     <FrameLayout
@@ -35,12 +34,13 @@
         android:layout_weight="1" />
 
     <LinearLayout
-
         android:layout_width="match_parent"
-        android:layout_height="70dp"
 
+        android:layout_height="70dp"
         android:layout_marginBottom="5dp"
+
         android:orientation="horizontal"
+        android:visibility="gone"
         android:weightSum="3">
 
 
@@ -77,8 +77,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="10dp"
             android:adjustViewBounds="true"
+            android:padding="10dp"
             android:src="@drawable/wallet_card140" />
 
         <!--
@@ -93,6 +93,8 @@
 
 
     </LinearLayout>
+
+    <include layout="@layout/common_bg_bottom_with_line" />
 
 
 </LinearLayout>

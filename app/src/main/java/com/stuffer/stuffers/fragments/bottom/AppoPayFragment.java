@@ -22,6 +22,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -45,6 +46,7 @@ import com.emv.qrcode.model.mpm.MerchantAccountInformation;
 import com.emv.qrcode.model.mpm.MerchantAccountInformationTemplate;
 import com.emv.qrcode.model.mpm.MerchantPresentedMode;
 import com.emv.qrcode.model.mpm.UnreservedTemplate;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.stuffer.stuffers.AppoPayApplication;
@@ -218,8 +220,8 @@ public class AppoPayFragment extends Fragment {
 
 
         //getMerchantProfile();
-        showMerchantDetails();
-
+        //showMerchantDetails();
+        getLatestUserDetails();
 
         return mView;
     }
@@ -349,7 +351,7 @@ public class AppoPayFragment extends Fragment {
 
         conversionRates = 1;
         tvCardMerchant.setVisibility(View.VISIBLE);
-        ////Log.e(TAG, "showMerchantDetails: " + new Gson().toJson(mDecode));
+        Log.e(TAG, "showMerchantDetails: " + new Gson().toJson(mDecode));
         String mWhole = new Gson().toJson(mDecode);
 
         TagLengthString countryCode1 = mDecode.getCountryCode();
@@ -362,7 +364,7 @@ public class AppoPayFragment extends Fragment {
         String mTerminalId = terminalLabel1.getValue();
         ////Log.e(TAG, "showMerchantDetails: "+mTerminalId );
         TagLengthString merchantCity = mDecode.getMerchantCity();
-        String mMerchantCity = merchantCity.getValue();
+        //String mMerchantCity = merchantCity.getValue();
         ////Log.e(TAG, "showMerchantDetails: "+mMerchantCity );
 
 
@@ -380,14 +382,12 @@ public class AppoPayFragment extends Fragment {
             tvIndex5.setText("MID : " + mMerchantId);
             tvIndex5.setVisibility(View.VISIBLE);
             tvHeader.setText(valueMerchantName);
-            tvCodeMobile.setText("(+" + valueCountry + ") " + mMerchantCity.toUpperCase());
+            tvCodeMobile.setText("(+" + valueCountry + ")");// + mMerchantCity.toUpperCase());
             JSONObject mJsonWhole = new JSONObject(mWhole);
             if (mJsonWhole.has("transactionAmount")) {
                 TagLengthString transactionAmount = mDecode.getTransactionAmount();
                 String transactionValue = transactionAmount.getValue();
                 edAmount.setText(transactionValue);
-
-
             }
 
 
@@ -746,27 +746,22 @@ public class AppoPayFragment extends Fragment {
     }
 
     private void showYouAboutToPay() {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getLayoutInflater();
-
         View dialogLayout = inflater.inflate(R.layout.dialog_about_topay_common, null);
-
         MyTextView tvInfo = dialogLayout.findViewById(R.id.tvInfo);
-        MyButton btnYes = dialogLayout.findViewById(R.id.btnYes);
-        MyButton btnNo = dialogLayout.findViewById(R.id.btnNo);
+        MyTextView btnYes = dialogLayout.findViewById(R.id.btnYes);
+        MyTextView btnNo = dialogLayout.findViewById(R.id.btnNo);
         //String boldText = "<font color=''><b>" + amountaftertax_fees + "</b></font>" + " " + "<font color=''><b>" + mListAccount.get(fromAccountPosition).getCurrencyCode() + "</b></font>";
         String boldText = "<font color=''><b>" + edAmount.getText().toString().trim() + "</b></font>" + " " + "<font color=''><b>" + mListAccount.get(fromAccountPosition).getCurrencyCode() + "</b></font>";
-
         String paymentAmount = getString(R.string.merchant_partial_pay1) + " " + boldText + " " + getString(R.string.merchant_partial_pay2);
-
         tvInfo.setText(Html.fromHtml(paymentAmount));
-
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //makePayment();
-                makePaymentUnion();
+                //makePaymentUnion();
+                showLoad();
             }
         });
         btnNo.setOnClickListener(new View.OnClickListener() {
@@ -780,6 +775,19 @@ public class AppoPayFragment extends Fragment {
         dialogMerchant = builder.create();
         dialogMerchant.setCanceledOnTouchOutside(false);
         dialogMerchant.show();
+    }
+
+    private void showLoad() {
+        if (dialogMerchant != null) {
+            dialogMerchant.dismiss();
+        }
+        Helper.showLoading(getString(R.string.info_please_wait), getContext());
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showPayDialogLikeUnion("100202478542755");
+            }
+        }, 200);
     }
 
     private void makePaymentUnion() {
@@ -926,17 +934,21 @@ public class AppoPayFragment extends Fragment {
     }
 
     private void showPayDialogLikeUnion(String param) {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
-        View mCustomLayout = LayoutInflater.from(getActivity()).inflate(R.layout.success_dialog_inner_appopay, null);
+        Helper.hideLoading();
+        AlertDialog.Builder mBuilder = new MaterialAlertDialogBuilder(getContext(), R.style.MyRounded_MaterialComponents_MaterialAlertDialog);
+        View mCustomLayout = LayoutInflater.from(getActivity()).inflate(R.layout.success_dialog_inner, null);
         LinearLayout layoutRoot = mCustomLayout.findViewById(R.id.layoutRoot);
         MyTextView tvInfo = mCustomLayout.findViewById(R.id.tvInfo);
         MyTextViewBold tvAmountPay = mCustomLayout.findViewById(R.id.tvAmountPay);//edAmount
-        MyTextView tvCurrencyPay = mCustomLayout.findViewById(R.id.tvCurrencyPay);
-        MyTextView tvTransactionTime = mCustomLayout.findViewById(R.id.tvTransactionTime);
-        MyTextView tvVoucherPay = mCustomLayout.findViewById(R.id.tvVoucherPay);
+        MyTextViewBold tvCurrencyPay = mCustomLayout.findViewById(R.id.tvCurrencyPay);
+        MyTextViewBold tvTransactionTime = mCustomLayout.findViewById(R.id.tvTransactionTime);
+        MyTextViewBold tvVoucherPay = mCustomLayout.findViewById(R.id.tvVoucherPay);
+        MyTextViewBold tvSenderName = mCustomLayout.findViewById(R.id.tvSenderName);
+        MyTextViewBold tvMerchantId = mCustomLayout.findViewById(R.id.tvMerchantId);
+
         MyButton btnShare = mCustomLayout.findViewById(R.id.btnShare);
         MyButton btnClose = mCustomLayout.findViewById(R.id.btnClose);
-        tvAmountPay.setText("Amount : " + edAmount.getText().toString().trim());
+        tvAmountPay.setText(edAmount.getText().toString().trim());
         String currencyId = Helper.getCurrencyId();
         String mCurrencyId = "";
         if (Helper.getCurrencyId().equalsIgnoreCase("1")) {
@@ -954,11 +966,18 @@ public class AppoPayFragment extends Fragment {
 
             mCurrencyId = "DOP";
         }
-        tvCurrencyPay.setText("Currency : " + mCurrencyId);
-        tvTransactionTime.setText("Transaction Time : " + getDateTime());
-        tvVoucherPay.setText("Merchant Id : " + param);
-        String info = "<font color='#FF0000'>" + "<b>" + "Paid to " + valueMerchantName + "</b></font>" + "<br>" + "SUCCESS";
+        tvCurrencyPay.setText(mCurrencyId);
+        tvTransactionTime.setText(getDateTime());
+        long currentTimeMillis = System.currentTimeMillis();
+        long l = currentTimeMillis / 2;
+        tvVoucherPay.setText("" + l);
+        tvMerchantId.setText(param);
+
+        //String info = "<font color='#FF0000'>" + "<b>" + "Paid to " + valueMerchantName + "</b></font>" + "<br>" + "SUCCESS";
+        String info = "<font color='#FF0000'>" + "<b>" + "Paid to " + "MOHAMMAD WASIM" + "</b></font>";
         tvInfo.setText(Html.fromHtml(info));
+
+        tvSenderName.setText(Helper.getSenderName());
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override

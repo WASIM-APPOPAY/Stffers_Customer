@@ -99,7 +99,8 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             }
             tvDescription.setText(mListItems.get(getAdapterPosition()).getTransactiondescription());
             tvTransactionInfo.setText(mListItems.get(getAdapterPosition()).getTransactionstatus());
-            tvTransactionInfo.setTextColor(Color.parseColor("#3CB371"));
+            //tvTransactionInfo.setTextColor(Color.parseColor("#3CB371"));
+            tvTransactionInfo.setTextColor(Color.parseColor("#000000"));
             tvDateTime.setText(mListItems.get(getAdapterPosition()).getViewdate());
             tvAmountCurrency.setText(mListItems.get(getAdapterPosition()).getCurrencycode() + " " + mListItems.get(getAdapterPosition()).getTransactionamount());
 

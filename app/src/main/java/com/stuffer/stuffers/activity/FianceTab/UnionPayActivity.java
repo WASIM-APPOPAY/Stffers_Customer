@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.quick_pass.QrGenerateFragment;
+import com.stuffer.stuffers.activity.wallet.AccountActivity;
 import com.stuffer.stuffers.activity.wallet.PayNowActivity;
 import com.stuffer.stuffers.activity.wallet.SignInActivity;
 import com.stuffer.stuffers.api.Constants;
@@ -33,11 +34,13 @@ import com.stuffer.stuffers.fragments.union_fragments.CardCategoryFragment;
 import com.stuffer.stuffers.fragments.union_fragments.CardEnrollMentFragment;
 import com.stuffer.stuffers.fragments.union_fragments.UnMaskFragment;
 import com.stuffer.stuffers.fragments.union_fragments.UnionOpenAccountFragment;
+import com.stuffer.stuffers.fragments.union_fragments.VisaFragment;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.views.MyButton;
 import com.stuffer.stuffers.views.MyTextView;
+import com.stuffer.stuffers.views.MyTextViewBold;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
@@ -46,7 +49,7 @@ import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_DETIALS;
 
 public class UnionPayActivity extends AppCompatActivity implements UnionPayListener, TitleListener, TransactionPinListener, OnBankSubmit {
     private static final String TAG = "UnionPayActivity";
-    private TextView toolbarTitle;
+    private MyTextViewBold toolbarTitle;
     private JSONObject mIndex;
     private AlertDialog alertDialog;
 
@@ -64,30 +67,28 @@ public class UnionPayActivity extends AppCompatActivity implements UnionPayListe
             bundle.putString("newNumber", walletAccountNumber);
             cardEnrollMentFragment.setArguments(bundle);
             toolbarTitle.setText(getString(R.string.info_wallet_card_enrollment));
-            initFragments(cardEnrollMentFragment, "enrollment");
+            initFragments(cardEnrollMentFragment, getString(R.string.info_wallet_card_enrollment));
             /*ActionFragment mActionFragment = new ActionFragment();
             initFragments(mActionFragment, "action");*/
           /*CardEnrollMentFragment cardEnrollMentFragment = new CardEnrollMentFragment();
           initFragments(cardEnrollMentFragment, "enrollment");*/
         }
+
+
     }
 
+
     private void setupActionBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ImageView menu_icon = toolbar.findViewById(R.id.menu_icon);
-        menu_icon.setVisibility(View.GONE);
-
-        toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbarTitle);
-        toolbarTitle.setVisibility(View.VISIBLE);
+        toolbarTitle = (MyTextViewBold) findViewById(R.id.common_toolbar_title);
         toolbarTitle.setText(getString(R.string.info_union_pay));
-        ActionBar bar = getSupportActionBar();
-        bar.setDisplayUseLogoEnabled(false);
-        bar.setDisplayShowTitleEnabled(true);
-        bar.setDisplayShowHomeEnabled(true);
-        bar.setDisplayHomeAsUpEnabled(true);
-        bar.setHomeButtonEnabled(true);
 
+        ImageView iv_common_back = (ImageView) findViewById(R.id.iv_common_back);
+        iv_common_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public void initFragments(Fragment fragment, String param) {
@@ -273,9 +274,27 @@ public class UnionPayActivity extends AppCompatActivity implements UnionPayListe
     }
 
     @Override
-    public void onConfirm() {
-        Intent intentBank = new Intent();
+    public void onConfirm(int param) {
+        //later enable
+      /*Intent intentBank = new Intent();
         setResult(RESULT_OK, intentBank);
-        finish();
+        finish();*/
+        if (param == 1) {
+            VisaFragment visaFragment = new VisaFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt(AppoConstants.PRDNUMBER, 1003);
+            String walletAccountNumber = Helper.getWalletAccountNumber();
+            bundle.putString("newNumber", walletAccountNumber);
+            visaFragment.setArguments(bundle);
+            toolbarTitle.setText("VISA Card Enrollment");
+            initFragments(visaFragment, "Visa Card Enrollment");
+        } else {
+            DataVaultManager.getInstance(AppoPayApplication.getInstance()).saveDemoValue("yes");
+            Intent intent = new Intent(UnionPayActivity.this, AccountActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+
     }
 }

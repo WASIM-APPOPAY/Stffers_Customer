@@ -176,7 +176,9 @@ public class VerifyOtpActivity extends AppCompatActivity {
         dialog.setMessage(getString(R.string.info_generating_otp));
         dialog.show();
         JsonObject param = new JsonObject();
+
         param.addProperty("phone_number", phNoWithCode );
+
         mainAPIInterface.getOtpforUserVerificaiton(param).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

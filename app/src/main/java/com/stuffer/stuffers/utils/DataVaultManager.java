@@ -22,6 +22,7 @@ public class DataVaultManager {
     public static final String ISFROMSPLASH = "isfromsplash";
     public static final String KEY_COUNT_NOTIFICATION = "key_count_notification";
     public static final String KEY_USER_LANGUAGE = "key_user_language";
+    public static final String KEY_DEMO = "key_demo";
     private static final String KEY_LIST_GIFT_CARD = "key_list_gift_card";
     private static String DVPassWord = "appopay";
     private static String APP_VAULTNAME = "APPOPAY";
@@ -211,6 +212,11 @@ public class DataVaultManager {
     public void saveCardToken(String token) {
         checkVaultStatus();
         vault.setString(KEY_TOKEN, token);
+        vault.lock();
+    }
+  public void saveDemoValue(String demovalue) {
+        checkVaultStatus();
+        vault.setString(KEY_DEMO, demovalue);
         vault.lock();
     }
 

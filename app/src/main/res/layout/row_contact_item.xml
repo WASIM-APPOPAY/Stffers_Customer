@@ -14,7 +14,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerVertical="true"
-            android:background="@drawable/bg_circular"
+            android:background="@drawable/bg_circle_primary"
             android:gravity="center"
             android:text="A"
             android:textColor="@color/white"
@@ -33,6 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="2dp"
+                android:textColor="@color/common_text_color"
                 android:text="Full Name"
                 android:textSize="18sp" />
 

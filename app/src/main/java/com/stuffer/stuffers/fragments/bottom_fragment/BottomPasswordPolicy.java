@@ -22,6 +22,7 @@ public class BottomPasswordPolicy extends BottomSheetDialogFragment implements V
     private BottomSheetBehavior mBehaviour;
     private MyButton btnClose;
     private MyTextView tvPolicyInfo;
+    private MyTextView tvNote;
 
     @Override
     public void onClick(View view) {
@@ -49,7 +50,9 @@ public class BottomPasswordPolicy extends BottomSheetDialogFragment implements V
     private void findIds(View mView) {
         btnClose = (MyButton) mView.findViewById(R.id.btnClose);
         tvPolicyInfo = (MyTextView) mView.findViewById(R.id.tvPolicyInfo);
+        tvNote = (MyTextView) mView.findViewById(R.id.tvNote);
         btnClose.setOnClickListener(this);
+        tvNote.setText(Html.fromHtml(PasswordUtil.NOTE_PASSWORD));
     }
 
     @Override

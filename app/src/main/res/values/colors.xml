@@ -5,10 +5,13 @@
     <color name="purple_200">#00baf2</color>
     <color name="purple_700">#12c8ff</color>-->
 
-    <color name="colorPrimary">#FA8128</color>
-    <color name="colorPrimaryDark">#ED7014</color>
-    <color name="purple_200">#FA8128</color>
-    <color name="purple_700">#ED7014</color>
+    <color name="colorPrimary">#FD9A17</color>
+    <color name="colorPrimaryDark">#FD9A17</color>
+
+    <color name="purple_200">#FD9A17</color>
+    <color name="purple_700">#FD9A17</color>
+
+
 
     <color name="colorAccent">#052f73</color>
     <color name="teal_200">#AAB8CD</color>
@@ -558,7 +561,8 @@
     <color name="textColor3">#b6b6b6</color>
     <color name="Tex">#ff404547</color>
 
-    <color name="otp_editext_color">#00baf2</color>
+    <color name="otp_editext_color">#FFFFFF</color>
+    <color name="otp_editext_color1">#00baf2</color>
     <color name="trueBlack">#000000</color>
     <color name="textColorSecondary">#757575</color>
     <color name="textColorPrimary">#212121</color>
@@ -584,10 +588,15 @@
     <color name="dot_inactive">#000000</color>
     <color name="color_gray_66">#666666</color>
     <color name="lighter_gray">#DDDDDD</color>
+    <!--New ColorCode-->
+    <color name="common_bg_color">#FFEAD9</color>
+    <color name="common_bg_landing_color">#F3DFCF</color>
+
+    <color name="common_color">#FF9201</color>
+
+    <color name="common_bottom_line_color">#353A46</color>
+    <color name="common_text_color">#484947</color>
+
 
 </resources>
-<!--<resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
-</resources>-->
+

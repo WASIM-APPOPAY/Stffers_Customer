@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.DrawableContainer;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -61,6 +64,7 @@ import com.stuffer.stuffers.views.MyTextViewBold;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import im.delight.android.webview.AdvancedWebView;
@@ -82,6 +86,7 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
     private MainAPIInterface apiService;
     private static final String TAG = "LandingFragment";
     //WebView advanceWeb;
+    List<MyTextViewBold> mTextBold;
 
     public LandingFragment() {
         // Required empty public constructor
@@ -99,27 +104,27 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
     }*/
 
     private void getAllRestaurents() {
-     apiService.getListRestaurant().enqueue(new Callback<MRestaurent>() {
-         @Override
-         public void onResponse(Call<MRestaurent> call, Response<MRestaurent> response) {
-             //Log.e(TAG, "onResponse: called" );
-             if (response.body().getMessage().equalsIgnoreCase(AppoConstants.SUCCESS)) {
+        apiService.getListRestaurant().enqueue(new Callback<MRestaurent>() {
+            @Override
+            public void onResponse(Call<MRestaurent> call, Response<MRestaurent> response) {
+                //Log.e(TAG, "onResponse: called" );
+                if (response.body().getMessage().equalsIgnoreCase(AppoConstants.SUCCESS)) {
 
-                 List<Result> content = response.body().getResult();
-                 String s = new Gson().toJson(content);
-                 //Log.e("TAG", "onResponse: " + s);
-                 passToAdapter(content);
+                    List<Result> content = response.body().getResult();
+                    String s = new Gson().toJson(content);
+                    //Log.e("TAG", "onResponse: " + s);
+                    passToAdapter(content);
 
 
-             }
-         }
+                }
+            }
 
-         @Override
-         public void onFailure(Call<MRestaurent> call, Throwable t) {
-             Log.e(TAG, "onFailure: "+t.getMessage() );
+            @Override
+            public void onFailure(Call<MRestaurent> call, Throwable t) {
+                Log.e(TAG, "onFailure: " + t.getMessage());
 
-         }
-     });
+            }
+        });
 
     }
 
@@ -134,7 +139,7 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_landing, container, false);
-        apiService= ApiUtils.getAPIService();
+        apiService = ApiUtils.getAPIService();
         nestedScrollView = view.findViewById(R.id.nestedScrollView);
         llTransfer = view.findViewById(R.id.llTransfer);
 
@@ -146,13 +151,15 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
         llLinkCard = view.findViewById(R.id.llLinkCard);
         llRecharge = view.findViewById(R.id.llRecharge);
         ivReward = view.findViewById(R.id.ivReward);
+        mTextBold = new ArrayList<>();
+
+
         restaurentView = (RecyclerView) view.findViewById(R.id.restaurentView);
 
-        restaurentView.setLayoutManager(new GridLayoutManager(getActivity(),1, LinearLayoutManager.VERTICAL,false));
+        restaurentView.setLayoutManager(new GridLayoutManager(getActivity(), 1, LinearLayoutManager.VERTICAL, false));
 
 
         getAllRestaurents();
-
 
 
         llTransfer.setOnClickListener(this);
@@ -171,7 +178,10 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
         entertainmentView = view.findViewById(R.id.entertainmentView);
 
 
-
+        mTextBold.add(allView);
+        mTextBold.add(shopView);
+        mTextBold.add(foodView);
+        mTextBold.add(entertainmentView);
         //container = view.findViewById(R.id.container);
         R_AllFragment mRAllFragment = new R_AllFragment();
         initFragment(mRAllFragment);
@@ -233,7 +243,21 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
     }
 
     private void makeActiveInactive(int i) {
+
+        for (int m = 0; m < mTextBold.size(); m++) {
+
+            if (m == i) {
+                mTextBold.get(m).setTextColor(Color.parseColor("#FFFFFF"));
+
+                mTextBold.get(m).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.view_normal_blue2));
+            } else {
+                mTextBold.get(m).setTextColor(Color.parseColor("#FF9201"));
+                mTextBold.get(m).setBackground(ContextCompat.getDrawable(getContext(), R.drawable.edit_text_rounded));
+
+            }
+        }
         if (i == 0) {
+
             allView.setTextSize(18f);
             allView.setTextColor(Color.parseColor(mSelectedColor));
             shopView.setTextColor(Color.parseColor("#000000"));
@@ -242,6 +266,8 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
             shopView.setTextSize(15f);
             foodView.setTextSize(15f);
             entertainmentView.setTextSize(15f);
+
+            mTextBold.get(i).setTextColor(Color.parseColor(mSelectedColor));
 
 
         } else if (i == 1) {

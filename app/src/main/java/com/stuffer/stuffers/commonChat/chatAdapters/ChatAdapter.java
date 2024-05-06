@@ -124,11 +124,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
                 /*if (contextualModeInteractor.isContextualMode()) {
                     toggleSelection(dataList.get(getAdapterPosition()), getAdapterPosition());
                 } else {*/
-                    int pos = getAdapterPosition();
-                    if (pos != -1) {
-                        Chat chat = dataList.get(pos);
-                        itemClickListener.onChatItemClick(chat, pos, image);
-                    }
+                int pos = getAdapterPosition();
+                if (pos != -1) {
+                    Chat chat = dataList.get(pos);
+                    itemClickListener.onChatItemClick(chat, pos, image);
+                }
                 //}
             });
             itemView.setOnLongClickListener(view -> {
@@ -139,18 +139,16 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
         }
 
         private void setData(Chat chat) {
-            Glide.with(context).load(chat.getChatImage()).apply(new RequestOptions().placeholder(R.drawable.user1)).into(image);
-
+            Glide.with(context).load(chat.getChatImage()).apply(new RequestOptions().placeholder(R.drawable.landing_user)).into(image);
             name.setText(chat.getChatName());
             //name.setCompoundDrawablesWithIntrinsicBounds(0, 0, !chat.isRead() ? R.drawable.ring_blue : 0, 0);
             status.setText(chat.getChatName());
-
             time.setText(chat.getTimeDiff());
             lastMessage.setText(chat.getLastMessage());
             lastMessage.setCompoundDrawablesWithIntrinsicBounds((lastReadIds != null && lastReadIds.contains(chat.getLastMessageId())) ? 0 : R.drawable.circle_unread, 0, 0, 0);
             //lastMessage.setTextColor(ContextCompat.getColor(context, !chat.isRead() ? R.color.textColorPrimary : R.color.textColorSecondary));
+            //user_details_container.setBackgroundColor(ContextCompat.getColor(context, (chat.isSelected() ? R.color.bg_gray : R.color.colorIcon)));
 
-            user_details_container.setBackgroundColor(ContextCompat.getColor(context, (chat.isSelected() ? R.color.bg_gray : R.color.colorIcon)));
         }
     }
 

@@ -167,6 +167,8 @@ public class L_SignUpActivity extends AppCompatActivity implements CommonListene
                 Log.e(TAG, "onResponse: " + response.body());
 
 
+
+
                 //{"message":"Submitted Successfully.","error":false,"WalletID":"202310060001"}
                 //{"MobileNo":"919830450542","Email":"mdwasim508@gmail.com","Password":"11a45e1e-f32f-31f3-9a01-166a906d0db6","FirstName":"Md","MiddleName":"","LastName":"Wasim","City":"Kolkata","State":"West Bengal","Country":"INDIA","BaseCurrency":"INR","NotificationKey":"f107eae1-a50e-4aec-8f4a-6ca78af8d9c0","AddressLine1":"bankra howrah 711403","AddressLine2":"","CompanyName":"Software Solutions"}
 

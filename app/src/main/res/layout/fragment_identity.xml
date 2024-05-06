@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/common_bg_color"
     android:orientation="vertical"
     tools:context=".fragments.wallet_fragments.IdentityFragment">
 
@@ -13,7 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="20dp">
+        android:layout_marginRight="20dp"
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/saloonUstara"
@@ -78,13 +80,13 @@
                 android:focusable="true"
                 android:orientation="vertical">
 
-                <com.stuffer.stuffers.views.MyTextView
+                <com.stuffer.stuffers.views.MyTextViewBold
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:padding="8dp"
                     android:text="@string/info_id_type"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/common_text_color"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -100,77 +102,87 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@null"
+                        android:background="@drawable/round_identity"
                         android:drawableEnd="@drawable/ic_forward"
                         android:drawablePadding="10dp"
+                        android:drawableTint="@color/common_text_color"
                         android:gravity="center_vertical"
                         android:imeOptions="actionNext|flagNoExtractUi"
                         android:inputType="numberDecimal"
                         android:minHeight="50dp"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
                         android:paddingLeft="8dp"
                         android:text="@string/info_please_select_id_type"
-                        app:drawableTint="@color/colorPrimary" />
+                        android:textSize="18sp"
+
+                        android:textStyle="bold" />
 
                     <com.stuffer.stuffers.views.MyEditText
                         android:id="@+id/edIdFoucs"
-                        android:layout_width="wrap_content"
+                        android:layout_width="20dp"
                         android:layout_height="50dp"
                         android:background="@null"
                         android:editable="false"
                         android:padding="10dp"
                         android:textSize="16sp"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
                 </LinearLayout>
 
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/layoutScan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/edit_text_rounded"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="22dp"
+                    android:background="@drawable/round_identity"
                     android:orientation="horizontal">
 
-                    <com.stuffer.stuffers.views.MyTextView
-                        android:id="@+id/tvScanDocs"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:drawablePadding="12dp"
-                        android:editable="false"
-                        android:focusable="false"
-                        android:gravity="left|center_vertical"
-                        android:inputType="none"
-                        android:lines="1"
-                        android:padding="15dp"
-                        android:text="@string/info_tap_to_capture_your_id"
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                        android:textColor="@color/Tex"
-                        android:textColorHint="@color/textSub"
-                        android:textSize="16sp" />
+                        <com.stuffer.stuffers.views.MyTextViewBold
+                            android:id="@+id/tvScanDocs"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:background="@null"
+                            android:drawablePadding="12dp"
+                            android:editable="false"
+                            android:focusable="false"
+                            android:gravity="left|center_vertical"
+                            android:inputType="none"
+                            android:lines="1"
+                            android:padding="15dp"
+                            android:text="@string/info_tap_to_capture_your_id"
+                            android:textColor="@color/Tex"
 
-                        android:editable="false"
-                        android:padding="10dp"
-                        android:src="@drawable/ic_scan"
-                        android:textSize="16sp" />
+                            android:textColorHint="@color/textSub"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="end"
+                            android:background="@null"
+
+                            android:editable="false"
+                            android:padding="10dp"
+                            android:src="@drawable/scan_qr"
+                            android:textSize="16sp"
+                            app:tint="@color/black" />
+                    </FrameLayout>
 
 
                 </LinearLayout>
@@ -185,220 +197,267 @@
                     android:layout_marginRight="5dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
             </LinearLayout>
 
-           <LinearLayout
-               android:visibility="gone"
-               android:id="@+id/layoutDetails"
-               android:orientation="vertical"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/layoutDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
 
 
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:padding="8dp"
+                    android:text="Full Name"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-               <com.google.android.material.textfield.TextInputLayout
-                   android:id="@+id/username"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginLeft="5dp"
-                   android:layout_marginTop="5dp"
-                   android:layout_marginRight="5dp"
-                   android:textColor="@color/colortext"
-                   android:textColorHint="@color/colorhint"
-                   app:boxBackgroundMode="none">
+                <com.stuffer.stuffers.views.MyEditText
+                    android:id="@+id/txtUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/round_identity"
 
-
-                   <com.stuffer.stuffers.views.MyEditText
-                       android:id="@+id/txtUserName"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:background="@drawable/edit_text_rounded"
-                       android:gravity="left|center"
-                       android:hint="@string/info_hint_full_name"
-                       android:imeOptions="flagNoExtractUi|actionNext"
-                       android:lines="1"
-                       android:padding="15dp"
-                       android:singleLine="true"
-                       android:textColor="@color/Tex"
-                       android:textColorHint="@color/textSub"
-                       android:textSize="16sp" />
-
-               </com.google.android.material.textfield.TextInputLayout>
-
-               <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginLeft="5dp"
-                   android:layout_marginTop="5dp"
-                   android:layout_marginRight="5dp"
-                   android:background="@drawable/edit_text_rounded"
-                   android:orientation="horizontal">
-
-                   <com.stuffer.stuffers.views.MyEditText
-                       android:id="@+id/edtDob"
-                       android:layout_width="0dp"
-                       android:layout_height="50dp"
-                       android:layout_weight="1"
-                       android:background="?android:attr/selectableItemBackground"
-                       android:drawablePadding="12dp"
-                       android:editable="false"
-                       android:focusable="false"
-                       android:gravity="left|center_vertical"
-                       android:hint="@string/info_select_your_date_of_birth"
-                       android:inputType="none"
-                       android:lines="1"
-                       android:padding="15dp"
-                       android:textColor="@color/Tex"
-                       android:textColorHint="@color/textSub"
-                       android:textSize="16sp" />
-
-                   <com.stuffer.stuffers.views.MyEditText
-                       android:id="@+id/edFocus"
-                       android:layout_width="wrap_content"
-                       android:layout_height="50dp"
-                       android:background="@null"
-                       android:editable="false"
-                       android:padding="10dp"
-                       android:textSize="16sp"
-                       android:visibility="gone" />
+                    android:gravity="left|center"
+                    android:hint="@string/info_hint_full_name"
+                    android:imeOptions="flagNoExtractUi|actionNext"
+                    android:lines="1"
+                    android:padding="15dp"
+                    android:singleLine="true"
+                    android:textColor="@color/Tex"
+                    android:textColorHint="@color/textSub"
+                    android:textSize="16sp" />
 
 
-               </LinearLayout>
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:padding="8dp"
+                    android:text="Date Of Birth"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/round_identity"
+                    android:orientation="horizontal">
+
+                    <com.stuffer.stuffers.views.MyEditText
+                        android:id="@+id/edtDob"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:drawablePadding="12dp"
+                        android:editable="false"
+                        android:focusable="false"
+                        android:gravity="left|center_vertical"
+                        android:hint="@string/info_select_your_date_of_birth"
+                        android:inputType="none"
+                        android:lines="1"
+                        android:padding="15dp"
+                        android:textColor="@color/Tex"
+                        android:textColorHint="@color/textSub"
+                        android:textSize="16sp" />
+
+                    <com.stuffer.stuffers.views.MyEditText
+                        android:id="@+id/edFocus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:background="@null"
+                        android:editable="false"
+                        android:padding="10dp"
+                        android:textSize="16sp"
+                        android:visibility="visible" />
 
 
-               <com.google.android.material.textfield.TextInputLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginLeft="5dp"
-                   android:layout_marginTop="5dp"
-                   android:layout_marginRight="5dp"
-                   android:textColor="@color/colortext"
-                   android:textColorHint="@color/colorhint"
-                   app:boxBackgroundMode="none">
+                </LinearLayout>
 
 
-                   <com.stuffer.stuffers.views.MyEditText
-                       android:id="@+id/tvIdNo"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:background="@drawable/edit_text_rounded"
-                       android:gravity="left|center"
-                       android:hint="@string/info_id_number"
-                       android:imeOptions="flagNoExtractUi|actionNext"
-                       android:inputType="text"
-                       android:lines="1"
-                       android:padding="15dp"
-                       android:singleLine="true"
-                       android:textColor="@color/Tex"
-                       android:textColorHint="@color/textSub"
-                       android:textSize="16sp" />
-
-               </com.google.android.material.textfield.TextInputLayout>
-
-               <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginLeft="5dp"
-                   android:layout_marginTop="8dp"
-                   android:layout_marginRight="5dp"
-                   android:background="@drawable/edit_text_rounded"
-                   android:orientation="horizontal">
-
-                   <com.stuffer.stuffers.views.MyEditText
-                       android:id="@+id/edtExpiryDate"
-                       android:layout_width="0dp"
-                       android:layout_height="50dp"
-                       android:layout_weight="1"
-                       android:background="?android:attr/selectableItemBackground"
-                       android:drawablePadding="12dp"
-                       android:editable="false"
-                       android:focusable="false"
-                       android:gravity="left|center_vertical"
-                       android:hint="@string/info_select_id_expiry_date"
-                       android:inputType="none"
-                       android:lines="1"
-
-                       android:padding="15dp"
-                       android:textColor="@color/Tex"
-                       android:textColorHint="@color/textSub"
-                       android:textSize="16sp" />
-
-                   <com.stuffer.stuffers.views.MyEditText
-                       android:id="@+id/edFocusIdExp"
-                       android:layout_width="wrap_content"
-                       android:layout_height="50dp"
-                       android:background="@null"
-                       android:editable="false"
-                       android:padding="10dp"
-                       android:textSize="16sp" />
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:padding="8dp"
+                    android:text="ID Number"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
 
-               </LinearLayout>
-               <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:orientation="horizontal">
+                <com.stuffer.stuffers.views.MyEditText
+                    android:id="@+id/tvIdNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/round_identity"
+                    android:gravity="left|center"
+                    android:hint="@string/info_id_number"
+                    android:imeOptions="flagNoExtractUi|actionNext"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:padding="15dp"
+                    android:singleLine="true"
+                    android:textColor="@color/Tex"
+                    android:textColorHint="@color/textSub"
+                    android:textSize="16sp" />
 
-                   <com.google.android.material.textfield.TextInputLayout
-                       android:id="@+id/password"
-                       android:layout_width="0dp"
-                       android:layout_height="wrap_content"
-                       android:layout_marginLeft="10dp"
-                       android:layout_marginRight="10dp"
-                       android:layout_weight="1"
-                       android:textColor="@color/colortext"
-                       android:textColorHint="@color/colorhint"
-                       app:passwordToggleEnabled="true">
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:padding="8dp"
+                    android:text="Expiry Date"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-                       <com.stuffer.stuffers.views.MyEditText
-                           android:id="@+id/txtUserPassword"
-                           android:layout_width="match_parent"
-                           android:layout_height="wrap_content"
-                           android:layout_weight="1"
-                           android:background="@drawable/edit_text_rounded"
-                           android:hint="@string/info_hint_password"
-                           android:imeOptions="flagNoExtractUi|actionNext"
-                           android:inputType="textPassword"
-                           android:padding="15dp"
-                           android:singleLine="true"
-                           android:textColor="@color/Tex"
-                           android:textColorHint="@color/textSub"
-                           android:textSize="16sp" />
-                   </com.google.android.material.textfield.TextInputLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="10dp"
 
-                   <ImageView
-                       android:id="@+id/ivPolicy"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_gravity="center_vertical"
-                       android:background="@drawable/forgot_password_bg"
-                       android:padding="5dp"
-                       android:src="@drawable/ic_info" />
+                    android:background="@drawable/round_identity"
+                    android:orientation="horizontal">
 
-               </LinearLayout>
+                    <com.stuffer.stuffers.views.MyEditText
+                        android:id="@+id/edtExpiryDate"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:drawablePadding="12dp"
+                        android:editable="false"
+                        android:focusable="false"
+                        android:gravity="left|center_vertical"
+                        android:hint="@string/info_select_id_expiry_date"
+                        android:inputType="none"
+                        android:lines="1"
 
-               <com.stuffer.stuffers.views.MyTextView
-                   android:id="@+id/btnSignUp"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginLeft="60dp"
-                   android:layout_marginTop="10dp"
-                   android:layout_marginRight="60dp"
-                   android:layout_marginBottom="5dp"
-                   android:background="@drawable/blue_rounded_bg"
-                   android:elevation="1.5dp"
-                   android:gravity="center"
-                   android:padding="12dp"
-                   android:text="@string/info_next"
-                   android:textColor="#fff"
-                   android:textSize="16sp" />
-           </LinearLayout>
+                        android:padding="15dp"
+                        android:textColor="@color/Tex"
+                        android:textColorHint="@color/textSub"
+                        android:textSize="16sp" />
+
+                    <com.stuffer.stuffers.views.MyEditText
+                        android:id="@+id/edFocusIdExp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:background="@null"
+                        android:editable="false"
+                        android:padding="10dp"
+                        android:textSize="16sp" />
 
 
+                </LinearLayout>
+
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:padding="8dp"
+                    android:text="Password"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/round_identity"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/password"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/colortext"
+                        android:textColorHint="@color/colorhint"
+                        app:hintEnabled="false"
+                        app:passwordToggleEnabled="true">
+
+                        <com.stuffer.stuffers.views.MyEditText
+                            android:id="@+id/txtUserPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/info_hint_password"
+                            android:imeOptions="flagNoExtractUi|actionNext"
+                            android:inputType="textPassword"
+                            android:padding="15dp"
+                            android:singleLine="true"
+                            android:textColor="@color/Tex"
+                            android:textColorHint="@color/textSub"
+                            android:textSize="16sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:id="@+id/ivPolicy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/forgot_password_bg"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_info" />
+
+                </LinearLayout>
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/btnSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/blue_rounded_bg"
+                    android:elevation="1.5dp"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="Submit"
+                    android:textColor="#fff"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
 
         </LinearLayout>

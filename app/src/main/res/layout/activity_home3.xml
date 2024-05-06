@@ -10,8 +10,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-
         android:orientation="vertical"
         tools:context=".activity.wallet.HomeActivity3">
 
@@ -19,16 +17,23 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="center_vertical"
-            android:background="@color/colorPrimary"
+            android:background="@color/common_color"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/menu_icon_drawer"
+            <FrameLayout
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:padding="8dp"
-                android:src="@drawable/menu2" />
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/bg_circle_white">
+
+                <ImageView
+                    android:id="@+id/menu_icon_drawer"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="8dp"
+                    android:src="@drawable/menu_left" />
+            </FrameLayout>
 
             <com.hbb20.CountryCodePicker
                 android:id="@+id/ccWhere"
@@ -36,6 +41,7 @@
                 android:layout_height="wrap_content"
                 app:ccp_autoDetectCountry="false"
                 app:ccp_showFlag="false"
+                app:ccp_contentColor="@color/white"
                 app:ccp_showFullName="true"
                 app:ccp_showPhoneCode="false" />
 
@@ -55,9 +61,11 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:padding="8dp"
+                    app:tint="@color/white"
                     android:src="@drawable/bright_left" />
 
                 <ImageView
+                    app:tint="@color/white"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:padding="8dp"
@@ -79,21 +87,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#FCEBDB"
             android:orientation="vertical">
             <!--<com.volcaniccoder.bottomify.BottomifyNavigationView
                 android:id="@+id/bottomify_nav"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="?attr/actionBarSize"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:orientation="horizontal"
-                app:active_color="@color/colorPrimary"
+                app:active_color="@color/common_text_color"
                 app:animation_duration="300"
                 app:item_padding="4dp"
                 app:item_text_size="10sp"
                 app:menu="@menu/landing_menu"
-                app:passive_color="@color/colorAccent"
+                app:passive_color="@color/search_gray"
                 app:pressed_color="@color/colorPrimary"
-                app:scale_percent="6" />-->
+                app:scale_percent="5" />-->
 
             <include layout="@layout/landing_bottom" />
 

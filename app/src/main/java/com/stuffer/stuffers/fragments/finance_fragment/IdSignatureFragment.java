@@ -661,7 +661,7 @@ public class IdSignatureFragment extends Fragment implements View.OnClickListene
                     progressDialog.dismiss();
                     progressDialog=null;
                 }
-                mConfirmListener.onConfirm();
+                mConfirmListener.onConfirm(0);
             }
         });
 

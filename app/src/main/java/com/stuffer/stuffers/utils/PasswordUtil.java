@@ -18,12 +18,14 @@ public final class PasswordUtil {
     private static final double QUALITY_MEDIUM = 26;
     private static final double QUALITY_STRONG = 31;
 
-    public static final String REGEX_PASSWORD_POLICY="Minimum password length is 8 characters"+"<br>" +
-            "Required at least one "+ "<font color='#00baf2'>"+"uppercase letter"+ "</font>"+" from latin alphaber(A-Z)"+"<br>" +
-            "Required at least one " +"<font color='#00baf2'>"+"lowercase letter"+ "</font>"+" from latin alphaber(a-z)"+"<br>" +
-            "Required at least one "+ "<font color='#00baf2'>"+ "</font>"+" numberic"+"<br>" +
-            "Required at least one "+ "<font color='#00baf2'>"+"non-alphanumeric"+ "</font>"+ " character(!@#$%^&*()_+=[]{}|')"+"<br>"+
-            "<font color='#00baf2'>"+"Note+"+ "</font>"+" white space is note allowed";
+    public static final String REGEX_PASSWORD_POLICY = "Minimum password length is 8 characters" + "<br>" +
+            "Required at least one " + "<font color='#00baf2'>" + "uppercase letter" + "</font>" + " from latin alphaber(A-Z)" + "<br>" +
+            "Required at least one " + "<font color='#00baf2'>" + "lowercase letter" + "</font>" + " from latin alphaber(a-z)" + "<br>" +
+            "Required at least one " + "<font color='#00baf2'>" + "</font>" + " numberic" + "<br>" +
+            "Required at least one " + "<font color='#00baf2'>" + "non-alphanumeric" + "</font>" + " character(!@#$%^&*()_+=[]{}|')" + "<br>" +
+            "<font color='#00baf2'>" + "Note+" + "</font>" + " white space is note allowed";
+    public static final String NOTE_PASSWORD = "<font color='#484947'>" + "Note : " + "</font>" + " white space is note allowed";
+    public static final String NOTE_NUMERIC = "Required at least one " + "non-alphanumeric" + " character(!@#$%^&*()_+=[]{}|')";
     public static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
                     "(?=.*[0-9])" +         //at least 1 digit

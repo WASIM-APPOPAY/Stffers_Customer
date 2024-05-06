@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_common2"
+    android:background="@color/common_bg_color"
     android:orientation="vertical"
     tools:context=".commonChat.chat.VerificationActivity">
 
@@ -19,18 +19,34 @@
             android:layout_height="200dp"
             android:layout_marginTop="15dp"
             android:padding="@dimen/dp_15"
-            android:src="@drawable/appopay_new_logo2" />
+            android:src="@drawable/appopay_new_logo2"
+            android:visibility="gone" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/logo2" />
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Verify Code"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp" />
 
         <com.stuffer.stuffers.views.MyTextViewBold
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_marginTop="20sp"
-            android:background="@drawable/edit_text_rounded"
             android:gravity="center"
             android:padding="@dimen/dp_5"
             android:text="@string/info_verified1"
-            android:textColor="@color/black"
+            android:textColor="@color/common_text_color"
             android:textSize="18sp"
             android:textStyle="italic" />
 
@@ -38,11 +54,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:background="@drawable/edit_text_rounded"
             android:gravity="center"
             android:padding="@dimen/dp_5"
             android:text="@string/info_verified2"
-            android:textAppearance="?attr/textAppearanceBody1"
+            android:textColor="#595654"
             android:textSize="@dimen/dp_16" />
 
 
@@ -59,86 +74,164 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="8dp">
 
-            <EditText
-                android:id="@+id/otp_edit_text1"
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/otp_edittext"
-                android:inputType="number"
-                android:maxLength="1"
-                android:textAlignment="center"
+                android:layout_weight="1">
 
-                android:textColor="@color/trueBlack"
-                android:textCursorDrawable="@null" />
+                <EditText
+                    android:id="@+id/otp_edit_text1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/otp_edittext"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/trueBlack"
+                    android:textCursorDrawable="@null" />
 
-            <EditText
-                android:id="@+id/otp_edit_text2"
+                <View
+                    android:layout_width="25dp"
+                    android:layout_height="3dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/common_bottom_line_color" />
+            </FrameLayout>
+
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/otp_edittext"
-                android:inputType="number"
-                android:maxLength="1"
-                android:textAlignment="center"
-                android:textColor="@color/trueBlack"
-                android:textCursorDrawable="@null" />
+                android:layout_weight="1">
 
-            <EditText
-                android:id="@+id/otp_edit_text3"
+                <EditText
+                    android:id="@+id/otp_edit_text2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/otp_edittext"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/trueBlack"
+                    android:textCursorDrawable="@null" />
+
+                <View
+                    android:layout_width="25dp"
+                    android:layout_height="3dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/common_bottom_line_color" />
+            </FrameLayout>
+
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/otp_edittext"
-                android:inputType="number"
-                android:maxLength="1"
-                android:textAlignment="center"
-                android:textColor="@color/trueBlack"
-                android:textCursorDrawable="@null" />
+                android:layout_weight="1">
 
-            <EditText
-                android:id="@+id/otp_edit_text4"
+                <EditText
+                    android:id="@+id/otp_edit_text3"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:background="@drawable/otp_edittext"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/trueBlack"
+                    android:textCursorDrawable="@null" />
+
+                <View
+                    android:layout_width="25dp"
+                    android:layout_height="3dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/common_bottom_line_color" />
+            </FrameLayout>
+
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="45dp"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/otp_edittext"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:maxLength="1"
-                android:textAlignment="center"
-                android:textColor="@color/trueBlack"
-                android:textCursorDrawable="@null" />
 
-            <EditText
-                android:id="@+id/otp_edit_text5"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/otp_edit_text4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+
+                    android:background="@drawable/otp_edittext"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/trueBlack"
+                    android:textCursorDrawable="@null" />
+
+                <View
+                    android:layout_width="25dp"
+                    android:layout_height="3dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/common_bottom_line_color" />
+            </FrameLayout>
+
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="45dp"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/otp_edittext"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:maxLength="1"
-                android:textAlignment="center"
-                android:textColor="@color/trueBlack"
-                android:textCursorDrawable="@null" />
+                android:layout_marginStart="10dp"
+                android:layout_weight="1">
 
-            <EditText
-                android:id="@+id/otp_edit_text6"
+                <EditText
+                    android:id="@+id/otp_edit_text5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/otp_edittext"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/trueBlack"
+                    android:textCursorDrawable="@null" />
+
+                <View
+                    android:layout_width="25dp"
+                    android:layout_height="3dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/common_bottom_line_color" />
+            </FrameLayout>
+
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="45dp"
-                android:layout_weight="1"
-                android:background="@drawable/otp_edittext"
-                android:imeOptions="actionDone"
-                android:inputType="number"
-                android:maxLength="1"
-                android:textAlignment="center"
-                android:textColor="@color/trueBlack"
-                android:textCursorDrawable="@null" />
+                android:layout_marginStart="10dp"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/otp_edit_text6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:background="@drawable/otp_edittext"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/trueBlack"
+                    android:textCursorDrawable="@null" />
+
+                <View
+                    android:layout_width="25dp"
+                    android:layout_height="3dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/common_bottom_line_color" />
+
+            </FrameLayout>
         </LinearLayout>
 
         <com.stuffer.stuffers.views.MyTextViewBold
@@ -148,7 +241,8 @@
             android:layout_marginTop="30dp"
             android:gravity="center"
             android:text="@string/info_verified3"
-            android:textColor="@color/black"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#9E9996"
             android:textSize="18sp"
             android:textStyle="italic" />
 
@@ -164,30 +258,36 @@
             android:textStyle="italic" />
 
         <com.stuffer.stuffers.views.MyTextView
-            android:layout_width="170dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/signinline"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@drawable/blue_rounded_bg3"
+
             android:elevation="1.5dp"
             android:gravity="center"
-            android:padding="12dp"
-            android:text="@string/info_resend"
-            android:textAllCaps="true"
-            android:textColor="#fff"
-            android:textSize="16sp" />
+            android:text="@string/resend_code"
+            android:textColor="@color/common_color"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+
+            />
 
 
         <com.stuffer.stuffers.views.MyTextView
             android:id="@+id/tvAgree"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
             android:layout_above="@+id/signinline"
             android:layout_gravity="center"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="25dp"
+            android:layout_marginEnd="25dp"
 
-            android:background="@drawable/blue_rounded_bg"
+            android:background="@drawable/view_normal_blue2"
             android:elevation="1.5dp"
             android:gravity="center"
             android:padding="12dp"
@@ -198,6 +298,11 @@
     </LinearLayout>
 
     <!--<include layout="@layout/bootm_layout" />-->
-
+    <View
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="7dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="15dp"
+        android:background="#353A46" />
 
 </LinearLayout>

@@ -3,12 +3,17 @@ package com.stuffer.stuffers.commonChat.chat;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.hbb20.CountryCodePicker;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.wallet.HomeActivity;
 import com.stuffer.stuffers.activity.wallet.HomeActivity2;
@@ -20,6 +25,7 @@ import com.stuffer.stuffers.commonChat.chatUtils.ChatHelper;
 import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
+import com.stuffer.stuffers.views.MyTextViewBold;
 
 
 import org.apache.commons.lang3.StringUtils;
@@ -34,14 +40,18 @@ public class BasicInfoActivity extends AppCompatActivity {
     private MyEditText userNameEditLast;
     private MyTextView tvSave;
     private String mFirstName, mLastName, mFullName;
+    private ImageView ivFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         chatHelper = new ChatHelper(this);
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         usersRef = firebaseDatabase.getReference(ChatHelper.REF_USERS);
         setContentView(R.layout.activity_basic_info);
+        ivFlag=findViewById(R.id.ivFlag);
+        setupActionBar();
         userPhone = (MyEditText) findViewById(R.id.userPhone);
         userNameEditFirst = (MyEditText) findViewById(R.id.userNameEditFirst);
         userNameEditLast = (MyEditText) findViewById(R.id.userNameEditLast);
@@ -55,6 +65,29 @@ public class BasicInfoActivity extends AppCompatActivity {
                 verify();
             }
         });
+
+        CountryCodePicker mCountryCodePicker = new CountryCodePicker(BasicInfoActivity.this);
+        String ccode = DataVaultManager.getInstance(BasicInfoActivity.this).getVaultValue(DataVaultManager.KEY_CCODE);
+        mCountryCodePicker.setCountryForNameCode(ccode);
+        ImageView imageViewFlag = mCountryCodePicker.getImageViewFlag();
+        Bitmap bitmap = ((BitmapDrawable) imageViewFlag.getDrawable()).getBitmap();
+        ivFlag.setImageBitmap(bitmap);
+
+
+
+    }
+
+    private void setupActionBar() {
+        MyTextViewBold common_toolbar_title = (MyTextViewBold) findViewById(R.id.common_toolbar_title);
+        common_toolbar_title.setText("AppOpay Personal");
+        ImageView iv_common_back = (ImageView) findViewById(R.id.iv_common_back);
+        iv_common_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
 
     }
 

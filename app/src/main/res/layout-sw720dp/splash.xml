@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:id="@+id/rLayout"
-    android:background="@drawable/bg_common2"
+    android:background="@color/common_bg_color"
     android:orientation="vertical"
     tools:context=".activity.wallet.SplashActivity">
 
@@ -57,7 +57,7 @@
                     android:layout_height="150dp"
                     android:layout_gravity="center"
                     android:padding="5dp"
-                    android:src="@drawable/qr_code" />
+                    android:src="@drawable/qr_splash" />
 
                 <ImageView
 
@@ -129,8 +129,8 @@
 
     </ScrollView>
 
-
-    <LinearLayout
+<include layout="@layout/common_bg_bottom"/>
+    <!--<LinearLayout
 
         android:layout_width="match_parent"
 
@@ -174,7 +174,7 @@
             android:adjustViewBounds="true"
             android:src="@drawable/wallet_card140" />
 
-        <!--
+        &lt;!&ndash;
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -182,10 +182,10 @@
             android:adjustViewBounds="true"
             android:padding="2dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/visa_mastercard_china" />-->
+            android:src="@drawable/visa_mastercard_china" />&ndash;&gt;
 
 
-    </LinearLayout>
+    </LinearLayout>-->
 </LinearLayout>
 
 

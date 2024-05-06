@@ -380,7 +380,7 @@
         <activity
             android:name=".activity.wallet.SignInActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustResize|adjustPan"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activity.wallet.SignupAcitivity"
@@ -504,6 +504,7 @@
         <activity
             android:name=".activity.wallet.P2PTransferActivity"
             android:exported="false"
+            android:windowSoftInputMode="stateHidden|adjustResize|adjustPan"
             android:parentActivityName=".activity.wallet.HomeActivity2"
             android:screenOrientation="portrait">
             <intent-filter>

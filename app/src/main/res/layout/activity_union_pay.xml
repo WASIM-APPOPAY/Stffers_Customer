@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/common_bg_color"
     android:orientation="vertical"
     tools:context=".activity.FianceTab.UnionPayActivity">
-    <include layout="@layout/toolbar" />
+
+    <include layout="@layout/common_toolbar2" />
+
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/unionContainer"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

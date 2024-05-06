@@ -1,10 +1,13 @@
 package com.stuffer.stuffers.fragments.transactionpin;
 
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_CCODE;
+
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,15 +24,20 @@ import com.google.gson.JsonObject;
 import com.hbb20.CountryCodePicker;
 import com.stuffer.stuffers.BuildConfig;
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.activity.wallet.CustomerProfileActivity;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
 import com.stuffer.stuffers.communicator.FragmentReplaceListener;
 import com.stuffer.stuffers.fragments.dialog.AreaCodeDialog;
 import com.stuffer.stuffers.utils.AppoConstants;
+import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.utils.Helper;
+import com.stuffer.stuffers.views.MyCountryText;
 import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
 import com.stuffer.stuffers.views.MyTextViewBold;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -63,6 +71,7 @@ public class TransactionPinFragment extends Fragment {
     private MyTextViewBold tvAreaCodeDo;
     private ArrayList<String> mAreaList;
     private AreaCodeDialog mAreaDialog;
+    private MyCountryText tvCountryCode;
 
     public TransactionPinFragment() {
 
@@ -77,6 +86,7 @@ public class TransactionPinFragment extends Fragment {
         send_customer_otp = view.findViewById(R.id.send_customer_otp);
         confirm_otp = view.findViewById(R.id.confirm_otp);
         tvAreaCodeDo = (MyTextViewBold) view.findViewById(R.id.tvAreaCodeDo);
+        tvCountryCode=view.findViewById(R.id.tvCountryCode);
         edtCustomerMobileNumber = view.findViewById(R.id.edtCustomerMobileNumber);
         edtCustomerCountryCode = view.findViewById(R.id.edtCustomerCountryCode);
         edtOtpNumber = view.findViewById(R.id.edtOtpNumber);
@@ -137,19 +147,6 @@ public class TransactionPinFragment extends Fragment {
             }
         });
 
-        edtCustomerCountryCode.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
-            @Override
-            public void onCountrySelected() {
-                selectedCountryNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
-                if (selectedCountryNameCode.equalsIgnoreCase("DO")) {
-                    mDominicaAreaCode = "";
-                    tvAreaCodeDo.setVisibility(View.GONE);
-                } else {
-                    mDominicaAreaCode = "";
-                    tvAreaCodeDo.setVisibility(View.GONE);
-                }
-            }
-        });
 
         edtCustomerCountryCode.setDialogEventsListener(new CountryCodePicker.DialogEventsListener() {
             @Override
@@ -177,8 +174,71 @@ public class TransactionPinFragment extends Fragment {
             }
         });
 
+        strCustomerCountryCode = edtCustomerCountryCode.getSelectedCountryCode();
+        edtCustomerCountryCode.setDialogEventsListener(mLis);
+
+        edtCustomerCountryCode.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                strCustomerCountryCode = edtCustomerCountryCode.getSelectedCountryCode();
+                selectedCountryNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
+                tvCountryCode.setText(strCustomerCountryCode + " (" + selectedCountryNameCode + ")");
+                edtCustomerCountryCode.setVisibility(View.GONE);
+            }
+        });
+
+        try {
+            String vaultValue1 = DataVaultManager.getInstance(getActivity()).getVaultValue(KEY_CCODE);
+            if (!StringUtils.isEmpty(vaultValue1)) {
+                edtCustomerCountryCode.setCountryForNameCode(vaultValue1);
+                //Log.e( "onCreateView: " ,"called: "+vaultValue1);
+            } else {
+                edtCustomerCountryCode.setCountryForPhoneCode(edtCustomerCountryCode.getDefaultCountryCodeAsInt());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        tvCountryCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //edtCustomerCountryCode.setVisibility(View.VISIBLE);
+                showCountry();
+
+            }
+        });
+
         return view;
     }
+
+    private void showCountry() {
+
+
+        edtCustomerCountryCode.launchCountrySelectionDialog();
+
+
+    }
+
+    CountryCodePicker.DialogEventsListener mLis = new CountryCodePicker.DialogEventsListener() {
+        @Override
+        public void onCcpDialogOpen(Dialog dialog) {
+            edtCustomerCountryCode.setVisibility(View.VISIBLE);
+
+        }
+
+        @Override
+        public void onCcpDialogDismiss(DialogInterface dialogInterface) {
+            edtCustomerCountryCode.setVisibility(View.GONE);
+
+        }
+
+        @Override
+        public void onCcpDialogCancel(DialogInterface dialogInterface) {
+            edtCustomerCountryCode.setVisibility(View.GONE);
+        }
+    };
+
 
     private void getAreaCodes() {
         mAreaList = new ArrayList<String>();

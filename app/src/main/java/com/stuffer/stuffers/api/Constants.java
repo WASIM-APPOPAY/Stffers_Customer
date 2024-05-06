@@ -226,10 +226,10 @@ public class Constants {
     //https://cerca24.com/v1/products/search?page=1&take=1&sort=&sortType=&q=&categoryId=5f1ad1385a679b68c152a957&shopId=&featured=&hot=&bestSell=&dailyDeal=&soldOut=&discounted=
     public static final String SHOP_CATEGORY_ITEM_DETAILS = "v1/products/search?";
 
-    public static final String ALL_ITEM="api/loyalty/product/page/all?";
-    public static final String ALL_ITEM_SHOP="api/loyalty/product/page/shop?";
-    public static final String ALL_ITEM_FOOD="api/loyalty/product/page/food?";
-    public static final String ALL_ITEM_ENTERTAINMENT="api/loyalty/product/page/entertainment?";
+    public static final String ALL_ITEM = "api/loyalty/product/page/all?";
+    public static final String ALL_ITEM_SHOP = "api/loyalty/product/page/shop?";
+    public static final String ALL_ITEM_FOOD = "api/loyalty/product/page/food?";
+    public static final String ALL_ITEM_ENTERTAINMENT = "api/loyalty/product/page/entertainment?";
 
 
     public static final int REQUEST_CHECK_SETTINGS = 999;
@@ -266,5 +266,10 @@ public class Constants {
     public static final String IS_USER_REGISTER_OR_PROFILE = "/api/wSignUp/MyProfile";
     public static final String LOAN_CITY_LIST = "/api/wMasters/CityList";
     public static final String LOAN_RIGESTER = "/api/wSignUp/Register";
+
+    public static final String LOAN_SET_PROFILE = "/api/wSignUp/UpdateProfileImage";
+    public static final String LOAN_SET_ID = "/api/wSignUp/UpdateIDCARDImage";
+    public static final String LOAN_SET_PAYSLIP = "/api/wSignUp/UpdatePAYSLIPImage";
+
     public static final String GET_LIST_RESTAURANT = "api/odrRestaurant/all";
 }

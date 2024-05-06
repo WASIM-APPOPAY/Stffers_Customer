@@ -59,6 +59,7 @@ import com.stuffer.stuffers.utils.TimeUtils;
 import com.stuffer.stuffers.views.MyButton;
 import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
+import com.stuffer.stuffers.views.MyTextViewBold;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
@@ -88,7 +89,8 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
     private Calendar newCalendar;
     private String mExpiry;
     private LinearLayout llIdType, layoutDetails, layoutScan;
-    private MyTextView tvIdType, tvScanDocs;
+    private MyTextView tvIdType;
+    private MyTextViewBold  tvScanDocs;
     private InsuranceDialog mIdTypeDialog;
     private ArrayList<String> mListType;
     private String stringExtraPath;
@@ -154,7 +156,7 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
         llIdType = (LinearLayout) mView.findViewById(R.id.llIdType);
         layoutDetails = (LinearLayout) mView.findViewById(R.id.layoutDetails);
         layoutScan = (LinearLayout) mView.findViewById(R.id.layoutScan);
-        tvScanDocs = (MyTextView) mView.findViewById(R.id.tvScanDocs);
+        tvScanDocs = (MyTextViewBold) mView.findViewById(R.id.tvScanDocs);
         imageId = (ImageView) mView.findViewById(R.id.imageId);
 
 

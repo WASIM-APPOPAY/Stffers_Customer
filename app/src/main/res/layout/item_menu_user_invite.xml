@@ -7,7 +7,9 @@
     android:layout_marginTop="8dp"
     android:layout_marginBottom="8dp"
     android:background="@color/bg_hint"
+    android:gravity="center|left"
     android:padding="10dp"
+
     android:textColor="@color/search_gray"
     android:textStyle="bold">
 

@@ -6,14 +6,14 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.stuffer.stuffers.views.MyTextView
+    <com.stuffer.stuffers.views.MyTextViewBold
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="@string/please_select_carrier1"
         android:textSize="20sp"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/common_text_color"
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_margin="5dp"
-            android:theme="@style/MaterialButton"
+            android:background="@drawable/view_normal_blue2"
             android:text="@string/info_close"
             android:textColor="@color/white" />
 

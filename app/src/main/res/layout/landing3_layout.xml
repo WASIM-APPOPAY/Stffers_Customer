@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
+        android:layout_weight="4"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -20,17 +21,26 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:src="@drawable/landing6" />
+
+            <FrameLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/bg_circle_home_landing">
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:padding="@dimen/dp_10"
+                    app:tint="@color/common_color"
+                    android:src="@drawable/landing6" />
+            </FrameLayout>
 
             <com.stuffer.stuffers.views.MyTextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Loan"
-                android:textColor="@color/black"
+                android:textColor="@color/search_gray"
                 android:textSize="12sp" />
 
 
@@ -47,17 +57,25 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:src="@drawable/landing7" />
+            <FrameLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/bg_circle_home_landing">
+
+                <ImageView
+                    android:padding="@dimen/dp_10"
+                    app:tint="@color/common_color"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/landing7" />
+            </FrameLayout>
 
             <com.stuffer.stuffers.views.MyTextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Store"
-                android:textColor="@color/black"
+                android:textColor="@color/search_gray"
                 android:textSize="12sp" />
 
 
@@ -72,17 +90,25 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:src="@drawable/landing8" />
+            <FrameLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/bg_circle_home_landing">
+
+                <ImageView
+                    android:padding="@dimen/dp_10"
+                    app:tint="@color/common_color"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/landing8" />
+            </FrameLayout>
 
             <com.stuffer.stuffers.views.MyTextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="P-2-P"
-                android:textColor="@color/black"
+                android:textColor="@color/search_gray"
                 android:textSize="12sp" />
 
 
@@ -95,30 +121,38 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:src="@drawable/landing9" />
+            <FrameLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/bg_circle_home_landing">
+
+                <ImageView
+                    android:padding="@dimen/dp_10"
+                    app:tint="@color/common_color"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/landing9" />
+            </FrameLayout>
 
             <com.stuffer.stuffers.views.MyTextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Card Repay"
-                android:textColor="@color/black"
+                android:textColor="@color/search_gray"
                 android:textSize="12sp" />
 
 
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/llResturant"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -130,7 +164,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Restaurant"
-                android:textColor="@color/black"
+                android:textColor="@color/search_gray"
                 android:textSize="12sp" />
 
 

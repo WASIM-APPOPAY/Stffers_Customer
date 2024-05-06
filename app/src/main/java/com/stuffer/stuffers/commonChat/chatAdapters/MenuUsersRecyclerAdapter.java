@@ -1,6 +1,7 @@
 package com.stuffer.stuffers.commonChat.chatAdapters;
 
 import android.content.Context;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -126,6 +127,8 @@ public class MenuUsersRecyclerAdapter extends RecyclerView.Adapter<MenuUsersRecy
 
         public void setData(User user) {
             inviteTitle.setText(context.getString(R.string.invite_to) + " " + context.getString(R.string.app_name));
+            inviteTitle.setHeight(100);
+
         }
     }
 
@@ -157,7 +160,7 @@ public class MenuUsersRecyclerAdapter extends RecyclerView.Adapter<MenuUsersRecy
         public void setData(User user) {
             userName.setText(user.getName());
             inviteText.setVisibility(user.isInviteAble() ? View.VISIBLE : View.GONE);
-            Glide.with(context).load(user.getImage()).apply(new RequestOptions().placeholder(R.drawable.user1)).into(userImage);
+            Glide.with(context).load(user.getImage()).apply(new RequestOptions().placeholder(R.drawable.landing_user)).into(userImage);
             userName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
     }

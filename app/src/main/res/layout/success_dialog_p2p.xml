@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:id="@+id/layoutRoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/appopay_gift_card" />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/tvHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="15dp"
+                android:text="@string/info_pay_to_merchant"
+                android:textAllCaps="true"
+                android:textColor="@color/common_text_color"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <ImageView
+
+            android:id="@+id/ivSuccess"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:src="@drawable/iv_tick_new"
+            android:visibility="gone"
+            app:tint="#1A9B00"
+
+            />
+
+        <ImageView
+            android:id="@+id/ivCancel"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_cancel_payment"
+            android:visibility="gone" />
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:id="@+id/tvInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/merchant_inactive_error"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <com.stuffer.stuffers.views.MyButton
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/view_normal_blue3"
+            android:gravity="center"
+
+            android:text="Transaction Details"
+            android:textAllCaps="false"
+            android:textColor="@color/common_color"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Transaction No"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvVoucherPay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:padding="5dp"
+
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Transaction Time"
+                android:textAppearance="?attr/textAppearanceBody1"
+
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvTransactionTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:padding="5dp"
+                android:text="@string/info_transaction_time"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Currency"
+                android:textAppearance="?attr/textAppearanceBody1"
+
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvCurrencyPay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:layout_weight="1"
+                android:gravity="end"
+                android:padding="5dp"
+
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Sender Name"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/common_text_color"
+                android:textSize="14sp"
+
+                android:visibility="visible"
+
+                />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvSenderName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="@string/info_amount_union"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/common_text_color"
+                android:textSize="14sp"
+
+                android:visibility="visible"
+
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Amount"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/common_text_color"
+                android:textSize="14sp"
+
+                android:visibility="visible"
+
+                />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvAmountPay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:textAppearance="?attr/textAppearanceBody1"
+
+                android:textColor="@color/common_text_color"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+
+                />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Receiver Amount"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/common_text_color"
+                android:textSize="14sp"
+
+                android:visibility="visible"
+
+                />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvReceiverAmt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/common_text_color"
+                android:textSize="14sp"
+
+                android:visibility="visible"
+
+                />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/dash_line" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Processing Fees"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/common_text_color"
+                android:textSize="14sp"
+
+                android:visibility="visible" />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvProcessing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_5"
+                android:text="@string/info_amount_union"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/common_text_color"
+                android:textSize="14sp"
+
+                android:visibility="visible" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Taxes"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/common_text_color"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/TvTaxes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_5"
+                android:text="@string/info_amount_union"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/common_text_color"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Transaction Cost"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/common_text_color"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_5"
+                android:text="@string/info_amount_union"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/common_text_color"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="Payment Status"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+            <com.stuffer.stuffers.views.MyButton
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="@drawable/view_normal_blue4"
+
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Success"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="#16C079"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:padding="5dp"
+            android:src="@drawable/logo3" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/view_normal_blue2"
+            android:gravity="center"
+            android:text="@string/info_share"
+            android:textColor="@color/white" />
+
+        <com.stuffer.stuffers.views.MyButton
+            android:id="@+id/btnClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/view_normal_blue2"
+            android:gravity="center"
+            android:text="@string/info_close"
+            android:textColor="@color/white" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -3,28 +3,36 @@
     xmlns:aap="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
-
+android:layout_marginTop="5dp"
 
     android:orientation="vertical">
 
-    <com.stuffer.stuffers.views.MyTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/info_balance"
-        android:textColor="@color/black" />
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#FF9200"
+        android:orientation="vertical">
 
-    <com.stuffer.stuffers.views.MyTextView
-        android:id="@+id/tvSideBalance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:text="$0"
-        android:textColor="@color/black"
-        android:textSize="18sp" />
+        <com.stuffer.stuffers.views.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/info_balance"
+            android:textSize="22sp"
+            android:textColor="@color/black" />
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:id="@+id/tvSideBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="$0"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    </LinearLayout>
 
 
     <LinearLayout
@@ -49,7 +57,7 @@
 
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:background="@drawable/bg_circle"
+                android:background="@drawable/bg_circle_landing"
                 android:padding="10dp"
                 android:src="@drawable/ic_add_drawer"
                 aap:tint="@color/white" />
@@ -81,7 +89,7 @@
 
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:background="@drawable/bg_circle"
+                android:background="@drawable/bg_circle_landing"
                 android:padding="10dp"
                 android:src="@drawable/ic_arrow_down_drawable"
                 aap:tint="@color/white" />
@@ -115,7 +123,7 @@
                 android:layout_width="55dp"
                 android:layout_height="55dp"
 
-                android:background="@drawable/bg_circle"
+                android:background="@drawable/bg_circle_landing"
                 android:padding="10dp"
                 android:src="@drawable/ic_arrow_forward_drawable" />
 
@@ -148,7 +156,7 @@
 
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:background="@drawable/bg_circle"
+                android:background="@drawable/bg_circle_landing"
                 android:padding="10dp"
                 android:src="@drawable/ic_credit_card_drawable" />
 

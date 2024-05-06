@@ -149,7 +149,7 @@ public class FinanceActivity extends AppCompatActivity implements OptionSelectLi
     }
 
     @Override
-    public void onConfirm() {
+    public void onConfirm(int param) {
 
         Intent intentOk = new Intent();
         setResult(RESULT_OK, intentOk);

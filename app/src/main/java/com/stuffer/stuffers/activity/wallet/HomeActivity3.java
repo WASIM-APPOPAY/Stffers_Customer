@@ -27,11 +27,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,6 +43,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -89,6 +92,7 @@ import com.stuffer.stuffers.my_camera.CameraActivity;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.utils.Helper;
+import com.stuffer.stuffers.views.MyButton;
 import com.stuffer.stuffers.views.MyTextView;
 import com.stuffer.stuffers.views.MyTextViewBold;
 
@@ -104,6 +108,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.michaelrocks.libphonenumber.android.NumberParseException;
@@ -162,7 +167,11 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
     };
     private ArrayList<MyTextViewBold> mBottomList;
     private BottomLanguage mBottomLanguage;
+    List<ImageView> mLandingImage;
+    private ImageView ivLanding1, ivLanding2, ivLanding3, ivLanding4, ivLanding5;
+    private AlertDialog mDialogLogout;
 
+    //https://m2.material.io/search.html?q=home
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -186,6 +195,18 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
         llLife = (LinearLayout) findViewById(R.id.llLife);
         llMe = (LinearLayout) findViewById(R.id.llMe);
         llFinance = (LinearLayout) findViewById(R.id.llFinance);
+        ivLanding1 = findViewById(R.id.ivLanding1);
+        ivLanding2 = findViewById(R.id.ivLanding2);
+        ivLanding3 = findViewById(R.id.ivLanding3);
+        ivLanding4 = findViewById(R.id.ivLanding4);
+        ivLanding5 = findViewById(R.id.ivLanding5);
+        mLandingImage = new ArrayList<>();
+        mLandingImage.add(ivLanding1);
+        mLandingImage.add(ivLanding2);
+        mLandingImage.add(ivLanding3);
+        mLandingImage.add(ivLanding4);
+        mLandingImage.add(ivLanding5);
+
         mBottomList = new ArrayList<>();
         mBottomList.add(findViewById(R.id.bottom_title_landing1));
         mBottomList.add(findViewById(R.id.bottom_title_landing2));
@@ -254,6 +275,9 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
                 showLanDialogue();
             }
         });
+
+        setActiveInActive(0);
+
     }
 
     private void showLanDialogue() {
@@ -275,6 +299,9 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
     }
 
     private void logoutUserRequest() {
+        if (mDialogLogout!=null){
+            mDialogLogout.dismiss();
+        }
         tvSideBalance.setText("$" + "00.00");
         DataVaultManager.getInstance(HomeActivity3.this).saveUserAccessToken("");
         DataVaultManager.getInstance(HomeActivity3.this).saveUserDetails("");
@@ -284,10 +311,10 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
     }
 
     private void logoutCalled() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity3.this, R.style.MyAlertDialogStyle);
+        /*AlertDialog.Builder builder = new MaterialAlertDialogBuilder(this,R.style.MyRounded_MaterialComponents_MaterialAlertDialog);
         builder.setTitle(getString(R.string.app_name));
         builder.setMessage(getString(R.string.info_want_to_logout));
-        builder.setIcon(R.drawable.appopay_gift_card);
+        builder.setIcon(R.drawable.logoo);
         builder.setPositiveButton(getString(R.string.info_yes),
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -308,6 +335,31 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
                 });
 
         builder.show();
+*/
+        AlertDialog.Builder builder = new MaterialAlertDialogBuilder(this,R.style.MyRounded_MaterialComponents_MaterialAlertDialog);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogLayout = inflater.inflate(R.layout.logout_layout, null);
+        MyButton btnNo = dialogLayout.findViewById(R.id.btnNo);
+        MyButton btnOk = dialogLayout.findViewById(R.id.btnOk);
+
+
+        builder.setView(dialogLayout);
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDialogLogout.dismiss();
+            }
+        });
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logoutUserRequest();
+            }
+        });
+        mDialogLogout = builder.create();
+        mDialogLogout.setCanceledOnTouchOutside(false);
+        mDialogLogout.show();
     }
 
     private void isAppoPayAccountExist(String id, String name) {
@@ -358,7 +410,6 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
                                 DataVaultManager.getInstance(HomeActivity3.this).saveUserDetails(response.toString());
                                 tvSideBalance.setText("");
                                 tvSideBalance.setText("$" + twoDecimal);
-
 
 
                             } else {
@@ -636,7 +687,7 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
             }, 200);
         } else if (view.getId() == R.id.layoutSetting) {
             drawer_layout.closeDrawer(GravityCompat.START);
-            new Handler().postDelayed(new Runnable() {
+            /*new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
@@ -648,7 +699,7 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
                         startActivity(mIntentQrCode);
                     }
                 }
-            }, 200);
+            }, 200);*/
         } else if (view.getId() == R.id.layoutProfile) {
             drawer_layout.closeDrawer(GravityCompat.START);
 
@@ -672,10 +723,15 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
 
     private void setActiveInActive(int i) {
         for (int j = 0; j < mBottomList.size(); j++) {
-            if (i == j) {
-                mBottomList.get(j).setTextColor(Color.parseColor("#ED7014"));
-            } else {
+            if (j == i) {
+
+                mLandingImage.get(j).setColorFilter(ContextCompat.getColor(HomeActivity3.this, R.color.common_text_color), android.graphics.PorterDuff.Mode.MULTIPLY);
+                //imageView.setColorFilter(ContextCompat.getColor(context, R.color.COLOR_YOUR_COLOR), android.graphics.PorterDuff.Mode.MULTIPLY);
                 mBottomList.get(j).setTextColor(Color.parseColor("#000000"));
+            } else {
+                mLandingImage.get(j).setColorFilter(ContextCompat.getColor(HomeActivity3.this, R.color.search_gray), android.graphics.PorterDuff.Mode.MULTIPLY);
+                //imageView.setColorFilter(ContextCompat.getColor(context, R.color.COLOR_YOUR_COLOR), android.graphics.PorterDuff.Mode.MULTIPLY);
+                mBottomList.get(j).setTextColor(Color.parseColor("#A0A0A0"));
             }
         }
     }

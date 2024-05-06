@@ -49,7 +49,7 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         setContentView(R.layout.activity_registration);
         stateProgressBar = (StateProgressBar) findViewById(R.id.my_progress_bar_id);
 
-        String[] descriptionData ={ ""+getString(R.string.info_step_one),""+getString(R.string.info_step_two),""+getString(R.string.info_step_three)};
+        String[] descriptionData = {"" + getString(R.string.info_step_one), "" + getString(R.string.info_step_two), "" + getString(R.string.info_step_three)};
 
         stateProgressBar.setStateDescriptionData(descriptionData);
         initBroadCast();
@@ -61,11 +61,10 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         intiFragment(identityFragment);*/
 
 
+        ;
 
-    ;
 
-
-}
+    }
 
     private void intiFragment(Fragment fragment) {
         FragmentManager supportFragmentManager = getSupportFragmentManager();
@@ -121,6 +120,22 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         VerifyFragment mVerifyFragment = new VerifyFragment();
         mVerifyFragment.setArguments(mBundle);
         intiFragment(mVerifyFragment);
+
+        /*IdentityFragment mIdentityFragment = new IdentityFragment();
+        Bundle mBundle = new Bundle();
+        mBundle.putString(AppoConstants.COUNTRYNAMECODE, mNameCode);
+        mBundle.putString(AppoConstants.COUNTRYCODE, mCountryCode);
+        mBundle.putString(AppoConstants.MOBILENUMBER, mMobileNo);
+        mBundle.putString(AppoConstants.EMIAL_ID, mEmailId);
+        mBundle.putString(AppoConstants.ADDRESS, mAddress);
+        mBundle.putString(AppoConstants.COUNTRYID, mCountryId);
+        mBundle.putString(AppoConstants.STATEID, mStateId);
+        mBundle.putString(AppoConstants.ZIPCODE2, mZipCode);
+        mBundle.putString(AppoConstants.CITY, mCity);
+
+        mIdentityFragment.setArguments(mBundle);
+        intiFragment(mIdentityFragment);
+        state(2);*/
 
 
     }
@@ -217,14 +232,11 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
     }
 
 
-
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(appSMSBroadcastReceiver);
-        appSMSBroadcastReceiver=null;
+        appSMSBroadcastReceiver = null;
     }
 
     @Override
@@ -234,8 +246,6 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
             ((NumEmailFragment) fragmentById).setStateName(statename, stateid);
         }
     }
-
-
 
 
 }

@@ -2,18 +2,18 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FCEBDB">
 
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+
         android:orientation="vertical"
 
         tools:context=".home_bottom.BottomChatFragment">
 
         <com.stuffer.stuffers.views.MyTextViewBold
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/colorPrimary"
@@ -21,7 +21,8 @@
             android:letterSpacing="0.3"
             android:text="Stuffrs Merchant"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:visibility="gone" />
 
 
         <com.stuffer.stuffers.views.MyRecyclerView
@@ -30,6 +31,7 @@
             android:layout_height="match_parent"
             android:paddingLeft="8dp"
             android:paddingTop="8dp"
+
             android:paddingRight="8dp" />
 
         <include layout="@layout/empty_view" />
@@ -37,12 +39,24 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addConversation"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="24dp"
+        android:background="@drawable/view_normal_blue2"
         android:src="@drawable/ic_add"
-        android:visibility="visible"
+        android:visibility="gone"
         app:fabSize="normal" />
+
+    <ImageView
+        android:id="@+id/addConversation"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="24dp"
+        android:background="@drawable/bg_circle_primary"
+        android:padding="5dp"
+        android:src="@drawable/ic_add" />
+
 </FrameLayout>

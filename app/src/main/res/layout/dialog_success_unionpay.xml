@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:src="@drawable/logo2" />
+
+        <com.stuffer.stuffers.views.MyTextView
+
+            android:id="@+id/tvHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            android:text="Card Enrolled"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            app:textAllCaps="true" />
+
+
+    </LinearLayout>
+
+    <ImageView
+
+        android:layout_width="150dp"
+
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_tick_success_union" />
+    <!--android:text="Thank you!\n Your Payment Successfully Done "-->
+    <com.stuffer.stuffers.views.MyTextView
+        android:id="@+id/tvSuccess"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Your UnionPay Card has been Created Successfully."
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <com.stuffer.stuffers.views.MyTextView
+        android:id="@+id/tvTransactionId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <com.stuffer.stuffers.views.MyTextView
+
+          android:id="@+id/tvNext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Please Click On Next to APPLY for VISA Card."
+            android:textColor="@color/common_text_color"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:id="@+id/btnClose"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/view_normal_blue2"
+            android:gravity="center"
+            android:text=" Close "
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:id="@+id/btnNext"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/view_normal_blue2"
+            android:gravity="center"
+            android:text=" Next "
+            android:textColor="@color/white"
+            />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

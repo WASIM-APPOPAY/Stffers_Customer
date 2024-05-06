@@ -4,6 +4,7 @@ import static com.stuffer.stuffers.utils.DataVaultManager.KEY_ACCESSTOKEN;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_CCODE;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_MOBILE;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_NAME;
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_TOKEN;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_DETIALS;
 
 import android.Manifest;
@@ -138,7 +139,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        Log.e(TAG, "onCreate: "+Helper.getTransactionPin() );
+        Log.e(TAG, "onCreate: " + Helper.getTransactionPin());
         setContentView(R.layout.profile_activity);
         apiServiceUNIONPay = ApiUtils.getApiServiceUNIONPay();
 
@@ -169,7 +170,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         //AndroidNetworking.initialize(getApplicationContext());
         //setupActionBar();
         mainAPIInterface = ApiUtils.getAPIService();
-        tvTitleProfile = findViewById(R.id.tvTitleProfile);
+       // tvTitleProfile = findViewById(R.id.tvTitleProfile);
         vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
         strUserName = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_NAME);
         strUserMobile = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_MOBILE);
@@ -210,24 +211,33 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         tvSacnQrCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intentQr = new Intent(CustomerProfileActivity.this, GenerateQrDynamicActivity.class);
+
                 startActivity(intentQr);
+
+
+
+
+
                 /*if (isPermissionGranted()) {
                     initQuickPass();
                 } else {
                     ActivityCompat.requestPermissions(CustomerProfileActivity.this, new String[]{Manifest.permission.CAMERA}, AppoConstants.CAMERA_REQUEST_CODE);
                 }*/
 
+
+
             }
         });
 
 
-        /*String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_TOKEN);
-        if (!StringUtils.isEmpty(vaultValue)) {
-            getConsumerQrCode(vaultValue);
-        } else {
-            getSavedCard();
-        }*/
+//        String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_TOKEN);
+//        if (!StringUtils.isEmpty(vaultValue)) {
+//            getConsumerQrCode(vaultValue);
+//        } else {
+//            getSavedCard();
+//        }
 
         countryCodePicker.setDialogEventsListener(mLis);
         try {
@@ -610,7 +620,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         tabLayout = (TabLayout) findViewById(R.id.profile_tabs);
         countryCodePicker = findViewById(R.id.countryCodePicker);
         countryCodePicker.setEnabled(false);
-        tvTitleProfile.setText(getString(R.string.info_profile));
+        //tvTitleProfile.setText(getString(R.string.info_profile));
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

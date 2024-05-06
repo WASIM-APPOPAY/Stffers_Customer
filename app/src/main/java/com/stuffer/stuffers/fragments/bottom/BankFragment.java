@@ -7,11 +7,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +42,7 @@ import com.stuffer.stuffers.models.output.CurrencyResult;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
 import com.stuffer.stuffers.utils.Helper;
-import com.stuffer.stuffers.views.MyButton;
+
 import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
 import com.stuffer.stuffers.views.MyTextViewBold;
@@ -66,13 +69,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_ACCESSTOKEN;
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_CCODE;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_DETIALS;
 
 public class BankFragment extends Fragment {
     private static final String TAG = "BankFragment";
     View mView;
     private MyEditText edtphone_number;
-    private MyButton btnSearch, btnChange;
+    private MyTextView btnSearch, btnChange;
     private MainAPIInterface mainAPIInterface;
     private ProgressDialog dialog;
     CountryCodePicker edtCustomerCountryCode;
@@ -105,12 +109,14 @@ public class BankFragment extends Fragment {
     private CircleImageView circularSender;
     private String receiverAvatar;
     private JSONObject indexUserTo;
+    private ImageView ivFlag;
 
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         mView = inflater.inflate(R.layout.bank_fragment, container, false);
+        ivFlag=mView.findViewById(R.id.ivFlag);
         Bundle arguments = this.getArguments();
         mType = arguments.getInt(AppoConstants.WHERE, 0);
         circularSender = (CircleImageView) mView.findViewById(R.id.circularSender);
@@ -222,6 +228,12 @@ public class BankFragment extends Fragment {
 
             }
         });
+        String ccode = DataVaultManager.getInstance(getContext()).getVaultValue(KEY_CCODE);
+        edtCustomerCountryCode.setCountryForNameCode(ccode);
+        ImageView imageViewFlag = edtCustomerCountryCode.getImageViewFlag();
+        Bitmap bitmap = ((BitmapDrawable) imageViewFlag.getDrawable()).getBitmap();
+        ivFlag.setImageBitmap(bitmap);
+        ivFlag.setVisibility(View.VISIBLE);
 
         edtCustomerCountryCode.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
@@ -234,6 +246,10 @@ public class BankFragment extends Fragment {
                     mDominicaAreaCode = "";
                     tvAreaCodeDo.setVisibility(View.GONE);
                 }
+                ImageView imageViewFlag = edtCustomerCountryCode.getImageViewFlag();
+                Bitmap bitmap = ((BitmapDrawable) imageViewFlag.getDrawable()).getBitmap();
+                ivFlag.setImageBitmap(bitmap);
+                ivFlag.setVisibility(View.VISIBLE);
             }
         });
 

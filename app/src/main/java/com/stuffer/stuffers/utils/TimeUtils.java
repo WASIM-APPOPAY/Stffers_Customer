@@ -4,12 +4,14 @@ import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.stuffer.stuffers.AppoPayApplication;
+import com.stuffer.stuffers.activity.loan.L_SignUpActivity;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+import java.util.UUID;
 
 public class TimeUtils {
     private static final String TAG = "TimeUtils";
@@ -44,10 +46,14 @@ public class TimeUtils {
     public static String getDeviceId() {
         /*String mDeviceID = Settings.Secure.getString(AppoPayApplication.getInstance().getContentResolver(),
                 Settings.Secure.ANDROID_ID);*/
-        Long senderMobileNumber = Helper.getSenderMobileNumber();
+        /*Long senderMobileNumber = Helper.getSenderMobileNumber();
         String phoneCode = Helper.getPhoneCode();
-        String phWithCode = phoneCode + senderMobileNumber;
-        return phWithCode;
+        String phWithCode = phoneCode + senderMobileNumber;*/
+
+        DeviceUuidFactory mDeviceUuidFactory = new DeviceUuidFactory(AppoPayApplication.getInstance());
+        UUID deviceUuid = mDeviceUuidFactory.getDeviceUuid();
+
+        return deviceUuid.toString();
     }
 
     // User id will to be change
