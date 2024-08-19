@@ -1,160 +1,175 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rounder_bottom_corner"
-    android:gravity="center"
-    android:orientation="horizontal"
-    android:padding="@dimen/dp_5">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
+
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_5">
 
         <LinearLayout
-
-            android:id="@+id/llRecharge"
-            android:layout_width="70dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <FrameLayout
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/bg_circle_white">
+            <LinearLayout
 
-                <ImageView
+                android:id="@+id/llRecharge"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <FrameLayout
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:background="@drawable/bg_circle_white">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:padding="8dp"
+                        android:src="@drawable/recharge"
+                        app:tint="@color/common_color" />
+                </FrameLayout>
+
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:padding="8dp"
-                    android:src="@drawable/recharge"
-                    app:tint="@color/common_color" />
-            </FrameLayout>
+                    android:gravity="center"
+                    android:lines="2"
+                    android:text="Recharge"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
 
-            <com.stuffer.stuffers.views.MyTextViewBold
-                android:layout_width="wrap_content"
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llQuick"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp"
                 android:gravity="center"
-                android:lines="2"
-                android:text="Recharge"
 
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:orientation="vertical">
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llQuick"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="5dp"
-            android:gravity="center"
-
-            android:orientation="vertical">
-
-            <FrameLayout
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/bg_circle_white">
-
-                <ImageView
-
-
+                <FrameLayout
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_quick_pass"
-                    app:tint="@color/common_color" />
-            </FrameLayout>
+                    android:background="@drawable/bg_circle_white">
 
-            <com.stuffer.stuffers.views.MyTextViewBold
-                android:layout_width="match_parent"
+                    <ImageView
+
+
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_quick_pass"
+                        app:tint="@color/common_color" />
+                </FrameLayout>
+                <!--android:text="Quick Pass"-->
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:text="Tap to Pay"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llScan"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:background="?attr/selectableItemBackground"
                 android:gravity="center"
-                android:lines="2"
-                android:text="Quick Pass"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:orientation="vertical">
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llScan"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <FrameLayout
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/bg_circle_white">
-
-                <ImageView
+                <FrameLayout
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:padding="10dp"
-                    android:src="@drawable/code_scan"
-                    app:tint="@color/common_color" />
-            </FrameLayout>
+                    android:background="@drawable/bg_circle_white">
 
-            <com.stuffer.stuffers.views.MyTextViewBold
-                android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:src="@drawable/code_scan"
+                        app:tint="@color/common_color" />
+                </FrameLayout>
+
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:lines="2"
+
+                    android:text="scan"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llLinkCard"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:background="?attr/selectableItemBackground"
+
                 android:gravity="center"
-                android:lines="2"
+                android:orientation="vertical">
 
-                android:text="scan"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llLinkCard"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:background="?attr/selectableItemBackground"
-
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <FrameLayout
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/bg_circle_white">
-
-                <ImageView
+                <FrameLayout
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_credit_card_drawable"
-                    app:tint="@color/common_color" />
-            </FrameLayout>
+                    android:background="@drawable/bg_circle_white">
 
-            <com.stuffer.stuffers.views.MyTextViewBold
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:lines="2"
-                android:text="Card"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="8dp"
+                        android:src="@drawable/landing8"
+                        app:tint="@color/common_color" />
+                </FrameLayout>
 
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:text="P-2-P"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
         </LinearLayout>
+
+
     </LinearLayout>
 
-
+    <com.stuffer.stuffers.views.MyTextViewBold
+        android:id="@+id/tvLandingBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:padding="@dimen/dp_5"
+        android:text="Balance : NA"
+        android:textStyle="bold" />
 </LinearLayout>

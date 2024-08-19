@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ import com.stuffer.stuffers.MyContextWrapper;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.api.Constants;
 import com.stuffer.stuffers.commonChat.chat.NumberActivity;
+import com.stuffer.stuffers.commonChat.chat.NumberDemoActivity;
 import com.stuffer.stuffers.commonChat.chatModel.User;
 import com.stuffer.stuffers.commonChat.chatUtils.ChatHelper;
 import com.stuffer.stuffers.utils.AppoConstants;
@@ -56,7 +58,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class UrlsActivity extends AppCompatActivity {
+import im.delight.android.webview.AdvancedWebView;
+
+public class UrlsActivity extends AppCompatActivity implements AdvancedWebView.Listener {
     private static final String TAG = "UrlsActivity";
     private static final int SPLASH_TIMEOUT = 100;
     private static final int BEFORE_13 = 2298;
@@ -67,7 +71,7 @@ public class UrlsActivity extends AppCompatActivity {
     private CheckBox checkbox;
     private LinearLayout rLayout;
     private ChatHelper chatHelper;
-    private WebView webView;
+    private AdvancedWebView webView;
     private MyTextViewBold common_toolbar_title;
 
     @Override
@@ -82,7 +86,7 @@ public class UrlsActivity extends AppCompatActivity {
         mTitle = getIntent().getStringExtra(AppoConstants.TITLE);
         mUrlName = getIntent().getStringExtra(AppoConstants.NAME);
         setupActionBar();
-        Button btnNext = findViewById(R.id.btnNextTerms);
+
         tvLongText = (MyTextView) findViewById(R.id.tvLongText);
         chatHelper = new ChatHelper(this);
         String vaultValue = DataVaultManager.getInstance(UrlsActivity.this).getVaultValue(TANDC);
@@ -90,13 +94,14 @@ public class UrlsActivity extends AppCompatActivity {
             checkbox.setChecked(true);
         }
         boolean checkPermission = checkPermission();
+        Button btnNext = findViewById(R.id.btnNextTerms);
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (checkbox.isChecked()) {
                     if (checkPermission) {
-                        User loggedInUser = chatHelper.getLoggedInUser();
-                        String s = new Gson().toJson(loggedInUser);
+                        /*User loggedInUser = chatHelper.getLoggedInUser();
+                        String s = new Gson().toJson(loggedInUser);*/
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -113,12 +118,14 @@ public class UrlsActivity extends AppCompatActivity {
         });
 
         //getContent(Constants.APPOPAY_BASE_URL + mUrlName);
-        showLoading();
-        webView.loadUrl("https://tool.appopay.com/tac");
-        MyWebViewClient myWebViewClient = new MyWebViewClient();
-        webView.setWebViewClient(myWebViewClient);
+        //showLoading();
+        //webView.setListener(this, this);
+        //webView.setMixedContentAllowed(false);
+        //webView.loadUrl("https://tool.appopay.com/tac");
 
-        webView.getSettings().setJavaScriptEnabled(true);
+        /*MyWebViewClient myWebViewClient = new MyWebViewClient();
+        webView.setWebViewClient(myWebViewClient);*/
+
 
         checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -128,6 +135,8 @@ public class UrlsActivity extends AppCompatActivity {
                 } else {
                     DataVaultManager.getInstance(UrlsActivity.this).saveTerm("");
                 }
+
+
             }
         });
 
@@ -141,40 +150,11 @@ public class UrlsActivity extends AppCompatActivity {
         if (requestCode == BEFORE_13) {
             //Log.e(TAG, "onRequestPermissionsResult: below called" );
             if (grantResults.length > 0) {
-
                 boolean p1 = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-              /*  if (p1) {
-                    Toast.makeText(this, "P1 Granted", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "P1 Not Granted", Toast.LENGTH_SHORT).show();
-                }*/
                 boolean p2 = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-              /*  if (p2) {
-                    Toast.makeText(this, "P2 Granted", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "P2 Not Granted", Toast.LENGTH_SHORT).show();
-                }*/
-
                 boolean p3 = grantResults[2] == PackageManager.PERMISSION_GRANTED;
-              /*  if (p3) {
-                    Toast.makeText(this, "P3 Granted", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "P3 Not Granted", Toast.LENGTH_SHORT).show();
-                }*/
                 boolean p4 = grantResults[3] == PackageManager.PERMISSION_GRANTED;
-              /*  if (p4) {
-                    Toast.makeText(this, "P4 Granted", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "P4 Not Granted", Toast.LENGTH_SHORT).show();
-                }*/
                 boolean p5 = grantResults[4] == PackageManager.PERMISSION_GRANTED;
-              /*  if (p5) {
-                    Toast.makeText(this, "P5 Granted", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(this, "below called", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "P5 Not Granted", Toast.LENGTH_SHORT).show();
-                }*/
-                //Toast.makeText(this, "below called", Toast.LENGTH_SHORT).show();
 
                 if (p1 && p2 && p3 && p4 && p5) {
                     setupUI();
@@ -183,42 +163,13 @@ public class UrlsActivity extends AppCompatActivity {
                 }
             }
         } else if (requestCode == AFTER_13) {
-            //Log.e(TAG, "onRequestPermissionsResult: after called" );
             if (grantResults.length > 0) {
 
                 boolean p1 = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                /*if (p1) {
-                    Toast.makeText(this, "P1 Granted", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "P1 Not Granted", Toast.LENGTH_SHORT).show();
-                }*/
                 boolean p2 = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-                /*if (p2) {
-                    Toast.makeText(this, "P2 Granted", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "P2 Not Granted", Toast.LENGTH_SHORT).show();
-                }*/
-
                 boolean p3 = grantResults[2] == PackageManager.PERMISSION_GRANTED;
-                /*if (p3) {
-                    Toast.makeText(this, "P3 Granted", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "P3 Not Granted", Toast.LENGTH_SHORT).show();
-                }*/
                 boolean p4 = grantResults[3] == PackageManager.PERMISSION_GRANTED;
-                /*if (p4) {
-                    Toast.makeText(this, "P4 Granted", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "P4 Not Granted", Toast.LENGTH_SHORT).show();
-                }*/
                 boolean p5 = grantResults[4] == PackageManager.PERMISSION_GRANTED;
-                /*if (p5) {
-                    Toast.makeText(this, "P5 Granted", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "P5 Not Granted", Toast.LENGTH_SHORT).show();
-                }*/
-
-
                 if (p1 && p2 && p3 && p4 && p5) {
                     setupUI();
                 } else {
@@ -293,7 +244,13 @@ public class UrlsActivity extends AppCompatActivity {
 
     private void setupUI() {
 
+        /*Intent i = new Intent(UrlsActivity.this, NumberDemoActivity.class);
+        startActivity(i);
+        finish();*/
 
+        /*Intent i = new Intent(UrlsActivity.this, Registration.class);
+        startActivity(i);
+        finish();*/
         if (chatHelper.getLoggedInUser() != null) {
             Intent i = new Intent(UrlsActivity.this, HomeActivity3.class);
             startActivity(i);
@@ -376,6 +333,31 @@ public class UrlsActivity extends AppCompatActivity {
         super.attachBaseContext(MyContextWrapper.wrap(newBase, userLanguage));
     }
 
+    @Override
+    public void onPageStarted(String url, Bitmap favicon) {
+        showLoading();
+    }
+
+    @Override
+    public void onPageFinished(String url) {
+        hideLoading();
+    }
+
+    @Override
+    public void onPageError(int errorCode, String description, String failingUrl) {
+        hideLoading();
+    }
+
+    @Override
+    public void onDownloadRequested(String url, String suggestedFilename, String mimeType, long contentLength, String contentDisposition, String userAgent) {
+
+    }
+
+    @Override
+    public void onExternalPageRequest(String url) {
+
+    }
+
     public class MyWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -388,5 +370,6 @@ public class UrlsActivity extends AppCompatActivity {
             super.onPageFinished(view, url);
             hideLoading();
         }
+
     }
 }

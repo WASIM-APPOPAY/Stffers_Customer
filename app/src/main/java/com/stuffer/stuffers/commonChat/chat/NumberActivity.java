@@ -1,12 +1,16 @@
 package com.stuffer.stuffers.commonChat.chat;
 
+import static org.apache.commons.lang3.StringUtils.equalsIgnoreCase;
+
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +31,8 @@ import com.stuffer.stuffers.views.MyCountryText;
 import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
 import com.stuffer.stuffers.views.MyTextViewBold;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class NumberActivity extends AppCompatActivity {
     private static final String TAG = "NumberActivity";
@@ -52,7 +58,7 @@ public class NumberActivity extends AppCompatActivity {
         setupActionBar();
 
         tvCountryCode = findViewById(R.id.tvCountryCode);
-        ivFlag=findViewById(R.id.ivFlag);
+        ivFlag = findViewById(R.id.ivFlag);
         edtCustomerCountryCode = findViewById(R.id.edtCustomerCountryCode);
         edtMobile = (MyEditText) findViewById(R.id.edtMobile);
         tvSent = (MyTextView) findViewById(R.id.tvSent);
@@ -65,7 +71,7 @@ public class NumberActivity extends AppCompatActivity {
 
                 selectedCountryNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
                 //tvCountryCode.setText("+"+selectedCountryCode + " (" + selectedCountryNameCode + ")");
-                tvCountryCode.setText("+"+selectedCountryCode );
+                tvCountryCode.setText("+" + selectedCountryCode);
                 edtCustomerCountryCode.setVisibility(View.GONE);
                 ImageView imageViewFlag = edtCustomerCountryCode.getImageViewFlag();
                 Bitmap bitmap = ((BitmapDrawable) imageViewFlag.getDrawable()).getBitmap();
@@ -77,6 +83,12 @@ public class NumberActivity extends AppCompatActivity {
         tvSent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String term = tvCountryCode.getText().toString().trim();
+                if (term.equalsIgnoreCase("select\ncountry")) {
+                    edtMobile.setError("please select country code first");
+                    edtMobile.requestFocus();
+                    return;
+                }
                 if (TextUtils.isEmpty(selectedCountryCode)) {
                     Toast.makeText(NumberActivity.this, getString(R.string.select_country_code), Toast.LENGTH_SHORT).show();
                     return;
@@ -98,6 +110,33 @@ public class NumberActivity extends AppCompatActivity {
                 Log.e(TAG, "onClick: called");
                 //edtCustomerCountryCode.setVisibility(View.VISIBLE);
                 showCountry();
+
+            }
+        });
+
+        edtMobile.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                //String trim = tvCountryCode.getText().toString().trim();
+
+                String term = tvCountryCode.getText().toString().trim();
+                if (term.equalsIgnoreCase("select\ncountry")) {
+
+                    edtMobile.setError("Select country code first");
+                    edtMobile.requestFocus();
+                    //edtMobile.setText("");
+
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
 
             }
         });
@@ -145,7 +184,7 @@ public class NumberActivity extends AppCompatActivity {
     };
 
     public void showEdit() {
-        AlertDialog.Builder builder = new MaterialAlertDialogBuilder(this,R.style.MyRounded_MaterialComponents_MaterialAlertDialog);
+        AlertDialog.Builder builder = new MaterialAlertDialogBuilder(this, R.style.MyRounded_MaterialComponents_MaterialAlertDialog);
         LayoutInflater inflater = getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.verify_layout, null);
         MyTextViewBold btnEdit = dialogLayout.findViewById(R.id.btnEdit);
@@ -178,6 +217,8 @@ public class NumberActivity extends AppCompatActivity {
 
         String selectedCountryNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
         DataVaultManager.getInstance(NumberActivity.this).saveCCODE(selectedCountryNameCode);
+        DataVaultManager.getInstance(NumberActivity.this).saveUserMobile(edtMobile.getText().toString().trim());
+        //Intent intent = new Intent(NumberActivity.this, VerificationActivity.class);
         Intent intent = new Intent(NumberActivity.this, VerificationActivity.class);
         intent.putExtra(AppoConstants.AREACODE, selectedCountryCode);
         intent.putExtra(AppoConstants.MOBILENUMBER, edtMobile.getText().toString().trim());

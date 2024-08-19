@@ -566,7 +566,8 @@ data.</string>
     <string name="info_split2"> to read the </string>
     <string name="info_split3"> to accept the</string>
     <string name="info_split4"> Terms  and Condition </string>
-    <string name="info_accept_intro"><![CDATA[READ T&C]]></string>
+    <!--<string name="info_accept_intro"><![CDATA[READ T&C]]></string>-->
+    <string name="info_accept_intro">Get Started</string>
     <string name="info_select_your_app_language">Select Your App Language</string>
     <string name="info_apply">Apply</string>
     <string name="info_term_condition">Please Accept Term and Conditions.</string>
@@ -1072,6 +1073,1060 @@ data.</string>
     <string name="resend_code">
          <u>Resend code</u>.
     </string>
-    <!--<string name="required_at_least_one_non_numeric">"Required at least one non-alphanumeric character(!@#$%^amp&amp;*()_+=[]{}|)"</string>-->
+    <string name="welcome">WELCOME</string>
+    <string name="welcome3">"APPOPAY User Terms of Service Agreement
 
+Effective Date: December 31, 2023
+
+1. GENERAL
+
+1.1 These terms and conditions (hereinafter, the "Agreement", "Terms and Conditions", "T&amp;C" or "Terms") govern the relationship between Stuffrs, S.A., (hereinafter, “Stuffrs”, “Us” or “Our”) and the user of the appOpay Wallet and Platform, offered by Stuffrs. By downloading, registering and using the appOpay Wallet, you become an appOpay user, (hereinafter “User”, “You” or “Your”) and therefore you agree to comply fully with the contents of these terms and conditions.
+
+1.1.1This Agreement constitute a legally binding contract between you whose name and other identification and contact information are entered in the corresponding fields for activation in the appOpay platform and Stuffrs. Stuffrs is a Fintech company organized and exists under the laws of the Republic of Panama, duly registered in the Public Registry of Panama on October 16, 2019, with Public Register number 28,781, together with the User, (the "Parties"). Stuffrs provides its products and services within the territory of Panama (the “Territory”) under the trade name of appOpay.
+
+1.2 Except where other special terms and conditions expressly apply, these Terms shall govern the rights and obligations of the parties with respect to the user’s use of the Wallet and the products and services (hereinafter “Services”) offered through it.  The user agrees to read, understand and accept all terms set forth in this agreement and by checking the box next to accept Terms and Conditions, during the registration for an Account, you are certifying your acceptance of this Agreement. If you do not agree to our Terms, do not check the box next to accept Terms and Conditions and refrain from using the Wallet. These T&amp;C shall be deemed accepted by both parties from the moment the user’s registration is approved by us.
+
+1.3 We reserve the right to update, amend or modify (a Revised Version) all or part of these T&amp;C at any time and at our sole discretion. A Revised Version may include additional or modified service-specific T&amp;C in relation to current Products or Services. It is understood that the version published on the website www. appOpay.com is the current and updated version of these T&amp;C. We will display the latest updated date, to reflect the date of any changes. If the modifications introduced in a revised terms and conditions increase your obligations, or limits your rights, we will inform you in advance of their entry into force, so that you can choose to continue using our services or discontinue the use of the services offered by appOpay.
+
+1.3.1 It is your responsibility to consult the T&amp;C from time-to-time and to take notice of any changes. It is important you review all revised versions as they become effective immediately and apply on an ongoing-forward basis, unless otherwise indicated.
+
+1.3.2 Your continued use of the Wallet, following the posting of a revised version, constitutes your unconditional acceptance and agreement to the changes and you are deemed to have read, understood and unconditionally agree to abide, and be bound by such revised version.
+
+1.3.3 Any Dispute (as defined in Section 34) that arose before a Revised Version will be governed by the Terms in place when the Dispute arose.
+
+1.3.4 If at any time you no longer accept or agree with our Terms and Conditions or a revised version and do not wish to be bound by them, your sole and exclusive remedy is to stop using the Wallet and immediately withdrawal your Wallet Balance and delete the appOpay app.
+
+1.4 By registering, accessing or using appOpay, you acknowledge, understand and accept that Electronic Mobile Wallets are not governed by regulations within the Republic of Panama. Therefore, you take full responsibility for any-and-all risk associated with the use of the Wallet and our services and hold Stuffrs, its officers, directors, employees and affiliated parties harmless from any-and-all loss or damages, except loss or damage from our gross negligence or willful misconduct.
+
+1.4.1 AppOpay is not authorized to operate as a Bank or Financial Entity by the Superintendence of Banks of Panama. The funds placed in your Wallet Account is converted to electronic money and does not constitute a deposits, nor does it have any of the guarantees that a deposits may enjoy in accordance with the applicable legislation and regulations regarding deposits in Banks or Financial Entities.
+
+1.4.2 You accept and acknowledge that our obligation is limited to providing the appOpay Wallet, Platform and related services, and does not imply any representation or guarantee in relation to the quality, security or legality of any service, between you and a third party.
+
+1.5 Our obligations under these Terms and Conditions are solely conditional upon us accepting you as a user. Acceptance of a user is at our absolute and sole discretion, and a user may be rejected without specifying a reason. You agree to promptly, provide all information and/or documentation we request from you at any time, to enable us to comply with any legal requirements relating to your use of our Wallet, including but not limited to, information required by anti-money laundering and anti-terrorist financing regulation. You further consent to our verifying your information, by any means we deem appropriate, for these purposes.
+
+1.6 You understand and agree that failure to provide any information or updated information requested, to meet regulatory requirements, will result in the termination of your use of the Wallet.
+
+1.7 AppOpay is not responsible for any failure to perform or comply with any obligation(s), where applicable laws, acts, or omissions of a governmental or regulatory authority or agency prohibit or impedes us from performing such obligation(s) under this Agreement. This includes, but is not limited to, orders of domestic or foreign courts, tribunals, government restrictions, sanctions, restrictions on foreign exchange controls, etc.
+
+1.8 You agree all communications between the Parties, including, without limitation, those providing for changes in the conditions set forth herein and any other applicable conditions regarding the Wallet and our Services shall be sent only through the App and/or to the email address indicated by you at the time of registration. You agree that we may contact you though the Wallet Chat service or through the email you provided.
+
+1.8.1 You will be considered to have received a communication from us 24 hours after the time we send it.
+
+18.2 You understand and agree that, to the extent permitted by law, we may, without further notice or warning, monitor and/or maintain a copy of chat conversations and emails you or anyone acting on your behalf has with us for quality control and training purposes or for our own protection. You acknowledge and understand that while your communications with us may be monitored or copied it does not guarantee that every chat or email will be retained or retrievable.
+
+1.9 We do not provide investment or financial advice or consulting services. We are solely the provider of appOpay and do not advise or make recommendations about engaging in electronic transactions or operations. Decisions on making electronic transactions or preform operations involving digital transactions is taken on your own accord and at your own risk.
+
+1.10 For the avoidance of doubt, this Agreement takes precedence over any other arrangement between you and us concerning appOpay.
+
+2. DEFINITIONS
+
+For the purposes of this Agreement, the following words shall have the meanings set forth below, whether used in the singular or plural, capitalized or lowercase, as appropriate in relation to the text in which they appear:
+
+"Account Balance" or "Balance" – means the Electronic Money held in a Wallet Account, less any Fees or Funds on hold, which belongs to the account owner and available to conduct transactions through the Wallet.
+"Activation" – means the point in time when the Wallet ID and Account is activated by us.
+"Additional Terms and Conditions" – means the Terms and Conditions of future Products and/or Services and/or Terms and Conditions based upon country specific regulations.
+"Agent" – means any entity authorized by Stuffrs to carry out, on its own account and order, the operations of converting cash into electronic money, as well as reconverting electronic money into cash or providing a service.
+"Agreement" – means this User Terms of Service Agreement.
+"Application" or "App"– means the mobile wallet software program developed by Stuffrs for use on smartphones and where you as a user will interact with appOpay in relation to the services.
+"AppOpay" – means the commercial name used for the digital wallet offered by Stuffrs.
+"AppOpay Card or Wallet Card" – means a virtual or physical prepaid or debit card, associated to the Wallet.
+"AppOpay Platform" – means our websites, app, systems (including any networks and servers used to provide any of our services) operated by us or on our behalf, and any of our services that facilitates a large scalable networks of interdependent users and resources that can be accessed on demand to produce and exchange value among and between the network users.
+"AppOpay Wallet" or "Wallet" – means the provision of mobile financial services conjointly, the appOpay Products, including its Platform and Services, (both currently or future), the Wallet ID, Wallet Account, Wallet Card and Wallet Balance accessed through the App.
+"Business Day(s)" – means Monday through Friday, excluding holidays when appOpay’s offices are not considered open for business in Panama. Holidays are those days designated as Official National Holidays.
+"Cash" – means Money in the physical form, such as banknotes and coins, also referred to as Physical Currency and/or Funds herein.
+"Chat Account" or "Chat" – means an account established by appOpay that enables a user to talk to other appOpay users through the application.
+"Electronic Money" – means money that exists in computer systems that may be used to facilitate electronic transactions and is backed by physical currency.
+"Eligible Devise" – means a mobile phone with either an iOS or Android operating platform with a version of operating software that supports the use of the Wallet and has a camera function.
+"Fees" – means monies owed to us by a user for Services provided through the Wallet.
+"Funds" – means money denominated in sovereign currency of Panama and readily available for a particular purpose, but not cryptocurrency or any other form of asset not readily available.
+"IMEI" or "International Mobile Equipment Identity" – means a unique 15-digit serial number given to every mobile phone by the manufacturer.
+"Merchant" – means any legal entity or person licensed, if necessary, by regulatory authority of the jurisdiction(s) in which it operates and authorized by appOpay to accept appOpay as a means of payment for the products and/or services it sells.
+"Mobile Wallet" – means either a built-in feature or an app that can be installed onto smartphones. It stores electronic money and other items uploaded to it, including but not limited to, payment cards, financial accounts, identifiers (such as phone numbers or tokens) linked to a bank account, QR Codes, Account Balances and other kinds of payment methods that can be used to manage and conduct transactions with Electronic Money stored on them.
+"Money" – means a commodity accepted by general consent as a medium of economic exchange.
+"Our" – means Stuffrs S.A., its strategic alliances, affiliates, and associates.
+"Password" – means a unique sequence of numbers the user creates upon successful registration that will be required each time the user connects to the Wallet platform. The Password is personal and non-transferable.
+"Physical Currency" – means the tangible form of money that is paper bills and coins.
+"Personal Identification Number" or "PIN" – means a number created by the user during the registration process that must be entered to validate an electronic transaction. No electronic money can be transferred from a user account until the user PIN has been entered, regardless of transaction type. A PIN is personal and non-transferable.
+"Politically Exposed Persons" or "PEP" – means those national or foreign persons who fulfill prominent high-level public functions or with command and jurisdiction in a state, such as (but not limited to) heads of state or government, high-profile politicians, government officials, high-level ranking judicial or military personnel, senior executives of state companies or corporations, public officials who hold elected positions, among others who make decisions in public entities;  persons who perform or have been entrusted with important functions by an international organization, such as members of senior management, that is, directors, deputy directors and members of the board of directors or equivalent officials.
+"Revised Version" –means any addition, subtraction or change of an existing Term and Condition.
+"Services" – means any Product or Service offered by Stuffrs through the App.
+"Stuffrs S.A." – means a Panamanian Company with public deed number 28,781.
+"Transaction Pin" – means a six-digit number the user creates upon registering with the Wallet that the User must entered in every financial operation that the user carries out with the Wallet. The use of the transaction pin replaces the user's signature for all legal purposes. The pin is personal and non-transferable.
+"Unauthorized Transaction" – means when money is sent from your Wallet Account that you did not authorize and that did not benefit you.
+"Us" – means Stuffrs S.A., its strategic alliances, affiliates, and associates.
+"User" – means any natural person who downloads and registers the appOpay App in their name and whose registration has been accepted by us.
+"Virtual Account", "Wallet Account" or "Account" – means a unique and unrepeatable electronic monetary record in the appOpay database, that enables users to carry out transactions with electronic money and is established upon the issuance of a wallet id, and which the user is the sole owner.
+"Wallet Identification Number", "Wallet ID" or "ID" – means a unique identification number issued by appOpay to differentiate users.
+"We" – means Stuffrs S.A., its strategic alliances, affiliates, and associates.
+"You" or "Your" – means a current or prospective user of appOpay.
+3. APPOPAY PLATFORM
+
+3.1 The appOpay platform provides the functionality necessary to deliver a trustworthy and secure environment for the deployment of our Services, for your benefit as you participate in chat and the appOpay Wallet ecosystem.
+
+3.2 The platform facilitates the provisioning and activation of appOpay mobile financial services, which enables you to interact, make transfers and make payments through electronic means.
+
+3.2.1 Converts cash into electronic money and enables electronic money to be converted into cash.
+
+3.2.2 The sending/withdrawal of electronic money to and from the Wallet.
+
+3.2.3 The transferring and payments between users.
+
+3.2.4 The purchase of good and services with the Account Balance.
+
+3.2.5 The purchase of airtime recharge
+
+3.2.6 Provides an electronic monetary records database reflecting user’s electronic accounts, balances and transactional history that enables users to carry out transactions with their electronic balance.
+
+3.2.7 Any other service that is made available through the Wallet.
+
+4. MOBILE WALLET DESCRIPTION
+
+4.1 AppOpay records electronic money on its platform, the provisioning of mobile financial services and enables all legally permitted uses of electronic money, such as electronic payments and transfers, via Eligible Devices. AppOpay facilitates electronic transactions including but not limited to: contactless NFC and QR Code payments between users and merchants, the sending and receiving of electronic money through online and offline transactions and the transformation of cash to electronic money and cash to electronic money.
+
+4.2 Electronic money has the following characteristics:
+
+4.2.1 Its value is equivalent to the value of physical currency credited.
+
+4.2.2 It is accepted as a means of payment in the businesses accepting payments in electronic form.
+
+4.2.3 It is convertible to cash at any time through enabled channels; and
+
+4.2.4 When converted to cash it will be redeemed in the legal tender of Panama.
+
+4.3 The Wallet saves and stores information upload to it, including but not limited to, virtual/credit/debit/prepaid cards and other payment methods, Wallet ID (such as your phone number, pins or tokens) linked to an account. Gift and loyalty cards, coupons, points and other items.
+
+4.3.1 The Wallet also saves and stores information surrounding service transactions conducted through it, such as purchases, payments, loading methods, chat history, and other information."</string>
+
+
+    <string name="welcome4">"5. WALLET PRODUCTS AND SERVICES
+
+        5.1. AppOpay’s Platform, with the participation of third party providers of complementary
+        services such as, but not limited to, payment processors, credit card networks and providers
+        of automated data processing services, enables users to manage and use our services,
+        including but not limited to:
+
+        (1) “Chat”, communications between users and between users and us;
+
+        (2) “P-2-P Transfer”, the sending of electronic money to family and friends that have an
+        AppOpay Account, for - noncommercial purposes;
+
+        (3) “Bill Payment”, paying bills, electronically through the platform without physically
+        visiting a Biller location;
+
+        (4) “Top-up Airtime”, adding minutes to a devise that utilizes mobile minutes;
+
+        (5) “Shopping”, purchasing products, information, goods, services or materials online or in
+        stores with your Wallet or other payment methods tied to your Wallet;
+
+        (6) “QR Code Payment”, paying for purchases contactless by using our integrated Global NFC
+        QR Code payment feature at participating merchants around the world; and,
+
+        (7) “Cash-Out”, converting electronic money into physical cash at businesses displaying the
+        AppOpay Agent Logo, (“Agent Locations”).
+
+        (8) “AppOpay Card”, an appOpay virtual or physical card that connects to a user’s Wallet
+        Account allowing the user to conduct electronic transactions at participating merchant
+        locations.
+
+        5.2 Our technology is constantly evolving and new enhancements are being developed to
+        improve the user experience, we reserve the right, from time-to-time to, add, change or
+        remove features or services from the Wallet (including in relation to whether a feature or
+        service is free of charge or not). We further reserve the right, in whole or in part, to
+        add, revise, change, remove, suspend, stop, delete, discontinue or impose conditions on the
+        use or access of any feature or aspect of the Wallet at any time without prior notice, at
+        our sole and absolute discretion.
+
+        5.2.1 We will take all reasonable steps to notify you of termination of a feature or other
+        types of changes to the Wallet through Chat, our website, by email, SMS, app push
+        notifications, or the next time you access your Wallet. After a new version of the software
+        is released, older versions of the software may not be available. We do not guarantee that
+        older versions and the corresponding customer service of the app will continue to be
+        available. Please check and download the latest version.
+
+        5.2.2 Additional Terms and Conditions may apply to new products and/or services.
+        Jurisdictional conditions may apply to certain products and services, if you attempt to use
+        a jurisdictional prohibited product or service, such prohibited transaction will not be
+        completed and the Country-Specific T&amp;C will be referenced through the Wallet.
+
+        5.3 AppOpay Services has an indefinite duration.
+
+        5.3.1 You understand and agree that we may terminate or suspend a Service and/or any of the
+        contents at any time and without cause by giving prior notice to you.
+
+        5.4 AppOpay reserves the right to charge fees and/or commissions for the services offered
+        through its platform. Any fees and/or commissions will be communicated to the user prior to
+        their implementation and may be unilaterally adjusted by appOpay from time to time, for
+        which notification will be through the Wallets chat feature or by publication on the
+        website.
+
+        5.4.1 Fees and/or commissions will be deducted from the amount available in your Account
+        Balance. Applicable transaction fees and/or commissions will be charged at the time the
+        transaction is made. You authorizes appOpay to make the corresponding fees and/or
+        commission’s deductions regarding the transactions made.
+
+        5.5 You hereby certify you are responsible for all reversals, chargebacks, claims, fees,
+        fines, penalties and other liability of any nature incurred by us and further release
+        appOpay from any liability, be it civil, commercial, criminal, labor, fiscal, against third
+        parties that may arise now and in the future due to your breach of this agreement.
+
+        6. SERVICE AND PLATFORM INTERRUPTION
+
+        6.1 AppOpay will endeavor to maintain the availability of the Wallet platform and services
+        for continued use; however, we may interrupt the platform and/or service at any time in
+        order to carry out maintenance work on its operational and security platforms and/or any
+        other work required or necessary to improve the service.
+
+        6.2 In the event of an interruption of the service and/or the platform, appOpay will not be
+        responsible for any loss or lost profits, direct or indirect damages, or any other harm that
+        occurs in relation to the availability of the service and/or any event that causes
+        interruptions, delays or makes it impossible to conduct any transaction through the
+        platform.
+
+        6.3 AppOpay does not assume any responsibility towards damages arising from this contract,
+        including lost profits, nor for any direct or indirect, consequential, moral, special or
+        incidental damage, whether or not related to the provision of the Wallet and Platform.
+
+        7. APPOPAY WALLET FUNCTIONAL REQUIREMENTS
+
+        7.1 You acknowledge, understand and unconditionally agree that:
+
+        7.1.1 You must make all necessary arrangements to assure the compatibility detailed herein
+        to access the Wallet and take advantage of its functionality, including but not limited to:
+        (i) your mobile phone qualifies as an eligible devise. (ii) Your mobile devise has an active
+        and adequate internet connection via mobile network or WiFi that is capable of receiving
+        emails, SMS or push messages/notifications. (iii) You have a verifiable valid mobile phone
+        number that belongs to you, and tied to your eligible devise. (iv) You have the capability
+        to adjust certain functions of the eligible devise in the manner described within the Wallet
+        setup, to allow the Wallet to function properly.
+
+        7.1.2 The Wallet is provided through the internet by means of the App, through an eligible
+        mobile devices owned by you, and with participation of third party providers such as,
+        internet and mobile service providers.
+
+        7.2 Access to the internet, the use of the Wallet, receipt of SMS messages or notifications
+        may result in third party charges depending on your internet payment plan. We are not
+        responsible for any third party charges you might incur from using the Wallet and you are
+        solely responsible for all carrier data plans, internet fees, and/or any other fees
+        associated with your use of the Wallet. We are not responsible for the availability,
+        suitability or speed of the internet or services provided to you, by any third party
+        provider.
+
+        7.3 You are solely responsible, for any and all terms or agreements, you may have with your
+        mobile manufacturer, mobile carrier and internet provider and we have no responsibility or
+        liability whatsoever for such agreements or charges, if any.
+
+        7.4 You are prohibited from using a modified device to access or use the Wallet if the
+        modification is contrary to the manufacturer’s software or hardware guidelines, including
+        disabling hardware or software controls—sometimes referred to as “jail broken”.
+
+        7.5 You understand and agree we require remote access to your eligible device and the
+        ability to activate certain functions and automatically install essential updates, such as
+        critical bug fixes or security updates through your internet service, without additional
+        consent. For non-essential update’s you will be notified in advance and can choose to
+        download and/or activate the update. When you do not activate updates, we cannot guarantee
+        that all features of the Wallet will function properly.
+
+        7.6 We capture the unique IMEI number of your eligible devise, for authentication and
+        verification purposes only. By registering for a Wallet, you authorized us to capture the
+        IMEI of the eligible devise you register with us. You further agree that we can register and
+        link your name and email, the eligible devise’s phone number and IMEI to the Wallet,
+        ensuring the Wallet functions properly.
+
+        7.7 You expressly consent to receive your Account ID, login verification, transactional
+        details, transaction authentication verifications, notices, disclosures and other
+        communications regarding your use of the Wallet, as we determine, through your eligible
+        device.
+
+        7.8 AppOpay assumes no responsibility for the functioning of your eligible device and/or
+        software used by you to access our Wallet, the content and/or services, nor for those
+        related to and/or caused by third party providers of internet access services, cellular
+        telephony and/or other service provided by third parties.
+
+        7.9 If you do not comply with the requirements outlined in this Section 7, the Wallet will
+        not preform properly and we may not be able to provide the Wallet to you. Any personal
+        information (as defined in the AppOpay Privacy Policy) that is used or accessed by us within
+        your eligible device will be treated in accordance with such Policy.
+
+        7.9.1 Protecting your privacy is very important to us. Please review our Privacy Statement
+        on our website, in order to understand our commitment to maintaining your privacy, as well
+        as our use and disclosure of your information.
+
+        8. REGISTRATION
+
+        8.1 We offer two types of accounts that you can register for: a Chat Account and a Wallet
+        Account.
+
+        8.1.1 To register for a Chat and/or Wallet Account, you must downloaded the appOpay App from
+        the appropriate app store, or any other access or channel that Stuffrs enables in the
+        future, accept our Terms and Conditions and provide the necessary permissions to their
+        mobile for the app to work properly.
+
+        8.1.2 You can register for only one Chat Account and Wallet Account. The Accounts belong
+        exclusively to the person that has registered for the Wallet.
+
+        8.2 To register for a Chat Account enter your mobile number, which registers your mobile to
+        our platform. A verification notification will be sent to your mobile to confirm your
+        registration. Upon verification, your Chat Account is established.
+
+        8.2.1 Upon establishing a Chat account, the chat feature of the app is enabled and you can
+        begin communicating with other appOpay users.
+
+        8.3 To use any Service other than Chat, you must register for a Wallet Account. To register
+        for a Wallet Account, you are required to provide complete identification information and
+        complete the registration process.
+
+        8.3.1 You must submit the following current, true and correct information to obtain a Wallet
+        Account: (1) legal name and date of birth. (2) Physical address. (3) An activate email
+        address owned and controlled by you. (4) Any other information as may be deemed necessary by
+        us, collectively (the “registration information”). It is your sole and exclusive
+        responsibility to provide the registration information and confirm, under the penalty of
+        perjury, a felony of the third degree, that such information will be true and accurate.
+
+        8.3.2 Generate a password to access your Wallet, your password and eligible devise gives you
+        the ability to access your Wallet Account.
+
+        8.3.2.1 Your password is personal and nontransferable and you are solely responsible for its
+        generation and use and are obligated to take all necessary security measures to safeguard
+        its confidentiality.
+
+        8.3.2.2 Disclosure of your pin to third parties is strictly prohibited.
+
+        8.3.2.3 You understand and agree you are personally and unlimitedly liable for the
+        operations carried out with your password and under no circumstances will appOpay be liable
+        for any damage, direct or indirect, whatever its origin, even by the intervention of third
+        parties, that may occur as a result of the use of your password.
+
+        8.3.2.4 It is best practice to change your password frequently; we encourage you to change
+        your password every three months. You can change your password from the App.
+
+        8.3.3 Generate a six-digit transaction pin. The pin must be entered into the appOpay
+        platform before any electronic money can be transferred from your Account Balance.
+
+        8.3.3.1 The use of your pin replaces your signature for all legal purposes.
+
+        8.3.3.2 Your pin is personal, nontransferable, and generated by you. You are solely
+        responsible for its use and are obligated to take all necessary security measures to
+        safeguard its confidentiality.
+
+        8.3.3.3 Disclosure of your pin to third parties is strictly prohibited.
+
+        8.3.3.4 You understand and agree you are personally and unlimitedly liable for all
+        operations carried out with your pin and under no circumstances will appOpay be liable for
+        any damage, direct or indirect, whatever its origin, even by the intervention of third
+        parties, that may occur as a result of the use of your pin.
+
+        8.3.3.5 It is best practice to change your pin frequently; we encourage you to change your
+        pin every three months. You can change your pin from within the App.
+
+        8.4 You understand and agree that it is your sole responsibility to notify appOpay
+        immediately, if you know or suspect that any of your personal registration identification
+        information has been compromised or there is a controversy concerning their use. Further,
+        you understand and agree that you assume full and absolute responsibility for losses or
+        other damages incurred until the moment you notify us of such event(s).
+
+        8.4.1 Notification should be made through the App chat feature to appOpay support or through
+        email at [email protected].
+
+        8.4.2 We regard all use of your Wallet as being conducted by you, except where we have
+        received a proper and valid notification regarding your Account, Pin or login identification
+        being compromised or a controversy has occurred.
+
+        9. REGISTRATION INFORMATION VERIFICATION
+
+        9.1 To comply with jurisdictional laws and to prevent the funding of terrorism and money
+        laundering activities, we require you, through the app, to verify your Wallet Account
+        registration information. You will be asked to scan and upload a true and current government
+        issued document, such as a passport, driver’s license or identification card (“ID”) and a
+        current (within the previous six months) utility bill or other verifiable document
+        displaying your name and address. To verify your email address, we will send an email to the
+        email registered and ask you to respond from such email account. To verify your eligible
+        devise, we will call the mobile devise number provided and compare the registered IMIC of
+        the eligible devise with the devise connecting to the network.
+
+        9.2 We record and match the registration information against the scanned information. You
+        therefore authorize us too directly or through third parties make, any inquiries we consider
+        necessary to validate or authenticate your registration information. If you decline to
+        provide any of the requested information or if we cannot verify your registration
+        information, to our satisfaction, then your registration will be denied.
+
+        9.3 You understands and agrees that appOpay reserves the right to carry out any-and-all
+        pertinent and necessary validations regarding the prevention of money laundering, financing
+        of terrorism or other illicit activities and for this reason, it may close your Wallet
+        Account at any time during the relationship, without liability on the part of us for such
+        closure.
+
+        9.3.1 You must cover all charges, fees and commissions, if any, that have been generated
+        until the effective date of cancellation.
+
+        9.4 In the event of any change to your registration information, you agree to notify us of
+        such change prior to such change, when possible and in any event no later than 30 days after
+        such change. You further acknowledge and agree that if you do not keep your registration
+        information current, you will not be able to access your Wallet Account.
+
+        10. VERIFICATION PROCESS AND REFERENCES
+
+        10.1 By accepting these Terms and Conditions, you expressly authorize appOpay, in accordance
+        with article 24 and other applicable provisions of Law 24 of May 22, 2002 and in accordance
+        with Law 81 of March 26, 2019, to obtain information from data information agencies, banks
+        or other economic agents that may have, with respect to information related to credit
+        obligations or transactions that it maintains or could maintain, as well as any other
+        related data that serves the specific purposes of verifying information submitted by you.
+        This authorization extends to but is not limited to capturing, obtaining, requesting,
+        compiling, registering, organizing, structuring, storing, preserving, adapting or modifying
+        as permitted or ordered by law, extract, consult, use, communicate, transmit, exchange,
+        share, disseminate, limit, delete or destroy (such data in which the law allows or orders)
+        and in any other way, process said data.
+
+        10.2 Likewise, you authorize us to consult the Identity Verification System (SVI) of the
+        Electoral Court with the objective of validating your identification data. You declare with
+        the acceptance of these Terms and Conditions that the above authorization is granted freely
+        and voluntarily.
+
+        11. REGISTRATION ACCEPTANCE
+
+        11.1 In order to comply with the measures for the prevention of money laundering, the
+        financing of terrorism and the financing of the proliferation of weapons of mass
+        destruction, we reserve the right to accept or reject any registration application without
+        being obliged to notify the reasons for such decision, and without giving rise to any right
+        in favor of you or any other third party.
+
+        11.2 Your submission of the Registration Information represents a request from you to us, to
+        accept your Wallet registration. We are entitled to accept or reject your registration or to
+        request additional identification information, in our sole and absolute discretion and for
+        any reason.
+
+        12. USER’S DECLARATION
+
+        12.1 You declare, under the penalty of perjury, that all identification information you
+        provide is true, and accurate. You will not use appOpay to carry out illicit activities such
+        as those provided for in the laws, agreements, regulations and/or any other norms, whether
+        of a national and/or international nature that are or become applicable in the Republic of
+        Panama.
+
+        12.2 You are not affiliated with activities that constitute crimes classified in current
+        criminal law, nor to those crimes arising from the legitimation of money or assets that
+        come, directly or indirectly, from any illicit or criminal activity. Likewise, you declare
+        you will not participate in any act of bribery, with the purpose of obtaining any type of
+        improper advantages.
+
+        12.2.1 That to date you have not been judicially proven to have participated in activities
+        related to money and asset laundering, drug trafficking and related crimes, either in
+        national jurisdiction or abroad.
+
+        12.2.2 Any funds placed or received in your Wallet are your personal property and do not
+        come from or are linked, directly or indirectly, to an illicit origin or origin that are
+        related to the crimes of Money and Asset Laundering and/or Financing of Terrorism and/or
+        Proliferation of Weapons of Mass Destruction.
+
+        12.2.3 You assume responsibility for the improper or inadequate use of the Wallet
+        established in your favor.
+
+        12.3 You, nor any person with control over you, has participated, nor will participate in
+        actions that violate the Foreign Corrupt Practices Act or FCPA, of the United States of
+        America, the United Kingdom Bribery Act 2010, or any other law or regulation applicable in
+        the Territory. In turn, you represents that (i) you do not and will not carry out acts that
+        violate morality, public order and good customs, (ii) your actions are in good faith and in
+        compliance with applicable laws, (iii) you do not participate and will not participate in
+        any type of acts of bribery or corruption.
+
+        12.4 You are not designated on any international sanctions list maintained by any sanctions
+        authority of the government of the United States, the United Nations, the European Union or
+        its member states, the HM Treasury's financial sanctions regime of the United Kingdom, or
+        other sanctions that may be directly or indirectly applicable to appOpay.
+
+        12.5 You are not a resident of a sanctioned jurisdiction or subject to any international
+        economic sanctions, trade embargoes or similar measures.
+
+        12.6 You declare you are not classified as a "Politically Exposed Persons" ("PEP") or are a
+        “close relative”, “close collaborator”, beneficiary or third party to a PEP as defined in
+        Law 23 of April 27, 2015.
+
+        12.7 You will not use our Wallet or Platform if you are a citizen or resident of any state,
+        country, territory or other jurisdiction where your use of the Wallet would be illegal or
+        otherwise violate any applicable laws.
+
+        12.8 You are at least 18 years of age, legally competent and you have the legal right,
+        authority and capacity to enter into this binding Agreement with us. (ii) You own and/or
+        control the email account, eligible devise and mobile number you registered. (iii) All
+        identification information entered or collected in the course of registering for the Wallet,
+        and any subsequent information you add or update to such information, will be true, accurate
+        and complete, is not misleading in any way, and you agree to keep all registration
+        information current at all times. (iv) To the best of your knowledge, you are not
+        disqualified from using the Wallet for compliance issues, current laws, permits,
+        regulations, or other reason. (v) You will not impersonate another person, or falsely state,
+        or otherwise misrepresent your identity, age or affiliation with any person or entity. (vi)
+        If the eligible devise, mobile number or e-mail address provided by you is transferred,
+        surrendered, or deactivated for any reason, you will contact us and have such information
+        updated in our records prior to such transfer, surrender, or deactivation, no later than
+        thirty (30) days of such occurrence. (vii) You hereby release Stuffrs from any liability, be
+        it civil, commercial, criminal, labor, fiscal or of any nature against third parties that
+        may arise now and in the future due to any false representation, failure to update your
+        information or illicit use of the Wallet by you. (viii) You warrant you will not use the
+        platform to defraud or mislead us, other users or any other person or entity you contact
+        through the platform and you will not engage in any type of unlawful activities, including
+        but not limited to, dealing in products or services prohibited by applicable laws or us.
+        (ix) You are bound by these T&amp;C, or any amendments thereof.
+
+        12.9 You will notify us immediately if you become aware of any breach, change or inaccuracy
+        in the above statements. In the event of non-compliance with this section, appOpay may, at
+        its sole discretion terminate this agreement and/or suspend your Account, without any
+        penalty for such termination, and withhold any transaction until the breach is remedied.
+
+        12.10 You will not share, rent, lease or otherwise transfer your rights or use of your
+        appOpay Wallet with a third party under any circumstances and you will never use another
+        person's Account.
+
+        12.11 You, for all legal purposes, expressly recognizes and accept the personal and
+        non-transferable nature of the appOpay Wallet, and will bear the risks derived from the
+        disclosure of your credentials to third parties.
+
+        12.12 You understand and agree that transactions conducted with the Wallet and our Services
+        are your sole and exclusive responsibility.
+
+        12.13 You declare you will only use appOpay Wallet for lawful purposes and only for the
+        purpose for which it was created, and you will not use your Wallet for any other purpose.
+
+        12.14 You exempt appOpay from all liability arising from any type of erroneous, false or
+        inaccurate information that you have presented or from any legal violation, while this
+        agreement is in force.
+
+        12.15 You authorized appOpay to use any measures necessary to identify and verify your
+        identity as well as the validation of the statements you have made herein."</string>
+
+    <string name="welcome5">"13. WALLET IDENTIFICATION NUMBER (ID)
+
+13.1 To access and use the Wallet Account, a Wallet ID must be issued by us to you.
+
+13.1.1 You are prohibited from gifting, lending, transferring or otherwise permitting any other person to access or use of your Wallet ID and you cannot use another user’s Wallet ID.
+
+13.1.2 You understand and agree you can have only one Wallet ID and cannot register for an ID by using another person's information or identity, even if you have that person's written permission.
+
+13.2 Upon issuance of your ID, your eligible devise IMEI and phone number are tied to your ID. You can only use your Wallet upon your identity being verified through your eligible devise.
+
+14. WALLET ACCOUNT
+
+14.1 Upon issuance of your Wallet ID, you authorize us to open an individual electronic Account in your name and tie the account to your Wallet ID and mobile phone.
+
+14.2 You understand and agree your Account is not a checking account or connected, in any way, to any account other than your Wallet stored value electronic Account, where your electronic money is held.
+
+14.3 Your Account is used to hold your electronic money that is used to conduct electronic transactions including but not limited to making and accepting payments.
+
+14.4 We reserve the right to impose limits on your use of your Wallet Account, from time to time, including but not limited to: (i) the maximum amount you may add to or hold in your Account at any time. (ii) The aggregate amount added to your Account over any time-period. (iii) The number of transactions that can be made using your Account. (iv) The amount of money that you can send or transfer, as well as any other particularities applicable to the use of the electronic money in your account.
+
+14.4.1 Limits on your Wallet account may be modified, in which case we will notify you through chat, or email.
+
+14.5 You unconditionally agree we can monitor and record your use of your Account, including but not limited to any transaction, card usage, digital communications (such as chat or messaging), or any other use of your Account.
+
+14.6 You agree appOpay, in its sole discretion, may declare an Account “inactive” or “cancelled” if twelve (12) consecutive months pass in which you do not register a balance.
+
+14.7 In connection with your use of your Account, you cannot refuse to cooperate in an investigation concerning any Account activity that potentially violates applicable laws or this Agreement.
+
+15. FUNDING YOUR WALLET ACCOUNT
+
+15.1 Funds can be added into your Account by using any payment method or other means of payment as we accept from time to time. This includes but is not limited to: bank accounts linked to your Account by requesting an electronic transfer, verified eligible debit cards, with cash at agent locations, from other users that you personally know (P-2-P transfer), or any other payment method we accept (collectively, "deposit instruments"). When you transfer an amount to us using any such deposit instrument, or someone else transfers it to your Account for you or on your behalf, we will credit your appOpay Account with an equivalent amount, less any monies owed to us by you without undue delay.
+
+15.2 For transfers into your Wallet using a deposit instrument, we make no representation or warranty in respect of any such deposit instrument, or that the issuer of your deposit instruments will authorize or approve such transfer.
+
+15.3 Unless otherwise expressly agreed, we shall not be liable for any third-party fees or charges associated with funding your Account using a deposit instrument or any other method.
+
+15.4 Funding your account will be subject to transactional limits, as may be set from time to time.
+
+15.5 You expressly declare that funds sent to your account are your property and the funds do not come from or are not linked, directly or indirectly, to activities related to the crimes of money laundering and/or financing of terrorism or any other illicit activity.
+
+15.6 We reserve the right from time to time to decline funding of your Account, by any method, if we consider it appropriate.
+
+16. LINK OR UNLINK A PAYMENT METHOD
+
+16.1 You can link or unlink certain payment methods such as your Account Balance, a credit or debit card, or preapproved bank accounts to your Wallet Account. Please keep your payment method information current (e.g., credit card number and expiration date). If this information changes, you are solely responsible for updating your payment method information.
+
+16.2 You can choose any of the payment methods in your Wallet as your preferred payment method through the Wallet. There may be times when your preferred payment method cannot be used, for example, if you select a credit card that is expired.
+
+16.3 If you have not selected a preferred payment method, or your preferred payment method is unavailable, you will be required to select a payment method during the transaction checkout process.
+
+17. ELECTRONIC MONEY HELD IN YOUR ACCOUNT
+
+17.1 You understand and agree that to conduct transactions from your Wallet, you must have a positive Account Balance.
+
+17.2 Electronic money in your Account represents an unsecured claim against us and we hold these funds in electronic form for you, as you are the ultimate beneficial owner of the electronic money.
+
+17.3 You understand and agree that physical funds placed in your Wallet Account are backed by a Trust and held in a custodial Reserve Trust Account maintained for the benefit of you, the distribution instructions of which is handled by appOpay.
+
+17.4 The Electronic Money held in your Account, less any fees or electronic money on hold represents your credited electronic Account Balance.
+
+17.4.1 Account Balances do not constitute a deposit.
+
+17.4.2 Account Balances are not subject to interest payments.
+
+17.4.3 Your Account Balance is used to facilitate the funding of transactions through the services we offer.
+
+17.4.4 Balances are expressed in the legal tender in Panama.
+
+17.4.5 You may request a withdrawal of all or any portion of the electronic money of your Account Balance at any moment. A withdrawal from your Account Balance involves a cash withdrawal at appOpay Agent locations, ATM’s that accepts the appOpay card or a transfer into your personal financial account.
+
+17.4.6 You accept and acknowledge that, for correct and uninterrupted use of appOpay, you may not register negative balances or insufficient balances.
+
+17.5 AppOpay shall not be obliged to carry out a transactions requested by you when the Account Balance does not have sufficient electronic money to do so.
+
+18. PROHIBITIONS
+
+18.1 We specifically prohibits any use of the Wallet to: (i) provide fraudulent information, incomplete, false or inaccurate biographical data either during the registration process or at any time during the term of the contractual relationship between you and us. (ii) Refusing to provide any information, documentation or justification for any action, required by us. (iii) Using any mechanism to prevent or attempt to prevent the proper functioning of the Wallet, our Services or their contents. (vi) Disclosing or sharing your password, pin or other confidential information with third parties, or using the Wallet for unauthorized purposes. (v) To use or attempt to use any machine, software, tool, agent or other mechanism to navigate or search the Wallet, our Services or their contents, that are different from the search tools provided by appOpay. (vi) Attempt to decipher, decompile or obtain the source code of the Wallet or our Services. (vii) Perform actions contrary to Law and/or that contravene the regulations and provisions issued by the Regulators of the Republic of Panama and/or any other applicable jurisdiction. (viii) Commit crimes, infractions, contraventions and/or damages of any kind, including discrimination and/or harassment, to any person. (ix) Sharing the use of your Wallet, passwords, pin or Cards with third parties or carrying out transactions for the account and order of third parties.
+
+18.2 You agree and hereby certify that you will not.
+
+18.2.1 Assign, sell or transfer the rights and obligations arising from these terms and conditions to third parties
+
+18.2.2 Violate any law, statute, ordinance, or regulation within or without Panama.
+
+18.2.3 Infringe on our or any third party’s copyright, patent, trademark, trade secret or other intellectual property rights, or rights of publicity or privacy.
+
+18.2.4 Act in a manner that is defamatory, libelous, threatening or harassing.
+
+18.2.5 Provide false, inaccurate or misleading information.
+
+18.2.6 Send or receive what we reasonably believe to be potentially fraudulent funds or electronic money.
+
+18.2.7 Refuse to cooperate in an investigation.
+
+18.2.8 Attempt to double dip during the course of a dispute by receiving or attempting to receive funds from both appOpay and the seller, bank or card issuer for the same transaction.
+
+18.2.9 Control an account that is linked to another account that has engaged in any of the restricted activities.
+
+18.2.10 Use your Wallet Account or a Service in a manner that we, or any other electronic money transfer network reasonably believes to be an abuse of the card system or a violation of card association or network rules.
+
+18.2.11 Allow your Wallet Account to have a negative balance.
+
+18.2.12 The provisioning of a cash advance for yourself from your credit card (or help others to do so).
+
+18.2.13 Access the Wallet Services from a country that accessing such Service would be a violation of law.
+
+18.2.14 Take any action that imposes an unreasonable or disproportionately large load on our websites, software, systems (including any networks and servers used to provide any of our services) operated by us or on our behalf or our services.
+
+18.2.15 Facilitate any viruses, Trojan horses, malware, worms or other computer programming routines that attempts to or may damage, disrupt, corrupt, misuse, detrimentally interfere with, surreptitiously intercept or expropriate, or gain unauthorized access to any system, data, information, Wallet or services.
+
+18.2.16 Use an anonymizing proxy; use any robot, spider, other automatic device, or manual process to monitor or copy our websites without our prior written permission; or use any device, software or routine to bypass our robot exclusion headers.
+
+18.2.17 Interfere or disrupt or attempt to interfere with or disrupt our websites, software, systems (including any networks and servers used to provide any of our services) operated by us or on our behalf, any of the appOpay services or other users’ use of any of our services.
+
+18.2.18 Take any action that may cause us to lose any of the services from our internet service providers, payment processors, or other suppliers or service providers.
+
+18.2.19 Use our Services to test credit card behaviors.
+
+18.2.20 Circumvent any appOpay policy or determinations about your Wallet such as temporary or indefinite suspensions or other account holds, limitations or restrictions, including, but not limited to, engaging in the following actions:
+
+18.2.20.1 Attempting to open new or additional Wallet Account(s) while you existing account is active.
+
+18.2.20.2 Opening or attempting to open Wallet Accounts using information that is not your own.
+
+18.2.20.3 Using another person’s Wallet Account for any reason.
+
+18.2.21 Harass and/or threaten our employees, agents, or other users.
+
+18.2.22 Abuse our dispute our resolution process or any other resolution process we provide in the future.
+
+19. RESULT OF A PROHIBITIED VIOLATION
+
+19.1 If we believe you have engaged in any prohibited activities, we may take a number of actions to protect our customers, others and us at any time in our sole discretion, without giving rise to any right to compensation. Actions we may take include, but are not limited to:
+
+19.1.1 Terminating this Agreement, limiting your access to your Wallet and/or closing or suspending your Wallet Account immediately and without penalty to us.
+
+19.1.2 Limiting your access to our app and or platform (including any servers used to provide any of the services) operated by us or on our behalf, your Wallet or any of our Services. Limiting your ability to pay or send electronic money with any of the payment methods linked to your Wallet, restricting your ability to make withdrawals.
+
+19.1.3 Placing a hold on your Account Balance or any electronic money waiting to be claimed through your Wallet for up to 180 days, if we reasonably believe we need to protect against the risk of liability or if you have violated this Agreement. The hold may remain in place longer than 180 days to comply with Court Orders, Regulatory Requirements, or other legal processes.
+
+19.2 If we close your Account or terminate your use of the Wallet for any reason, we will provide you with notice of our actions and make any unrestricted electronic money in your Account, or any electronic money waiting to be claimed through your Wallet available for withdrawal."</string>
+    <string name="welcome6">
+20. CONDUCTING WALLET TRANSACTIONS
+
+20.1 You understand and agree you are required to enter your 6-digit pin before any electronic transaction can be completed or any electronic money can leave your Wallet Balance.
+
+20.1.2 Upon your 6-digit pin being entered, you irrevocably authorize appOpay to complete the transaction by moving electronic money from your Wallet Balance to the transaction’s corresponding recipient account.
+
+20.2 It is your responsibility to successfully verify each transaction and control the balance in your wallet once a transaction is completed. You are solely responsible for any errors in a transaction.
+
+20.2.1 It is not possible to reverse payments made from an external website where an appOpay Button is used.
+
+20.2.2 In this sense, appOpay is not obligated to reverse or return to the origin of the total amount sent, or the fee and/or commission paid if applicable. You may submit your case for evaluation.
+
+20.3 Transactions conducted by you through the Wallet are only valid when you conduct the transaction through your Account with the specific methods determined by appOpay for such transactions. Any attempt to conduct a transaction by any other means shall not be valid.
+
+20.4 Your understand, agree and accept that any transaction initiated and carried out through your Wallet shall be considered and understood as proof of you personally carrying out the transaction and is considered valid, legitimate, authentic and binding, without the need for any other type of confirmation.
+
+20.5 Transactions are recorded on the date and time they are actually carried out. In certain cases, the date or time of registration of the transaction may be later than the time when its execution was requested, depending on the type of transaction. Likewise, registration of the date and time of a recharge and corresponding withdrawal operations may be subject to additional conditions by individual third party service providers.
+
+20.6 Upon receipt of a transaction confirmation message, which is displayed on the app at the conclusion of each transaction, the transaction cannot be revoked. You expressly exonerate us from all liability for any damages and/or losses, direct and/or indirect, arising or that may arise in connection with the use of your pin, passwords and/or authentication factors, including biometric ones, as well as the inability to use them. Further, you expressly exonerates us from all liability in connection with any failure in performance, error, omission, interruption, defect, delay in operation or transmission, virus or system failure of both appOpay and your device, or for any other circumstance.
+
+20.7 You acknowledge, agree and accept as reliable, fully truthful and undisputable proof of an operation and/or transaction; the transaction summary issued by appOpay concerning such transaction, constituting sufficient proof of the completion of the transaction, replacing the need for any additional documentation.
+
+20.7.1 You accept the app operation transaction summary as an account summary through which you can review your transactional history. By virtue of this, you accept and exonerate us from sending periodic account statements.
+
+20.8 You confirm you will use appOpay’s P-2-P service to send money to friends, family and other trusted persons, and will not use the service for recipients whom you do not know or trust.
+
+20.8.1 You authorizes us to carry out transfers of electronic money ordered by you to send and receive such electronic money from and to other appOpay users.
+
+20.9 When we identify a potentially high-risk transaction, we review the transaction more closely before allowing it to proceed. When a high-risk transaction happens, appOpay may place a hold on the transaction. If the transaction is an e-commerce purchase, we will notify the seller to delay shipment of the item. A review can result in a delay in receiving the item you purchased. Once the transaction is cleared, we will notify the seller and direct them to ship the item. If we do not clear the transaction, if the transaction is canceled we will return the electronic money to you, unless we are legally required to take other action.
+
+20.10 AppOpay will use suitable systems to accredit the ownership of the transactions carried out, and we declare that we will apply our best efforts and the best practices required by the industry in order to guarantee the computer security of the systems and records used in a transaction.
+
+
+
+21. TAXES AND INFORMATION REPORTING
+
+21.1 You accept and agree that appOpay will not be responsible for the valuation or payment of taxes/levies or other charges that may arise from a transaction between you and a third party. Therefore, you must assume any charge that may arise from any transaction carried out with third parties.
+
+21.2 Fees or commissions charged by us, if any, do not include any taxes, levies, duties or similar governmental assessments of any nature, including, for example, value-added, sales, use or withholding taxes, assessable by any jurisdiction (collectively, “taxes”).
+
+21.2.1 It is your responsibility to determine what, if any, taxes apply to any payments you make or receive, and it is solely your responsibility to assess, collect, report and remit the correct taxes to the appropriate authority. AppOpay is not responsible for determining whether any taxes apply to your transaction, or for calculating, collecting, reporting or remitting taxes arising from any transaction.
+
+21.3 You acknowledge that we may make certain reports to tax authorities regarding transactions that we process.
+
+22. CLOSING YOUR WALLET ACCOUNT
+
+22.1 You can terminate your relationship with us at any time without cost by closing your Wallet Account withdrawing or transferring any electronic money held in your Account Balance, Virtual Card and Physical Card, leaving a zero dollar ($0.00) balance, and removing the app from your mobile. You will remain liable for all obligations related to your Account even after your account is closed.
+
+22.2 When you close your Account, we will cancel any scheduled or incomplete transactions.
+
+22.2 In certain cases, you may not close your Account.
+
+22.2.1 To evade an investigation.
+
+22.2.2 If you have a pending transaction using your Account, Virtual Card or Physical Card Balances as the payment method, or an open dispute or claim related to your Balances.
+
+22.2.3 If your Account or Card Balances has a negative balance.
+
+22.2.4 If your Account or Card Balances is subject to a hold or limitation.
+
+23. HOLDS, LIMITATIONS, AND RESERVES
+
+23.1 Under certain circumstances, in order to protect us and the security and integrity of our Wallet and Platform, we may take account-level or transaction-level actions. Unless otherwise noted, if we take any of the actions described here, we will provide you with notice of our actions, but we retain the sole discretion to take these actions. To request information in connection with an account limitation, hold or reserve, you should contact appOpay support though the Wallet chat feature, or follow the instructions in our notice with respect to the limitation, hold or reserve. Account holds or limitations may affect your ability to move electronic money to or from your Wallet Account.
+
+23.1.1 To protect us and other users from loss, we may delay a transaction, transfer or withdrawal, in certain situations, including if we need to confirm that you have authorized the transaction, transfer or withdrawal. If we place a limitation on your Wallet Account, a payment or transaction is subject to a hold, or your account has a negative balance while a withdrawal from your Account is pending, you will have to reinitiate the withdrawal once the limitation or hold has been lifted, or negative balance is fully paid off.
+
+23.1.2 Our decision about holds, limitations and reserves may be based on confidential criteria that are essential to our management of risk and the protection of appOpay, our customers and/or service providers. We may use proprietary fraud and risk modeling when assessing the risk associated with your Wallet Account. In addition, we may be restricted by regulation or a governmental authority from disclosing certain information to you about such decisions. You agree that we have no obligation to disclose the details of our risk management or security procedures to you.
+
+23.1.3 In order to facilitate actions described above and allow us to assess the level of risk associated with your Wallet Account, you agree to cooperate with all reasonable requests for financial statements and other documentation or information in a timely fashion.
+
+23.2 A hold or limitation is an action that we may take under certain circumstances at either the transaction level or the account level. When appOpay places a temporary hold or limitation on a transaction, the money is not available to either the sender or the recipient. We review many factors before placing a hold or limitation on a transaction, including but not limited to: account tenure, transaction activity, transaction type, and past disputes.
+
+23.3 There are several reasons why your Account could be placed on hold or limited, including but not limited to.
+
+23.3.1 If we suspect someone could be using your Wallet Account without your knowledge, we will limit it for your protection and look into the fraudulent activity.
+
+23.3.2 If your debit or credit card issuer alerts us of someone has used your card without your permission. Similarly, if your bank lets us know that there have been unauthorized transfers between your Wallet Account and your bank account.
+
+23.3.3 In order to comply with applicable law.
+
+23.3.4 If we believe in our sole discretion that you have breached this agreement.
+
+23.4 Unless a permanent limitation or hold is placed on your account, you will need to resolve any issues with your account before a limitation or hold can be removed. Normally, this is done after you provide us with the information we request. However, if we reasonably believe a risk still exists after you have provided us that information, we may take action to protect appOpay, you, other users, or third parties from reversals, fees, fines, penalties, legal and/or regulatory risks and any other liability.
+
+23.5 If we place a reserve on your Account Balance, the Balance will be shown as "pending" and we will notify you of the terms of the reserve. If we change the terms of the reserve due to a change in our risk assessment, we will notify you of the new terms.
+
+24. ERROR RESOLUTION
+
+24.1 An “Error” means the following:
+
+24.1.1 When electronic money is either incorrectly taken from your Account Balance or incorrectly placed into your Wallet Account, or when a transaction is incorrectly recorded in your Wallet Account.
+
+24.1.2 You conduct a transaction and the incorrect amount is debited from your Account Balance.
+
+24.1.3 An incorrect amount is credited to your Account Balance.
+
+24.1.4 A transaction is missing from or not properly identified in your transaction summary.
+
+24.1.5We make a computational or mathematical error related to your Account.
+
+24.2 The following are NOT considered Errors:
+
+24.2.1 Giving a third-party access to your Wallet Account (by providing them your credentials) and they use your Account without your knowledge or permission. You are responsible for transactions made in this situation.
+
+24.2.2 Routine inquiries about the balance in your Account.
+
+24.2.3 Requests for duplicate documentation or other information for tax or other recordkeeping purposes.
+
+24.3 If you find an error or have a question about an electronic transfer, contact us at customer support through the chat feature of the Wallet.
+
+24.3.1 Notify us as soon as possible, if you believe your transaction summary or receipt is incorrect or if you need more information about a transfer listed on the transaction summary or receipt. We must hear from you no later than 60 days after we provide the FIRST transaction summary on which the problem or error appeared.
+
+24.3.1.1 Provide your name and account number.
+
+24.3.1.2 Tell us the dollar amount of the suspected error.
+
+24.3.1.3 Describe the error or the transfer you are unsure about, and explain as clearly as you can why you believe it is an error or why you need more information.
+
+24.3.2 We will determine whether an error occurred within 10 business days after you contact us and will correct any error promptly. If we need more time, however, we may take up to 45 days to investigate your complaint or question. If we decide to do this, we will credit your Account within 10 business days for the amount you think is in error, so that you will have the use of the money during the time it takes us to complete our investigation.
+
+24.3.2.1 Should we determine no error occurred, you hereby irrevocably agree we have the right to withdrawal the credit from your Account.
+
+24.3.2.2 We may ask you to provide more details concerning your complaint or question in writing. If we do not receive your response within 10 business days, we may not credit your Account Balance.
+
+24.3.3 For errors involving new Wallet Accounts, point-of-sale transactions, or foreign-initiated transactions, we may take up to 90 days to investigate your complaint or question. For new Wallet Accounts, we may take up to 20 business days to credit your Account for the amount you think is in error.
+
+24.3.4 We will tell you the results within 3 business days after completing our investigation. If we decide that there was no error, we will send you a written explanation. You may ask for copies of the documents that we used in our investigation.
+
+25. PROCESSING ERRORS
+
+25.1 We will rectify any processing error that we discover. If the error results in:
+
+25.1.1 You receiving less than the correct amount to which you were entitled, then we will credit your Wallet Account for the difference between what you should have received and what you actually received.
+
+25.1.2 You receiving more than the correct amount to which you were entitled, then we will debit your Wallet Account for the difference between what you actually received and what you should have received.
+
+25.1.3 We do not completing a transaction on time or in the correct amount, then we will be responsible to you for your losses or damages directly caused by this failure, unless:
+
+25.1.3.1 Through no fault of ours, you did not have enough available electronic money to complete the transaction.
+
+25.1.3.2 Our Platform was not working properly and you knew about the breakdown when you started the transaction; or
+
+25.1.3.3 The error was due to extraordinary circumstances outside our control (such as fire, flood or loss of Internet connection), despite our reasonable precautions.
+
+25.2 Processing errors are not:
+
+25.2.1 Delays that result from us applying holds, limitations or reserves.
+
+25.2.2 Delays based on a payment review.
+
+25.2.3 Delays related to the time it may take for a purchase transaction to be completed in some situations.
+
+25.2.4 Errors made by you in making a transaction (for example, mistyping an amount of money that you are sending)."</string>
+
+    <string name="welcome7">"26. APPOPAY’S RIGHTS
+
+26.1 AppOpay in our sole discretion, reserves the right to suspend, interrupt or terminate this Agreement, your access to or use of your Wallet and our Platform for any reason and at any time, upon notice to you and, upon termination of this Agreement and the payment to you of any unrestricted electronic money held in your Account Balance.
+
+26.2 You grant appOpay a lien on, and security interest in and to, electronic money held in your Wallet Account to secure the performance of your obligations under this Agreement.
+
+26.3 If your Account Balance becomes negative for any reason, that negative balance represents an amount that you owe to us. You hereby consent and agree appOpay may deduct these amounts from electronic money added to your Wallet Account later either by you or from third parties.
+
+26.4 In addition to the above, if you have a past due amount owed to us or our affiliates, you agree we may debit your Account Balance to pay any amounts that are past due. This includes amounts owed by using our various services.
+
+26.5 If any proceeding by or against you is commenced under any provision of law as amended, or under any insolvency law, you hereby confirm we will be entitled to recover all reasonable costs or expenses (including reasonable legal fees and expenses) incurred in connection with the enforcement of this Agreement.
+
+26.6 If appOpay invalidates and reverses a payment that you made (either at your initiative or otherwise), you agree that we assume your rights against the recipient and third parties related to the payment, and may pursue those rights directly or on your behalf, in our discretion.
+
+27. NO WAIVER
+
+Our failure to act with respect to a breach of any of your obligations under this Agreement by you or others does not waive our right to act with respect to subsequent or similar breaches.
+
+28. SECURITY
+
+28.1 We have implemented measures, both technical and organizational, designed to secure your personal information from loss and from unauthorized access, use, alteration, or disclosure. However, we cannot guarantee that unauthorized third parties will never be able to defeat our measures or use your personal information for improper purposes. You understand and agree to provide your personal information to us at your own risk.
+
+28.2 Best practice is not to reuse your Wallet password or transaction pin on third party applications. You are required to immediately, notify us when you become aware of any suspected disclosure and/or unauthorized use or misuse of your Wallet password, transaction pin or Account or any other breach of security. Additionally, you are prohibited from using the Wallet Account of another person. In the event of any dispute between two or more parties as to account ownership, we will be the sole arbiter of such dispute in our sole discretion. Our decision (which may include termination or suspension of any Account subject to dispute) will be final and binding on all parties.
+
+28.3 From time to time, we may provide you with various transaction security features to reduce the risk of unintended or unauthorized transactions involving your Account. Regardless of the transaction security features you select, you assume responsibility for all charges made through your Wallet, including unintended or unauthorized purchases made through your Wallet.
+
+29. PERSONAL DATA PROTECTION
+
+29.1 By registering for our app, you grant your voluntary, prior, express and informed consent to appOpay, to create a personal database on you containing sensitive personal data (data). The database will be created during the course of your relationship with related entities, if any, and us. You also voluntarily authorize us to use and process your personal data, sensitive personal data, including biometric data referring to your fingerprints, voice, image of your face, or other similar data, as well as your credit and financial data in accordance with current legislation and the appOpay Privacy Notice published at the following link: http://www.appOpay.com/legal/PrivacyNotice. Such Privacy Notice may be modified due to new legal requirements, our own needs for the products or services we offer, our practices, privacy policies or programs, changes in our business model or other causes, through the website or other Digital Wallet applications.
+
+29.1.1 You expressly and voluntarily declare and accepts that the purpose of collecting, storing, distributing, and processing of your data includes, among others things, for the provisioning of services, offering of goods, products and services. The sending of communications related to goods, services, products, commercial promotions, service improvement, satisfaction surveys, studies, collection management, customer service, technical support or other related services, as well as those purposes described in the Privacy Notice, whether provided directly by us or through affiliated third parties.
+
+29.1.2 The purpose of collection, storage, distribution and processing of your biometric data is solely for: (i) the validation and verification of your identity by Digital Wallet and its related companies, in the sales or post-sale processes of goods and services or granting of credit. (ii) In order to prevent fraud, money laundering, financing of terrorism and other illegal activities in compliance with the Law against money laundering or other assets, the Law to prevent and repress the financing of terrorism and other laws in force in the country. (iii) Allowing your electronic authentication, whenever you decide, in the goods, products and services offered by appOpay or affiliated third parties.
+
+29.1.3 In any case, you authorize appOpay to process all of your data that is necessary for the proper provision of services, the cross-border transfer of data, as well as the processing and analysis of your data by our affiliate companies, for the purposes that originate its collection. You certify you know your rights to update and rectify any information given or collected, if it is found that the information is erroneous, incomplete or inaccurate, in accordance with current legislation. You further certify you understand how to exercise such rights in accordance with the provisions of the Privacy Notice published at http://www.appOpay.com/legal/PrivacyNotice where you can learn about our data processing practices, which you agree may be modified or updated at any time.
+
+29.1.4 You unconditionally authorize appOpay to provide your personal data to third-party providers of services or products or affiliated partners in charge of processing the data and to affiliated entities and subsidiaries of appOpay, within and outside of the Republic of Panama.
+
+29.2 In the event that our employees, affiliated companies, systems or us have access to your confidential data, we will employ effective technologies and process protocols to ensure the protection, integrity and security of any personal information of and the systems in which this information is collected, transferred and stored. The data provided will be kept as long as the commercial relationship is maintained or for the years necessary to comply with legal obligations. The data will not be transferred to third parties except in cases where there is a legal obligation.
+
+29.3 You expressly authorize us on our own or through third parties, to contact entities that provide personal data, credit and financial data and information and to collect periodic reports, studies or information that contain personal and credit information at any time while the contractual relationship between you and us is in force. You further authorize us to, distribute and provide such personal data to third-party service or product providers in charge of data processing, and to affiliated entities and subsidiaries of appOpay within and outside Panama for purposes related to the provision of our services. Sharing of data will comply with the privacy constraints indicated in our Privacy Notice, and with the requirements imposed by current legislation on data protection.
+
+29.4 In the event that we receive a database or any personal information on our own, or from any third party, appOpay undertakes to use it for the purposes of the execution for which it has been transferred, always respecting the purpose of the authorization given by the owner of the personal data stored therein. We will, at all times comply with the provisions of Law 81 of March 26, 2019 and its regulations. All information collected during the term of this Agreement is part of our Database.
+
+29.5 The data provided will be kept as long as the commercial relationship is maintained or for the years necessary to comply with legal obligations. If you require additional information regarding this policy or exercise any right contemplated in current regulations, you can contact us through our customer service channels.
+
+29.6 We highly recommend you periodically review our Privacy Notice, published at the link above, to learn about our current practices for the processing of personal data, which may be modified or updated at the discretion of appOpay at any time, through our website.
+
+30. APPOPAY CARD
+
+30.1 During the registration process you can apply for an appOpay virtual and physical Card (hereinafter the “Card”) that can be linked to your Wallet Account in a manner that allows you to simplify your mobile purchase and payment processes, as well as obtaining cash at appOpay network of ATMs and agents.
+
+30.1.1 The card is issued at your request and upon approval of your application. Once funded, the card may be used as a means of payment anywhere the appOpay card is accepted, including our network of merchants, agents and affiliates.
+
+30.2 Upon accepting these Terms and Conditions, the acceptance of your card application and you signing the card agreement, you may obtain one virtual and one physical card per Account. To use a card, you must transfer electronic money from your Wallet Account Balance to the card you wish to use. The combined balance on each of the cards plus your Wallet Account Balance are subject limitations and restrictions as outlined in Section 14.4. Likewise, the combined transactions of each card and your Wallet Account transactions are subject to the restrictions outlined in said Section.
+
+30.2.1 The balance in your card accounts do not draw interest.
+
+30.2.2 You are solely responsible for placing electronic money onto your card from your Wallet Account Balance.
+
+30.2.3 You are responsible to ensure that you have sufficient electronic money in your card balance to cover the transactions you make.
+
+30.2.4 We reserve the right to reject any transaction that exceeds the card balance and assume no liability for any loss or damage that may result from such rejection.
+
+30.2.5 If you conduct a transaction that exceeds your card balance, you agree and authorizes the application of additional fees on the amount exceeding such card balance. This charge will be added to the total amount of the transaction and may be automatically debited from your associated account.
+
+30.2.6 You irrevocably authorize us to reload your appOpay Card by withdrawing electronic money from your Wallet Account Balance and electronically place such electronic money for credit to your applicable appOpay Card Balance, per the instructions you make though the app. You further authorize use to make the corresponding movements of your card balance for the payment of a card transaction requested you, always in accordance with the caps and restrictions set by appOpay.
+
+30.3 Upon your application being accepted, your virtual card becomes activate in the app and is ready to have electronic money transferred from your Account Balance to the card through the app. Once you have transferred electronic money to your virtual card it can be used for in store and online purchases, anywhere the appOpay card is accepted. Additionally, your virtual card can be used at participating ATM’s and at network agent locations to obtain cash.
+
+30.3.1 Your virtual card is assigned a card number, security code and expiration date (card credentials) which is masked in the app. To use your virtual card for e-commerce the card can be unmasked in the app displaying the card number, security code and expiration date.
+
+30.3.2 You are solely responsible for administrating and safeguarding your virtual card credentials, as they have been assigned to you on a personal, confidential and non-transferable basis. Your use of the virtual card is your exclusive responsibility and you bear the risks derived from the disclosure of the card credentials to third parties. You acknowledge and agree that the use of your virtual card through the app or online implies the recognition of all transactions made through the Wallet, especially those related to payments and purchases.
+
+30.4 Upon your virtual card being activated, you can request a physical card through the chat feature in the app. The appOpay physical card is subject to an annual fee that is set out in the card agreement.
+
+30.4.1 The physical card will be delivered by mail to the address you provide or picked up at designated agent locations, provided you provide the agent with the required identification and verification process outlined in the app.
+
+30.4.2 Your physical card contains a card number, security code and expiration date (card credentials) and you are solely responsible for administration and safeguarding your physical card credentials, as they have been assigned to you on a personal, confidential and non-transferable basis. Your use of the physical card is your exclusive responsibility and you bear the risks derived from the disclosure of the card credentials to third parties. You acknowledge and agree that the use of your physical card implies the recognition of all transactions made with the card, especially those related to payments and purchases.
+
+30.5 You can use your virtual and prepaid card to make online and physical store transactions for purchase for products and consumption services, within and outside the Territory. Make cash withdrawals at Automated Teller Machine (ATM) networks accepting the appOpay card or at network agent locations. You can authorize automatic debits through the cards. All in accordance with the limits established by appOpay.
+
+30.6 You may block and unblock your Cards from your Wallet. To unlock your card, from your appOpay Wallet, you must log into your account through the app verification process and from within the app, unlock the blocked card (both virtual and/or physical card). If you require additional support, you can do so by contact support through the chat feature.
+
+30.7 You can reload your card directly from your Wallet Account Balance within the app. It is your sole and exclusive responsibility to load electronic money onto your cards.
+
+30.8 AppOpay may charge a commission and/or transaction fee for use of the card; by withdrawal; by Balance Recharge; by issue; and, for replacement, which will be set by appOpay. Applicable taxes must be added to the respective commissions and/or transaction fee in accordance with current legislation.
+
+30.8.1 Commissions and/or transactional fees applicable to the Card will be debited from your Wallet Card Balance at the time the transactions corresponding to them are carried out.
+
+30.8.2 Commissions and/or transactional fees may be modified by appOpay in accordance with its commercial stipulations, the change of which will be notified to you in accordance with the terms indicated in this agreement.
+
+30.9 In case of loss, theft or misplacement of the Card, you are responsible for requesting a replacement through the application and immediately reporting it to Customer Service through chat and request the blocking of the card.
+
+30.10 In the event that you are the victim of any illicit act by third parties, any transaction generated from the moment of said legal act is your sole responsibility; you must report or denounce it in the relevant and authorized instances in accordance with the legislation of the Territory.
+
+30.11 Your card has an expiration date listed on the card. Prior to the expiration of your card, you will be notified and will be able to request a new card from within your Wallet.
+
+30.12 If you request a review or need to express any dissatisfaction with any transaction made with your appOpay Card, you must contact customer service through chat within the app within 30 business days after making the charge (the Dispute period). Any transaction that has occurred after the Dispute period will be understood as accepted by you.
+
+30.12.1 Disputes or claims when using your appOpay card concerning consumer transactions carried out with merchants, you must file the claim in the first instance with the merchant carrying out the transaction that is in dispute. After fifteen (15) calendar days of the claim filed with the business, you must file the claim through the chat feature within the Wallet.
+
+30.13 All operations and/or transactions are carried out in United States dollars.
+
+30.14 We reserve the right to deny both the physical and virtual card issuance request in accordance with our Anti-Money and Asset Laundering enforcement policies, our Fraud policies, our Commercial Policies, as well as under any other cause that we believe, in our sole discretion, could represent a risk.
+
+31. DORMANT ACCOUNTS
+
+31.1 If you do not log in to your Wallet Account or use your appOpay card for two or more years, we may close your Wallet Account and card and send any Account Balances, to your primary address on file with us.
+
+32. LIMITATIONS ON LIABILITY
+
+32.1 You expressly release appOpay, its directors, representatives, employees, subsidiaries, affiliates  and any other related party, (the appOpay Parties), from liability for any event, action or consequence arising from the use of our Wallet and Platform. You further guarantee to hold us harmless from any claim, action or demand of a civil, commercial, criminal, labor, fiscal or any nature that may arise due to the acceptance of this Agreement and the use of the appOpay Platform, notwithstanding that AppOpay may have been advised of the possibility of such damages.
+
+32.2 In no event shall we be liable for lost profits or any special, incidental, consequential or moral damages (including without limitation damages for loss of data or loss of business) arising out of or in connection with our Platform, (however arising, including negligence), unless and to the extent prohibited by law.
+
+32.3 Our liability to you or any third parties in any circumstance is limited to the actual amount of direct damages.
+
+32.3.1 To the extent permitted by applicable law, appOpay is not liable, and you agree not to hold us responsible, for any damages or losses (including, but not limited to, loss of money, goodwill, or reputation, profits, or other intangible losses or any special, indirect, or consequential damages) resulting directly or indirectly from:
+
+ 32.3.1.1 Your use of, or your inability to use, our Platform.
+
+32.3.1.2 Delays or disruptions in our Platform.
+
+32.3.1.3 Viruses or other malicious software obtained by accessing our Platform.
+
+32.3.1.4 Glitches, bugs, errors, or inaccuracies of any kind in our Platform or in the information and graphics obtained from them.
+
+32.3.1.5 The content, actions, or inactions of third parties.
+
+32.3.1.6 A suspension or other action taken with respect to your Wallet Account.
+
+32.3.1.7 Your need to modify your practices, content, or behavior, or your loss of or inability to do business, because of changes to this Agreement.
+
+ 32.4 AppOpay will not be responsible for any sum or interest that may be generated because of any delay, interruption, suspension of the service, lack of processing, computer problems, defects in the platform, connection failures, and/or any other event that may be perceived using the services offered through the Wallet.
+
+32.5 In general, appOpay excludes all liability for damages of any nature that may be due to the actions of unauthorized third parties with respect to the personal data of users.
+
+33. DISCLAIMER OF WARRANTY AND RELEASE
+
+33.1 AppOpay Wallet and Platform are provided “as-is” and without any representation or warranty, whether express, implied or statutory. We specifically disclaims any implied warranties of title, merchantability, fitness for a particular purpose and non-infringement.
+
+33.2 AppOpay does not have any control over the products or services provided by sellers who accept AppOpay as a payment method, and we cannot ensure that a buyer or a seller will actually complete a transaction, or is authorized to do so. We do not guarantee continuous, uninterrupted or secure access to any part of our Platform, and it may be interfered with by numerous factors outside of our control. AppOpay will make reasonable efforts to ensure requests for electronic debits and credits, debit cards, credit cards, and checks are processed in a timely manner. We make no representations or warranties regarding the amount of time needed to complete processing as our services are dependent upon many factors outside of our control, such as delays in the banking system or mail service.
+
+33.3 If you have a dispute with any other appOpay account holder, you release us from any-and-all claims, demands and damages (actual and consequential) of every kind and nature, known and unknown, arising out of or in any way connected with such disputes. In entering into this release, you expressly waive any protections whether statutory or otherwise that would otherwise limit the coverage of this release to include only those claims, which you may know or suspect to exist in your favor at the time of agreeing to this release.
+
+34. INTELLECTUAL PROPERTY RIGHTS
+
+34.1 You acknowledges that all productions, creations, studies, reports and other documents, works or programs that are part of the services we provide, as well as anything linked to it, are the exclusive property of appOpay.
+
+34.2 The logos, brands, products and service names of appOpay are registered trademarks. You may not display or use them in a way that makes commercial or deceptive use of them.
+
+34.3 We prohibit the use of our name and/or logos, brands and any other distinctive signs of our property, unless it has been expressly and previously authorized by appOpay in which case its use must adhere to the criteria and manuals and policies established by us.
+
+34.4 Failure to comply with these prohibitions will be a violation of the intellectual property rights of appOpay, and we reserve the right to take the appropriate legal action.
+
+34.5 No provision of this Agreement may be understood to mean that you have rights over our brand, or any of our products and service, and vice versa.
+
+34.6 We do not claim ownership of the content that you provide, upload, submit or send to appOpay.
+
+34.6.1 When you provide content to us or post content using our services, you grant us (and parties that we work with) a non-exclusive, irrevocable, royalty-free, transferable, and worldwide license to use your content and associated intellectual property and publicity rights to help us improve, operate and promote our current services and develop new ones.
+
+34.6.2 AppOpay will not compensate you for any of your content.
+
+34.6.3 You acknowledge that our use of your content will not infringe any intellectual property or publicity rights and you warrant that you own or otherwise control all of the rights of the content you provide, and you agree to waive your moral rights and promise not to assert such rights against appOpay.
+"</string>
+    <string name="welcome8">"35. NOTIFICATIONS AND INFORMATION UPDATES
+
+35.1 To stay up to date with our Terms and Conditions that govern the use of our Wallet and Platform, including Rates for the services established by us, as well as any updates, modifications and new service you agree to periodically, access our website at www. appOpay.com/legal, in order to stay informed
+
+35.2 AppOpay is responsible for notifying you about any changes, whether through email, appOpay chat and/or notice on the website. Said notices will be considered given, from the date of sending.
+
+35.2 All information about the services provided by us is published on the appOpay website.
+
+36. LINKS TO THIRD PARTY SITES
+
+36.1 The Wallet may contain links to third party websites and/or applications ("Third Party Sites"). AppOpay does not endorse or guarantee the contents of these Third Party Sites, is not responsible for the content of the Third Party Sites and makes no representations regarding the content and/or accuracy of such Third Party Sites. If you choose to access Third Party Sites, you do so at your own risk.
+
+37. DISPUTE RESOLUTION
+
+37.1 Any conflict or difference, whatever its nature or nature, must in the first instance be resolved by direct negotiation of the parties. If no agreement is reached, the parties submit to the jurisdiction of the Courts of the Republic of Panama, to resolve any difference in interpretation or dispute related to these terms and conditions.
+
+38. COURT ORDERS, REGULATORY REQUIREMENTS, OR OTHER LEGAL PROCESSES
+
+38.1 If we are notified of a court order or other legal process affecting you. If we otherwise believe we are required to, do so in order to comply with applicable law or regulatory requirements, we may be required to take certain actions, including holding payments to/from your Wallet Account, placing a reserve or limitation on your Account, or releasing your Wallet Balance. We will decide, in our sole discretion, which action is required of us.
+
+38.2 Unless a court order, applicable law, regulatory requirement or other legal process requires otherwise, we will notify you of these actions. We do not have an obligation to contest or appeal any court order or legal process involving you or your Wallet Account. When we implement a hold, reserve or limitation as a result of a court order, applicable law, regulatory requirement or other legal process, the hold, reserve or limitation until such court order, regulator process or legal process releases us of taking such certain actions.
+
+39. INDEMNIFICATION
+
+39.1 You agree to defend, indemnify and hold AppOpay harmless from any claim or demand (including reasonable legal fees) made or incurred by any third party due to or arising out of your breach of this user agreement, your improper use of the Wallet or services, your violation of any law or the rights of a third party and/or the actions or inactions of any third party to whom you grant permissions to use your Wallet Account or access our websites, software, systems (including any networks and servers used to provide any of our services) operated by us or on our behalf, or any of our services on your behalf.
+
+40. ACCEPTANCE
+
+40.1 Both parties declare that they reciprocally commit to comply with the foregoing terms and conditions, you acknowledging that, with your registration and activation of the Wallet, you fully accept this document.
+
+41. CHANGES TO THE TERMS AND CONDITIONS
+
+41.1 These terms and conditions are subject to change, without the need for prior acceptance by you. AppOpay will notify you of the existence of changes in the terms and conditions, through the chat feature of the Wallet.
+
+41.2 Any modification will come into effect thirty (30) days after the date of notification of the change unless such change is mandated by law; in such case the change will be effective immediately. In the event that you do not agree with the new terms and conditions, you are free to proceed with the cancellation of your Wallet Account. The fact that you continue to use your Wallet will be considered as your acceptance of the modified terms and conditions.
+
+41.3 In the event of a change, appOpay will give the corresponding notice and the latest version will be updated and always available on the appOpay website, www.appOpay.com
+
+42. EXCLUSION AND WAIVER
+
+42.1 Partial compliance or modification of any of the terms and conditions stipulated in this Contract will not mean in any way the waiver by the latter of the rights granted by such terms and conditions in the manner in which they have been stipulated.
+
+42.2 The fact that appOpay does not enforce any of its rights or requires the performance of any obligation, responsibility or commitment of the other Party under the Contract, will not in itself be taken as a waiver of the rights, obligations, responsibilities or commitments of either of the Parties under this Contract.
+
+43. ASSIGNMENT OR UNAUTHORIZED COMMERCIAL USE
+
+43.1 You agree not to assign, in any way, your rights or obligations under this Agreement. You also agree that you will not make any unauthorized commercial use of the Wallet, or our Services. Furthermore, you agree to use your Wallet and the Services diligently and in accordance with the applicable and current law of the Republic of Panama and this Agreement. AppOpay reserves the right, at its sole discretion, to employ all legal means at its disposal in the event that you violate any of these Terms and Conditions.
+
+44. OF THE ENTIRE AGREEMENT
+
+44.1 These Terms and Conditions, together with the Privacy and Data Protection Policy, the specific terms pertaining to appOpay Cards and those that may be specified from time to time for each Service constitute the entire agreement between you and us.
+
+45. EFFECTS OF NULL STIPULATION
+
+45.1 The parties accept that, should any of the clauses of this Agreement be found to be null and/or void according to the laws of the Republic of Panama, such nullity shall not affect the validity of the remaining clauses, which shall remain in full force and effect.
+
+46. FORTUITOUS EVENT AND FORCE MAJEURE
+
+46.1 Without prejudice to the obligations contained in this Agreement, the Parties will not be responsible for failure to comply with their respective obligations, when the failure is due to causes duly accredited to force majeure or fortuitous event, in accordance with what is defined by the Civil Code, of the Republic of Panama in Article 34-D.
+
+47. DOMICILE, APPLICABLE LAW AND JURISDICTION
+
+47.1 This Agreement is governed by the laws of the Republic of Panama. Any action arising out of these Terms and Conditions or the use of the App shall be construed under the laws of the Republic of Panama.
+
+47.2 AppOpay is domiciled at Calle Punta Darién, Punta Pacifica, P.H. Torre de las Américas, Suite 2905, Panamá City, Republic of Panamá.
+
+48. TRANSLATION OF AGREEMENT
+
+Any translation of this Agreement is provided solely for your convenience and is not intended to modify the terms of this Agreement. In the event of a conflict between the English version of this Agreement and a version in a language other than English, the English version shall control."</string>
+
+
+    <!--<string name="required_at_least_one_non_numeric">"Required at least one non-alphanumeric character(!@#$%^amp&amp;*()_+=[]{}|)"</string>-->
 </resources>
+
+

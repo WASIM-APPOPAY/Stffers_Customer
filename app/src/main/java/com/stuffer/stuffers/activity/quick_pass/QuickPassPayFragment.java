@@ -292,11 +292,7 @@ public class QuickPassPayFragment extends Fragment {
             mMerName = name;
             mMerNumber = mobileNumber;
             mMerArea = merchantAreaCode;
-
-
             getMerchantProfile(mobileNumber, merchantAreaCode);
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }

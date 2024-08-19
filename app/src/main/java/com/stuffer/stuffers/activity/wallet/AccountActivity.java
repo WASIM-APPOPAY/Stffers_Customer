@@ -50,6 +50,7 @@ import com.stuffer.stuffers.views.MyTextViewBold;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -71,6 +72,7 @@ import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_DETIALS;
 public class AccountActivity extends AppCompatActivity implements CurrencySelectListener, ConfirmSelectListener, RecyclerViewRowItemCLickListener, TransactionPinListener {
     private static final String TAG = "AccountActivity";
     private RecyclerView rvGiftCards;
+    boolean allow = true;
     private MyButton btnCreate;
     private MainAPIInterface mainAPIInterface;
     private ProgressDialog dialog;
@@ -118,7 +120,10 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
     private MyTextViewBold tvTopTap;
     private int mType = 0;
     private AppCompatTextView tvDemoName;
-    private FrameLayout demoFrame;
+    private FrameLayout demoFrame, walletFrame;
+    private ImageView demoBlank;
+    private AppCompatTextView tvDemonameCard;
+    private MyTextViewBold tvmaskunmask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +133,12 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
 
             mType = getIntent().getIntExtra(AppoConstants.WHERE, 0);
         }
-        demoFrame=findViewById(R.id.demoFrame);
+        demoFrame = findViewById(R.id.demoFrame);
+        walletFrame = findViewById(R.id.walletFrame);
+
+        tvmaskunmask = findViewById(R.id.tvmaskunmask);
+        tvDemonameCard = findViewById(R.id.tvDemonameCard);
+        demoBlank = findViewById(R.id.demoBlank);
         tvDemoName = findViewById(R.id.tvDemoName);
         mainAPIInterface = ApiUtils.getAPIService();
         apiServiceUNIONPay = ApiUtils.getApiServiceUNIONPay();
@@ -141,7 +151,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
         ivFrameTop = findViewById(R.id.ivFrameTop);
         tvCvvU = (MyTextView) findViewById(R.id.tvCvvU);
 
-        String transactionPin = Helper.getTransactionPin();
+        //String transactionPin = Helper.getTransactionPin();
         ////Log.e(TAG, "onCreate: "+transactionPin );
         tvCardTypeU = (MyTextView) findViewById(R.id.tvCardTypeU);
         ivUninonPay = (ImageView) findViewById(R.id.ivUninonPay);
@@ -158,7 +168,14 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
         tvTopTap = (MyTextViewBold) findViewById(R.id.tvTopTap);
         setupActionBar();
         if (AppoPayApplication.isNetworkAvailable(AccountActivity.this)) {
-            getUserDetailsForProfile();
+            String vaultValue = DataVaultManager.getInstance(AccountActivity.this).getVaultValue(KEY_USER_DETIALS);
+            if (StringUtils.isEmpty(vaultValue)) {
+                Log.e(TAG, "onCreate: empty");
+                demoBlank.setVisibility(View.VISIBLE);
+            } else {
+                demoBlank.setVisibility(View.VISIBLE);
+                getUserDetailsForProfile();
+            }
         } else {
             showToast(getString(R.string.no_inteenet_connection));
         }
@@ -178,13 +195,19 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
         ivWallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (mListAccount != null && mListAccount.size() > 0) {
                     Intent intentTransactionList = new Intent(AccountActivity.this, TransactionListActivity.class);
                     intentTransactionList.putExtra(AppoConstants.ACCOUNTNUMBER, mListAccount.get(0).getAccountnumber());
                     intentTransactionList.putExtra(AppoConstants.ENCRYPTACCOUNTNUMBER, mListAccount.get(0).getAccountEncrypt());
                     startActivity(intentTransactionList);
                 } else {
-                    return;
+                    DataVaultManager.getInstance(AccountActivity.this).saveUserDetails("");
+                    DataVaultManager.getInstance(AccountActivity.this).saveUserAccessToken("");
+                    Intent intent = new Intent(AccountActivity.this, SignInActivity.class);
+                    intent.putExtra(AppoConstants.WHERE, mType);
+                    startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -192,15 +215,27 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
         ivWallet1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (AppoPayApplication.isNetworkAvailable(AccountActivity.this)) {
-                    if (mListAccount != null && mListAccount.size() > 0) {
-                        Intent intentTransactionList = new Intent(AccountActivity.this, TransactionListActivity.class);
-                        intentTransactionList.putExtra(AppoConstants.ACCOUNTNUMBER, mListAccount.get(0).getAccountnumber());
-                        intentTransactionList.putExtra(AppoConstants.ENCRYPTACCOUNTNUMBER, mListAccount.get(0).getAccountEncrypt());
-                        startActivity(intentTransactionList);
-                    }
+                String vaultValue = DataVaultManager.getInstance(AccountActivity.this).getVaultValue(KEY_USER_DETIALS);
+                if (StringUtils.isEmpty(vaultValue)) {
+                    DataVaultManager.getInstance(AccountActivity.this).saveUserDetails("");
+                    DataVaultManager.getInstance(AccountActivity.this).saveUserAccessToken("");
+                    Intent intent = new Intent(AccountActivity.this, SignInActivity.class);
+                    intent.putExtra(AppoConstants.WHERE, mType);
+                    startActivity(intent);
+                    finish();
                 } else {
-                    showToast(getString(R.string.no_inteenet_connection));
+
+
+                    if (AppoPayApplication.isNetworkAvailable(AccountActivity.this)) {
+                        if (mListAccount != null && mListAccount.size() > 0) {
+                            Intent intentTransactionList = new Intent(AccountActivity.this, TransactionListActivity.class);
+                            intentTransactionList.putExtra(AppoConstants.ACCOUNTNUMBER, mListAccount.get(0).getAccountnumber());
+                            intentTransactionList.putExtra(AppoConstants.ENCRYPTACCOUNTNUMBER, mListAccount.get(0).getAccountEncrypt());
+                            startActivity(intentTransactionList);
+                        }
+                    } else {
+                        showToast(getString(R.string.no_inteenet_connection));
+                    }
                 }
             }
         });
@@ -217,6 +252,32 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
                 showBottomPin();
             }
         });
+
+        demoBlank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Helper.showLoading(getString(R.string.info_please_wait), AccountActivity.this);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (allow) {
+                            tvmaskunmask.setText("Tap on UnionPay Card to MASK");
+                            allow = false;
+                            tvDemonameCard.setText("5288 1234 5678 9010");
+                        } else {
+                            tvmaskunmask.setText("Tap on UnionPay Card to UNMASK");
+                            tvDemonameCard.setText("5288 **** **** 9010");
+                            allow = true;
+                        }
+
+                        Helper.hideLoading();
+                    }
+                }, 2000);
+            }
+        });
+
         //getCardImage(cardFaceID);
 
     }
@@ -303,6 +364,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
                 mListWalletNumber.add(getNumberInStyle(index.getString(AppoConstants.ACCOUNTNUMBER)));
                 mListAccount.add(model);
             }
+            //5288 1234 5678 9010
             if (mListAccount.size() > 0) {
                 tvTopTap.setVisibility(View.VISIBLE);
                 ivFrameTop.setVisibility(View.VISIBLE);
@@ -313,9 +375,9 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
                 tvFullName.setText(mUserName);
                 tvCardNumber1.setText("" + mListAccount.get(0).getAccountEncrypt());
                 tvName1.setText(mUserName);
-
                 demoFrame.setVisibility(View.VISIBLE);
                 tvDemoName.setText(mUserName);
+
             }
             //need to unCooment Below
             if (mListAccount.size() > 0) {
@@ -372,44 +434,43 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
             ////Log.e(TAG, "getCardImage: " + mRootObject);
             JsonObject mRoot = new JsonParser().parse(mRootObject.toString()).getAsJsonObject();
 
-            apiServiceUNIONPay.getJWSTokenImage(mRoot, "/scis/switch/cardfacedownloading", UnionConstant.CONTENT_TYPE)
-                    .enqueue(new Callback<JsonObject>() {
-                        @Override
-                        public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                            hideLoading();
-                            if (response.isSuccessful()) {
-                                String responseString = new Gson().toJson(response.body());
-                                try {
-                                    JSONObject mResponse = new JSONObject(responseString);
-                                    if (mResponse.getInt("status") == 200) {
-                                        //////Log.e(TAG, "onResponse: called");
-                                        if (mResponse.getString("message").equalsIgnoreCase("success")) {
-                                            String mResult = mResponse.getString("result");
-                                            makeRequestCardDownloadRequest(mResult);
-                                        }
-                                    } else {
-                                        if (response.code() == 400) {
-                                            Toast.makeText(AccountActivity.this, "Bad Request", Toast.LENGTH_SHORT).show();
-                                        } else if (response.code() == 503) {
-                                            Toast.makeText(AccountActivity.this, "Service Unavailable server error", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            showToast(mResponse.getString("status"));
-                                        }
-
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+            apiServiceUNIONPay.getJWSTokenImage(mRoot, "/scis/switch/cardfacedownloading", UnionConstant.CONTENT_TYPE).enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    hideLoading();
+                    if (response.isSuccessful()) {
+                        String responseString = new Gson().toJson(response.body());
+                        try {
+                            JSONObject mResponse = new JSONObject(responseString);
+                            if (mResponse.getInt("status") == 200) {
+                                //////Log.e(TAG, "onResponse: called");
+                                if (mResponse.getString("message").equalsIgnoreCase("success")) {
+                                    String mResult = mResponse.getString("result");
+                                    makeRequestCardDownloadRequest(mResult);
+                                }
+                            } else {
+                                if (response.code() == 400) {
+                                    Toast.makeText(AccountActivity.this, "Bad Request", Toast.LENGTH_SHORT).show();
+                                } else if (response.code() == 503) {
+                                    Toast.makeText(AccountActivity.this, "Service Unavailable server error", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    showToast(mResponse.getString("status"));
                                 }
 
                             }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
 
-                        @Override
-                        public void onFailure(Call<JsonObject> call, Throwable t) {
-                            ////Log.e(TAG, "onFailure: JWS " + t.getMessage());
-                            hideLoading();
-                        }
-                    });
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    ////Log.e(TAG, "onFailure: JWS " + t.getMessage());
+                    hideLoading();
+                }
+            });
 
 
         } catch (JSONException e) {
@@ -582,7 +643,6 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
     }
 
 
-
     private void setupActionBar() {
         MyTextViewBold common_toolbar_title = (MyTextViewBold) findViewById(R.id.common_toolbar_title);
         common_toolbar_title.setText(getString(R.string.info_account_destails));
@@ -701,6 +761,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 dialog.dismiss();
                 if (response.isSuccessful()) {
+                    demoBlank.setVisibility(View.VISIBLE);
                     //String res = new Gson().toJson(response.body());
                     ////////Log.e(TAG, "onResponse: getprofile :" + res);
                     JsonObject body = response.body();
@@ -723,6 +784,7 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 dialog.dismiss();
+                demoBlank.setVisibility(View.GONE);
                 //////Log.e(TAG, "onFailure: " + t.getMessage().toString());
             }
         });
@@ -766,12 +828,10 @@ public class AccountActivity extends AppCompatActivity implements CurrencySelect
 
 
     private void makeUnmaskedRequest1(int pos) {
-        if (mBottomPinFragment != null)
-            mBottomPinFragment.dismiss();
+        if (mBottomPinFragment != null) mBottomPinFragment.dismiss();
 
         showLoading();
-        RequestBody body =
-                RequestBody.create(MediaType.parse("text/plain"), mCardInfo);
+        RequestBody body = RequestBody.create(MediaType.parse("text/plain"), mCardInfo);
         apiServiceUNIONPay.getUnmaskRequestBody(body).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

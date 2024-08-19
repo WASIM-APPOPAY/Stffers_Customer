@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+
+
+            android:src="@drawable/logo2" />
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:id="@+id/tvCommonHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+
+
+            android:text="Wallet Card Enrollment"
+            android:textAllCaps="true"
+            android:textColor="@color/common_color"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+    <com.stuffer.stuffers.views.MyTextViewBold
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textColor="@color/common_text_color"
+        android:text="If you not apply for a card, you will not be able to make financial transactions with the wallet until you link a payment card(third party tokenization charges may apply)."
+        android:textSize="16sp" />
+
+    <com.stuffer.stuffers.views.MyTextView
+        android:id="@+id/tvCommonContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="-5dp"
+        android:layout_marginEnd="20dp"
+        android:padding="12dp"
+        android:text=""
+        android:textAlignment="textStart"
+        android:textSize="16sp" />
+
+    <com.stuffer.stuffers.views.MyTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="-5dp"
+        android:layout_marginEnd="20dp"
+        android:padding="12dp"
+        android:text="Payments in the palm of your hand"
+        android:textAlignment="textStart"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="italic" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end">
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:id="@+id/btnNoThanks"
+            android:layout_width="100dp"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="end"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:background="@drawable/view_normal_blue2"
+            android:gravity="center|center_vertical"
+            android:padding="5dp"
+            android:text="No Thanks"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+
+
+            />
+
+        <com.stuffer.stuffers.views.MyTextView
+            android:id="@+id/btnApply"
+            android:layout_width="100dp"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="end"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:background="@drawable/view_normal_blue2"
+            android:gravity="center|center_vertical"
+            android:padding="5dp"
+            android:text="Apply"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

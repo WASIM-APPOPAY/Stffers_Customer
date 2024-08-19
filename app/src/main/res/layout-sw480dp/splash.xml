@@ -34,9 +34,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/info_intro"
+
                 android:textAppearance="?attr/textAppearanceBody1"
-                android:textSize="18sp"
+
+                android:text="@string/welcome"
+
+                android:textColor="#32A2FB"
+                android:textSize="30sp"
+                android:textStyle="bold"
 
                 />
 

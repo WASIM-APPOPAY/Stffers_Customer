@@ -94,7 +94,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-;
+
 
 public class CustomerProfileActivity extends AppCompatActivity implements TransactionStatus, UnionPayCardListener {
     private static final String TAG = "ProfileActivity";
@@ -175,6 +175,8 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         strUserName = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_NAME);
         strUserMobile = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_MOBILE);
         initViews();
+        String walletAccountNumber = Helper.getWalletAccountNumber();
+        Log.e(TAG, "onCreate: "+walletAccountNumber );
         countryCodePicker.setExcludedCountries(getString(R.string.info_exclude_countries));
         if (AppoPayApplication.isNetworkAvailable(this)) {
             if (!StringUtils.isEmpty(vaultValue)) {
@@ -252,7 +254,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
             e.printStackTrace();
         }
 
-        //showNoCardDialog();
+        showNoCardDialog();
     }
 
     CountryCodePicker.DialogEventsListener mLis = new CountryCodePicker.DialogEventsListener() {
@@ -281,7 +283,6 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
 
                 if (response.isSuccessful()) {
                     String s1 = new Gson().toJson(response.body());
-
                     try {
                         JSONObject mRoot = new JSONObject(s1);
                         if (mRoot.getInt("status") == 200 && mRoot.getString("message").equalsIgnoreCase("success")) {
@@ -557,12 +558,13 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
     }
 
     private void getCustomerQrCode(String id) {
+        //Log.e(TAG, "getCustomerQrCode: "+id );
         show();
         mainAPIInterface.getCustomerQrCode(id).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 hideDialog();
-
+//Payment status could not retrieve, Payment will be cleared within hour. Reference ID :RCRQ24111132565 and Amount :590.00
                 if (response.code() == 200) {
                     String s = new Gson().toJson(response.body());
                     try {
@@ -572,7 +574,6 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
                             String mQrCode1 = resultQRCODE.substring(resultQRCODE.indexOf(",") + 1);
                             final byte[] decodedBytes = Base64.decode(mQrCode1, Base64.DEFAULT);
                             Glide.with(CustomerProfileActivity.this).load(decodedBytes).into(customerQrCodeQrCode);
-
                             frameLayout.setVisibility(View.VISIBLE);
                             //later enable
                             //getSavedCard();
@@ -624,13 +625,24 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                Intent intent=new Intent(CustomerProfileActivity.this,HomeActivity3.class);
+                startActivity(intent);
                 finish();
+                //onBackPressed();
+
             }
         });
         setupTabIcons();
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        Intent intent=new Intent(CustomerProfileActivity.this,HomeActivity3.class);
+        startActivity(intent);
+        finish();
     }
 
     private void setupTabIcons() {
@@ -723,7 +735,7 @@ public class CustomerProfileActivity extends AppCompatActivity implements Transa
     }
 
     @Override
-    public void onCardRequest() {
+    public void onCardRequest(int type) {
         if (mBottomNotCard != null)
             mBottomNotCard.dismiss();
         Intent intentUnion = new Intent(CustomerProfileActivity.this, UnionPayActivity.class);

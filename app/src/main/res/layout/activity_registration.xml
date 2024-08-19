@@ -25,7 +25,13 @@
         app:spb_stateForegroundColor="@color/common_color"
         app:spb_stateNumberBackgroundColor="#808080"
          />
-
+    <com.stuffer.stuffers.views.MyTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Confirm Identification"
+        android:textColor="@color/cookie_bar_color"
+        android:textSize="22sp" />
 
     <FrameLayout
         android:id="@+id/containerSignUp"

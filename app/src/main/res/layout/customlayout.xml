@@ -65,7 +65,7 @@
                         android:id="@+id/tvDrawername"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sebastian Deo"
+                        android:text="username"
                         android:textSize="@dimen/dp_18"
                         android:textColor="@color/common_text_color"
                         android:textStyle="bold" />
@@ -75,7 +75,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="4029209"
+                        android:text="user mobile number"
                         android:textSize="16sp"
                         android:textColor="@color/common_text_color"
                         android:textStyle="bold"

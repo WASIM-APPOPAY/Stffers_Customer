@@ -728,7 +728,7 @@ public class PayNowActivity extends AppCompatActivity implements NfcAdapter.Read
     }
 
     @Override
-    public void onCardRequest() {
+    public void onCardRequest(int type) {
         redirectCardEnrollment();
     }
 

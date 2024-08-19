@@ -38,6 +38,8 @@ import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.views.MyEditText;
 import com.stuffer.stuffers.views.MyTextView;
 
+import org.aviran.cookiebar2.CookieBar;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -111,7 +113,7 @@ public class VerifyFragment extends Fragment {
         otp_edit_text4 = mView.findViewById(R.id.otp_edit_text4);
         otp_edit_text5 = mView.findViewById(R.id.otp_edit_text5);
         otp_edit_text6 = mView.findViewById(R.id.otp_edit_text6);
-        tvVerifyOtpCommon=mView.findViewById(R.id.tvVerifyOtpCommon);
+        tvVerifyOtpCommon = mView.findViewById(R.id.tvVerifyOtpCommon);
         setInfo();
         setOtpBoxFocus();
         //floatingConfirm = mView.findViewById(R.id.floatingConfirm);
@@ -182,6 +184,7 @@ public class VerifyFragment extends Fragment {
         });
         return mView;
     }
+
     private void setOtpBoxFocus() {
         /*
         for (int i = 0; i < smsCode.length(); i++) {
@@ -283,6 +286,7 @@ public class VerifyFragment extends Fragment {
         });
 
     }
+
     private void setInfo() {
         mListEditText = new ArrayList<>();
         mListEditText.add(otp_edit_text1);
@@ -295,21 +299,29 @@ public class VerifyFragment extends Fragment {
         tvVerifyOtpCommon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                /*boolean allow = true;
+                StringBuilder otp = new StringBuilder();
+                boolean allow = true;
                 for (int i = 0; i < mListEditText.size(); i++) {
                     if (mListEditText.get(i).getText().toString().trim().isEmpty()) {
                         allow = false;
 
                     }
+                    otp.append(mListEditText.get(i).getText().toString().trim());
                 }
                 if (allow) {
-                    getConfirmation();
+                    //getConfirmation();
+
+                    if ("123456".equalsIgnoreCase(otp.toString())) {
+                        mVerifiedListener.onVerified(mParamNameCode, mParamCountryCode, mParamMobile);
+                        progress.setVisibility(View.GONE);
+                        CookieBar.dismiss(getActivity());
+                    } else {
+                        Helper.showErrorMessage(getActivity(), "Please enter valid otp");
+                    }
                 } else {
                     Helper.showErrorMessage(getActivity(), "Please enter otp");
-                }*/
-                mVerifiedListener.onVerified(mParamNameCode, mParamCountryCode, mParamMobile);
-                progress.setVisibility(View.GONE);
+                }
+
 
             }
         });

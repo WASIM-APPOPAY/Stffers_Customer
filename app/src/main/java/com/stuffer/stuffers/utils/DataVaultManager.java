@@ -45,8 +45,10 @@ public class DataVaultManager {
     public static final String KEY_TOKEN = "token";
     public static final String KEY_USER_ID1 = "userid1";
     public static final String KEY_IDPATH = "idpath";
+    public static final String KEY_IDPATH2 = "idpath2";
     public static final String TANDC="tandc";
     public static final String NotificationKey="notification_key";
+    public static final String ISCREATED="iscreated";
 
     private static PrivateDataVault vault;
     private static DataVaultManager dataVaultManager;
@@ -225,6 +227,11 @@ public class DataVaultManager {
         vault.setString(KEY_IDPATH, idpath);
         vault.lock();
     }
+public void saveIdImagePath2(String idpath) {
+        checkVaultStatus();
+        vault.setString(KEY_IDPATH2, idpath);
+        vault.lock();
+    }
 
 
     public void saveTerm(String check) {
@@ -242,6 +249,12 @@ public class DataVaultManager {
     public void saveNotificationKey(String value) {
         checkVaultStatus();
         vault.setString(NotificationKey, value);
+        vault.lock();
+    }
+
+    public void savIsCreated(String value) {
+        checkVaultStatus();
+        vault.setString(ISCREATED, value);
         vault.lock();
     }
 }

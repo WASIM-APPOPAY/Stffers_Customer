@@ -40,7 +40,8 @@
                 android:layout_margin="@dimen/dp_8"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
-                android:src="@drawable/visa_visa_card" />
+                android:src="@drawable/visa_visa_card"
+                android:visibility="gone" />
 
             <ImageView
                 android:layout_width="match_parent"
@@ -48,7 +49,8 @@
                 android:layout_margin="@dimen/dp_8"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
-                android:src="@drawable/card_prepaid_union2" />
+                android:src="@drawable/card_prepaid_union2"
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvGiftCards"
@@ -113,29 +115,44 @@
 
             </FrameLayout>
 
+            <com.stuffer.stuffers.views.MyTextViewBold
+                android:id="@+id/tvmaskunmask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:padding="5dp"
+                android:text="Tap on UnionPay Card to UNMASK"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textSize="18sp"
+                android:visibility="visible" />
+
             <FrameLayout
                 android:id="@+id/demoFrame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <ImageView
+                    android:id="@+id/demoBlank"
+                    android:layout_width="wrap_content"
 
-                    android:layout_width="match_parent"
                     android:layout_height="230dp"
                     android:layout_margin="@dimen/dp_8"
-                    android:src="@drawable/card_prepaid_union1" />
+                    android:src="@drawable/wallt_card_blank" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDemonameCard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="-25dp"
-                    android:text="5288 1234 5678 9010"
+                    android:text="5288 **** **** 9010"
                     android:textAppearance="?attr/borderlessButtonStyle"
                     android:textSize="25sp"
-                    android:visibility="gone"
+                    android:visibility="visible"
 
                     />
 
@@ -149,7 +166,7 @@
                     android:textAppearance="?attr/borderlessButtonStyle"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvDemoName"
@@ -158,28 +175,27 @@
                     android:layout_gravity="center|left"
                     android:layout_marginStart="140dp"
                     android:layout_marginTop="30sp"
+                    android:text="Don Pitts"
                     android:textAppearance="?attr/borderlessButtonStyle"
-
                     android:textSize="20sp"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
 
             </FrameLayout>
 
             <ImageView
-
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
                 android:layout_margin="@dimen/dp_8"
-                android:src="@drawable/card_prepaid_union3" />
+                android:src="@drawable/card_prepaid_union3"
+                android:visibility="gone" />
 
 
             <FrameLayout
+                android:id="@+id/walletFrame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_marginTop="15dp"
-
                 android:visibility="visible">
 
                 <LinearLayout
@@ -200,17 +216,16 @@
                         android:text="Tap on Wallet Card to see Transaction Details"
                         android:textAppearance="?attr/textAppearanceBody1"
                         android:textSize="14sp"
-                        android:visibility="gone"
+                        android:visibility="visible"
 
 
                         />
 
                     <FrameLayout
                         android:id="@+id/ivFrameTop"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="230dp"
-                        android:layout_marginBottom="10dp"
-                        android:visibility="gone">
+                        android:layout_marginBottom="10dp">
 
                         <ImageView
 
@@ -229,7 +244,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="120dp"
                             android:gravity="center"
-                            android:text="0000    0000    0000    0000    000"
+                            android:text="3999XXXXXXXXXXX4808"
                             android:textColor="@color/black"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -251,9 +266,10 @@
                             android:layout_gravity="bottom"
                             android:layout_marginStart="30dp"
                             android:layout_marginBottom="18dp"
-
+                            android:text="Don Pitts"
                             android:textColor="@color/black"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </FrameLayout>
 
 
@@ -432,18 +448,18 @@
                 android:visibility="gone" />
 
             <ImageView
-
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
                 android:layout_margin="@dimen/dp_8"
-                android:src="@drawable/card_gift1" />
+                android:src="@drawable/card_gift1"
+                android:visibility="gone" />
 
             <ImageView
-
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
                 android:layout_margin="@dimen/dp_8"
-                android:src="@drawable/card_gift2" />
+                android:src="@drawable/card_gift2"
+                android:visibility="gone" />
 
 
         </LinearLayout>

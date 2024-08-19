@@ -42,6 +42,7 @@ import com.stuffer.stuffers.MyContextWrapper;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.FianceTab.UnionPayActivity;
 import com.stuffer.stuffers.activity.forgopassword.ForgotPasswordActvivity;
+import com.stuffer.stuffers.activity.quick_pass.VisaUnionActivity;
 import com.stuffer.stuffers.activity.restaurant.E_ShopActivity;
 import com.stuffer.stuffers.activity.restaurant.E_StoreDiscountActivity;
 import com.stuffer.stuffers.api.ApiUtils;
@@ -140,6 +141,14 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                 chat = getIntent().getParcelableExtra(EXTRA_DATA_CHAT);
 
             }
+
+            Bundle extras = getIntent().getExtras();
+            if (extras.containsKey("open")) {
+                mBottomTransDialog = new BottomTransactionPin();
+                mBottomTransDialog.show(getSupportFragmentManager(), mPinTag);
+                mBottomTransDialog.setCancelable(false);
+            }
+
         } else {
             mType = 0;
         }
@@ -226,7 +235,10 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
             @Override
             public void onClick(View view) {
 
-                isAppoPayAccountExist(userMe.getId(), userMe.getName());
+                //isAppoPayAccountExist(userMe.getId(), userMe.getName());
+                Intent mIntent = new Intent(SignInActivity.this, Registration.class);
+                startActivity(mIntent);
+                finish();
 
 
             }
@@ -288,7 +300,7 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                 getAreaCodes();
             }
         });
-
+//showNoCardDialog();
 
     }
 
@@ -538,8 +550,6 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
 
                             Helper.setUserDetailsNull();
                             DataVaultManager.getInstance(SignInActivity.this).saveUserDetails(jsonUserDetails);
-
-
                             DataVaultManager.getInstance(SignInActivity.this).saveCCODE(selectedCountryNameCode);
                             JSONObject result;
                             try {
@@ -553,21 +563,21 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
                                     mBottomTransDialog = new BottomTransactionPin();
                                     mBottomTransDialog.show(getSupportFragmentManager(), mPinTag);
                                     mBottomTransDialog.setCancelable(false);
-                                } else if (StringUtils.isEmpty(keydemo)) {
+                                } /*else if (StringUtils.isEmpty(keydemo)) {
                                     showNoCardDialog();
 
-                                } else {
+                                }*/ else {
                                     try {
                                         if (result.getString(AppoConstants.AVATAR).startsWith("http")) {
                                             HomeActivity3.showProfileAvatarLogin(result.getString(AppoConstants.AVATAR));
                                             goToScreen(mType);
 
-                                        } else if (result.getBoolean("isPasswordOutdated")) {
+                                        } /*else if (result.getBoolean("isPasswordOutdated")) {
                                             Intent intent = new Intent(SignInActivity.this, ForgotPasswordActvivity.class);
                                             intent.putExtra("expire", "data");
                                             startActivity(intent);
                                             finish();
-                                        } else {
+                                        }*/ else {
                                             goToScreen(mType);
                                         }
 
@@ -822,11 +832,26 @@ public class SignInActivity extends AppCompatActivity implements AreaSelectListe
     }
 
     @Override
-    public void onCardRequest() {
+    public void onCardRequest(int type) {
         if (mBottomNotCard != null)
             mBottomNotCard.dismiss();
-        Intent intentUnion = new Intent(SignInActivity.this, UnionPayActivity.class);
-        startActivity(intentUnion);
+        if (type == 1) {
+            Intent intentUnion = new Intent(SignInActivity.this, UnionPayActivity.class);
+            intentUnion.putExtra(AppoConstants.CARDTYPE, type);
+            startActivity(intentUnion);
+            finish();
+        } else {
+            Intent intentUnion = new Intent(SignInActivity.this, VisaUnionActivity.class);
+            intentUnion.putExtra(AppoConstants.CARDTYPE, type);
+            startActivity(intentUnion);
+            finish();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(SignInActivity.this, HomeActivity3.class);
+        startActivity(i);
         finish();
     }
 }

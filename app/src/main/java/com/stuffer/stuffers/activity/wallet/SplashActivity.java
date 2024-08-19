@@ -1,6 +1,7 @@
 package com.stuffer.stuffers.activity.wallet;
 
 import static android.os.Build.VERSION.SDK_INT;
+import static com.stuffer.stuffers.utils.DataVaultManager.ISCREATED;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_LANGUAGE;
 import static com.stuffer.stuffers.utils.DataVaultManager.TANDC;
 
@@ -39,6 +40,7 @@ import com.stuffer.stuffers.MyContextWrapper;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.api.Constants;
 import com.stuffer.stuffers.commonChat.chat.NumberActivity;
+import com.stuffer.stuffers.commonChat.chat.NumberDemoActivity;
 import com.stuffer.stuffers.commonChat.chatModel.User;
 import com.stuffer.stuffers.commonChat.chatUtils.ChatHelper;
 import com.stuffer.stuffers.communicator.LanguageListener;
@@ -97,14 +99,14 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
         String mTandc = DataVaultManager.getInstance(SplashActivity.this).getVaultValue(TANDC);
         chatHelper = new ChatHelper(this);
         boolean checkPermission = checkPermission();
-     tvCheck.setVisibility(View.GONE);
+        tvCheck.setVisibility(View.GONE);
         if (!StringUtils.isEmpty(mTandc)) {
             tvCheck.setChecked(true);
         } else {
             tvCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    if (b){
+                    if (b) {
                         tvCheck.setChecked(true);
                         Intent intent = new Intent(SplashActivity.this, UrlsActivity.class);
                         intent.putExtra(AppoConstants.TITLE, "Terms and Condition");
@@ -115,7 +117,7 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
             });
         }
 
-        if (/*checkPermission && */!StringUtils.isEmpty(DataVaultManager.getInstance(SplashActivity.this).getVaultValue(TANDC))) {
+        if (!StringUtils.isEmpty(DataVaultManager.getInstance(SplashActivity.this).getVaultValue(TANDC))) {
 
 
             new Handler().postDelayed(new Runnable() {
@@ -126,6 +128,15 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
             }, SPLASH_TIMEOUT1);
         }
 
+        /*new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent i = new Intent(SplashActivity.this, SignInActivity.class);
+                startActivity(i);
+                finish();
+            }
+        }, 200);*/
+
         tvAgree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,8 +144,8 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
                     Toast.makeText(SplashActivity.this, getString(R.string.info_term_condition), Toast.LENGTH_SHORT).show();
                     return;
                 }*/
-                User loggedInUser = chatHelper.getLoggedInUser();
-                String s = new Gson().toJson(loggedInUser);
+                /*User loggedInUser = chatHelper.getLoggedInUser();
+                String s = new Gson().toJson(loggedInUser);*/
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -162,7 +173,7 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
         //String tapInfoText1 = "<font color='#029DDC'>" + getString(R.string.info_split1) + " " + "&quot;" + getString(R.string.info_split2) + "&quot;" + "</font>" + "<font color='#029DDC'>" + " " + getString(R.string.info_split3) + "</font>";
         /*String tapInfoText1 = "<font color='#029DDC'>" + getString(R.string.info_split1) + " " + "&quot;" + " " + getString(R.string.info_split2)  + " " +"&quot;" + "</font>";
         String tapInfoText2 = "<font color='#FB8310'>" + " " + getString(R.string.info_split4) + "</font>";*/
-        String tapInfoText1 = "<font color='#000000'>" + getString(R.string.info_split1) + " " + "&quot;" + " " + getString(R.string.info_split2)  + " " +"&quot;" + "</font>";
+        String tapInfoText1 = "<font color='#000000'>" + getString(R.string.info_split1) + " " + "&quot;" + " " + getString(R.string.info_split2) + " " + "&quot;" + "</font>";
         String tapInfoText2 = "<font color='#000000'>" + " " + getString(R.string.info_split4) + "</font>";
         String wholeText = tapInfoText1 + tapInfoText2;
 
@@ -170,6 +181,7 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
         tvTapInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //setupUI();
                 tvCheck.setChecked(true);
                 Intent intent = new Intent(SplashActivity.this, UrlsActivity.class);
                 intent.putExtra(AppoConstants.TITLE, "Terms and Condition");
@@ -185,8 +197,6 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
                 showLanDialogue();
             }
         });
-
-
 
 
     }
@@ -211,19 +221,29 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
     private void setupUI() {
 
         String vaultValue = DataVaultManager.getInstance(SplashActivity.this).getVaultValue(TANDC);
-        if (StringUtils.isEmpty(vaultValue)){
+        //String vaultValue1 = DataVaultManager.getInstance(SplashActivity.this).getVaultValue(ISCREATED);
+
+        if (StringUtils.isEmpty(vaultValue)) {
+            //Intent intent = new Intent(SplashActivity.this, NumberActivity.class);
             Intent intent = new Intent(SplashActivity.this, UrlsActivity.class);
             intent.putExtra(AppoConstants.TITLE, "Terms and Condition");
             intent.putExtra(AppoConstants.NAME, Constants.TERM_AND_CONDITIONS);
             startActivity(intent);
             finish();
-        }else {
+        } /*else if (StringUtils.isEmpty(vaultValue1)) {
+            Intent i = new Intent(SplashActivity.this, NumberActivity.class);
+            startActivity(i);
+            finish();
+        }
+*/ else {
+           /*Intent i = new Intent(SplashActivity.this, HomeActivity3.class);
+            startActivity(i);
+            finish();*/
             if (chatHelper.getLoggedInUser() != null) {
-                //Intent i = new Intent(SplashActivity.this, HomeActivity2.class);
                 Intent i = new Intent(SplashActivity.this, HomeActivity3.class);
                 startActivity(i);
                 finish();
-            }else {
+            } else {
                 startActivity(new Intent(SplashActivity.this, NumberActivity.class));
                 finish();
             }
@@ -240,13 +260,11 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
                 intent.putExtra(AppoConstants.TITLE, "Terms and Condition");
                 intent.putExtra(AppoConstants.NAME, Constants.TERM_AND_CONDITIONS);
                 startActivity(intent);
-            }else {
+            } else {
                 startActivity(new Intent(SplashActivity.this, NumberActivity.class));
                 finish();
             }
-        }*/
-
-
+        } */
     }
 
 
@@ -282,7 +300,6 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
         if (requestCode == BEFORE_13) {
             //Log.e(TAG, "onRequestPermissionsResult: below called" );
             if (grantResults.length > 0) {
-
                 boolean p1 = grantResults[0] == PackageManager.PERMISSION_GRANTED;
               /*  if (p1) {
                     Toast.makeText(this, "P1 Granted", Toast.LENGTH_SHORT).show();
@@ -436,3 +453,11 @@ public class SplashActivity extends AppCompatActivity implements LanguageListene
 }
 //https://www.youtube.com/watch?v=6cxTVPFYaTw&ab_channel=AaviskarInfotech
 //https://developer.android.com/about/versions/13/behavior-changes-13
+
+
+/*
+@Deepak i have one question
+Suppose user has created the account but he did not create the mobile pin later for login
+and he uninstall the mobile app.
+later he/she download the app again
+is there any way i can check out user has created the mobile pin for login*/

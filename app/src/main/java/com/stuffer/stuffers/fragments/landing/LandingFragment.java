@@ -39,6 +39,7 @@ import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.restaurant.E_ShopActivity;
 import com.stuffer.stuffers.activity.restaurant.E_StoreDiscountActivity;
+import com.stuffer.stuffers.activity.restaurant.ListRestaurentActivity;
 import com.stuffer.stuffers.activity.restaurant.R_AllFragment;
 import com.stuffer.stuffers.activity.restaurant.R_EntertainmentFragment;
 import com.stuffer.stuffers.activity.restaurant.R_FoodFragment;
@@ -46,6 +47,7 @@ import com.stuffer.stuffers.activity.restaurant.R_ShopFragment;
 import com.stuffer.stuffers.activity.restaurant.RestaurantListActivity;
 import com.stuffer.stuffers.activity.restaurant.RestaurantWebActivity;
 import com.stuffer.stuffers.activity.restaurant.RewardActivity;
+import com.stuffer.stuffers.activity.restaurant.StoreListActivity;
 import com.stuffer.stuffers.activity.wallet.CardDetails;
 import com.stuffer.stuffers.activity.wallet.InnerPayActivity;
 import com.stuffer.stuffers.activity.wallet.MobileRechargeActivity;
@@ -60,10 +62,12 @@ import com.stuffer.stuffers.models.restaurant.MRestaurent;
 import com.stuffer.stuffers.models.restaurant.Result;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
+import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.views.MyTextViewBold;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +79,7 @@ import retrofit2.Response;
 public class LandingFragment extends Fragment implements View.OnClickListener {
 
 
-    private LinearLayout llResturant, llTransfer, llScan, llLinkCard, llRecharge, llDiscount, llTrain;
+    private LinearLayout llResturant, llTransfer, llScan, llLinkCard, llRecharge, llDiscount, llTrain, llMetro, llQuick;
     private ImageView ivReward;
     private LinearLayout llShop;
     private StartActivityListener mListener;
@@ -87,6 +91,7 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "LandingFragment";
     //WebView advanceWeb;
     List<MyTextViewBold> mTextBold;
+    private MyTextViewBold tvLandingBalance;
 
     public LandingFragment() {
         // Required empty public constructor
@@ -134,6 +139,28 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        upDateBalance();
+
+    }
+    public void upDateBalance () {
+
+        try {
+            String currantBalance = Helper.getCurrantBalance();
+            DecimalFormat df2 = new DecimalFormat("#.00");
+            Double doubleV = Double.parseDouble(currantBalance);
+            String format = df2.format(doubleV);
+            tvLandingBalance.setText("$0");
+            tvLandingBalance.setText("Balance " + "$" + format);
+
+        } catch (Exception e) {
+            //tvSideBalance.setText("$0");
+            tvLandingBalance.setText("Balance " + "$" + "0.00");
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -144,13 +171,18 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
         llTransfer = view.findViewById(R.id.llTransfer);
 
         llTrain = view.findViewById(R.id.llTrain);
+
+        tvLandingBalance = view.findViewById(R.id.tvLandingBalance);
+
         llShop = view.findViewById(R.id.llShop);
-        llDiscount = view.findViewById(R.id.llDiscount);
+        //llDiscount = view.findViewById(R.id.llDiscount);
         llResturant = view.findViewById(R.id.llResturant);
         llScan = view.findViewById(R.id.llScan);
         llLinkCard = view.findViewById(R.id.llLinkCard);
         llRecharge = view.findViewById(R.id.llRecharge);
-        ivReward = view.findViewById(R.id.ivReward);
+        llMetro = view.findViewById(R.id.llMetro);
+        llQuick = view.findViewById(R.id.llQuick);
+        //ivReward = view.findViewById(R.id.ivReward);
         mTextBold = new ArrayList<>();
 
 
@@ -167,9 +199,11 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
         llLinkCard.setOnClickListener(this);
         llRecharge.setOnClickListener(this);
         llResturant.setOnClickListener(this);
-        ivReward.setOnClickListener(this);
+        llMetro.setOnClickListener(this);
+        llQuick.setOnClickListener(this);
+        //ivReward.setOnClickListener(this);
         llShop.setOnClickListener(this);
-        llDiscount.setOnClickListener(this);
+        //llDiscount.setOnClickListener(this);
         llTrain.setOnClickListener(this);
 
         allView = view.findViewById(R.id.allView);
@@ -323,16 +357,50 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
 
                 break;
             case R.id.llLinkCard:
-                Intent intent = new Intent(getActivity(), CardDetails.class);
-                startActivity(intent);
+
+                String userData3 = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+                if (TextUtils.isEmpty(userData3)) {
+                    goToLoginScreen(3);
+                } else {
+                    //mListener.OnStartActivityRequest(3);
+                    /*Intent intent = new Intent(getActivity(), CardDetails.class);
+                    startActivity(intent);*/
+                    mListener.OnStartActivityRequest(3);
+                }
+                break;
+            case R.id.llMetro:
+
+                String userData4 = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+                if (TextUtils.isEmpty(userData4)) {
+                    goToLoginScreen(0);
+                }  //mListener.OnStartActivityRequest(3);
+                //Intent intent = new Intent(getActivity(), CardDetails.class);
+                //startActivity(intent);
+                break;
+            case R.id.llQuick:
+
+                String userData5 = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+                if (TextUtils.isEmpty(userData5)) {
+                    goToLoginScreen(0);
+                }  //mListener.OnStartActivityRequest(3);
+                //Intent intent = new Intent(getActivity(), CardDetails.class);
+                //startActivity(intent);
                 break;
             case R.id.llScan:
-                Intent intentscan = new Intent(getActivity(), InnerPayActivity.class);
-                startActivity(intentscan);
-                break;
-            case R.id.llRecharge:
                 String userData1 = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
                 if (TextUtils.isEmpty(userData1)) {
+                    goToLoginScreen(0);
+                } else {
+                    //mListener.OnStartActivityRequest(3);
+                    Intent intentscan = new Intent(getActivity(), InnerPayActivity.class);
+                    startActivity(intentscan);
+                }
+
+
+                break;
+            case R.id.llRecharge:
+                String userData2 = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+                if (TextUtils.isEmpty(userData2)) {
                     goToLoginScreen(2);
                 } else {
                     Intent mIntent = new Intent(getActivity(), MobileRechargeActivity.class);
@@ -343,8 +411,20 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
             case R.id.llResturant:
                 //Intent intentResturant = new Intent(getActivity(), TabsActivity.class);
                 //Intent intentResturant = new Intent(getActivity(), RestaurantListActivity.class);
-                Intent intentResturant = new Intent(getActivity(), RestaurantWebActivity.class);
-                startActivity(intentResturant);
+                //later
+                /*Intent intentResturant = new Intent(getActivity(), RestaurantWebActivity.class);
+                startActivity(intentResturant);*/
+
+
+                String userData6 = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+                if (TextUtils.isEmpty(userData6)) {
+                    goToLoginScreen(0);
+                } else {
+                    Intent intentResturant = new Intent(getActivity(), ListRestaurentActivity.class);
+                    startActivity(intentResturant);
+                }
+
+
                 /*String userData2 = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
                 String accesstoken = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_ACCESSTOKEN);
                 if (TextUtils.isEmpty(userData2)|| StringUtils.isEmpty(accesstoken)) {
@@ -354,25 +434,35 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
                     startActivity(intentResturant);
                 }*/
                 break;
-            case R.id.ivReward:
+            /*case R.id.ivReward:
 
                 Intent intentReward = new Intent(getActivity(), RewardActivity.class);
                 startActivity(intentReward);
-                break;
+                break;*/
 
             case R.id.llShop:
 
-                String userData3 = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+
+                String userData7 = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+                if (TextUtils.isEmpty(userData7)) {
+                    goToLoginScreen(0);
+                } else {
+                    Intent mIntent1 = new Intent(getActivity(), StoreListActivity.class);
+                    startActivity(mIntent1);
+                }
+
+
+                /*String userData3 = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
                 if (TextUtils.isEmpty(userData3)) {
                     goToLoginScreen(12);
                 } else {
                     Intent mIntent = new Intent(getActivity(), E_ShopActivity.class);
                     mIntent.putExtra(AppoConstants.WHERE, 12);
                     startActivity(mIntent);
-                }
+                }*/
 
                 break;
-            case R.id.llDiscount:
+            /*case R.id.llDiscount:
                 String userData4 = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
                 if (TextUtils.isEmpty(userData4)) {
                     goToLoginScreen(13);
@@ -382,7 +472,7 @@ public class LandingFragment extends Fragment implements View.OnClickListener {
                     startActivity(mIntent);
                 }
 
-                break;
+                break;*/
 
             case R.id.llTrain:
                 /*Intent train=new Intent(getActivity(), MyCameraActivity.class);

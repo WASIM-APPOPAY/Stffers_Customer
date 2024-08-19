@@ -130,7 +130,7 @@ public class QRCodeActivity extends AppCompatActivity implements ScanRequestList
     }
 
     @Override
-    public void onCardRequest() {
+    public void onCardRequest(int type) {
         Fragment fragment = (Fragment) adapter.instantiateItem(viewPager, 0);
         if (fragment instanceof QrGenerateFragment) {
             ((QrGenerateFragment) fragment).redirectCardEnrollment();

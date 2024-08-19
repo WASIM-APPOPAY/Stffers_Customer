@@ -5,14 +5,13 @@
     android:id="@+id/rLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/common_bg_color"
+    android:orientation="vertical"
 
     tools:context=".activity.wallet.UrlsActivity">
 
 
-
-    <include layout="@layout/common_toolbar"/>
+    <include layout="@layout/common_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -22,26 +21,83 @@
 
         <LinearLayout
 
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <com.stuffer.stuffers.views.MyTextView
-                android:visibility="gone"
+
                 android:id="@+id/tvLongText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:padding="10dp"
                 android:scrollbars="vertical"
-                android:textSize="15sp"
+                android:textAlignment="inherit"
+                android:text="@string/welcome3"
+                android:textSize="15sp" />
 
-                />
-            <WebView
+            <com.stuffer.stuffers.views.MyTextView
 
+                android:id="@+id/tvLongText2"
+                android:layout_width="match_parent"
+                android:textAlignment="inherit"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:scrollbars="vertical"
+                android:text="@string/welcome4"
+                android:textSize="15sp" />
+
+            <com.stuffer.stuffers.views.MyTextView
+
+                android:id="@+id/tvLongText3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:scrollbars="vertical"
+                android:textAlignment="inherit"
+                android:text="@string/welcome5"
+                android:textSize="15sp" />
+
+            <com.stuffer.stuffers.views.MyTextView
+
+                android:id="@+id/tvLongText4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textAlignment="inherit"
+                android:scrollbars="vertical"
+                android:text="@string/welcome6"
+                android:textSize="15sp" />
+
+            <com.stuffer.stuffers.views.MyTextView
+
+                android:id="@+id/tvLongText5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textAlignment="inherit"
+                android:scrollbars="vertical"
+                android:text="@string/welcome7"
+                android:textSize="15sp" />
+
+            <com.stuffer.stuffers.views.MyTextView
+
+                android:id="@+id/tvLongText6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textAlignment="inherit"
+                android:scrollbars="vertical"
+                android:text="@string/welcome8"
+                android:textSize="15sp" />
+
+
+            <!--<im.delight.android.webview.AdvancedWebView
                 android:padding="@dimen/dp_5"
                 android:id="@+id/webView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"/>-->
+
         </LinearLayout>
     </ScrollView>
 

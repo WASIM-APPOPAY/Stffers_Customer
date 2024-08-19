@@ -65,9 +65,13 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
     private String newNumber;
     private OnBankSubmit mConfirmLsitener;
     private CheckBox checkbox;
+    private int mCardType;
 
     public CardEnrollMentFragment() {
+
         // Required empty public constructor
+
+
     }
 
 
@@ -99,18 +103,20 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
 
         mTiedFname.setText(firstName);
         mTiedLname.setText(lastName);
-        tvCountryCodeU.setText(phoneCode);
-        tvMobNumU.setText("" + senderMobileNumber);
+        //tvCountryCodeU.setText(phoneCode);
+        tvMobNumU.setText("" + phWithCode);
         Bundle arguments = this.getArguments();
         mPrdNo = arguments.getInt(AppoConstants.PRDNUMBER, 0);
         newNumber = arguments.getString("newNumber");
+        mCardType = arguments.getInt(AppoConstants.CARDTYPE, 0);
         ////Log.e(TAG, "onCreateView: " + anInt);
+
         //later below will be enable
-        /*if (mPrdNo == 1003) {
+        if (mPrdNo == 1003) {
             mTiedAccNo.setText(walletAccountNumber);
         } else {
             mTiedAccNo.setText("" + newNumber);
-        }*/
+        }
 
 
         return mView;
@@ -121,22 +127,20 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
     public void onClick(View view) {
 
         if (view.getId() == R.id.btnCardEnrollment) {
-            //getCmvInfo();
+            getCmvInfo();
 
-            if (checkbox.isChecked()) {
-                Helper.showLoading(getString(R.string.info_please_wait), getActivity());
+            /*if (checkbox.isChecked()) {*/
+                /*Helper.showLoading(getString(R.string.info_please_wait), getActivity());
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         //showSuccessDialog("Card Enrollment", "Your UnionPay Card has been created Successfully");
                         showSuccessDialog();
                     }
-                }, 3000);
-            } else {
+                }, 3000);*/
+            /*} else {
                 Toast.makeText(getActivity(), "Please accept term and conditions", Toast.LENGTH_SHORT).show();
-            }
-
-
+            }*/
         }
     }
 
@@ -211,7 +215,8 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
         String uniqueMsgId = TimeUtils.getUniqueMsgId(mTimeStamp);
         mMsgInfo.addProperty("msgID", uniqueMsgId);
         mMsgInfo.addProperty("msgType", "CARD_ENROLLMENT");
-        mMsgInfo.addProperty("insID", "39990157");
+
+        mMsgInfo.addProperty("insID", "39990296");
         /*mTrxInfo.addProperty("deviceID", TimeUtils.getDeviceId());
         mTrxInfo.addProperty("userID", TimeUtils.getDeviceId());*/
         mTrxInfo.addProperty("deviceID", TimeUtils.getDeviceId());
@@ -244,7 +249,6 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
                         if (mResponse.getInt("status") == 200) {
                             //Log.e(TAG, "onResponse: called");
                             if (mResponse.getString("message").equalsIgnoreCase("success")) {
-
                                 String mResult = mResponse.getString("result");
                                 //Log.e(TAG, "onResponse: "+mResult );
                                 makeFinalRequest2(mResult, mRoot1);
@@ -333,14 +337,12 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
     private void showSuccessDialog() {
         AlertDialog.Builder builder = new MaterialAlertDialogBuilder(getActivity(), R.style.MyRounded_MaterialComponents_MaterialAlertDialog);
         LayoutInflater inflater = getLayoutInflater();
-
         View dialogLayout = inflater.inflate(R.layout.dialog_success_unionpay, null);
         MyTextView tvHeader = dialogLayout.findViewById(R.id.tvHeader);
-
-
+        MyTextView tvSuccess = dialogLayout.findViewById(R.id.tvSuccess);
+        MyTextView tvNext = dialogLayout.findViewById(R.id.tvNext);
         MyTextView btnClose = dialogLayout.findViewById(R.id.btnClose);
         btnClose.setVisibility(View.GONE);
-
         MyTextView btnNext = dialogLayout.findViewById(R.id.btnNext);
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -370,7 +372,7 @@ public class CardEnrollMentFragment extends Fragment implements View.OnClickList
     private void redirectHome() {
         Helper.hideLoading();
         mDialogCard.dismiss();
-        mConfirmLsitener.onConfirm(1);
+        mConfirmLsitener.onConfirm(2);
         //getActivity().finish();
 
     }

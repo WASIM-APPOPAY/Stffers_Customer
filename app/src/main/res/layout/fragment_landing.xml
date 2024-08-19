@@ -22,6 +22,7 @@
 
             <include layout="@layout/landing1_layout" />
 
+
             <ImageView
                 android:layout_width="match_parent"
 
@@ -89,7 +90,9 @@
 
             <include layout="@layout/landing2_layout" />
 
-            <include layout="@layout/landing3_layout" />
+
+            <!--<include layout="@layout/landing3_layout" />-->
+
 
             <LinearLayout
 
@@ -98,6 +101,7 @@
                 android:orientation="vertical">
 
                 <com.stuffer.stuffers.views.MyTextViewBold
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -114,6 +118,7 @@
                     android:padding="@dimen/dp_8">
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:visibility="gone"
                         android:id="@+id/restaurentView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -124,9 +129,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
                         android:layout_margin="10dp"
-                        android:src="@drawable/lbanner1" />
+                        android:src="@drawable/lbanner1"
+                        android:visibility="gone" />
 
                     <LinearLayout
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
@@ -134,64 +141,64 @@
                         android:orientation="horizontal">
 
                         <com.stuffer.stuffers.views.MyTextViewBold
-                            android:layout_marginStart="20dp"
                             android:id="@+id/allView"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
+                            android:layout_marginStart="20dp"
                             android:layout_marginEnd="@dimen/dp_8"
                             android:gravity="center|center_vertical"
                             android:minWidth="@dimen/dp_50"
-                            android:textAlignment="center"
                             android:singleLine="true"
-                            android:text="All" />
+                            android:text="All"
+                            android:textAlignment="center" />
 
                         <com.stuffer.stuffers.views.MyTextViewBold
                             android:id="@+id/shopView"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_marginEnd="8dp"
-                            android:textAlignment="center"
                             android:gravity="center|center_vertical"
                             android:minWidth="50dp"
-
-
                             android:singleLine="true"
-                            android:text="Shop" />
+
+
+                            android:text="Shop"
+                            android:textAlignment="center" />
 
                         <com.stuffer.stuffers.views.MyTextViewBold
                             android:id="@+id/foodView"
                             android:layout_width="wrap_content"
-                            android:gravity="center|center_vertical"
                             android:layout_height="40dp"
                             android:layout_marginEnd="8dp"
-                            android:textAlignment="center"
+                            android:gravity="center|center_vertical"
                             android:minWidth="@dimen/dp_60"
-
-
                             android:singleLine="true"
-                            android:text="Food" />
+
+
+                            android:text="Food"
+                            android:textAlignment="center" />
 
                         <com.stuffer.stuffers.views.MyTextViewBold
                             android:id="@+id/entertainmentView"
-                            android:gravity="center|center_vertical"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
-                             android:textAlignment="center"
+                            android:gravity="center|center_vertical"
                             android:minWidth="@dimen/dp_80"
                             android:padding="5dp"
                             android:singleLine="true"
-                            android:text="Entertainment" />
+                            android:text="Entertainment"
+                            android:textAlignment="center" />
 
                     </LinearLayout>
 
                     <FrameLayout
-                        android:layout_marginTop="@dimen/dp_10"
-
                         android:id="@+id/container"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
 
-                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10" />
+
+                    <!--<LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
@@ -511,7 +518,7 @@
                         android:layout_height="100dp"
                         android:layout_margin="10dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/lbanner11" />
+                        android:src="@drawable/lbanner11" />-->
 
                 </LinearLayout>
             </LinearLayout>

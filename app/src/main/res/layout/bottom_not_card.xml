@@ -44,6 +44,78 @@
 
         </LinearLayout>
 
+        <!--<xyz.teamgravity.imageradiobutton.GravityRadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <xyz.teamgravity.imageradiobutton.GravityImageRadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                app:girbImage="@drawable/wallet_card140" />
+
+            <xyz.teamgravity.imageradiobutton.GravityImageRadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:girbImage="@drawable/visa_visa_card" />
+        </xyz.teamgravity.imageradiobutton.GravityRadioGroup>-->
+
+        <worker8.com.github.radiogroupplus.RadioGroupPlus
+            android:id="@+id/radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_button1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="230dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/wallet_card140" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="230dp"
+
+                    android:layout_weight="1"
+                    android:src="@drawable/visa_visa_card" />
+
+
+            </LinearLayout>
+
+
+        </worker8.com.github.radiogroupplus.RadioGroupPlus>
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="230dp"
@@ -51,7 +123,9 @@
             android:layout_marginTop="-5dp"
             android:layout_marginEnd="20dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/wallet_card140" />
+            android:src="@drawable/wallet_card140"
+            android:visibility="gone" />
+
 
         <ImageView
             android:layout_width="match_parent"
@@ -60,8 +134,8 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/visa_visa_card" />
-
+            android:src="@drawable/visa_visa_card"
+            android:visibility="gone" />
 
         <com.stuffer.stuffers.views.MyTextView
             android:id="@+id/tvCommonContent"
@@ -74,24 +148,59 @@
             android:text=""
             android:textAlignment="textStart"
             android:textSize="16sp" />
-
         <com.stuffer.stuffers.views.MyTextView
-            android:id="@+id/btnApply"
-            android:layout_width="90dp"
-            android:layout_height="@dimen/dp_40"
-            android:layout_gravity="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="-5dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="@dimen/dp_5"
-            android:background="@drawable/view_normal_blue2"
-            android:gravity="center|center_vertical"
-            android:padding="5dp"
-            android:text="Apply"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="14sp"
+            android:padding="12dp"
+            android:textStyle="italic"
+            android:text="Payments in the palm of your hand"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:gravity="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/btnNoThanks"
+                android:layout_width="100dp"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="end"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:background="@drawable/view_normal_blue2"
+                android:gravity="center|center_vertical"
+                android:padding="5dp"
+                android:text="No Thanks"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
 
 
-            />
+                />
+
+            <com.stuffer.stuffers.views.MyTextView
+                android:id="@+id/btnApply"
+                android:layout_width="100dp"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="end"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:background="@drawable/view_normal_blue2"
+                android:gravity="center|center_vertical"
+                android:padding="5dp"
+                android:text="Apply"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 

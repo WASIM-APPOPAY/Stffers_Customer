@@ -1,10 +1,14 @@
 package com.stuffer.stuffers.fragments.wallet_fragments;
 
+//import static com.stuffer.stuffers.activity.wallet.SplashActivity.AFTER_13;
+//import static com.stuffer.stuffers.activity.wallet.SplashActivity.BEFORE_13;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -18,15 +22,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.collection.CircularArray;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -44,16 +51,22 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.activity.wallet.HomeActivity3;
 import com.stuffer.stuffers.activity.wallet.SignInActivity;
 import com.stuffer.stuffers.activity.wallet.SignupAcitivity;
+import com.stuffer.stuffers.activity.wallet.SplashActivity;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.Constants;
 import com.stuffer.stuffers.api.MainAPIInterface;
+import com.stuffer.stuffers.commonChat.chat.PinDemoActivity;
+import com.stuffer.stuffers.communicator.NextRequestListener;
+import com.stuffer.stuffers.communicator.OtpRequestListener;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomPasswordPolicy;
 import com.stuffer.stuffers.fragments.dialog.InsuranceDialog;
 import com.stuffer.stuffers.my_camera.CameraActivity;
 import com.stuffer.stuffers.utils.AppoConstants;
 import com.stuffer.stuffers.utils.DataVaultManager;
+import com.stuffer.stuffers.utils.Helper;
 import com.stuffer.stuffers.utils.PasswordUtil;
 import com.stuffer.stuffers.utils.TimeUtils;
 import com.stuffer.stuffers.views.MyButton;
@@ -90,16 +103,16 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
     private String mExpiry;
     private LinearLayout llIdType, layoutDetails, layoutScan;
     private MyTextView tvIdType;
-    private MyTextViewBold  tvScanDocs;
+    private MyTextViewBold tvScanDocs;
     private InsuranceDialog mIdTypeDialog;
     private ArrayList<String> mListType;
     private String stringExtraPath;
-    private ImageView imageId;
+    private ImageView imageId1, imageId2;
     private ProgressDialog progressDialog;
-    private MyEditText txtUserName;
+    private MyEditText txtUserName, txtLastName;
     private MyEditText tvIdNo;
-    private MyEditText txtUserPassword;
-    private ImageView ivPolicy;
+    private MyEditText txtUserPassword, txtUserPasswordConfirm;
+    private ImageView ivPolicy, ivPolicy2;
     private MyTextView btnSignUp;
     MainAPIInterface apiServiceOCR;
     private MainAPIInterface mainAPIInterface;
@@ -114,6 +127,13 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
     private String strUserEmail, strUserPassword;
     private FirebaseAuth mAuth;
     private DatabaseReference reference;
+    private MyTextViewBold tvFrontSide, tvBackSide;
+    private String stringExtraPath2;
+    private static final int BEFORE_13 = 2298;
+    private static final int AFTER_13 = 2299;
+    private MyTextView capture1, capture2;
+    private NextRequestListener mRequestListener;
+
 
     public IdentityFragment() {
         // Required empty public constructor
@@ -157,13 +177,22 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
         layoutDetails = (LinearLayout) mView.findViewById(R.id.layoutDetails);
         layoutScan = (LinearLayout) mView.findViewById(R.id.layoutScan);
         tvScanDocs = (MyTextViewBold) mView.findViewById(R.id.tvScanDocs);
-        imageId = (ImageView) mView.findViewById(R.id.imageId);
+        imageId1 = (ImageView) mView.findViewById(R.id.imageId1);
+        imageId2 = (ImageView) mView.findViewById(R.id.imageId2);
+
+        tvFrontSide = (MyTextViewBold) mView.findViewById(R.id.tvFrontSide);
+        tvBackSide = (MyTextViewBold) mView.findViewById(R.id.tvBackSide);
+        capture1 = (MyTextView) mView.findViewById(R.id.capture1);
+        capture2 = (MyTextView) mView.findViewById(R.id.capture2);
 
 
         txtUserName = (MyEditText) mView.findViewById(R.id.txtUserName);
+        txtLastName = (MyEditText) mView.findViewById(R.id.txtLastName);
         tvIdNo = (MyEditText) mView.findViewById(R.id.tvIdNo);
         txtUserPassword = (MyEditText) mView.findViewById(R.id.txtUserPassword);
+        txtUserPasswordConfirm = (MyEditText) mView.findViewById(R.id.txtUserPasswordConfirm);
         ivPolicy = (ImageView) mView.findViewById(R.id.ivPolicy);
+        ivPolicy2 = (ImageView) mView.findViewById(R.id.ivPolicy2);
         btnSignUp = (MyTextView) mView.findViewById(R.id.btnSignUp);
 
 
@@ -171,8 +200,11 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
         edtExpiryDate.setOnClickListener(this);
         llIdType.setOnClickListener(this);
         tvIdType.setOnClickListener(this);
-        layoutScan.setOnClickListener(this);
+        //layoutScan.setOnClickListener(this);
+        tvFrontSide.setOnClickListener(this);
+        tvBackSide.setOnClickListener(this);
         ivPolicy.setOnClickListener(this);
+        ivPolicy2.setOnClickListener(this);
         btnSignUp.setOnClickListener(this);
         return mView;
     }
@@ -187,36 +219,60 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
             getSelectedId();
         } else if (view.getId() == R.id.tvIdType) {
             getSelectedId();
-        } else if (view.getId() == R.id.layoutScan) {
+        } /*else if (view.getId() == R.id.layoutScan) {
             openCameraActivity();
 
-            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 checkCameraPermissionTop();
             } else {
                 openCameraActivity();
-            }*/
+            }
+        }*/ else if (view.getId() == R.id.tvFrontSide) {
+            //openCameraActivityFront();
+            checkCameraPermissionTop();
+        } else if (view.getId() == R.id.tvBackSide) {
+            checkCameraPermissionEND();
+            //openCameraActivityBack();
         } else if (view.getId() == R.id.ivPolicy) {
             BottomPasswordPolicy bottomPasswordPolicy = new BottomPasswordPolicy();
             bottomPasswordPolicy.show(getChildFragmentManager(), bottomPasswordPolicy.getTag());
+        } else if (view.getId() == R.id.ivPolicy2) {
+            BottomPasswordPolicy bottomPasswordPolicy = new BottomPasswordPolicy();
+            bottomPasswordPolicy.show(getChildFragmentManager(), bottomPasswordPolicy.getTag());
         } else if (view.getId() == R.id.btnSignUp) {
-            fullName = txtUserName.getText().toString().trim();
+            /*fullName = txtUserName.getText().toString().trim();
             if (StringUtils.isEmpty(fullName)) {
                 txtUserName.setFocusable(true);
                 txtUserName.setError(getString(R.string.info_enter_name));
                 return;
-            }
+            }*/
 
-            if (!fullName.contains(" ")) {
+            /*if (!fullName.contains(" ")) {
                 txtUserName.setFocusable(true);
                 txtUserName.setError(getString(R.string.info_enter_first_name_lasr_name));
                 return;
-            }
+            }*/
 
             /*if (txtUserName.getText().toString().trim().length() < 5) {
                 txtUserName.setError(getString(R.string.info_enter_name));
                 txtUserName.requestFocus();
                 return;
             }*/
+
+            String name = txtUserName.getText().toString().trim();
+            if (StringUtils.isEmpty(name)) {
+                txtUserName.setError("Enter first name");
+                txtUserName.requestFocus();
+                return;
+            }
+
+            String lastname = txtLastName.getText().toString().trim();
+            if (StringUtils.isEmpty(lastname)) {
+                txtLastName.setError("Enter last name");
+                txtLastName.requestFocus();
+                return;
+            }
+
 
             if (mDob == null) {
                 edFocus.setVisibility(View.VISIBLE);
@@ -239,18 +295,48 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
             }
 
 
-            if (!PasswordUtil.PASSWORD_PATTERN.matcher(txtUserPassword.getText().toString().trim()).matches()) {
+            /*if (!PasswordUtil.PASSWORD_PATTERN.matcher(txtUserPassword.getText().toString().trim()).matches()) {
                 txtUserPassword.setFocusable(true);
                 txtUserPassword.setError("please follow the pattern");
                 txtUserPassword.requestFocus();
                 return;
             }
-            String[] nameArray = txtUserName.getText().toString().split(" ");
-            fName = nameArray[0];
-            lName = nameArray[1];
 
-            makeRequest();
+            if (!PasswordUtil.PASSWORD_PATTERN.matcher(txtUserPasswordConfirm.getText().toString().trim()).matches()) {
+                txtUserPasswordConfirm.setFocusable(true);
+                txtUserPasswordConfirm.setError("please follow the pattern");
+                txtUserPasswordConfirm.requestFocus();
+                return;
+            }
 
+            String trim = txtUserPasswordConfirm.getText().toString().trim();
+            String trim2 = txtUserPassword.getText().toString().trim();
+            if (!trim.equals(trim2)) {
+                Helper.showLongMessage(getActivity(), "password mismatch");
+                return;
+            }*/
+
+            //String[] nameArray = txtUserName.getText().toString().split(" ");
+            //fName = nameArray[0];
+            //lName = nameArray[1];
+            //makeRequest();
+            /*Helper.showLoading(getString(R.string.info_please_wait), getActivity());
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Helper.hideLoading();
+                    Toast.makeText(getActivity(), "Successfully Created!!!!", Toast.LENGTH_SHORT).show();
+                    DataVaultManager.getInstance(getActivity()).savIsCreated("yes");
+                    //Intent intent = new Intent(getActivity(), HomeActivity3.class);
+                    Intent intent = new Intent(getActivity(), PinDemoActivity.class);
+                    intent.putExtra("open", "yes");
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+            }, 500);*/
+
+
+            mRequestListener.onNextRequest();
 
         }
     }
@@ -404,21 +490,61 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+    //@RequiresApi(api = Build.VERSION_CODES.M)
     private void checkCameraPermissionTop() {
 
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+        /*if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 988);
         } else {
-            openCameraActivity();
+            openCameraActivityFront();
+        }*/
+        openCameraActivityFront();
+    }
+
+    //@RequiresApi(api = Build.VERSION_CODES.M)
+    private void checkCameraPermissionEND() {
+
+        /*if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            //Toast.makeText(SplashActivity.this, "Below Called", Toast.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(getActivity(), new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+
+                    Manifest.permission.CAMERA
+            }, BEFORE_13);
+        } else {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{
+                    Manifest.permission.READ_MEDIA_AUDIO,
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.CAMERA
+            }, AFTER_13);
         }
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 989);
+        } else {
+            openCameraActivityBack();
+        }*/
+        openCameraActivityBack();
     }
 
     private void openCameraActivity() {
         Intent intentCamera = new Intent(getActivity(), CameraActivity.class);
         startActivityForResult(intentCamera, 777);
+    }
+
+    private void openCameraActivityFront() {
+        Intent intentCamera = new Intent(getActivity(), CameraActivity.class);
+        startActivityForResult(intentCamera, 777);
+    }
+
+    private void openCameraActivityBack() {
+        Intent intentCamera = new Intent(getActivity(), CameraActivity.class);
+        startActivityForResult(intentCamera, 888);
     }
 
     @Override
@@ -429,9 +555,19 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
             boolean readPermission = grantResults[0] == PackageManager.PERMISSION_GRANTED;
             boolean writePermission = grantResults[1] == PackageManager.PERMISSION_GRANTED;
             boolean cameraPermission = grantResults[2] == PackageManager.PERMISSION_GRANTED;
-           // Log.e("TAG", "onRequestPermissionsResult:Manage ::  " + writePermission + "==" + cameraPermission + "==" + readPermission);
+            // Log.e("TAG", "onRequestPermissionsResult:Manage ::  " + writePermission + "==" + cameraPermission + "==" + readPermission);
             if (readPermission && writePermission && cameraPermission) {
-                openCameraActivity();
+                openCameraActivityFront();
+            } else {
+                Toast.makeText(getActivity(), "please allow permission to work properly", Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == 989) {
+            boolean readPermission = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+            boolean writePermission = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+            boolean cameraPermission = grantResults[2] == PackageManager.PERMISSION_GRANTED;
+            // Log.e("TAG", "onRequestPermissionsResult:Manage ::  " + writePermission + "==" + cameraPermission + "==" + readPermission);
+            if (readPermission && writePermission && cameraPermission) {
+                openCameraActivityBack();
             } else {
                 Toast.makeText(getActivity(), "please allow permission to work properly", Toast.LENGTH_SHORT).show();
             }
@@ -443,13 +579,14 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 777 && resultCode == Activity.RESULT_OK) {
             stringExtraPath = data.getStringExtra(AppoConstants.IMAGE_PATH);
-           // Log.e(TAG, "onActivityResult: " + stringExtraPath);
+            // Log.e(TAG, "onActivityResult: " + stringExtraPath);
 
-            imageId.setVisibility(View.VISIBLE);
+            imageId1.setVisibility(View.VISIBLE);
+            capture1.setVisibility(View.VISIBLE);
             DataVaultManager.getInstance(getActivity()).saveIdImagePath(stringExtraPath);
             Glide.with(getActivity())
                     .load(stringExtraPath)
-                    .into(imageId);
+                    .into(imageId1);
 
             File imgFile = new File(stringExtraPath);
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -460,7 +597,36 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
             JsonObject mSent = new JsonObject();
             mSent.addProperty("image", imageString);
             getDataFromImage(mSent);
+        } else if (requestCode == 888 && resultCode == Activity.RESULT_OK) {
+            stringExtraPath2 = data.getStringExtra(AppoConstants.IMAGE_PATH);
+            // Log.e(TAG, "onActivityResult: " + stringExtraPath);
 
+            imageId2.setVisibility(View.VISIBLE);
+            capture2.setVisibility(View.VISIBLE);
+
+            layoutDetails.setVisibility(View.VISIBLE);
+            DataVaultManager.getInstance(getActivity()).saveIdImagePath(stringExtraPath2);
+
+            Glide.with(getActivity())
+                    .load(stringExtraPath2)
+                    .into(imageId2);
+
+
+            File imgFile = new File(stringExtraPath2);
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+
+            txtUserName.requestFocus();
+            //txtUserName.setCursorVisible(true);
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(txtUserName, InputMethodManager.SHOW_IMPLICIT);
+            //below will be open later
+            /*byte[] imageBytes = byteArrayOutputStream.toByteArray();
+            String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+            JsonObject mSent = new JsonObject();
+            mSent.addProperty("image", imageString);
+            getDataFromImage(mSent);*/
 
         }
     }
@@ -688,7 +854,7 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
                         JSONObject mExtractROOT = new JSONObject(responseExtract);
                         JSONObject mExtractJSON = mExtractROOT.getJSONObject(AppoConstants.DATA);
                         if (mExtractJSON.getString(Constants.ERRORCODE).equalsIgnoreCase("0")) {
-                            layoutDetails.setVisibility(View.VISIBLE);
+
                             if (mExtractJSON.has("documentNumber")) {
                                 if (mExtractJSON.has("documentNumber")) {
                                     tvIdNo.setText(mExtractJSON.getString("documentNumber"));
@@ -890,7 +1056,7 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
                 //Log.e(TAG, "onFailure: " + t.getMessage());
                 mAllow = true;
                 layoutDetails.setVisibility(View.VISIBLE);
-                Toast.makeText(getActivity(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -1012,6 +1178,13 @@ public class IdentityFragment extends Fragment implements View.OnClickListener {
         if (mIdTypeDialog != null) {
             mIdTypeDialog.dismiss();
         }
+
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mRequestListener = (NextRequestListener) context;
 
     }
 }

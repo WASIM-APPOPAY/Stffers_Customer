@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg_color"
+    android:orientation="vertical"
+    tools:context=".activity.restaurant.StoreListActivity">
+
+    <include layout="@layout/common_toolbar2" />
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+
+        android:orientation="horizontal">
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:id="@+id/allView"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:gravity="center|center_vertical"
+            android:minWidth="@dimen/dp_50"
+            android:singleLine="true"
+            android:text="All"
+            android:textAlignment="center" />
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:id="@+id/shopView"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center|center_vertical"
+            android:minWidth="50dp"
+            android:singleLine="true"
+
+
+            android:text="Shop"
+            android:textAlignment="center" />
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:id="@+id/foodView"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center|center_vertical"
+            android:minWidth="@dimen/dp_60"
+            android:singleLine="true"
+
+
+            android:text="Food"
+            android:textAlignment="center" />
+
+        <com.stuffer.stuffers.views.MyTextViewBold
+            android:id="@+id/entertainmentView"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center|center_vertical"
+            android:minWidth="@dimen/dp_80"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text="Entertainment"
+            android:textAlignment="center" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_weight="1" />
+
+    <include layout="@layout/common_bg_bottom" />
+
+</LinearLayout>

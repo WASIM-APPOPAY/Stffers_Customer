@@ -19,21 +19,25 @@ import com.google.android.gms.tasks.Task;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.communicator.CarrierSelectListener;
+import com.stuffer.stuffers.communicator.NextRequestListener;
 import com.stuffer.stuffers.communicator.OtpRequestListener;
 import com.stuffer.stuffers.communicator.StateSelectListener;
 import com.stuffer.stuffers.communicator.VerifiedListener;
 import com.stuffer.stuffers.fragments.bottom.HomeFragment;
 import com.stuffer.stuffers.fragments.wallet_fragments.IdentityFragment;
 import com.stuffer.stuffers.fragments.wallet_fragments.NumEmailFragment;
+import com.stuffer.stuffers.fragments.wallet_fragments.PasswordFragment;
 import com.stuffer.stuffers.fragments.wallet_fragments.VerifyFragment;
 import com.stuffer.stuffers.myService.AppSMSBroadcastReceiver;
 import com.stuffer.stuffers.myService.SMSReceiver;
 import com.stuffer.stuffers.utils.AppoConstants;
 
+import org.aviran.cookiebar2.CookieBar;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Registration extends AppCompatActivity implements OtpRequestListener, VerifiedListener, CarrierSelectListener, StateSelectListener {
+public class Registration extends AppCompatActivity implements OtpRequestListener, VerifiedListener, CarrierSelectListener, StateSelectListener , NextRequestListener {
     String mNameCode, mCountryCode, mMobileNo, mEmailId, mAddress, mCountryId;
 
     StateProgressBar stateProgressBar;
@@ -49,14 +53,23 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         setContentView(R.layout.activity_registration);
         stateProgressBar = (StateProgressBar) findViewById(R.id.my_progress_bar_id);
 
+        //String[] descriptionData = {"" + getString(R.string.info_step_one), "" + getString(R.string.info_step_two)};
         String[] descriptionData = {"" + getString(R.string.info_step_one), "" + getString(R.string.info_step_two), "" + getString(R.string.info_step_three)};
 
         stateProgressBar.setStateDescriptionData(descriptionData);
         initBroadCast();
         smsListener();
         registerReceiver(appSMSBroadcastReceiver, intentFilter);
+
         NumEmailFragment mNumEmailFragment = new NumEmailFragment();
+        if (getIntent().getExtras() != null) {
+            Bundle mBundle = new Bundle();
+            mBundle.putString(AppoConstants.AREACODE, getIntent().getStringExtra(AppoConstants.AREACODE));
+            mBundle.putString(AppoConstants.MOBILENUMBER, getIntent().getStringExtra(AppoConstants.MOBILENUMBER));
+            mNumEmailFragment.setArguments(mBundle);
+        }
         intiFragment(mNumEmailFragment);
+
         /*IdentityFragment identityFragment = new IdentityFragment();
         intiFragment(identityFragment);*/
 
@@ -83,10 +96,10 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
             case 2:
                 stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.THREE);
                 break;
-            case 3:
+        /*    case 3:
                 stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.FOUR);
-                break;
-            case 4:
+                break;*/
+            case 3:
                 stateProgressBar.setAllStatesCompleted(true);
                 break;
         }
@@ -102,13 +115,12 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         mEmailId = emailId;
         mAddress = address;
         mCountryId = countryId;
-
         mStateId = String.valueOf(stateId);
         mZipCode = zipCode;
         mCity = city;
+        VerifyFragment mVerifyFragment = new VerifyFragment();
 
-
-        Bundle mBundle = new Bundle();
+        /*Bundle mBundle = new Bundle();
         mBundle.putString(AppoConstants.COUNTRYNAMECODE, nameCode);
         mBundle.putString(AppoConstants.COUNTRYCODE, countryCode);
         mBundle.putString(AppoConstants.MOBILENUMBER, mobileNumber);
@@ -116,12 +128,20 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         mBundle.putString(AppoConstants.ADDRESS, address);
         mBundle.putString(AppoConstants.STATEID, String.valueOf(stateId));
         mBundle.putString(AppoConstants.ZIPCODE2, zipCode);
-        mBundle.putString(AppoConstants.CITY, city);
-        VerifyFragment mVerifyFragment = new VerifyFragment();
+        mBundle.putString(AppoConstants.CITY, city);*/
+        /*VerifyFragment mVerifyFragment = new VerifyFragment();
         mVerifyFragment.setArguments(mBundle);
         intiFragment(mVerifyFragment);
 
-        /*IdentityFragment mIdentityFragment = new IdentityFragment();
+        CookieBar.build(Registration.this)
+                .setTitle("appOpay")
+                .setMessage("Your One Time Password is 123456")
+                .setIcon(R.drawable.appopay_notification_icon1)
+                //.setIconAnimation(R.animator.spin)
+                .setEnableAutoDismiss(false)
+                .show();*/
+
+        IdentityFragment mIdentityFragment = new IdentityFragment();
         Bundle mBundle = new Bundle();
         mBundle.putString(AppoConstants.COUNTRYNAMECODE, mNameCode);
         mBundle.putString(AppoConstants.COUNTRYCODE, mCountryCode);
@@ -135,7 +155,7 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
 
         mIdentityFragment.setArguments(mBundle);
         intiFragment(mIdentityFragment);
-        state(2);*/
+        //state(2);
 
 
     }
@@ -153,13 +173,14 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
         mBundle.putString(AppoConstants.STATEID, mStateId);
         mBundle.putString(AppoConstants.ZIPCODE2, mZipCode);
         mBundle.putString(AppoConstants.CITY, mCity);
-
         mIdentityFragment.setArguments(mBundle);
         intiFragment(mIdentityFragment);
         state(2);
 
 
     }
+
+
 
     @Override
     public void onCarrierSelect(int pos) {
@@ -248,4 +269,10 @@ public class Registration extends AppCompatActivity implements OtpRequestListene
     }
 
 
+    @Override
+    public void onNextRequest() {
+        state(3);
+        PasswordFragment mFragment=new PasswordFragment();
+        intiFragment(mFragment);
+    }
 }

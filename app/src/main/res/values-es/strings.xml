@@ -1069,4 +1069,5 @@ data.</string>
     <string name="info_verified2">Si tu móvil no se verificó automáticamente,\ningresa tu PIN de seis dígitos.</string>
     <string name="info_verified3">Si no recibió su PIN de seis dígitos, haga clic en reenviar a continuación.</string>
     <string name="info_resend">reenviar</string>
+    <string name="welcome">BIENVENIDA</string>
 </resources>

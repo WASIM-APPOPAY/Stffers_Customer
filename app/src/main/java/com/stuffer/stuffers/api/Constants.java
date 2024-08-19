@@ -240,7 +240,7 @@ public class Constants {
     public static final int CAPTURE_IMAGE_REQUEST = 8787;
     public static final String CARDINFO = "cardInfo";
     //http://54.253.233.223:8889/ocr/credit
-    public static final String BASE_OCR = "http://3.141.54.113:8889/";
+    public static final String BASE_OCR = "http://3.141.54.113:8889/ocr/";
     public static final String BASE_LOAN = "https://en.corecoop.net";
     //public static final String BASE_OCR = "http://54.253.233.223:8889/";
     public static final String OCR_ID = "ocr/idcard_base64";

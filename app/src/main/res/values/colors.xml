@@ -10,6 +10,8 @@
 
     <color name="purple_200">#FD9A17</color>
     <color name="purple_700">#FD9A17</color>
+    <!--later-->
+    <!--<color name="purple_700">#0658A1</color>-->
 
 
 
@@ -596,6 +598,7 @@
 
     <color name="common_bottom_line_color">#353A46</color>
     <color name="common_text_color">#484947</color>
+    <color name="cookie_bar_color">#2DA0FF</color>
 
 
 </resources>

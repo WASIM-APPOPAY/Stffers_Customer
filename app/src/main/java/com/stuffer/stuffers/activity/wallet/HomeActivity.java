@@ -1296,7 +1296,7 @@ public class HomeActivity extends AppCompatActivity implements OnNavigationItemC
     }
 
     @Override
-    public void onCardRequest() {
+    public void onCardRequest(int type) {
         if (mBottomNotCard != null)
             mBottomNotCard.dismiss();
         Intent intentUnion = new Intent(HomeActivity.this, UnionPayActivity.class);

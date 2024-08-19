@@ -1,5 +1,6 @@
 package com.stuffer.stuffers.activity.wallet;
 
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_BASE_64;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_CCODE;
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_USER_LANGUAGE;
 
@@ -30,6 +31,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -59,8 +61,11 @@ import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.BuildConfig;
 import com.stuffer.stuffers.MyContextWrapper;
 import com.stuffer.stuffers.R;
+import com.stuffer.stuffers.activity.FianceTab.UnionPayActivity;
 import com.stuffer.stuffers.activity.loan.L_HomeActivity;
 import com.stuffer.stuffers.activity.loan.L_IntroActivity;
+import com.stuffer.stuffers.activity.quick_pass.CardTermsActivity;
+import com.stuffer.stuffers.activity.quick_pass.VisaUnionActivity;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.Constants;
 import com.stuffer.stuffers.api.MainAPIInterface;
@@ -82,9 +87,14 @@ import com.stuffer.stuffers.commonChat.interfaces.UserGroupSelectionDismissListe
 import com.stuffer.stuffers.communicator.CashTransferListener;
 import com.stuffer.stuffers.communicator.CommonListener;
 import com.stuffer.stuffers.communicator.LanguageListener;
+import com.stuffer.stuffers.communicator.LaterListener;
+import com.stuffer.stuffers.communicator.OnTransactionPinSuccess;
 import com.stuffer.stuffers.communicator.StartActivityListener;
+import com.stuffer.stuffers.communicator.UnionPayCardListener;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomLanguage;
+import com.stuffer.stuffers.fragments.bottom_fragment.BottomNotCard;
 import com.stuffer.stuffers.fragments.bottom_fragment.BottomRegister;
+import com.stuffer.stuffers.fragments.bottom_fragment.BottomTransactionPin;
 import com.stuffer.stuffers.fragments.landing.LandingFragment;
 import com.stuffer.stuffers.fragments.landing.LifeFragment;
 import com.stuffer.stuffers.myService.FetchMyUsersService;
@@ -118,7 +128,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeActivity3 extends BaseActivity implements View.OnClickListener, ChatItemClickListener, ProceedRequest, UserGroupSelectionDismissListener, CashTransferListener, CommonListener, StartActivityListener, LanguageListener {
+public class HomeActivity3 extends BaseActivity implements View.OnClickListener, ChatItemClickListener, ProceedRequest, UserGroupSelectionDismissListener, CashTransferListener, CommonListener, StartActivityListener, LanguageListener, OnTransactionPinSuccess, UnionPayCardListener, LaterListener {
     private static final String TAG = "HomeActivity3";
     private static final int REQUEST_CODE_CHAT_FORWARD = 99;
     private static String CONFIRM_TAG = "confirmtag";
@@ -170,6 +180,10 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
     List<ImageView> mLandingImage;
     private ImageView ivLanding1, ivLanding2, ivLanding3, ivLanding4, ivLanding5;
     private AlertDialog mDialogLogout;
+    private BottomTransactionPin mBottomTransDialog;
+    String mPinTag = "TransactionTag";
+    private BottomNotCard mBottomNotCard;
+    private AlertDialog dialogLater;
 
     //https://m2.material.io/search.html?q=home
     @Override
@@ -229,9 +243,9 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
         ccWhere = (CountryCodePicker) findViewById(R.id.ccWhere);
         llMsg = findViewById(R.id.llMsg);
         helper = new ChatHelper(this);
-        userMe = helper.getLoggedInUser();
+        //userMe = helper.getLoggedInUser();
         ccWhere.setDialogEventsListener(mLis);
-        registerChatUpdates();
+        //registerChatUpdates();
 
         reflectCountry();
 
@@ -239,13 +253,13 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
         initFragment(mLandingFragment);
         /*HomeLandingFragment mLandingFragment = new HomeLandingFragment();
         initFragment(mLandingFragment);*/
-        isAppoPayAccountExist(userMe.getId(), userMe.getName());
+        //isAppoPayAccountExist(userMe.getId(), userMe.getName());
         llMsg.setOnClickListener(this);
 
         //tvUserName.setText(userMe.getName());
         //tvMobileNumber.setText("+" + userMe.getId());
-        tvDrawername.setText(userMe.getName());
-        tvDrawerNo.setText("+" + userMe.getId());
+        //tvDrawername.setText(userMe.getName());
+        //tvDrawerNo.setText("+" + userMe.getId());
 
         tvVersion.setText(getString(R.string.info_version) + BuildConfig.VERSION_NAME);
 
@@ -258,9 +272,23 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
             }
         });
 
+        if (getIntent().getExtras() != null) {
 
-        updateFcmToken();
-        refreshMyContacts();
+            Bundle extras = getIntent().getExtras();
+            if (extras.containsKey("open")) {
+                mBottomTransDialog = new BottomTransactionPin();
+                mBottomTransDialog.show(getSupportFragmentManager(), mPinTag);
+                mBottomTransDialog.setCancelable(false);
+            }
+
+        }
+        /*mBottomTransDialog = new BottomTransactionPin();
+        mBottomTransDialog.show(getSupportFragmentManager(), mPinTag);
+        mBottomTransDialog.setCancelable(false);*/
+
+
+        //updateFcmToken();
+        //refreshMyContacts();
         LinearLayout layoutLogout = (LinearLayout) findViewById(R.id.layoutLogout);
         layoutLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -277,6 +305,7 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
         });
 
         setActiveInActive(0);
+        //showNoCardDialog();
 
     }
 
@@ -299,7 +328,7 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
     }
 
     private void logoutUserRequest() {
-        if (mDialogLogout!=null){
+        if (mDialogLogout != null) {
             mDialogLogout.dismiss();
         }
         tvSideBalance.setText("$" + "00.00");
@@ -336,7 +365,7 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
 
         builder.show();
 */
-        AlertDialog.Builder builder = new MaterialAlertDialogBuilder(this,R.style.MyRounded_MaterialComponents_MaterialAlertDialog);
+        AlertDialog.Builder builder = new MaterialAlertDialogBuilder(this, R.style.MyRounded_MaterialComponents_MaterialAlertDialog);
         LayoutInflater inflater = getLayoutInflater();
         View dialogLayout = inflater.inflate(R.layout.logout_layout, null);
         MyButton btnNo = dialogLayout.findViewById(R.id.btnNo);
@@ -656,7 +685,14 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
             setActiveInActive(3);
             /*Intent intentFinance = new Intent(HomeActivity3.this, L_IntroActivity.class);
             startActivity(intentFinance);*/
-            getDetails();
+            String userData = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(DataVaultManager.KEY_USER_DETIALS);
+            if (TextUtils.isEmpty(userData)) {
+                goToLoginScreen(0);
+            } else {
+
+                getDetails();
+            }
+
         } else if (view.getId() == R.id.layoutMyCards) {
             drawer_layout.closeDrawer(GravityCompat.START);
             new Handler().postDelayed(new Runnable() {
@@ -807,12 +843,12 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
 
     }
 
-    protected void onDestroy() {
-        //markOnline(false);
+    /*protected void onDestroy() {
+
         if (myInboxRef != null && chatChildEventListener != null)
             myInboxRef.removeEventListener(chatChildEventListener);
         super.onDestroy();
-    }
+    }*/
 
     private Chat mTemp;
     private ChildEventListener chatChildEventListener = new ChildEventListener() {
@@ -982,10 +1018,10 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
     protected void onResume() {
         super.onResume();
 
-        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(mContext);
-        localBroadcastManager.registerReceiver(myContactsReceiver, new IntentFilter(ChatHelper.BROADCAST_MY_CONTACTS));
+        //LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(mContext);
+        /*localBroadcastManager.registerReceiver(myContactsReceiver, new IntentFilter(ChatHelper.BROADCAST_MY_CONTACTS));
         localBroadcastManager.registerReceiver(myUsersReceiver, new IntentFilter(ChatHelper.BROADCAST_MY_USERS));
-        localBroadcastManager.registerReceiver(userReceiver, new IntentFilter(ChatHelper.BROADCAST_USER_ME));
+        localBroadcastManager.registerReceiver(userReceiver, new IntentFilter(ChatHelper.BROADCAST_USER_ME));*/
         upDateBalance();
         reflectCountry();
     }
@@ -1136,5 +1172,105 @@ public class HomeActivity3 extends BaseActivity implements View.OnClickListener,
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onPinCreated() {
+        if (mBottomTransDialog != null)
+            mBottomTransDialog.dismiss();
+        /*String base64 = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_BASE_64);
+        if (!StringUtils.isEmpty(base64)) {
+            uploadUserAvatar(base64);
+        } else {
+            showNoCardDialog();
+        }*/
+        showNoCardDialog();
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        if (getIntent().getExtras() != null) {
+            Log.e(TAG, "onNewIntent: called");
+            Bundle extras = intent.getExtras();
+            if (extras.containsKey("open")) {
+                mBottomTransDialog = new BottomTransactionPin();
+                mBottomTransDialog.show(getSupportFragmentManager(), mPinTag);
+                mBottomTransDialog.setCancelable(false);
+            }
+        }
+    }
+
+    private void showNoCardDialog() {
+        mBottomNotCard = new BottomNotCard();
+        mBottomNotCard.show(getSupportFragmentManager(), mBottomNotCard.getTag());
+        mBottomNotCard.setCancelable(false);
+    }
+
+    @Override
+    public void onCardRequest(int type) {
+        if (mBottomNotCard != null)
+            mBottomNotCard.dismiss();
+
+        Intent intentUnion = new Intent(HomeActivity3.this, UnionPayActivity.class);
+        startActivityForResult(intentUnion, 1004);
+
+        /*Intent intentUnion = new Intent(HomeActivity3.this, CardTermsActivity.class);
+        intentUnion.putExtra(AppoConstants.CARDTYPE, type);
+        startActivity(intentUnion);*/
+        /*if (type == 1) {
+            Intent intentUnion = new Intent(HomeActivity3.this, UnionPayActivity.class);
+            intentUnion.putExtra(AppoConstants.CARDTYPE, type);
+            startActivity(intentUnion);
+
+        } else {
+            Intent intentUnion = new Intent(HomeActivity3.this, VisaUnionActivity.class);
+            intentUnion.putExtra(AppoConstants.CARDTYPE, type);
+            startActivity(intentUnion);
+
+        }*/
+    }
+
+    @Override
+    public void onLaterRequest() {
+        if (mBottomNotCard != null)
+            mBottomNotCard.dismiss();
+        AlertDialog.Builder builder = new MaterialAlertDialogBuilder(this, R.style.MyRounded_MaterialComponents_MaterialAlertDialog);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogLayout = inflater.inflate(R.layout.layout_no_thanks, null);
+        MyTextView tvCommonContent = dialogLayout.findViewById(R.id.tvCommonContent);
+        MyTextView btnNoThanks = dialogLayout.findViewById(R.id.btnNoThanks);
+        MyTextView btnApply = dialogLayout.findViewById(R.id.btnApply);
+        String info = "Apply for a personal Visa or UnionPay virtual card tied directly to your " + "<font color='#0658A1'>" + "WALLET" + "</font>";
+        tvCommonContent.setText(Html.fromHtml(info));
+
+        builder.setView(dialogLayout);
+
+        btnNoThanks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogLater.dismiss();
+            }
+        });
+
+        btnApply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestCardAgain();
+            }
+        });
+
+        dialogLater = builder.create();
+        dialogLater.setCanceledOnTouchOutside(false);
+        dialogLater.show();
+
+
+    }
+
+    private void requestCardAgain() {
+        dialogLater.dismiss();
+        showNoCardDialog();
     }
 }

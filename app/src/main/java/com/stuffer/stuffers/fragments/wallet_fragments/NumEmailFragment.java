@@ -1,6 +1,7 @@
 package com.stuffer.stuffers.fragments.wallet_fragments;
 
 import static com.stuffer.stuffers.utils.DataVaultManager.KEY_CCODE;
+import static com.stuffer.stuffers.utils.DataVaultManager.KEY_MOBILE;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -47,6 +48,7 @@ import com.stuffer.stuffers.activity.wallet.SignInActivity;
 import com.stuffer.stuffers.adapter.address.AutoCompleteAdapter;
 import com.stuffer.stuffers.api.ApiUtils;
 import com.stuffer.stuffers.api.MainAPIInterface;
+import com.stuffer.stuffers.commonChat.chat.NumberActivity;
 import com.stuffer.stuffers.commonChat.chatModel.User;
 import com.stuffer.stuffers.commonChat.chatUtils.ChatHelper;
 import com.stuffer.stuffers.communicator.OtpRequestListener;
@@ -84,7 +86,7 @@ public class NumEmailFragment extends Fragment {
 
     private MyTextView floatingOtpNext;
     private OtpRequestListener mOtpRequestListener;
-    private MyEditText edtCustomerMobileNumber, edtEmail;
+    private MyEditText edtCustomerMobileNumber, edtEmail, edtConfirmEmail;
     //private AutoCompleteTextView placesAutocomplete;
     private MyEditText placesAutocomplete;
     private ImageView btnClearAll;
@@ -105,6 +107,7 @@ public class NumEmailFragment extends Fragment {
     private ChatHelper helper;
     private User userMe;
     private PhoneNumberUtil phoneUtil;
+    private String mConfirmEmail;
 
     public NumEmailFragment() {
         // Required empty public constructor
@@ -128,9 +131,10 @@ public class NumEmailFragment extends Fragment {
         ivState = mView.findViewById(R.id.ivState);
         tvState = mView.findViewById(R.id.tvState);
         edtEmail = mView.findViewById(R.id.edtEmail);
+        edtConfirmEmail = mView.findViewById(R.id.edtConfirmEmail);
         tvZip = mView.findViewById(R.id.tvZip);
         tvCity = mView.findViewById(R.id.tvCity);
-        String id = userMe.getId();
+        /*String id = userMe.getId();
         try {
             if (phoneUtil == null) {
                 phoneUtil = PhoneNumberUtil.createInstance(getActivity());
@@ -154,7 +158,7 @@ public class NumEmailFragment extends Fragment {
 
         } catch (NumberParseException e) {
             System.err.println("NumberParseException was thrown: " + e.toString());
-        }
+        }*/
 
 
         btnClearAll.setOnClickListener(new View.OnClickListener() {
@@ -176,7 +180,9 @@ public class NumEmailFragment extends Fragment {
                 mNameCode = edtCustomerCountryCode.getSelectedCountryNameCode();
                 mCountryName = edtCustomerCountryCode.getSelectedCountryName();
                 mEmail = edtEmail.getText().toString().trim();
-                /*if (edtCustomerMobileNumber.getText().toString().trim().isEmpty()) {
+                mConfirmEmail = edtConfirmEmail.getText().toString().trim();
+
+                if (edtCustomerMobileNumber.getText().toString().trim().isEmpty()) {
                     edtCustomerMobileNumber.setError(getString(R.string.info_enter_mobile_number));
                     edtCustomerMobileNumber.requestFocus();
                     edtCustomerMobileNumber.setFocusable(true);
@@ -188,6 +194,20 @@ public class NumEmailFragment extends Fragment {
                     edtEmail.requestFocus();
                     return;
                 }
+                if (mConfirmEmail.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(mConfirmEmail).matches()) {
+                    edtConfirmEmail.setError(getString(R.string.info_valid_email_id));
+                    edtConfirmEmail.setFocusable(true);
+                    edtConfirmEmail.requestFocus();
+                    return;
+                }
+
+                if (!mEmail.equals(mConfirmEmail)) {
+                    edtConfirmEmail.setError("email id miss match");
+                    edtConfirmEmail.setFocusable(true);
+                    edtConfirmEmail.requestFocus();
+                    return;
+                }
+
 
                 if (placesAutocomplete.getText().toString().trim().isEmpty()) {
                     placesAutocomplete.setError(getString(R.string.info_your_address));
@@ -202,15 +222,20 @@ public class NumEmailFragment extends Fragment {
                 if (tvCity.getText().toString().trim().isEmpty()) {
                     Helper.showErrorMessage(getActivity(), getString(R.string.info_city_name));
                     return;
-                }*/
-
-
-                mOtpRequestListener.onOtpRequest("IN", "91", "9830450542", "mdwasim508@gmail.com", "bankra mondal para killa math kolkata 711403, West Bengal","27",100,"711403","kolkata");
+                }
+                String zip;
+                if (StringUtils.isEmpty(tvZip.getText().toString().trim())) {
+                    zip = "-1";
+                } else {
+                    zip = tvZip.getText().toString().trim();
+                }
+                //mOtpRequestListener.onOtpRequest(mNameCode, mCountryCode, mMobileNumber, mEmail, mAddress, String.valueOf(mCountyId), mStateId, zip, tvCity.getText().toString().trim());
+                mOtpRequestListener.onOtpRequest(mNameCode, mCountryCode, mMobileNumber, mEmail, mAddress, String.valueOf(mCountyId), mStateId, zip, tvCity.getText().toString().trim());
                 //requestForOtp();
 
 
                 //verifyMobileNumber(mCountryCode + mMobileNumber);
-
+//Helper.showLoading();
             }
         });
 
@@ -235,14 +260,15 @@ public class NumEmailFragment extends Fragment {
             }
         });
 
-        mCountryName = edtCustomerCountryCode.getSelectedCountryName();
+        //DataVaultManager.getInstance(NumberActivity.this).saveCCODE(selectedCountryNameCode);
 
-        /*if (!Places.isInitialized()) {
-            Places.initialize(AppoPayApplication.getInstance(), getString(R.string.google_maps_api_key));
-        }*/
+        String temp = DataVaultManager.getInstance(getActivity()).getVaultValue(KEY_CCODE);
+        edtCustomerCountryCode.setCountryForNameCode(temp);
 
-        //mPlaceClient = Places.createClient(getActivity());
-        //initAutoCompleteTextView();
+        mMobileNumber = DataVaultManager.getInstance(getActivity()).getVaultValue(KEY_MOBILE);
+        edtCustomerMobileNumber.setText(mMobileNumber);
+
+
         edtCustomerCountryCode.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
             public void onCountrySelected() {
@@ -424,6 +450,7 @@ public class NumEmailFragment extends Fragment {
     }
 
     private void disableSelectCountry() {
+        String selectedCountryName = edtCustomerCountryCode.getSelectedCountryName();
 
         int pos = -1;
         for (int i = 0; i < mListCountry.size(); i++) {
@@ -432,7 +459,7 @@ public class NumEmailFragment extends Fragment {
             String regex = "\\s+";
             //Replacing the pattern with single space
             String result = countryname.replaceAll(regex, " ");
-            if (result.equalsIgnoreCase(mCountryName)) {
+            if (result.equalsIgnoreCase(selectedCountryName)) {
                 String country = " ( " + mListCountry.get(i).getCountrycode() + " )  " + mListCountry.get(i).getCountryname();
                 mCountyId = mListCountry.get(i).getId();
 
@@ -549,5 +576,6 @@ public class NumEmailFragment extends Fragment {
     public void setStateName(String statename, int stateid) {
         tvState.setText(statename);
         mStateId = stateid;
+        tvCity.requestFocus();
     }
 }

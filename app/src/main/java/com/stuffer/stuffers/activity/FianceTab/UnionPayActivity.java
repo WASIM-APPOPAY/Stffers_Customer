@@ -21,6 +21,7 @@ import com.stuffer.stuffers.AppoPayApplication;
 import com.stuffer.stuffers.R;
 import com.stuffer.stuffers.activity.quick_pass.QrGenerateFragment;
 import com.stuffer.stuffers.activity.wallet.AccountActivity;
+import com.stuffer.stuffers.activity.wallet.HomeActivity3;
 import com.stuffer.stuffers.activity.wallet.PayNowActivity;
 import com.stuffer.stuffers.activity.wallet.SignInActivity;
 import com.stuffer.stuffers.api.Constants;
@@ -52,27 +53,56 @@ public class UnionPayActivity extends AppCompatActivity implements UnionPayListe
     private MyTextViewBold toolbarTitle;
     private JSONObject mIndex;
     private AlertDialog alertDialog;
-
+    boolean flag1 = false, flag2 = false;
+    int intExtra;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_union_pay);
+
+        intExtra = getIntent().getIntExtra(AppoConstants.CARDTYPE, 0);
         setupActionBar();
-        if (savedInstanceState == null) {
-            CardEnrollMentFragment cardEnrollMentFragment = new CardEnrollMentFragment();
-            Bundle bundle = new Bundle();
-            bundle.putInt(AppoConstants.PRDNUMBER, 1003);
-            String walletAccountNumber = Helper.getWalletAccountNumber();
-            bundle.putString("newNumber", walletAccountNumber);
-            cardEnrollMentFragment.setArguments(bundle);
-            toolbarTitle.setText(getString(R.string.info_wallet_card_enrollment));
-            initFragments(cardEnrollMentFragment, getString(R.string.info_wallet_card_enrollment));
-            /*ActionFragment mActionFragment = new ActionFragment();
-            initFragments(mActionFragment, "action");*/
-          /*CardEnrollMentFragment cardEnrollMentFragment = new CardEnrollMentFragment();
-          initFragments(cardEnrollMentFragment, "enrollment");*/
-        }
+        CardEnrollMentFragment cardEnrollMentFragment = new CardEnrollMentFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(AppoConstants.PRDNUMBER, 1003);
+        bundle.putInt(AppoConstants.CARDTYPE, intExtra);
+        //String walletAccountNumber = Helper.getWalletAccountNumber();
+        bundle.putString("newNumber", "2233445566778899");
+        cardEnrollMentFragment.setArguments(bundle);
+        toolbarTitle.setText(getString(R.string.info_wallet_card_enrollment));
+        initFragments(cardEnrollMentFragment, getString(R.string.info_wallet_card_enrollment));
+        /*if (savedInstanceState == null) {
+            if (intExtra == 1) {
+                CardEnrollMentFragment cardEnrollMentFragment = new CardEnrollMentFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt(AppoConstants.PRDNUMBER, 1003);
+                bundle.putInt(AppoConstants.CARDTYPE, intExtra);
+                String walletAccountNumber = Helper.getWalletAccountNumber();
+                bundle.putString("newNumber", walletAccountNumber);
+                cardEnrollMentFragment.setArguments(bundle);
+                toolbarTitle.setText(getString(R.string.info_wallet_card_enrollment));
+                initFragments(cardEnrollMentFragment, getString(R.string.info_wallet_card_enrollment));
+                flag1=true;
+            } else if (intExtra == 2) {
+                VisaFragment visaFragment = new VisaFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt(AppoConstants.PRDNUMBER, 1003);
+                bundle.putInt(AppoConstants.CARDTYPE, intExtra);
+                String walletAccountNumber = Helper.getWalletAccountNumber();
+
+                bundle.putString("newNumber", walletAccountNumber);
+                visaFragment.setArguments(bundle);
+                toolbarTitle.setText("VISA Card Enrollment");
+                initFragments(visaFragment, "Visa Card Enrollment");
+                flag2=true;
+            }
+
+          *//*ActionFragment mActionFragment = new ActionFragment();
+          initFragments(mActionFragment, "action");*//*
+         *//*CardEnrollMentFragment cardEnrollMentFragment = new CardEnrollMentFragment();
+          initFragments(cardEnrollMentFragment, "enrollment");*//*
+        }*/
 
 
     }
@@ -279,21 +309,42 @@ public class UnionPayActivity extends AppCompatActivity implements UnionPayListe
       /*Intent intentBank = new Intent();
         setResult(RESULT_OK, intentBank);
         finish();*/
-        if (param == 1) {
+
+        DataVaultManager.getInstance(AppoPayApplication.getInstance()).saveDemoValue("yes");
+        //Intent intent = new Intent(UnionPayActivity.this, HomeActivity3.class);
+        //Intent intent = new Intent(UnionPayActivity.this, AccountActivity.class);
+        Intent intent = new Intent(UnionPayActivity.this, SignInActivity.class);
+        startActivity(intent);
+        finish();
+
+        /*if (param == 2) {
             VisaFragment visaFragment = new VisaFragment();
             Bundle bundle = new Bundle();
             bundle.putInt(AppoConstants.PRDNUMBER, 1003);
-            String walletAccountNumber = Helper.getWalletAccountNumber();
-            bundle.putString("newNumber", walletAccountNumber);
+            bundle.putInt(AppoConstants.CARDTYPE, intExtra);
+            *//*String walletAccountNumber = Helper.getWalletAccountNumber();
+            bundle.putString("newNumber", walletAccountNumber);*//*
+            bundle.putString("newNumber", "2233445566778899");
             visaFragment.setArguments(bundle);
             toolbarTitle.setText("VISA Card Enrollment");
             initFragments(visaFragment, "Visa Card Enrollment");
+        } else if (param == 1) {
+            CardEnrollMentFragment cardEnrollMentFragment = new CardEnrollMentFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt(AppoConstants.PRDNUMBER, 1003);
+            bundle.putInt(AppoConstants.CARDTYPE, intExtra);
+            *//*String walletAccountNumber = Helper.getWalletAccountNumber();
+            bundle.putString("newNumber", walletAccountNumber);*//*
+            bundle.putString("newNumber", "2233445566778899");
+            cardEnrollMentFragment.setArguments(bundle);
+            toolbarTitle.setText(getString(R.string.info_wallet_card_enrollment));
+            initFragments(cardEnrollMentFragment, getString(R.string.info_wallet_card_enrollment));
         } else {
             DataVaultManager.getInstance(AppoPayApplication.getInstance()).saveDemoValue("yes");
-            Intent intent = new Intent(UnionPayActivity.this, AccountActivity.class);
+            Intent intent = new Intent(UnionPayActivity.this, HomeActivity3.class);
             startActivity(intent);
             finish();
-        }
+        }*/
 
 
     }

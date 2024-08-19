@@ -751,11 +751,13 @@ public class AppoPayFragment extends Fragment {
         View dialogLayout = inflater.inflate(R.layout.dialog_about_topay_common, null);
         MyTextView tvInfo = dialogLayout.findViewById(R.id.tvInfo);
         MyTextView btnYes = dialogLayout.findViewById(R.id.btnYes);
+
         MyTextView btnNo = dialogLayout.findViewById(R.id.btnNo);
         //String boldText = "<font color=''><b>" + amountaftertax_fees + "</b></font>" + " " + "<font color=''><b>" + mListAccount.get(fromAccountPosition).getCurrencyCode() + "</b></font>";
         String boldText = "<font color=''><b>" + edAmount.getText().toString().trim() + "</b></font>" + " " + "<font color=''><b>" + mListAccount.get(fromAccountPosition).getCurrencyCode() + "</b></font>";
         String paymentAmount = getString(R.string.merchant_partial_pay1) + " " + boldText + " " + getString(R.string.merchant_partial_pay2);
         tvInfo.setText(Html.fromHtml(paymentAmount));
+        btnYes.setVisibility(View.VISIBLE);
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -785,7 +787,8 @@ public class AppoPayFragment extends Fragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                showPayDialogLikeUnion("100202478542755");
+                //showPayDialogLikeUnion("100202478542755");
+                showPayDialogLikeUnion("921059160100025");
             }
         }, 200);
     }
@@ -974,7 +977,7 @@ public class AppoPayFragment extends Fragment {
         tvMerchantId.setText(param);
 
         //String info = "<font color='#FF0000'>" + "<b>" + "Paid to " + valueMerchantName + "</b></font>" + "<br>" + "SUCCESS";
-        String info = "<font color='#FF0000'>" + "<b>" + "Paid to " + "MOHAMMAD WASIM" + "</b></font>";
+        String info = "<font color='#FF0000'>" + "<b>" + "Paid to " + "COODE M.L. " + "</b></font>";
         tvInfo.setText(Html.fromHtml(info));
 
         tvSenderName.setText(Helper.getSenderName());

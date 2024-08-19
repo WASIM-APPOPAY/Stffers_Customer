@@ -113,8 +113,9 @@ public class BottomTransactionPin extends BottomSheetDialogFragment implements V
         btnKey8.setOnClickListener(this);
         btnKey9.setOnClickListener(this);
         btnKey10.setOnClickListener(this);
-        btnConfirm.setOnClickListener(this);
         btnClear.setOnClickListener(this);
+        btnConfirm.setOnClickListener(this);
+
         btnCloseDialog.setOnClickListener(this);
 
         mListBtn.add(btnKey1);
@@ -219,7 +220,11 @@ public class BottomTransactionPin extends BottomSheetDialogFragment implements V
                 }
 
                 if (edTransPin.getText().toString().trim().equalsIgnoreCase(edCnfmTransPin.getText().toString().trim())) {
-                    mPinListenr.onPinConfirm(edTransPin.getText().toString().trim());
+                    //mPinListenr.onPinConfirm(edTransPin.getText().toString().trim());
+
+                    Toast.makeText(getActivity(), "Your have created your transaction pin Successfully", Toast.LENGTH_SHORT).show();
+                    mTransactionSuccess.onPinCreated();
+
                 } else {
                     Toast.makeText(getActivity(), "pin mismatch", Toast.LENGTH_SHORT).show();
                 }
@@ -254,7 +259,7 @@ public class BottomTransactionPin extends BottomSheetDialogFragment implements V
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        mPinListenr = (TransactionPinListener) context;
+        //mPinListenr = (TransactionPinListener) context;
         mTransactionSuccess = (OnTransactionPinSuccess) context;
     }
 

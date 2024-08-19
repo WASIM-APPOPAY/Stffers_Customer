@@ -77,20 +77,19 @@ public class VisaFragment extends Fragment implements View.OnClickListener {
 
 
         btnCardEnrollment.setOnClickListener(this);
-        String mUserDetails = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
+        /*String mUserDetails = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
         firstName = Helper.getFirstName();
         lastName = Helper.getLastName();
         fullName = firstName + " " + lastName;
         senderMobileNumber = Helper.getSenderMobileNumber();
         phoneCode = Helper.getPhoneCode();
         phWithCode = phoneCode + senderMobileNumber;
-        walletAccountNumber = Helper.getWalletAccountNumber();
+        walletAccountNumber = Helper.getWalletAccountNumber();*/
 
-
-        mTiedFname.setText(firstName);
-        mTiedLname.setText(lastName);
-        tvCountryCodeU.setText(phoneCode);
-        tvMobNumU.setText("" + senderMobileNumber);
+        mTiedFname.setText("Don");
+        mTiedLname.setText("Pitts");
+        tvCountryCodeU.setText("1");
+        tvMobNumU.setText("" + "6204744494");
         Bundle arguments = this.getArguments();
         mPrdNo = arguments.getInt(AppoConstants.PRDNUMBER, 0);
         newNumber = arguments.getString("newNumber");
@@ -143,7 +142,7 @@ public class VisaFragment extends Fragment implements View.OnClickListener {
 
         MyTextView btnNext = dialogLayout.findViewById(R.id.btnNext);
         btnNext.setVisibility(View.GONE);
-          btnClose.setVisibility(View.VISIBLE);
+        btnClose.setVisibility(View.VISIBLE);
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,18 +164,17 @@ public class VisaFragment extends Fragment implements View.OnClickListener {
 
 
     private void redirectHome() {
+        Helper.hideLoading();
         mDialogCard.dismiss();
-        mConfirmLsitener.onConfirm(2);
+        mConfirmLsitener.onConfirm(3);
     }
-
 
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        mConfirmLsitener= (OnBankSubmit) context;
+        mConfirmLsitener = (OnBankSubmit) context;
     }
-
 
 
 }

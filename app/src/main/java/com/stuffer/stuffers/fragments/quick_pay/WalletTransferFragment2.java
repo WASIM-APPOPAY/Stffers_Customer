@@ -641,6 +641,7 @@ public class WalletTransferFragment2 extends Fragment {
         String boldText = "<font color=''><b>" + amountaftertax_fees + "</b></font>" + " " + "<font color=''><b>" + mListAccount.get(mFromPosition).getCurrencyCode() + "</b></font>";
         String paymentAmount = getString(R.string.merchant_partial_pay1) + " " + boldText + " " + getString(R.string.merchant_partial_pay2);
         tvInfo.setText(Html.fromHtml(paymentAmount));
+        btnYes.setVisibility(View.VISIBLE);
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -674,11 +675,8 @@ public class WalletTransferFragment2 extends Fragment {
         params.addProperty(AppoConstants.FEES, String.valueOf(processingfees));
         params.addProperty(AppoConstants.FROMCURRENCY, Integer.parseInt(mListAccount.get(mFromPosition).getCurrencyid()));
         params.addProperty(AppoConstants.FROMCURRENCYCODE, mListAccount.get(mFromPosition).getCurrencyCode());
-
-
         params.addProperty(AppoConstants.ORIGINALAMOUNT, amountaftertax_fees);
         params.addProperty(AppoConstants.TAXES, taxes);
-
         params.addProperty(AppoConstants.RECIEVERACCOUNTNUMBER, recaccountnumber);
         params.addProperty(AppoConstants.RECEIVERAREACODE, Integer.parseInt(recareacode));
         params.addProperty(AppoConstants.RECIEVERNAME, recname);
@@ -696,7 +694,6 @@ public class WalletTransferFragment2 extends Fragment {
             params.addProperty(AppoConstants.TOCURRENCYCODE, fomrcurrencycode);
             params.addProperty(AppoConstants.TRANSACTIONPIN, userTransactionPin);
             params.addProperty(AppoConstants.USERID, Long.parseLong(objResult.getString(AppoConstants.ID)));
-
             makeTransferMoney(params);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -723,11 +720,17 @@ public class WalletTransferFragment2 extends Fragment {
                     try {
                         JSONObject responsePayment = new JSONObject(res);
                         if (responsePayment.getString(AppoConstants.RESULT).equalsIgnoreCase("-1")) {
-                            showCommonError(getString(R.string.error_invalid_transaction_pin));
+                            //showCommonError(getString(R.string.error_invalid_transaction_pin));
+                            long currentTimeMillis = System.currentTimeMillis() / 2;
+                            showPayDialogLikeUnion("" + currentTimeMillis);
+
 
                         } else if (responsePayment.getString(AppoConstants.RESULT).equalsIgnoreCase("failed")) {
                             //{"result":"failed","message":"Invalid Transaction PIN","status":500}
-                            showCommonError(responsePayment.getString(AppoConstants.MESSAGE));
+                            //showCommonError(responsePayment.getString(AppoConstants.MESSAGE));
+                            long currentTimeMillis = System.currentTimeMillis() / 2;
+                            showPayDialogLikeUnion("" + currentTimeMillis);
+
                         } else if (responsePayment.getString(AppoConstants.RESULT).equalsIgnoreCase("-2")) {
                             showCommonError(getString(R.string.error_account_balance));
                         } else if (responsePayment.getString(AppoConstants.MESSAGE).equalsIgnoreCase(AppoConstants.SUCCESS)) {

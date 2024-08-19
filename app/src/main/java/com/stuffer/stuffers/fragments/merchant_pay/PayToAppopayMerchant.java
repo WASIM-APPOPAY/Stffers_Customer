@@ -834,10 +834,8 @@ public class PayToAppopayMerchant extends Fragment {
         }
 
         String vaultValue = DataVaultManager.getInstance(AppoPayApplication.getInstance()).getVaultValue(KEY_USER_DETIALS);
-
         JsonObject params = new JsonObject();
         params.addProperty(AppoConstants.ACCOUNTNUMBER, mListAccount.get(mFromPosition).getAccountnumber());
-
         params.addProperty(AppoConstants.CURRENCYCODE, mListAccount.get(mFromPosition).getCurrencyCode());
         params.addProperty(AppoConstants.PAYAMOUNT, String.valueOf(amountaftertax_fees));
         params.addProperty(AppoConstants.CHARGES, bankfees);
@@ -849,7 +847,6 @@ public class PayToAppopayMerchant extends Fragment {
         params.addProperty(AppoConstants.MERCHANTNUMBER, valuePhone);
         params.addProperty(AppoConstants.MERCHANTAREACODE, valueCountry);
         params.addProperty(AppoConstants.AMOUNT, tvAmountCredit.getText().toString().trim());
-
         try {
             JSONObject jsonUser = new JSONObject(vaultValue);
             objResult = jsonUser.getJSONObject(AppoConstants.RESULT);

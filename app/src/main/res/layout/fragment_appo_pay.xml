@@ -50,7 +50,7 @@
                             android:id="@+id/tvHeader"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="MOHAMMAD WASIM"
+                            android:text="COODEM R.L."
                             android:textColor="@color/common_text_color"
                             android:textSize="16sp" />
 
@@ -59,7 +59,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="+91 9836683269"
+                            android:text="+507 63516303"
                             android:textSize="14sp" />
 
                         <com.stuffer.stuffers.views.MyTextView
@@ -67,7 +67,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="wasim@gmail.com"
+                            android:text="appopay@gmail.com"
                             android:textSize="14sp" />
 
                         <com.stuffer.stuffers.views.MyTextView
@@ -75,7 +75,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="MID : 100202478542755"
+                            android:text="MID : 921059160100025"
                             android:textSize="14sp" />
 
                         <LinearLayout

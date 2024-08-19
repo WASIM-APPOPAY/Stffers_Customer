@@ -71,6 +71,7 @@
 
             <com.stuffer.stuffers.views.MyTextView
                 android:id="@+id/btnYes"
+                android:visibility="gone"
                 android:layout_width="80dp"
                 android:layout_height="45dp"
                 android:layout_alignParentEnd="true"

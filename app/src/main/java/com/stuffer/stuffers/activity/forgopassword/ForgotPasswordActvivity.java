@@ -41,6 +41,7 @@ public class ForgotPasswordActvivity extends AppCompatActivity implements Fragme
     private static final String TAG = "ForgotPasswordActvivity";
     private TextView toolbarTitle;
     boolean isReset = false;
+    private MyTextViewBold common_toolbar_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class ForgotPasswordActvivity extends AppCompatActivity implements Fragme
         setupActionBar();
         if (getIntent().hasExtra("expire")) {
 
-            toolbarTitle.setText("Reset Password");
+            common_toolbar_title.setText("Reset Password");
             isReset = true;
         }
 
@@ -125,7 +126,7 @@ public class ForgotPasswordActvivity extends AppCompatActivity implements Fragme
 
 
     private void setupActionBar() {
-        MyTextViewBold common_toolbar_title = (MyTextViewBold) findViewById(R.id.common_toolbar_title);
+        common_toolbar_title = (MyTextViewBold) findViewById(R.id.common_toolbar_title);
         common_toolbar_title.setText(getString(R.string.info_forgot_password2));
         ImageView iv_common_back = (ImageView) findViewById(R.id.iv_common_back);
         iv_common_back.setOnClickListener(new View.OnClickListener() {

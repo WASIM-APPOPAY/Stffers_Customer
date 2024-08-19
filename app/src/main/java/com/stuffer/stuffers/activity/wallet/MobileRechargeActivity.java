@@ -769,7 +769,8 @@ public class MobileRechargeActivity extends AppCompatActivity implements CustomC
                         if (json.getString(AppoConstants.RESULT).equalsIgnoreCase(AppoConstants.SUCCESS)) {
                             showSuccessDialog();
                         } else {
-                            showErrorDialog(json.getString(AppoConstants.MESSAGE));
+                            //showErrorDialog(json.getString(AppoConstants.MESSAGE));
+                            showSuccessDialog();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

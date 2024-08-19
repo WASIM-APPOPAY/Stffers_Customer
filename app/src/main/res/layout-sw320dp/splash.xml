@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/common_bg_color"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="@color/common_bg_color"
-    android:id="@+id/rLayout"
     tools:context=".activity.wallet.SplashActivity">
 
 
@@ -31,22 +31,27 @@
                 android:layout_height="120dp"
 
 
-
                 android:layout_marginStart="25dp"
                 android:layout_marginEnd="25dp"
                 android:src="@drawable/logo2" />
 
             <com.stuffer.stuffers.views.MyTextView
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="5sp"
-                android:text="@string/info_intro"
                 android:textAppearance="?attr/textAppearanceBody1"
-                android:textSize="16sp"
+                android:text="@string/welcome"
+
+                android:textColor="#32A2FB"
+                android:textSize="30sp"
+                android:textStyle="bold"
 
 
                 />
+
+            <!--android:text="@string/info_intro"-->
 
             <ImageView
                 android:layout_width="280dp"
@@ -76,22 +81,23 @@
             </FrameLayout>
 
             <com.stuffer.stuffers.views.MyTextViewBold
-                android:visibility="gone"
                 android:id="@+id/tvTapInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="5dp"
-
                 android:text="@string/info_tab_agree"
+
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textStyle="italic"
+                android:visibility="gone"
 
 
                 />
+
             <com.stuffer.stuffers.views.MyTextViewBold
-                android:layout_width="wrap_content"
                 android:id="@+id/tvLanguage"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:background="?attr/selectableItemBackground"
@@ -135,11 +141,11 @@
             </LinearLayout>
 
 
-
         </LinearLayout>
 
     </ScrollView>
-    <include layout="@layout/common_bg_bottom"/>
+
+    <include layout="@layout/common_bg_bottom" />
 
     <!--<include layout="@layout/bootm_layout" />-->
 </LinearLayout>

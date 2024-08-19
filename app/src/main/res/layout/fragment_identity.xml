@@ -113,8 +113,8 @@
                         android:paddingLeft="8dp"
                         android:text="@string/info_please_select_id_type"
                         android:textSize="18sp"
-
                         android:textStyle="bold" />
+
 
                     <com.stuffer.stuffers.views.MyEditText
                         android:id="@+id/edIdFoucs"
@@ -126,6 +126,7 @@
                         android:textSize="16sp"
                         android:visibility="visible" />
 
+
                 </LinearLayout>
 
 
@@ -136,7 +137,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -156,7 +157,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_weight="1"
-
                             android:drawablePadding="12dp"
                             android:editable="false"
                             android:focusable="false"
@@ -166,30 +166,89 @@
                             android:padding="15dp"
                             android:text="@string/info_tap_to_capture_your_id"
                             android:textColor="@color/Tex"
-
                             android:textColorHint="@color/textSub"
                             android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:visibility="gone" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.stuffer.stuffers.views.MyTextViewBold
+                                android:id="@+id/tvFrontSide"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawablePadding="12dp"
+                                android:editable="false"
+                                android:focusable="false"
+                                android:gravity="center"
+                                android:inputType="none"
+                                android:lines="2"
+                                android:padding="15dp"
+                                android:text="Tap to Capture FrontSide"
+                                android:textColor="@color/Tex"
+                                android:textColorHint="@color/textSub"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <com.stuffer.stuffers.views.MyTextViewBold
+                                android:id="@+id/tvBackSide"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="-20dp"
+
+                                android:layout_weight="1"
+                                android:drawablePadding="12dp"
+                                android:editable="false"
+                                android:focusable="false"
+                                android:gravity="center"
+                                android:inputType="none"
+                                android:lines="2"
+                                android:padding="15dp"
+                                android:text="Tap to Capture BackSide"
+                                android:textColor="@color/Tex"
+                                android:textColorHint="@color/textSub"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+
+                        </LinearLayout>
 
                         <ImageView
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:layout_gravity="end"
+                            android:layout_gravity="end|center_vertical"
                             android:background="@null"
-
                             android:editable="false"
+
                             android:padding="10dp"
                             android:src="@drawable/scan_qr"
                             android:textSize="16sp"
+                            android:visibility="gone"
                             app:tint="@color/black" />
                     </FrameLayout>
 
 
                 </LinearLayout>
 
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/capture1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:text="Front Picture"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <ImageView
-                    android:id="@+id/imageId"
+                    android:id="@+id/imageId1"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_marginLeft="5dp"
@@ -197,7 +256,31 @@
                     android:layout_marginRight="5dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
+
+                <com.stuffer.stuffers.views.MyTextView
+                    android:id="@+id/capture2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:text="Back Picture"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/imageId2"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -206,7 +289,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
 
                 <com.stuffer.stuffers.views.MyTextViewBold
@@ -216,7 +299,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:padding="8dp"
-                    android:text="Full Name"
+                    android:text="First Name"
                     android:textColor="@color/common_text_color"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -230,7 +313,36 @@
                     android:background="@drawable/round_identity"
 
                     android:gravity="left|center"
-                    android:hint="@string/info_hint_full_name"
+                    android:hint="Enter first name"
+                    android:imeOptions="flagNoExtractUi|actionNext"
+                    android:lines="1"
+                    android:padding="15dp"
+                    android:singleLine="true"
+                    android:textColor="@color/Tex"
+                    android:textColorHint="@color/textSub"
+                    android:textSize="16sp" />
+
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:padding="8dp"
+                    android:text="Last Name"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.stuffer.stuffers.views.MyEditText
+                    android:id="@+id/txtLastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/round_identity"
+                    android:gravity="left|center"
+                    android:hint="Enter last name"
                     android:imeOptions="flagNoExtractUi|actionNext"
                     android:lines="1"
                     android:padding="15dp"
@@ -389,10 +501,11 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:padding="8dp"
-                    android:text="Password"
+                    android:text="Create Login Password"
                     android:textColor="@color/common_text_color"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
 
                 <LinearLayout
@@ -401,7 +514,8 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/round_identity"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/password"
@@ -442,6 +556,68 @@
 
                 </LinearLayout>
 
+                <com.stuffer.stuffers.views.MyTextViewBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:padding="8dp"
+                    android:text="Confirm Login Password"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/round_identity"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/passwordConfirm"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/colortext"
+                        android:textColorHint="@color/colorhint"
+                        app:hintEnabled="false"
+                        app:passwordToggleEnabled="true">
+
+                        <com.stuffer.stuffers.views.MyEditText
+                            android:id="@+id/txtUserPasswordConfirm"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:hint="@string/info_hint_password"
+                            android:imeOptions="flagNoExtractUi|actionNext"
+                            android:inputType="textPassword"
+                            android:padding="15dp"
+                            android:singleLine="true"
+                            android:textColor="@color/Tex"
+                            android:textColorHint="@color/textSub"
+                            android:textSize="16sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:id="@+id/ivPolicy2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/forgot_password_bg"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_info" />
+
+                </LinearLayout>
+
                 <com.stuffer.stuffers.views.MyTextView
                     android:id="@+id/btnSignUp"
                     android:layout_width="match_parent"
@@ -454,7 +630,7 @@
                     android:elevation="1.5dp"
                     android:gravity="center"
                     android:padding="12dp"
-                    android:text="Submit"
+                    android:text="Next"
                     android:textColor="#fff"
                     android:textSize="16sp" />
             </LinearLayout>

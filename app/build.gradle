@@ -238,5 +238,8 @@ dependencies {
     implementation 'com.github.hamzaahmedkhan:SpinnerDialog:v1.2.3'
     implementation "com.priyankvasa.android:cameraview-ex:3.5.5-alpha"
 
+    implementation 'com.github.raheemadamboev:image-radio-button-android:1.0.7'
+    implementation 'com.github.worker8:radiogroupplus:1.0.1'
+    implementation 'org.aviran.cookiebar2:cookiebar2:1.1.5'
 }
 apply plugin: 'com.google.gms.google-services'
